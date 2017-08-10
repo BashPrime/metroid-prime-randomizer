@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es5",
+    "module": "system",
+    "moduleResolution": "node",
+
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/main-aot.ts"
+  ]
+}

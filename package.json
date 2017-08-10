@@ -1,0 +1,39 @@
+{
+  "name": "prime-docs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^4.0.0",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/compiler-cli": "^4.3.3",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/platform-server": "^4.3.3",
+    "@angular/router": "^4.0.0",
+    "codelyzer": "^3.1.2",
+    "core-js": "^2.4.1",
+    "gulp-less": "^3.3.2",
+    "less-plugin-autoprefix": "^1.5.1",
+    "rxjs": "^5.4.1",
+    "systemjs": "^0.20.17",
+    "zone.js": "^0.8.14"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-typescript": "^3.2.1",
+    "http2": "^3.3.6",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.3.2",
+    "typescript": "^2.4.1"
+  }
+}
