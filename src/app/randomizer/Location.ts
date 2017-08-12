@@ -1,4 +1,5 @@
 import { Item } from './Item';
+import { ItemCollection } from './collection/ItemCollection';
 
 export class Location {
     protected name: string;
@@ -20,7 +21,7 @@ export class Location {
         this.item = item;
     }
 
-    public canFill = function(items, item): boolean {
+    public canFillItem = function(item: Item, items: ItemCollection): boolean {
         return false;
     }
 
