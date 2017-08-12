@@ -102,7 +102,8 @@ export class ChozoRuins extends Region {
         };
 
         this.locations.get("Tower of Light").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
+            return items.hasMissileCount(40 / 5) && this.canLayBombs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPIDER_BALL)
+                && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
 
         this.locations.get("Tower Chamber").canFillItem = function(item: Item, items: ItemCollection): boolean {

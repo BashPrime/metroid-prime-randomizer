@@ -42,6 +42,15 @@ export class ItemCollection extends Collection{
         return this.has(PrimeItemName.MISSILE_EXPANSION) || this.has(PrimeItemName.MISSILE_LAUNCHER);
     }
 
+    public hasMissileCount(count: number): boolean {
+        if (this.hasMissiles()) {
+            let expansionCount = this.has(PrimeItemName.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItemName.MISSILE_EXPANSION) : 0;
+            let launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0; // This should almost always be 1 or 0
+            return expansionCount + launcherCount >= count;
+        }
+        return false;
+    }
+
     public hasAnySuit(): boolean {
         return this.has(PrimeItemName.VARIA_SUIT) || this.has(PrimeItemName.GRAVITY_SUIT) || this.has(PrimeItemName.PHAZON_SUIT);
     }
@@ -66,4 +75,9 @@ export class ItemCollection extends Collection{
         return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.GRAVITY_SUIT)
             && this.has(PrimeItemName.THERMAL_VISOR) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
     }
+
+    public hasMinesFromMagmoorReqs(): boolean {
+		return this.hasMissiles() && this.canLayPowerBombs() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) && 
+				this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
+	}
 }
