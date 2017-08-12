@@ -17,7 +17,7 @@ export class PhazonMines extends Region {
             ["Fungal Hall Access",  new Location("Fungal Hall Access", "de9d71f5.mrea", 0x00280102)],
             ["Phazon Mining Tunnel", new Location("Phazon Mining Tunnel", "bbfa4ab3.mrea", 0x0027007F)],
             ["Fungal Hall B", new Location("Fungal Hall B", "ec47c242.mrea", 0x00240127)],
-            ["Metroid Quarantine A", new Location("Metroid Quarantine A", "bb3afc4e.mrea", 0x001F0205)],
+            ["Metroid Quarantine A", new Location("Metroid Quarantine A", "fb051f5a.mrea", 0x002005EA)],
             ["Metroid Quarantine B", new Location("Metroid Quarantine B", "bb3afc4e.mrea", 0x001F0205)],
             ["Elite Quarters", new Location("Elite Quarters", "3953c353.mrea", 0x001A04B8)],
             ["Processing Center Access", new Location("Processing Center Access", "ed6de73b.mrea", 0x001600A7)],
