@@ -71,6 +71,15 @@ export class ItemCollection extends Collection{
         return this.hasMissiles() && this.has(PrimeItemName.CHARGE_BEAM) && this.has(PrimeItemName.SUPER_MISSILE);
     }
 
+    public hasPhendranaReqs(): boolean {
+        return this.hasMissiles() && this.canLayBombs() && this.hasAnySuit();
+    }
+
+    public hasBackwardsPhendranaReqs(): boolean {
+        return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
+            && this.has(PrimeItemName.WAVE_BEAM);
+    }
+
     public hasMinesFromTallonReqs(): boolean {
         return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.GRAVITY_SUIT)
             && this.has(PrimeItemName.THERMAL_VISOR) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
