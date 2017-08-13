@@ -92,50 +92,57 @@ export class PhendranaDrifts extends Region {
         };
 
         this.locations.get("Research Lab Hydra").canFillItem = function(item: Item, items: ItemCollection): boolean {
+            return items.canFireSuperMissiles() && items.has(PrimeItemName.THERMAL_VISOR)
+                && ((items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
+                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.ICE_BEAM)));
+        };
+
+        this.locations.get("Observatory").canFillItem = function(item: Item, items: ItemCollection): boolean {
+            return (items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
+                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.ICE_BEAM));
+        };
+
+        this.locations.get("Control Tower").canFillItem = function(item: Item, items: ItemCollection): boolean {
+            return items.has(PrimeItemName.PLASMA_BEAM)
+                && ((items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
+                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.THERMAL_VISOR) && items.has(PrimeItemName.ICE_BEAM)));
+        };
+
+        this.locations.get("Research Lab Aether (Tank)").canFillItem = function(item: Item, items: ItemCollection): boolean {
+            return (items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
+                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.THERMAL_VISOR) && items.has(PrimeItemName.ICE_BEAM));
+        };
+
+        this.locations.get("Research Lab Aether (Morph Track)").canFillItem = function(item: Item, items: ItemCollection): boolean {
+            return (items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
+                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.THERMAL_VISOR) && items.has(PrimeItemName.ICE_BEAM));
+        };
+
+        this.locations.get("Research Core").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Transport Access").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Frost Cave").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Storage Cave").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Security Cave").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Gravity Chamber (Underwater)").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
 
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
-        };
-
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
-        };
-
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
-        };
-
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
-        };
-
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return true;
-        };
-
-        this.locations.get("").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Gravity Chamber (Grapple Ledge)").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return true;
         };
     }
