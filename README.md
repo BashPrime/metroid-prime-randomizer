@@ -8,10 +8,10 @@ Status: Probably possible
 
 ## Setup
 ```bash
-npm install -g gulp-cli # Install gulp globally, if you haven't already
-npm install # Install local deps
-gulp # Just builds the app
-gulp watch # Build, run web server, watch for changes, auto-rebuild
+npm install -g @angular/cli
+npm install
+ng serve # for dev/autobuild/autoreload
+ng build # to build
 ```
 
 ## License
