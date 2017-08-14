@@ -4,7 +4,7 @@ import { Item } from '../Item';
 import { ItemCollection } from '../collection/ItemCollection';
 import { PrimeItemName } from '../ItemType';
 
-export class TallonOverWorld extends Region {
+export class TallonOverworld extends Region {
     constructor() {
         super();
         this.locations = new Map<string, Location>([
