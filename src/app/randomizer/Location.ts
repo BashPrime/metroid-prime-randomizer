@@ -13,12 +13,20 @@ export class Location {
         this.id = id;
     }
 
+    public getName(): string {
+        return this.name;
+    }
+
     public getItem(): Item {
         return this.item;
     }
 
     public setItem(item: Item): void {
         this.item = item;
+    }
+
+    public hasItem(): boolean {
+        return this.item !== undefined;
     }
 
     public canFillItem = function(item: Item, items: ItemCollection): boolean {

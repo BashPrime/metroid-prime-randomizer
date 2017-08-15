@@ -177,7 +177,7 @@ export class ChozoRuins extends Region {
             return items.canLayBombs();
         };
 
-        this.locations.get("Furance (Spider Tracks)").canFillItem = function(item: Item, items: ItemCollection): boolean {
+        this.locations.get("Furnace (Spider Tracks)").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
                 && items.has(PrimeItemName.SPIDER_BALL);
         };

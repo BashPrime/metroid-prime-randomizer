@@ -15,7 +15,7 @@ export class World {
     protected locations: Array<Location>;
     protected collectableLocations: Array<Location>;
 
-    constructor(mode: string, logic: string, difficulty: string) {
+    constructor(mode: string = "Standard", logic: string = "NoGlitches", difficulty: string = "Normal") {
         this.mode = mode;
         this.logic = logic;
         this.difficulty = difficulty;
