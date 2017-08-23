@@ -5,7 +5,7 @@ import { Item } from '../Item';
 
 export class RandomAssumed extends Filler {
     fill(artifacts: Array<Item>, priorityItems: Array<Item>, luxuryItems: Array<Item>, expansions: Array<Item>): void {
-        let randomizedLocations = this.shuffleLocations(this.world.getLocations());
+        let randomizedLocations = this.shuffleLocations([...this.world.getLocations()]);
 
         this.fillItemsInLocations(new ItemCollection(priorityItems.concat(luxuryItems)), new LocationCollection(randomizedLocations));
         

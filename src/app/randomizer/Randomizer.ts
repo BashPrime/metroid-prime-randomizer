@@ -11,20 +11,31 @@ export class Randomizer {
     protected difficulty: string;
     protected world: World;
     protected rng: MersenneTwister;
+    protected seed: number;
 
     constructor(mode: string, logic: string, difficulty: string) {
         this.mode = mode;
         this.logic = logic;
         this.difficulty = difficulty;
         this.world = new World(this.mode, this.logic, this.difficulty);
+
     }
 
     randomize(seed?: number): void {
         if (!seed)
             seed = this.getRandomInt(1, 1000000000);
         console.log("Using seed: " + seed);
-        this.rng = !seed ? new MersenneTwister() : new MersenneTwister(seed);
+        this.seed = seed;
+        this.rng = new MersenneTwister(this.seed);
         new RandomAssumed(this.world, this.rng).fill(this.getArtifacts(), this.getPriorityItems(), this.getLuxuryItems(), this.getExpansions());
+    }
+
+    getWorld(): World {
+        return this.world;
+    }
+
+    getSeed(): number {
+        return this.seed;
     }
 
     getArtifacts(): Array<Item> {
