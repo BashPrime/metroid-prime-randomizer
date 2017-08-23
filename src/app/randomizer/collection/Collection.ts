@@ -13,11 +13,30 @@ export class Collection {
         this.items.push(item);
     }
 
+    public remove(index: number): void {
+        if (index > -1) {
+            this.items.splice(index, 1);
+        }
+    }
+
     public size(): number {
         return this.items.length;
     }
 
     public has(key: any): boolean {
         return this.items.indexOf(key) > -1;
+    }
+
+    public diff(otherItems: Collection): Collection {
+        let otherArr = otherItems.toArray();
+        return new Collection(this.items.filter(item => otherArr.indexOf(item) < 0));
+    }
+
+    public merge(otherItems: Collection): Collection {
+        return new Collection(this.items.concat(otherItems.toArray()));
+    }
+
+    public toArray(): Array<any> {
+        return this.items;
     }
 }

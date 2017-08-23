@@ -25,6 +25,30 @@ export class ItemCollection extends Collection{
         this.incrementItemCount(item);
     }
 
+    public remove(index: number): void {
+        if (index > -1) {
+            let itemName = this.items[index].getName();
+            this.items.splice(index, 1);
+            this.itemCount.set(itemName, this.itemCount.get(itemName) - 1);
+        }
+    }
+
+    public removeItem(itemKey: string): Item {
+        let givenItemCount = this.itemCount.get(itemKey);
+
+        if (givenItemCount !== undefined && givenItemCount > 0) {
+            let givenItem = Item.get(itemKey);
+            for (let i = 0; i < this.items.length; i++) {
+                if (this.items[i].getName() === itemKey) {
+                    this.remove(i);
+                    return givenItem;
+                }
+            }
+        }
+
+        return undefined;
+    }
+
     protected incrementItemCount(item: Item) {
         let itemName = item.getName();
         let itemVal= this.itemCount.get(itemName);
@@ -36,6 +60,18 @@ export class ItemCollection extends Collection{
 
     public has(key: string): boolean {
         return this.itemCount.get(key) !== undefined && this.itemCount.get(key) > 0;
+    }
+
+    public diff(otherItems: ItemCollection): ItemCollection {
+        return new ItemCollection(this.items.filter(item => !otherItems.has(item.getName())));
+    }
+
+    public merge(otherItems: ItemCollection): ItemCollection {
+        return new ItemCollection(this.items.concat(otherItems.toArray()));
+    }
+
+    public toArray(): Array<Item> {
+        return this.items;
     }
 
     public hasMissiles(): boolean {
