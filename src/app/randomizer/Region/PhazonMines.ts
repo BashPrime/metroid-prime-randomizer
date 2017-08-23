@@ -8,7 +8,7 @@ export class PhazonMines extends Region {
     constructor() {
         super();
         this.locations = new Map<string, Location>([
-            ["Main Quarry", new Location("Landing Site", "643d038f.mrea", 0x00020233)],
+            ["Main Quarry", new Location("Main Quarry", "643d038f.mrea", 0x00020233)],
             ["Security Access A", new Location("Security Access A", "c44e7a07.mrea", 0x00050187)],
             ["Storage Depot A", new Location("Storage Depot A", "35c5d736.mrea", 0x000C0026)],
             ["Elite Research (Phazon Elite)", new Location("Elite Research (Phazon Elite)", "8a97bb54.mrea", 0x00050187)],
