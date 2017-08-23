@@ -20,6 +20,9 @@ export class Randomizer {
     }
 
     randomize(seed?: number): void {
+        if (!seed)
+            seed = this.getRandomInt(1, 1000000000);
+        console.log("Using seed: " + seed);
         this.rng = !seed ? new MersenneTwister() : new MersenneTwister(seed);
         new RandomAssumed(this.world, this.rng).fill(this.getArtifacts(), this.getPriorityItems(), this.getLuxuryItems(), this.getExpansions());
     }
@@ -106,5 +109,9 @@ export class Randomizer {
         });
 
         return expansions;
+    }
+
+    getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
+        return Math.floor(rng.random() * (max - min + 1)) + min;
     }
 }

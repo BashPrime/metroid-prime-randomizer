@@ -30,7 +30,7 @@ export class RandomAssumed extends Filler {
     }
 
     fillItemsInLocations(fillItems: ItemCollection, locations: LocationCollection, baseAssumedItems: ItemCollection = new ItemCollection()): void {
-        let remainingFillItems = new ItemCollection(fillItems.toArray());
+        let remainingFillItems = new ItemCollection([...fillItems.toArray()]);
 
         if (remainingFillItems.size() > locations.getEmptyLocations().size()) {
             throw new RangeError("There are more items to fill than available locations");

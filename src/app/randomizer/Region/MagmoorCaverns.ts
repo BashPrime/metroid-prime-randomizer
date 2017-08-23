@@ -69,7 +69,7 @@ export class MagmoorCaverns extends Region {
         };
 
         this.locations.get("Magmoor Workstation").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return items.hasMissiles() && items.hasAnySuit() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM)
+            return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL) && items.hasAnySuit() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM)
                 && items.has(PrimeItemName.THERMAL_VISOR);
         };
     }

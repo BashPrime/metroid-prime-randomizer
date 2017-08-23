@@ -65,7 +65,7 @@ export class ChozoRuins extends Region {
         };
 
         this.locations.get("Ruined Fountain").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return items.hasMissiles() && items.has(PrimeItemName.SPIDER_BALL);
+            return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL) && items.has(PrimeItemName.SPIDER_BALL);
         };
 
         this.locations.get("Ruined Shrine (Beetle Battle)").canFillItem = function(item: Item, items: ItemCollection): boolean {
