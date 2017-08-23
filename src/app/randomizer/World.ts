@@ -54,7 +54,7 @@ export class World {
 
         // Get all non-artifact items
         let availableLocations = this.getLocations().filter(location => {
-            return location.hasItem() && location.getItem().getName().indexOf("Artifact") >= 0;
+            return location.hasItem() && location.getItem().getName().indexOf("Artifact") < 0;
         });
 
         let newItems: ItemCollection = new ItemCollection();

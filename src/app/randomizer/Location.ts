@@ -34,6 +34,6 @@ export class Location {
     }
 
     public canEscape = function(items, item): boolean {
-        return false;
+        return true;
     }
 }
