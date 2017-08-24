@@ -72,6 +72,8 @@ export class ChozoRuins extends Region {
             return items.hasMissiles();
         };
         this.locations.get("Ruined Shrine (Beetle Battle)").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.MORPH_BALL) || items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
 
@@ -102,7 +104,7 @@ export class ChozoRuins extends Region {
         };
 
         this.locations.get("Tower of Light").canFillItem = function(item: Item, items: ItemCollection): boolean {
-            return items.hasMissileCount(40 / 5) && this.canLayBombs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPIDER_BALL)
+            return items.hasMissileCount(40 / 5) && items.canLayBombs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPIDER_BALL)
                 && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
 
@@ -167,6 +169,8 @@ export class ChozoRuins extends Region {
             return items.hasMissiles() && items.canLayBombsOrPowerBombs();
         };
         this.locations.get("Burn Dome (Tunnel)").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.canLayBombs();
         };
 
@@ -174,6 +178,8 @@ export class ChozoRuins extends Region {
             return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL);
         };
         this.locations.get("Burn Dome (I. Drone)").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.canLayBombs();
         };
 
@@ -206,6 +212,8 @@ export class ChozoRuins extends Region {
                 && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
         this.locations.get("Antechamber").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.ICE_BEAM);
         };
     }

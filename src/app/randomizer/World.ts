@@ -49,6 +49,10 @@ export class World {
         return this.locations;
     }
 
+    public getEmptyLocations(): Array<Location> {
+        return this.locations.filter(location => !location.hasItem());
+    }
+
     public collectItems(collectedItems?: ItemCollection): ItemCollection {
         let myItems: ItemCollection = collectedItems !== undefined ? collectedItems : new ItemCollection();
 
@@ -60,7 +64,7 @@ export class World {
         let newItems: ItemCollection = new ItemCollection();
         do {
             let searchLocations = new LocationCollection(availableLocations.filter(location => {
-                return location.canFillItem(undefined, myItems) && location.canEscape(undefined, myItems);
+                return location.canFillItem(undefined, myItems);
             }));
 
             let foundItems = searchLocations.getItems();

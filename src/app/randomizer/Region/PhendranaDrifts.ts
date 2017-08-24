@@ -63,6 +63,8 @@ export class PhendranaDrifts extends Region {
             return items.hasPhendranaReqs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
         this.locations.get("Chapel of the Elders").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.WAVE_BEAM) && (items.has(PrimeItemName.SPACE_JUMP_BOOTS) || items.canLayBombs());
         };
 
@@ -75,6 +77,8 @@ export class PhendranaDrifts extends Region {
         };
         // You'll softlock if you destroy the boxes, and don't have space jump or boost
         this.locations.get("Phendrana Canyon").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.SPACE_JUMP_BOOTS) || items.has(PrimeItemName.BOOST_BALL);
         };
 
@@ -83,6 +87,8 @@ export class PhendranaDrifts extends Region {
                     && items.has(PrimeItemName.THERMAL_VISOR)) || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.THERMAL_VISOR));
         };
         this.locations.get("Quarantine Cave").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.SPIDER_BALL) || items.has(PrimeItemName.GRAPPLE_BEAM);
         };
 
@@ -123,6 +129,8 @@ export class PhendranaDrifts extends Region {
                 || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.ICE_BEAM));
         };
         this.locations.get("Research Core").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.THERMAL_VISOR) && items.has(PrimeItemName.ICE_BEAM);
         }
 
@@ -158,6 +166,8 @@ export class PhendranaDrifts extends Region {
                 || items.hasBackwardsPhendranaReqs());
         };
         this.locations.get("Gravity Chamber (Underwater)").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.GRAVITY_SUIT) && (items.has(PrimeItemName.THERMAL_VISOR) || items.hasBackwardsPhendranaReqs());
         }
 

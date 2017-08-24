@@ -5,28 +5,21 @@ import { Item } from '../Item';
 
 export class RandomAssumed extends Filler {
     fill(artifacts: Array<Item>, priorityItems: Array<Item>, luxuryItems: Array<Item>, expansions: Array<Item>): void {
-        let randomizedLocations = this.shuffleLocations([...this.world.getLocations()]);
+        let randomizedLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
 
-        this.fillItemsInLocations(new ItemCollection(priorityItems.concat(luxuryItems)), new LocationCollection(randomizedLocations));
+        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(priorityItems)), new LocationCollection(randomizedLocations));
+
+        randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
+
+        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(luxuryItems)), new LocationCollection(randomizedLocations));
+
+        randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
         
         this.fastFillItemsInLocations(artifacts, randomizedLocations);
 
+        randomizedLocations = new LocationCollection(randomizedLocations).getEmptyLocations().toArray();
+
         this.fastFillItemsInLocations(expansions, randomizedLocations);
-
-        // for (let i = 0; i < 15; i++) {
-        //     if (!randomizedLocations[i].hasItem())
-        //         break;
-        //     console.log("Location " + randomizedLocations[i].getName() + " has item " + randomizedLocations[i].getItem().getName());
-        // }
-
-        // let worldLocations = this.world.getLocations();
-        // let emptyLocationCount = new LocationCollection(worldLocations).getEmptyLocations().size();
-        // console.log("Empty location count is: " + emptyLocationCount);
-        // for (let i = 0; i < worldLocations.length; i++) {
-        //     if (!worldLocations[i].hasItem())
-        //         break;
-        //     console.log("Location " + worldLocations[i].getName() + " has item " + worldLocations[i].getItem().getName());
-        // }
     }
 
     fillItemsInLocations(fillItems: ItemCollection, locations: LocationCollection, baseAssumedItems: ItemCollection = new ItemCollection()): void {

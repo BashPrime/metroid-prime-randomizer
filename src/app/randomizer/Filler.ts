@@ -26,6 +26,10 @@ export abstract class Filler {
         }
     }
 
+    shuffleItems(items: Array<Item>): Array<Item> {
+        return this.shuffleInPlace(items);
+    }
+
     shuffleLocations(locations: Array<Location>): Array<Location> {
         return this.shuffleInPlace(locations);
     }

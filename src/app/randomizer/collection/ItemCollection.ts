@@ -112,7 +112,7 @@ export class ItemCollection extends Collection{
     }
 
     public hasBackwardsPhendranaReqs(): boolean {
-        return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
+        return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
             && this.has(PrimeItemName.WAVE_BEAM);
     }
 
@@ -122,7 +122,7 @@ export class ItemCollection extends Collection{
     }
 
     public hasMinesFromMagmoorReqs(): boolean {
-		return this.hasMissiles() && this.canLayPowerBombs() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) && 
+		return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) && 
 				this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
 	}
 }

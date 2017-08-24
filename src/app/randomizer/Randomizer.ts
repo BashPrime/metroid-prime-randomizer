@@ -63,63 +63,63 @@ export class Randomizer {
     }
     
     getPriorityItems(): Array<Item> {
-		let priorityItems: Array<Item> = [];
-		let priorityItemsMap: Map<string, number> = new Map<string, number>();
-		priorityItemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
-		priorityItemsMap.set(PrimeItemName.MORPH_BALL, 1);
-		priorityItemsMap.set(PrimeItemName.MORPH_BALL_BOMB, 1);
-		priorityItemsMap.set(PrimeItemName.PHAZON_SUIT, 1);
-		priorityItemsMap.set(PrimeItemName.SPACE_JUMP_BOOTS, 1);
-		priorityItemsMap.set(PrimeItemName.WAVE_BEAM, 1);
-		priorityItemsMap.set(PrimeItemName.ICE_BEAM, 1);
-		priorityItemsMap.set(PrimeItemName.PLASMA_BEAM, 1);
-		priorityItemsMap.set(PrimeItemName.CHARGE_BEAM, 1);
-		priorityItemsMap.set(PrimeItemName.SUPER_MISSILE, 1);
-		priorityItemsMap.set(PrimeItemName.XRAY_VISOR, 1);
-        priorityItemsMap.set(PrimeItemName.POWER_BOMB, 1);
+		let items: Array<Item> = [];
+		let itemsMap: Map<string, number> = new Map<string, number>();
+		itemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
+		itemsMap.set(PrimeItemName.MORPH_BALL, 1);
         
-        priorityItemsMap.forEach((value: number, key: string) => {
+        itemsMap.forEach((value: number, key: string) => {
             for (let i = 0; i < value; i++)
-                priorityItems.push(Item.get(key));
+                items.push(Item.get(key));
         });
 				
-		return priorityItems;
+		return items;
     }
     
     getLuxuryItems(): Array<Item> {
-		let luxuryItems: Array<Item> = [];
-		let luxuryItemsMap: Map<string, number> = new Map<string, number>();
-		luxuryItemsMap.set(PrimeItemName.VARIA_SUIT, 1);
-		luxuryItemsMap.set(PrimeItemName.GRAVITY_SUIT, 1);
-		luxuryItemsMap.set(PrimeItemName.THERMAL_VISOR, 1);
-		luxuryItemsMap.set(PrimeItemName.BOOST_BALL, 1);
-		luxuryItemsMap.set(PrimeItemName.SPIDER_BALL, 1);
-		luxuryItemsMap.set(PrimeItemName.GRAPPLE_BEAM, 1);
-		luxuryItemsMap.set(PrimeItemName.WAVEBUSTER, 1);
-		luxuryItemsMap.set(PrimeItemName.ICE_SPREADER, 1);
-		luxuryItemsMap.set(PrimeItemName.FLAMETHROWER, 1);
+		let items: Array<Item> = [];
+		let itemsMap: Map<string, number> = new Map<string, number>();
+		itemsMap.set(PrimeItemName.MORPH_BALL_BOMB, 1);
+        itemsMap.set(PrimeItemName.VARIA_SUIT, 1);
+        itemsMap.set(PrimeItemName.GRAVITY_SUIT, 1);
+        itemsMap.set(PrimeItemName.PHAZON_SUIT, 1);
+		itemsMap.set(PrimeItemName.SPACE_JUMP_BOOTS, 1);
+		itemsMap.set(PrimeItemName.WAVE_BEAM, 1);
+		itemsMap.set(PrimeItemName.ICE_BEAM, 1);
+		itemsMap.set(PrimeItemName.PLASMA_BEAM, 1);
+		itemsMap.set(PrimeItemName.CHARGE_BEAM, 1);
+        itemsMap.set(PrimeItemName.POWER_BOMB, 1);
+        itemsMap.set(PrimeItemName.THERMAL_VISOR, 1);
+        itemsMap.set(PrimeItemName.XRAY_VISOR, 1);
+		itemsMap.set(PrimeItemName.BOOST_BALL, 1);
+		itemsMap.set(PrimeItemName.SPIDER_BALL, 1);
+        itemsMap.set(PrimeItemName.GRAPPLE_BEAM, 1);
+        itemsMap.set(PrimeItemName.SUPER_MISSILE, 1);
+		itemsMap.set(PrimeItemName.WAVEBUSTER, 1);
+		itemsMap.set(PrimeItemName.ICE_SPREADER, 1);
+		itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
 		
-		luxuryItemsMap.forEach((value: number, key: string) => {
+		itemsMap.forEach((value: number, key: string) => {
             for (let i = 0; i < value; i++)
-                luxuryItems.push(Item.get(key));
+                items.push(Item.get(key));
         });
 		
-		return luxuryItems;
+		return items;
     }
     
     getExpansions(): Array<Item> {
-        let expansions: Array<Item> = [];
-        let expansionsMap: Map<string, number> = new Map<string, number>();
-        expansionsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
-        expansionsMap.set(PrimeItemName.ENERGY_TANK, 14);
-        expansionsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
+        let items: Array<Item> = [];
+        let itemsMap: Map<string, number> = new Map<string, number>();
+        itemsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
+        itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
+        itemsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
 
-        expansionsMap.forEach((value: number, key: string) => {
+        itemsMap.forEach((value: number, key: string) => {
             for (let i = 0; i < value; i++)
-                expansions.push(Item.get(key));
+                items.push(Item.get(key));
         });
 
-        return expansions;
+        return items;
     }
 
     getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {

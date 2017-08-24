@@ -52,6 +52,8 @@ export class MagmoorCaverns extends Region {
                 && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
         };
         this.locations.get("Fiery Shores (Warrior Shrine Tunnel)").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.canLayBombs();
         };
         
@@ -65,6 +67,8 @@ export class MagmoorCaverns extends Region {
                 && items.has(PrimeItemName.GRAPPLE_BEAM);
         };
         this.locations.get("Plasma Processing").canEscape = function(item: Item, items: ItemCollection): boolean {
+            if (item !== undefined)
+                items = new ItemCollection([...items.toArray(), item]);
             return items.has(PrimeItemName.PLASMA_BEAM);
         };
 
