@@ -1,11 +1,4 @@
 <md-toolbar color="primary">
   <span>{{title}}</span>
 </md-toolbar>
-<md-card>
-  <p>Seed: {{ randomizer.getSeed() }}</p>
-  <ul>
-    <li *ngFor="let location of locations">
-      <span style="font-weight: 700;">{{ location.getName() }}</span>: {{location.getItem().getName()}}
-    </li>
-  </ul>
-</md-card>
+<app-randomizer></app-randomizer>

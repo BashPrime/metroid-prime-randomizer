@@ -1,0 +1,48 @@
+<md-card>
+  <md-card-header>
+    <h2>Randomizer</h2>
+  </md-card-header>
+  <md-card-content>
+    <form #randomizerForm="ngForm">
+      <div style="margin-bottom: 1em;">
+        <md-input-container style="width: 150px;">
+          <input mdInput type="number" min="1" max="999999999" name="seed" placeholder="Seed Number (optional)" [(ngModel)]="selectedSeed" #seed="ngModel" />
+        </md-input-container>
+      </div>
+      <div style="margin-bottom: 2em;">
+        <md-select placeholder="Mode" [(ngModel)]="selectedMode" name="mode" style="margin-right: 0.5em;">
+          <md-option *ngFor="let mode of modes" [value]="mode.value">
+            {{ mode.name }}
+          </md-option>
+        </md-select>
+        <md-select placeholder="Logic" [(ngModel)]="selectedLogic" name="logic" style="margin-right: 0.5em;">
+          <md-option *ngFor="let logic of logics" [value]="logic.value">
+            {{ logic.name }}
+          </md-option>
+        </md-select>
+        <md-select placeholder="Difficulty" [(ngModel)]="selectedDifficulty" name="difficulty" style="margin-right: 0.5em;">
+          <md-option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
+            {{ difficulty.name }}
+          </md-option>
+        </md-select>
+      </div>
+      <div>
+        <button md-raised-button (click)="onSubmit()">Randomize</button>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>
+<md-card *ngIf="locations !== undefined">
+  <md-card-header>
+    <h2>Results</h2>
+  </md-card-header>
+  <md-card-content>
+    <md-list *ngIf="locations !== undefined">
+      <h3 md-subheader>Seed: {{ randomizer.getSeed() }}</h3>
+      <md-list-item *ngFor="let location of locations">
+        <h4 md-line>{{ location.getName() }}</h4>
+        <p md-line> {{ location.getItem().getName() }}</p>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>

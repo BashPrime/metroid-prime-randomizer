@@ -105,7 +105,7 @@ export class PhendranaDrifts extends Region {
 
         this.locations.get("Observatory").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return (items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM))
-                || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItemName.ICE_BEAM));
+                || (items.hasBackwardsPhendranaReqs() && items.canLayBombs() && items.has(PrimeItemName.ICE_BEAM));
         };
 
         this.locations.get("Control Tower").canFillItem = function(item: Item, items: ItemCollection): boolean {
