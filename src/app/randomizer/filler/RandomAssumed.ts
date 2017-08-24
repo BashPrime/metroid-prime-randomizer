@@ -35,7 +35,7 @@ export class RandomAssumed extends Filler {
             let assumedItems = this.world.collectItems(remainingFillItems);
 
             let fillableLocations = new LocationCollection(locations.toArray().filter(location => {
-                return !location.hasItem() && location.canFillItem(item, assumedItems);
+                return !location.hasItem() && location.canFillItem(item, assumedItems) && location.canEscape(item, assumedItems);
             }));
 
             if (fillableLocations.size() == 0) {

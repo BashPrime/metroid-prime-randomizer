@@ -173,6 +173,7 @@ export class PhendranaDrifts extends Region {
 
         this.locations.get("Gravity Chamber (Grapple Ledge)").canFillItem = function(item: Item, items: ItemCollection): boolean {
             return items.canLayPowerBombs() && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.PLASMA_BEAM) && items.has(PrimeItemName.GRAVITY_SUIT)
+                && items.has(PrimeItemName.GRAPPLE_BEAM)
                 && ((items.hasPhendranaReqs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM)
                     && items.has(PrimeItemName.THERMAL_VISOR))
                 || items.hasBackwardsPhendranaReqs());
