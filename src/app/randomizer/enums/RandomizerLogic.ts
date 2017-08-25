@@ -1,3 +1,4 @@
 export enum RandomizerLogic {
-    NO_GLITCHES = "NoGlitches"
+    NO_GLITCHES = "NoGlitches",
+    NAIVE = "Naive"
 }

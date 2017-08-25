@@ -5,6 +5,7 @@ import { Item } from '../Item';
 import { Location } from '../Location';
 import { PrimeItemName } from '../ItemType';
 import { RandomizerMode } from '../enums/RandomizerMode';
+import { RandomizerLogic } from '../enums/RandomizerLogic';
 
 export class RandomAssumed extends Filler {
     fill(priorityItems: Array<Item>, upgrades: Array<Item>, artifacts: Array<Item>, expansions: Array<Item>): void {
@@ -22,11 +23,17 @@ export class RandomAssumed extends Filler {
                 randomizedLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
         }
 
-        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(priorityItems)), new LocationCollection(randomizedLocations));
-
-        randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-
-        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(upgrades)), new LocationCollection(randomizedLocations));
+        switch (this.world.getLogic()) {
+            case RandomizerLogic.NAIVE:
+                this.fastFillItemsInLocations(priorityItems, randomizedLocations);
+                randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
+                this.fastFillItemsInLocations(upgrades, randomizedLocations);
+                break;
+            default:
+                this.fillItemsInLocations(new ItemCollection(this.shuffleItems(priorityItems)), new LocationCollection(randomizedLocations));
+                randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
+                this.fillItemsInLocations(new ItemCollection(this.shuffleItems(upgrades)), new LocationCollection(randomizedLocations));
+        }
 
         if (this.world.getMode() === RandomizerMode.MAJORS) {
             randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
