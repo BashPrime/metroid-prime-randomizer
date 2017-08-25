@@ -1,13 +1,13 @@
 import { Location } from './Location';
-import { RandomizerType } from './enums/RandomizerType';
+import { RandomizerLogic } from './enums/RandomizerLogic';
 
 export abstract class Region {
     protected name: string;
     protected locations: Map<string, Location>;
 
-    public init(logic: string = RandomizerType.NO_GLITCHES): void {
+    public init(logic: string = RandomizerLogic.NO_GLITCHES): void {
         switch (logic) {
-            case RandomizerType.NO_GLITCHES:
+            case RandomizerLogic.NO_GLITCHES:
             default:
                 this.initNoGlitches();
         }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Randomizer } from './Randomizer';
 import { Location } from './Location';
+import { RandomizerMode } from './enums/RandomizerMode';
+import { RandomizerLogic } from './enums/RandomizerLogic';
 
 @Component({
   selector: 'app-randomizer',
@@ -15,10 +17,11 @@ export class RandomizerComponent implements OnInit {
   selectedLogic: string;
   selectedDifficulty: string;
   modes = [
-    { name: "Standard", value: "Standard" }
+    { name: "Standard", value: RandomizerMode.STANDARD },
+    { name: "Major Items", value: RandomizerMode.MAJORS },
   ];
   logics = [
-    { name: "No Glitches", value: "NoGlitches" }
+    { name: "No Glitches", value: RandomizerLogic.NO_GLITCHES }
   ];
   difficulties = [
     { name: "Normal", value: "Normal" }

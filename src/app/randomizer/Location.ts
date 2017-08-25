@@ -6,11 +6,13 @@ export class Location {
     protected fileName: string;
     protected id: number;
     protected item: Item = undefined;
+    protected majorItemLocation: boolean;
 
-    constructor(name:string, fileName: string, id: number) {
+    constructor(name:string, fileName: string, id: number, majorItemLocation: boolean = false) {
         this.name = name;
         this.fileName = fileName;
         this.id = id;
+        this.majorItemLocation = majorItemLocation;
     }
 
     public getName(): string {
@@ -29,11 +31,15 @@ export class Location {
         return this.item !== undefined;
     }
 
+    public isMajorItemLocation(): boolean {
+        return this.majorItemLocation;
+    }
+
     public canFillItem = function(item: Item, items: ItemCollection): boolean {
         return false;
     }
 
     public canEscape = function(items, item): boolean {
         return true;
-    }
+    }    
 }

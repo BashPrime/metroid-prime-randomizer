@@ -1,3 +1,3 @@
-export enum RandomizerType {
+export enum RandomizerLogic {
     NO_GLITCHES = "NoGlitches"
 }
