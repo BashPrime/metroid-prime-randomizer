@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Randomizer } from '../../common/randomizer/Randomizer';
-import { Location } from '../../common/randomizer/Location';
-import { RandomizerMode } from '../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../common/randomizer/enums/RandomizerLogic';
+import {Component, OnInit} from '@angular/core';
+import {Randomizer} from '../../common/randomizer/Randomizer';
+import {Location} from '../../common/randomizer/Location';
+import {RandomizerMode} from '../../common/randomizer/enums/RandomizerMode';
+import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
 
 @Component({
   selector: 'app-randomizer',
@@ -17,15 +17,15 @@ export class RandomizerComponent implements OnInit {
   selectedLogic: string;
   selectedDifficulty: string;
   modes = [
-    { name: "Standard", value: RandomizerMode.STANDARD },
-    { name: "Major Items", value: RandomizerMode.MAJORS },
+    {name: 'Standard', value: RandomizerMode.STANDARD},
+    {name: 'Major Items', value: RandomizerMode.MAJORS},
   ];
   logics = [
-    { name: "No Glitches", value: RandomizerLogic.NO_GLITCHES },
-    { name: "Naive", value: RandomizerLogic.NAIVE }
+    {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
+    {name: 'Naive', value: RandomizerLogic.NAIVE}
   ];
   difficulties = [
-    { name: "Normal", value: "Normal" }
+    {name: 'Normal', value: 'Normal'}
   ];
 
   constructor() {

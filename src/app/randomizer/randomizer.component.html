@@ -6,7 +6,8 @@
     <form #randomizerForm="ngForm">
       <div style="margin-bottom: 1em;">
         <md-input-container style="width: 150px;">
-          <input mdInput type="number" min="1" max="999999999" name="seed" placeholder="Seed Number (optional)" [(ngModel)]="selectedSeed" #seed="ngModel" />
+          <input mdInput type="number" min="1" max="999999999" name="seed" placeholder="Seed Number (optional)"
+                 [(ngModel)]="selectedSeed" #seed="ngModel"/>
         </md-input-container>
       </div>
       <div style="margin-bottom: 2em;">
@@ -20,7 +21,8 @@
             {{ logic.name }}
           </md-option>
         </md-select>
-        <md-select placeholder="Difficulty" [(ngModel)]="selectedDifficulty" name="difficulty" style="margin-right: 0.5em;">
+        <md-select placeholder="Difficulty" [(ngModel)]="selectedDifficulty" name="difficulty"
+                   style="margin-right: 0.5em;">
           <md-option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
             {{ difficulty.name }}
           </md-option>

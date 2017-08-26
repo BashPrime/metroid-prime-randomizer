@@ -1,133 +1,133 @@
-import { World } from './World';
-import { Item } from './Item';
-import { PrimeItemName } from './ItemType';
-import { MersenneTwister } from './MersenneTwister';
-import { Filler } from './Filler';
-import { RandomAssumed } from './filler/RandomAssumed';
-import { RandomizerMode } from './enums/RandomizerMode';
-import { RandomizerLogic } from './enums/RandomizerLogic';
+import {World} from './World';
+import {Item} from './Item';
+import {PrimeItemName} from './ItemType';
+import {MersenneTwister} from './MersenneTwister';
+import {Filler} from './Filler';
+import {RandomAssumed} from './filler/RandomAssumed';
+import {RandomizerMode} from './enums/RandomizerMode';
+import {RandomizerLogic} from './enums/RandomizerLogic';
 
 export class Randomizer {
-    protected mode: string;
-    protected logic: string;
-    protected difficulty: string;
-    protected goal: string;
-    protected world: World;
-    protected rng: MersenneTwister;
-    protected seed: number;
+  protected mode: string;
+  protected logic: string;
+  protected difficulty: string;
+  protected goal: string;
+  protected world: World;
+  protected rng: MersenneTwister;
+  protected seed: number;
 
-    constructor(mode: string, logic: string, difficulty: string) {
-        this.mode = mode;
-        this.logic = logic;
-        this.difficulty = difficulty;
-        this.world = new World(this.mode, this.logic, this.difficulty);
+  constructor(mode: string, logic: string, difficulty: string) {
+    this.mode = mode;
+    this.logic = logic;
+    this.difficulty = difficulty;
+    this.world = new World(this.mode, this.logic, this.difficulty);
+  }
+
+  randomize(seed?: number): void {
+    if (!seed)
+      seed = this.getRandomInt(1, 1000000000);
+    this.seed = seed;
+    this.rng = new MersenneTwister(this.seed);
+    new RandomAssumed(this.world, this.rng).fill(this.getPriorityItems(), this.getUpgrades(), this.getArtifacts(), this.getExpansions());
+  }
+
+  getWorld(): World {
+    return this.world;
+  }
+
+  getSeed(): number {
+    return this.seed;
+  }
+
+  getArtifacts(): Array<Item> {
+    let items: Array<Item> = [];
+    let itemsMap: Map<string, number> = new Map<string, number>();
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_TRUTH, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_STRENGTH, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_ELDER, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_WILD, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_LIFEGIVER, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_WARRIOR, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_CHOZO, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_NATURE, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_SUN, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_WORLD, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_SPIRIT, 1);
+    itemsMap.set(PrimeItemName.ARTIFACT_OF_NEWBORN, 1);
+
+    itemsMap.forEach((value: number, key: string) => {
+      for (let i = 0; i < value; i++)
+        items.push(Item.get(key));
+    });
+
+    return items;
+  }
+
+  getPriorityItems(): Array<Item> {
+    let items: Array<Item> = [];
+    let itemsMap: Map<string, number> = new Map<string, number>();
+    switch (this.logic) {
+      case RandomizerLogic.NO_GLITCHES:
+      default:
+        itemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
+        itemsMap.set(PrimeItemName.MORPH_BALL, 1);
     }
 
-    randomize(seed?: number): void {
-        if (!seed)
-            seed = this.getRandomInt(1, 1000000000);
-        this.seed = seed;
-        this.rng = new MersenneTwister(this.seed);
-        new RandomAssumed(this.world, this.rng).fill(this.getPriorityItems(), this.getUpgrades(), this.getArtifacts(), this.getExpansions());
-    }
+    itemsMap.forEach((value: number, key: string) => {
+      for (let i = 0; i < value; i++)
+        items.push(Item.get(key));
+    });
 
-    getWorld(): World {
-        return this.world;
-    }
+    return items;
+  }
 
-    getSeed(): number {
-        return this.seed;
-    }
+  getUpgrades(): Array<Item> {
+    let items: Array<Item> = [];
+    let itemsMap: Map<string, number> = new Map<string, number>();
+    itemsMap.set(PrimeItemName.MORPH_BALL_BOMB, 1);
+    itemsMap.set(PrimeItemName.VARIA_SUIT, 1);
+    itemsMap.set(PrimeItemName.GRAVITY_SUIT, 1);
+    itemsMap.set(PrimeItemName.PHAZON_SUIT, 1);
+    itemsMap.set(PrimeItemName.SPACE_JUMP_BOOTS, 1);
+    itemsMap.set(PrimeItemName.WAVE_BEAM, 1);
+    itemsMap.set(PrimeItemName.ICE_BEAM, 1);
+    itemsMap.set(PrimeItemName.PLASMA_BEAM, 1);
+    itemsMap.set(PrimeItemName.CHARGE_BEAM, 1);
+    itemsMap.set(PrimeItemName.POWER_BOMB, 1);
+    itemsMap.set(PrimeItemName.THERMAL_VISOR, 1);
+    itemsMap.set(PrimeItemName.XRAY_VISOR, 1);
+    itemsMap.set(PrimeItemName.BOOST_BALL, 1);
+    itemsMap.set(PrimeItemName.SPIDER_BALL, 1);
+    itemsMap.set(PrimeItemName.GRAPPLE_BEAM, 1);
+    itemsMap.set(PrimeItemName.SUPER_MISSILE, 1);
+    itemsMap.set(PrimeItemName.WAVEBUSTER, 1);
+    itemsMap.set(PrimeItemName.ICE_SPREADER, 1);
+    itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
 
-    getArtifacts(): Array<Item> {
-        let items: Array<Item> = [];
-        let itemsMap: Map<string, number> = new Map<string, number>();
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_TRUTH, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_STRENGTH, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_ELDER, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_WILD, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_LIFEGIVER, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_WARRIOR, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_CHOZO, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_NATURE, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_SUN, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_WORLD, 1);
-		itemsMap.set(PrimeItemName.ARTIFACT_OF_SPIRIT, 1);
-        itemsMap.set(PrimeItemName.ARTIFACT_OF_NEWBORN, 1);
-        
-        itemsMap.forEach((value: number, key: string) => {
-            for (let i = 0; i < value; i++)
-                items.push(Item.get(key));
-        });
-				
-		return items;
-    }
-    
-    getPriorityItems(): Array<Item> {
-		let items: Array<Item> = [];
-        let itemsMap: Map<string, number> = new Map<string, number>();
-        switch (this.logic) {
-            case RandomizerLogic.NO_GLITCHES:
-            default:
-                itemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
-                itemsMap.set(PrimeItemName.MORPH_BALL, 1);
-        }
+    itemsMap.forEach((value: number, key: string) => {
+      for (let i = 0; i < value; i++)
+        items.push(Item.get(key));
+    });
 
-        itemsMap.forEach((value: number, key: string) => {
-            for (let i = 0; i < value; i++)
-                items.push(Item.get(key));
-        });
-				
-		return items;
-    }
-    
-    getUpgrades(): Array<Item> {
-		let items: Array<Item> = [];
-		let itemsMap: Map<string, number> = new Map<string, number>();
-		itemsMap.set(PrimeItemName.MORPH_BALL_BOMB, 1);
-        itemsMap.set(PrimeItemName.VARIA_SUIT, 1);
-        itemsMap.set(PrimeItemName.GRAVITY_SUIT, 1);
-        itemsMap.set(PrimeItemName.PHAZON_SUIT, 1);
-		itemsMap.set(PrimeItemName.SPACE_JUMP_BOOTS, 1);
-		itemsMap.set(PrimeItemName.WAVE_BEAM, 1);
-		itemsMap.set(PrimeItemName.ICE_BEAM, 1);
-		itemsMap.set(PrimeItemName.PLASMA_BEAM, 1);
-		itemsMap.set(PrimeItemName.CHARGE_BEAM, 1);
-        itemsMap.set(PrimeItemName.POWER_BOMB, 1);
-        itemsMap.set(PrimeItemName.THERMAL_VISOR, 1);
-        itemsMap.set(PrimeItemName.XRAY_VISOR, 1);
-		itemsMap.set(PrimeItemName.BOOST_BALL, 1);
-		itemsMap.set(PrimeItemName.SPIDER_BALL, 1);
-        itemsMap.set(PrimeItemName.GRAPPLE_BEAM, 1);
-        itemsMap.set(PrimeItemName.SUPER_MISSILE, 1);
-		itemsMap.set(PrimeItemName.WAVEBUSTER, 1);
-		itemsMap.set(PrimeItemName.ICE_SPREADER, 1);
-        itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
-		
-		itemsMap.forEach((value: number, key: string) => {
-            for (let i = 0; i < value; i++)
-                items.push(Item.get(key));
-        });
-		
-		return items;
-    }
-    
-    getExpansions(): Array<Item> {
-        let items: Array<Item> = [];
-        let itemsMap: Map<string, number> = new Map<string, number>();
-        itemsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
-        itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
-        itemsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
+    return items;
+  }
 
-        itemsMap.forEach((value: number, key: string) => {
-            for (let i = 0; i < value; i++)
-                items.push(Item.get(key));
-        });
+  getExpansions(): Array<Item> {
+    let items: Array<Item> = [];
+    let itemsMap: Map<string, number> = new Map<string, number>();
+    itemsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
+    itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
+    itemsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
 
-        return items;
-    }
+    itemsMap.forEach((value: number, key: string) => {
+      for (let i = 0; i < value; i++)
+        items.push(Item.get(key));
+    });
 
-    getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
-        return Math.floor(rng.random() * (max - min + 1)) + min;
-    }
+    return items;
+  }
+
+  getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
+    return Math.floor(rng.random() * (max - min + 1)) + min;
+  }
 }

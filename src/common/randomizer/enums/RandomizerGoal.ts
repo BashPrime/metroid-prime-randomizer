@@ -1,5 +1,5 @@
 export enum RandomizerGoal {
-    ARTIFACTS = "Artifacts",
-    BOSSES = "Bosses",
-    NO_ARTIFACTS = "NoArtifacts"
+  ARTIFACTS = 'Artifacts',
+  BOSSES = 'Bosses',
+  NO_ARTIFACTS = 'NoArtifacts'
 }
