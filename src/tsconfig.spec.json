@@ -13,6 +13,9 @@
   "files": [
     "test.ts"
   ],
+  "exclude": [
+    "node/**"
+  ],
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"

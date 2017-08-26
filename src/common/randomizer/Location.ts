@@ -37,9 +37,9 @@ export class Location {
 
     public canFillItem = function(item: Item, items: ItemCollection): boolean {
         return false;
-    }
+    };
 
-    public canEscape = function(items, item): boolean {
+    public canEscape = function(item: Item, items: ItemCollection): boolean {
         return true;
-    }    
+    };
 }

@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "node": "node_modules/.bin/ts-node -P src/tsconfig.node.json src/node/main.ts"
   },
   "private": true,
   "dependencies": {
@@ -44,7 +45,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
-    "ts-node": "~3.0.4",
+    "ts-node": "^3.3.0",
     "tslint": "~5.3.2",
     "typescript": "^2.4.2"
   }
