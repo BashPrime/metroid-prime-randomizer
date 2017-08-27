@@ -19,7 +19,7 @@ export class RandomizerComponent implements OnInit {
   selectedLogic: string;
   selectedDifficulty: string;
   layoutString: string;
-  toggleSpoiler: boolean = false;
+  toggleSpoilers: boolean = false;
   modes = [
     { name: "Standard", value: RandomizerMode.STANDARD },
     { name: "Major Items", value: RandomizerMode.MAJORS },
