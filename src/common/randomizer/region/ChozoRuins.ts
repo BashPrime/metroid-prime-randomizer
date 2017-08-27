@@ -31,7 +31,6 @@ export class ChozoRuins extends Region {
       ['Hive Totem', new Location('Hive Totem', 'c8309df6.mrea', 0x002401DC, true)],
       ['Sunchamber (Flaahgra)', new Location('Sunchamber (Flaahgra)', '9a0a03eb.mrea', 0x002528EE, true)],
       ['Sunchamber (Ghosts)', new Location('Sunchamber (Ghosts)', '9a0a03eb.mrea', 0x18252F7D, true)],
-
       ['Watery Hall Access', new Location('Watery Hall Access', 'eeec837d.mrea', 0x00260008)],
       ['Watery Hall (Scan Puzzle)', new Location('Watery Hall (Scan Puzzle)', '492cbf4a.mrea', 0x00290085, true)],
       ['Watery Hall (Underwater)', new Location('Watery Hall (Underwater)', '492cbf4a.mrea', 0x002927E6)],

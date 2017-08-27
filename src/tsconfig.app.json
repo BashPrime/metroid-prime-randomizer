@@ -8,9 +8,7 @@
   },
   "exclude": [
     "node/**",
+    "**/*.spec.ts",
     "test.ts"
-  ],
-  "include": [
-    "**/*.d.ts"
   ]
 }

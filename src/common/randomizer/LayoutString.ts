@@ -1,4 +1,6 @@
 import * as bigInt from 'big-integer';
+import {ItemCollection} from './collection/ItemCollection';
+import {BigInteger} from 'big-integer';
 
 export class LayoutString {
   protected readonly TABLE: string = 'ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_';
@@ -51,7 +53,7 @@ export class LayoutString {
     return s;
   }
 
-  public encode_pickup_layout(layout) {
+  public encode_pickup_layout(layout: Array<number>) {
     let num = bigInt(0);
     layout.forEach(function (item_type) {
       num = num.times(36).plus(item_type);
@@ -91,11 +93,11 @@ export class LayoutString {
   }
 
 
-  public compute_checksum(layout_number) {
-    let s = 0;
+  public compute_checksum(layout_number: BigInteger) {
+    let s = bigInt(0);
     while (layout_number.greater(0)) {
       const divmod = layout_number.divmod(32);
-      s = (s + divmod.remainder) % 32;
+      s = s.add(divmod.remainder).mod(32);
       layout_number = divmod.quotient;
     }
     return s;
