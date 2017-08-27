@@ -36,15 +36,28 @@
 </md-card>
 <md-card *ngIf="locations !== undefined">
   <md-card-header>
-    <h2>Results</h2>
+    <h3>Randomized Game Details</h3>
   </md-card-header>
   <md-card-content>
-    <md-list *ngIf="locations !== undefined">
-      <h3 md-subheader>Seed: {{ randomizer.getSeed() }}</h3>
-      <md-list-item *ngFor="let location of locations">
-        <h4 md-line>{{ location.getName() }}</h4>
-        <p md-line> {{ location.getItem().getName() }}</p>
-      </md-list-item>
-    </md-list>
+    <div>Seed: {{ randomizer.getSeed() }}</div>
+    <div><a href="https://github.com/aprilwade/randomprime">Aprilwade Patcher Layout</a>: {{ layoutString }}</div>
+    <button md-raised-button (click)="toggleSpoilers = !toggleSpoilers" style="margin-top: 1em;">{{ !toggleSpoilers ?
+      "Show" : "Hide" }} Spoilers
+    </button>
   </md-card-content>
 </md-card>
+<div *ngIf="regions !== undefined && toggleSpoilers">
+  <md-card *ngFor="let region of regions">
+    <md-card-header>
+      <h3>{{ region.getName() }}</h3>
+    </md-card-header>
+    <md-card-content>
+      <md-list>
+        <md-list-item *ngFor="let location of region.getLocationsArray()">
+          <h4 md-line>{{ location.getName() }}</h4>
+          <p md-line> {{ location.getItem().getName() }}</p>
+        </md-list-item>
+      </md-list>
+    </md-card-content>
+  </md-card>
+</div>

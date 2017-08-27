@@ -7,24 +7,25 @@ import {PrimeItemName} from '../ItemType';
 export class PhazonMines extends Region {
   constructor() {
     super();
+    this.name = 'Phazon Mines';
     this.locations = new Map<string, Location>([
       ['Main Quarry', new Location('Main Quarry', '643d038f.mrea', 0x00020233)],
       ['Security Access A', new Location('Security Access A', 'c44e7a07.mrea', 0x00050187)],
+      ['Storage Depot B', new Location('Storage Depot B', 'e39c342b.mrea', 0x00090003, true)],
       ['Storage Depot A', new Location('Storage Depot A', '35c5d736.mrea', 0x000C0026, true)],
       ['Elite Research (Phazon Elite)', new Location('Elite Research (Phazon Elite)', '8a97bb54.mrea', 0x00050187, true)],
       ['Elite Research (Laser)', new Location('Elite Research (Laser)', '8a97bb54.mrea', 0x000D0340)],
-      ['Storage Depot B', new Location('Storage Depot B', 'e39c342b.mrea', 0x00090003, true)],
-      ['Fungal Hall Access', new Location('Fungal Hall Access', 'de9d71f5.mrea', 0x00280102)],
-      ['Phazon Mining Tunnel', new Location('Phazon Mining Tunnel', 'bbfa4ab3.mrea', 0x0027007F, true)],
-      ['Fungal Hall B', new Location('Fungal Hall B', 'ec47c242.mrea', 0x00240127)],
-      ['Metroid Quarantine A', new Location('Metroid Quarantine A', 'fb051f5a.mrea', 0x002005EA)],
-      ['Metroid Quarantine B', new Location('Metroid Quarantine B', 'bb3afc4e.mrea', 0x001F0205)],
-      ['Elite Quarters', new Location('Elite Quarters', '3953c353.mrea', 0x001A04B8, true)],
-      ['Processing Center Access', new Location('Processing Center Access', 'ed6de73b.mrea', 0x001600A7, true)],
-      ['Phazon Processing Center', new Location('Phazon Processing Center', 'ad2e7eb9.mrea', 0x00130766)],
       ['Elite Control Access', new Location('Elite Control Access', '8988d1cb.mrea', 0x000F008D)],
       ['Ventilation Shaft', new Location('Ventilation Shaft', '90709aac.mrea', 0x0012010C, true)],
+      ['Phazon Processing Center', new Location('Phazon Processing Center', 'ad2e7eb9.mrea', 0x00130766)],
+      ['Processing Center Access', new Location('Processing Center Access', 'ed6de73b.mrea', 0x001600A7, true)],
+      ['Elite Quarters', new Location('Elite Quarters', '3953c353.mrea', 0x001A04B8, true)],
       ['Central Dynamo', new Location('Central Dynamo', 'fea372e2.mrea', 0x001B04B1, true)],
+      ['Metroid Quarantine B', new Location('Metroid Quarantine B', 'bb3afc4e.mrea', 0x001F0205)],
+      ['Metroid Quarantine A', new Location('Metroid Quarantine A', 'fb051f5a.mrea', 0x002005EA)],
+      ['Fungal Hall B', new Location('Fungal Hall B', 'ec47c242.mrea', 0x00240127)],
+      ['Phazon Mining Tunnel', new Location('Phazon Mining Tunnel', 'bbfa4ab3.mrea', 0x0027007F, true)],
+      ['Fungal Hall Access', new Location('Fungal Hall Access', 'de9d71f5.mrea', 0x00280102)]
     ]);
   }
 

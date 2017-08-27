@@ -15,7 +15,15 @@ export abstract class Region {
 
   public abstract initNoGlitches(): void;
 
+  public getName(): string {
+    return this.name;
+  }
+
   public getLocations(): Map<string, Location> {
     return this.locations;
+  }
+
+  public getLocationsArray(): Array<Location> {
+    return Array.from(this.locations.values());
   }
 }

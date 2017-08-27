@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Randomizer} from '../../common/randomizer/Randomizer';
+import {Region} from '../../common/randomizer/Region';
 import {Location} from '../../common/randomizer/Location';
 import {RandomizerMode} from '../../common/randomizer/enums/RandomizerMode';
 import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
@@ -11,11 +12,14 @@ import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
 })
 export class RandomizerComponent implements OnInit {
   randomizer: Randomizer;
+  regions: Array<Region>;
   locations: Array<Location>;
   selectedSeed: number;
   selectedMode: string;
   selectedLogic: string;
   selectedDifficulty: string;
+  layoutString: string;
+  toggleSpoilers: boolean = false;
   modes = [
     {name: 'Standard', value: RandomizerMode.STANDARD},
     {name: 'Major Items', value: RandomizerMode.MAJORS},
@@ -49,7 +53,9 @@ export class RandomizerComponent implements OnInit {
     } else {
       this.randomizer.randomize();
     }
+    this.regions = this.randomizer.getWorld().getRegions();
     this.locations = this.randomizer.getWorld().getLocations();
+    this.layoutString = this.randomizer.getWorld().generateLayout();
   }
 
 }
