@@ -10,7 +10,7 @@ export class ItemCollection extends Collection {
     super(items);
     this.itemCount = new Map<string, number>();
     if (this.items.length > 0) {
-      for (let item of this.items) {
+      for (const item of this.items) {
         this.incrementItemCount(item);
       }
     }
@@ -27,17 +27,17 @@ export class ItemCollection extends Collection {
 
   public remove(index: number): void {
     if (index > -1) {
-      let itemName = this.items[index].getName();
+      const itemName = this.items[index].getName();
       this.items.splice(index, 1);
       this.itemCount.set(itemName, this.itemCount.get(itemName) - 1);
     }
   }
 
   public removeItem(itemKey: string): Item {
-    let givenItemCount = this.itemCount.get(itemKey);
+    const givenItemCount = this.itemCount.get(itemKey);
 
     if (givenItemCount !== undefined && givenItemCount > 0) {
-      let givenItem = Item.get(itemKey);
+      const givenItem = Item.get(itemKey);
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i].getName() === itemKey) {
           this.remove(i);
@@ -50,8 +50,8 @@ export class ItemCollection extends Collection {
   }
 
   protected incrementItemCount(item: Item) {
-    let itemName = item.getName();
-    let itemVal = this.itemCount.get(itemName);
+    const itemName = item.getName();
+    const itemVal = this.itemCount.get(itemName);
     if (itemVal === undefined)
       this.itemCount.set(itemName, 1);
     else
@@ -80,8 +80,8 @@ export class ItemCollection extends Collection {
 
   public hasMissileCount(count: number): boolean {
     if (this.hasMissiles()) {
-      let expansionCount = this.has(PrimeItemName.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItemName.MISSILE_EXPANSION) : 0;
-      let launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0; // This should almost always be 1 or 0
+      const expansionCount = this.has(PrimeItemName.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItemName.MISSILE_EXPANSION) : 0;
+      const launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0; // This should almost always be 1 or 0
       return expansionCount + launcherCount >= count;
     }
     return false;

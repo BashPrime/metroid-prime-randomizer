@@ -17,7 +17,7 @@ export class Item {
   }
 
   public static get(key: string): Item {
-    let items: Map<string, Item> = this.all();
+    const items: Map<string, Item> = this.all();
     return items.get(key);
   }
 

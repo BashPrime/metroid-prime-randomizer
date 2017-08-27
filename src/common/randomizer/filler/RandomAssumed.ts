@@ -55,19 +55,21 @@ export class RandomAssumed extends Filler {
     this.fastFillItemsInLocations(expansions, randomizedLocations);
   }
 
-  fillItemsInLocations(fillItems: ItemCollection, locations: LocationCollection, baseAssumedItems: ItemCollection = new ItemCollection()): void {
-    let remainingFillItems = new ItemCollection([...fillItems.toArray()]);
+  fillItemsInLocations(fillItems: ItemCollection,
+                       locations: LocationCollection,
+                       baseAssumedItems: ItemCollection = new ItemCollection()): void {
+    const remainingFillItems = new ItemCollection([...fillItems.toArray()]);
 
     if (remainingFillItems.size() > locations.getEmptyLocations().size()) {
       throw new RangeError('There are more items to fill than available locations');
     }
 
-    for (let item of fillItems.toArray()) {
+    for (const item of fillItems.toArray()) {
       baseAssumedItems.add(remainingFillItems.removeItem(item.getName()));
 
-      let assumedItems = this.world.collectItems(remainingFillItems);
+      const assumedItems = this.world.collectItems(remainingFillItems);
 
-      let fillableLocations = new LocationCollection(locations.toArray().filter(location => {
+      const fillableLocations = new LocationCollection(locations.toArray().filter(location => {
         return !location.hasItem() && location.canFillItem(item, assumedItems) && location.canEscape(item, assumedItems);
       }));
 
@@ -75,7 +77,7 @@ export class RandomAssumed extends Filler {
         throw new RangeError('No available locations to fill item: ' + item.getName());
       }
 
-      let fillLocation = fillableLocations.get(0);
+      const fillLocation = fillableLocations.get(0);
 
       fillLocation.setItem(item);
     }

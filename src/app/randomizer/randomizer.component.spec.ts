@@ -9,8 +9,7 @@ describe('RandomizerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RandomizerComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

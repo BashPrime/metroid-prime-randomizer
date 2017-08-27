@@ -44,11 +44,11 @@ export class RandomizerComponent implements OnInit {
   runRandomizer(): void {
     this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedDifficulty);
 
-    if (this.selectedSeed)
+    if (this.selectedSeed) {
       this.randomizer.randomize(this.selectedSeed);
-    else
+    } else {
       this.randomizer.randomize();
-
+    }
     this.locations = this.randomizer.getWorld().getLocations();
   }
 

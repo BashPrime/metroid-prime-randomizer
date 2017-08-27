@@ -10,7 +10,10 @@
       true,
       "check-space"
     ],
-    "curly": true,
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
     "eofline": true,
     "forin": true,
     "import-blacklist": [

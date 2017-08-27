@@ -16,12 +16,10 @@ export abstract class Filler {
   abstract fill(priorityItems: Array<Item>, upgrades: Array<Item>, artifacts: Array<Item>, expansions: Array<Item>): void;
 
   fastFillItemsInLocations(fillItems: Array<Item>, locations: Array<Location>): void {
-    for (let location of locations) {
-      if (location.hasItem())
-        continue;
-      let item = fillItems.pop();
-      if (!item)
-        break;
+    for (const location of locations) {
+      if (location.hasItem()) continue;
+      const item = fillItems.pop();
+      if (!item) break;
       location.setItem(item);
     }
   }

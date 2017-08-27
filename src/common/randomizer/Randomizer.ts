@@ -24,8 +24,9 @@ export class Randomizer {
   }
 
   randomize(seed?: number): void {
-    if (!seed)
+    if (seed == null) {
       seed = this.getRandomInt(1, 1000000000);
+    }
     this.seed = seed;
     this.rng = new MersenneTwister(this.seed);
     new RandomAssumed(this.world, this.rng).fill(this.getPriorityItems(), this.getUpgrades(), this.getArtifacts(), this.getExpansions());
@@ -40,8 +41,8 @@ export class Randomizer {
   }
 
   getArtifacts(): Array<Item> {
-    let items: Array<Item> = [];
-    let itemsMap: Map<string, number> = new Map<string, number>();
+    const items: Array<Item> = [];
+    const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItemName.ARTIFACT_OF_TRUTH, 1);
     itemsMap.set(PrimeItemName.ARTIFACT_OF_STRENGTH, 1);
     itemsMap.set(PrimeItemName.ARTIFACT_OF_ELDER, 1);
@@ -56,16 +57,17 @@ export class Randomizer {
     itemsMap.set(PrimeItemName.ARTIFACT_OF_NEWBORN, 1);
 
     itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++)
+      for (let i = 0; i < value; i++) {
         items.push(Item.get(key));
+      }
     });
 
     return items;
   }
 
   getPriorityItems(): Array<Item> {
-    let items: Array<Item> = [];
-    let itemsMap: Map<string, number> = new Map<string, number>();
+    const items: Array<Item> = [];
+    const itemsMap: Map<string, number> = new Map<string, number>();
     switch (this.logic) {
       case RandomizerLogic.NO_GLITCHES:
       default:
@@ -74,16 +76,17 @@ export class Randomizer {
     }
 
     itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++)
+      for (let i = 0; i < value; i++) {
         items.push(Item.get(key));
+      }
     });
 
     return items;
   }
 
   getUpgrades(): Array<Item> {
-    let items: Array<Item> = [];
-    let itemsMap: Map<string, number> = new Map<string, number>();
+    const items: Array<Item> = [];
+    const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItemName.MORPH_BALL_BOMB, 1);
     itemsMap.set(PrimeItemName.VARIA_SUIT, 1);
     itemsMap.set(PrimeItemName.GRAVITY_SUIT, 1);
@@ -105,23 +108,25 @@ export class Randomizer {
     itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
 
     itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++)
+      for (let i = 0; i < value; i++) {
         items.push(Item.get(key));
+      }
     });
 
     return items;
   }
 
   getExpansions(): Array<Item> {
-    let items: Array<Item> = [];
-    let itemsMap: Map<string, number> = new Map<string, number>();
+    const items: Array<Item> = [];
+    const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
     itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
     itemsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
 
     itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++)
+      for (let i = 0; i < value; i++) {
         items.push(Item.get(key));
+      }
     });
 
     return items;

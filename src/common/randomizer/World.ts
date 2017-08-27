@@ -36,7 +36,7 @@ export class World {
 
     this.locations = [];
 
-    for (let region of this.regions) {
+    for (const region of this.regions) {
       region.init(logic);
 
       region.getLocations().forEach((value: Location, key: string) => {
@@ -81,19 +81,19 @@ export class World {
     let myItems: ItemCollection = collectedItems !== undefined ? collectedItems : new ItemCollection();
 
     // Get all non-artifact items
-    let availableLocations = this.getLocations().filter(location => {
+    const availableLocations = this.getLocations().filter(location => {
       return location.hasItem() && location.getItem().getName().indexOf('Artifact') < 0;
     });
 
     let newItems: ItemCollection = new ItemCollection();
     do {
-      let searchLocations = new LocationCollection(availableLocations.filter(location => {
+      const searchLocations = new LocationCollection(availableLocations.filter(location => {
         return location.canFillItem(undefined, myItems) && location.canEscape(location.getItem(), myItems);
       }));
 
-      let foundItems = searchLocations.getItems();
+      const foundItems = searchLocations.getItems();
 
-      let precollected = myItems.diff(foundItems);
+      const precollected = myItems.diff(foundItems);
       newItems = foundItems.diff(myItems);
       myItems = foundItems.merge(precollected);
     } while (newItems.size() > 0);

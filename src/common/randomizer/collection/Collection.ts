@@ -28,7 +28,7 @@ export class Collection {
   }
 
   public diff(otherItems: Collection): Collection {
-    let otherArr = otherItems.toArray();
+    const otherArr = otherItems.toArray();
     return new Collection(this.items.filter(item => otherArr.indexOf(item) < 0));
   }
 
