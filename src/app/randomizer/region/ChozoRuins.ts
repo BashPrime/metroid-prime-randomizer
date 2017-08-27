@@ -7,6 +7,7 @@ import { PrimeItemName } from '../ItemType';
 export class ChozoRuins extends Region {
     constructor() {
         super();
+        this.name = "Chozo Ruins";
         this.locations = new Map<string, Location>([
             ["Main Plaza (Half-Pipe)", new Location("Main Plaza (Half-Pipe)", "d5cdb809.mrea", 0x0002012C)],
             ["Main Plaza (Grapple Ledge)", new Location("Main Plaza (Grapple Ledge)", "d5cdb809.mrea", 0x00020131)],
@@ -18,11 +19,11 @@ export class ChozoRuins extends Region {
             ["Ruined Shrine (Lower Tunnel)", new Location("Ruined Shrine (Lower Tunnel)", "3c785450.mrea", 0x0009006D)],
             ["Vault", new Location("Vault", "ef069019.mrea", 0x000B003D)],
             ["Training Chamber", new Location("Training Chamber", "3f04f304.mrea", 0x000C0026, true)],
+            ["Ruined Nursery", new Location("Ruined Nursery", "c2576e4d.mrea", 0x00100062)],
             ["Training Chamber Access", new Location("Training Chamber Access", "18d186bb.mrea", 0x001400ED)],
             ["Magma Pool", new Location("Magma Pool", "491bfaba.mrea", 0x001400ED)],
             ["Tower of Light", new Location("Tower of Light", "0d72f1f7.mrea", 0x00150335, true)],
             ["Tower Chamber", new Location("Tower Chamber", "11bd63b7.mrea", 0x001B0019, true)],
-            ["Ruined Nursery", new Location("Ruined Nursery", "c2576e4d.mrea", 0x00100062)],
             ["Ruined Gallery (Missile Wall)", new Location("Ruined Gallery (Missile Wall)", "e34fd92b.mrea", 0x001C0024)],
             ["Ruined Gallery (Tunnel)", new Location("Ruined Gallery (Tunnel)", "e34fd92b.mrea", 0x001C0054)],
             ["Transport Access North", new Location("Transport Access North", "3ad2120f.mrea", 0x001E0172, true)],
