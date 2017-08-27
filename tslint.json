@@ -15,6 +15,10 @@
       "ignore-same-line"
     ],
     "eofline": true,
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
     "forin": true,
     "import-blacklist": [
       true,

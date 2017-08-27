@@ -39,7 +39,7 @@ export class World {
 
     this.locations = [];
 
-    for (let region of this.regions) {
+    for (const region of this.regions) {
       region.init(logic);
 
       region.getLocations().forEach((value: Location, key: string) => {
@@ -84,19 +84,19 @@ export class World {
     let myItems: ItemCollection = collectedItems !== undefined ? collectedItems : new ItemCollection();
 
     // Get all non-artifact items
-    let availableLocations = this.getLocations().filter(location => {
+    const availableLocations = this.getLocations().filter(location => {
       return location.hasItem() && location.getItem().getName().indexOf('Artifact') < 0;
     });
 
     let newItems: ItemCollection = new ItemCollection();
     do {
-      let searchLocations = new LocationCollection(availableLocations.filter(location => {
+      const searchLocations = new LocationCollection(availableLocations.filter(location => {
         return location.canFillItem(undefined, myItems) && location.canEscape(location.getItem(), myItems);
       }));
 
-      let foundItems = searchLocations.getItems();
+      const foundItems = searchLocations.getItems();
 
-      let precollected = myItems.diff(foundItems);
+      const precollected = myItems.diff(foundItems);
       newItems = foundItems.diff(myItems);
       myItems = foundItems.merge(precollected);
     } while (newItems.size() > 0);
@@ -105,8 +105,8 @@ export class World {
   }
 
   public generateLayout(): string {
-    let itemLayout: Array<number> = [];
-    let itemLayoutMap: Map<string, number> = new Map<string, number>();
+    const itemLayout: Array<number> = [];
+    const itemLayoutMap: Map<string, number> = new Map<string, number>();
     itemLayoutMap.set(PrimeItemName.MISSILE_LAUNCHER, 0);
     itemLayoutMap.set(PrimeItemName.MISSILE_EXPANSION, 0);
     itemLayoutMap.set(PrimeItemName.ENERGY_TANK, 1);
@@ -144,15 +144,15 @@ export class World {
     itemLayoutMap.set(PrimeItemName.ARTIFACT_OF_NATURE, 33);
     itemLayoutMap.set(PrimeItemName.ARTIFACT_OF_STRENGTH, 34);
 
-    let regionOrder = [1, 3, 0, 4, 2];
+    const regionOrder = [1, 3, 0, 4, 2];
 
-    for (let regionIndex of regionOrder) {
+    for (const regionIndex of regionOrder) {
       this.regions[regionIndex].getLocations().forEach((value: Location, key: string) => {
         itemLayout.push(itemLayoutMap.get(value.getItem().getName()));
       });
     }
 
-    let layoutString = new LayoutString();
+    const layoutString = new LayoutString();
 
     return layoutString.encode_pickup_layout(itemLayout);
   }

@@ -12,15 +12,15 @@ export class LayoutString {
 
   public encodePickupLayout(layout: Array<number>) {
     let num = bigInt(0);
-    for (let itemType of layout) {
+    for (const itemType of layout) {
       num = num.times(36).plus(itemType);
     }
 
-    let checksum = this.compute_checksum(num);
+    const checksum = this.compute_checksum(num);
     num = num.plus(bigInt(checksum).shiftLeft(517));
 
-    let even_bits = [];
-    let odd_bits = [];
+    const even_bits = [];
+    const odd_bits = [];
     let all_bits: any = num.toString(2);
     for (let i = 0; i < all_bits.length; i++) {
       if (i % 2) {
@@ -42,7 +42,7 @@ export class LayoutString {
 
     let s = '';
     for (let i = 0; i < 87; i++) {
-      let divmod: any = num.divmod(64);
+      const divmod: any = num.divmod(64);
       num = divmod.quotient;
 
       s = s + this.TABLE[divmod.remainder];
@@ -57,11 +57,11 @@ export class LayoutString {
       num = num.times(36).plus(item_type);
     });
 
-    let checksum = this.compute_checksum(num);
+    const checksum = this.compute_checksum(num);
     num = num.plus(bigInt(checksum).shiftLeft(517));
 
-    let even_bits = [];
-    let odd_bits = [];
+    const even_bits = [];
+    const odd_bits = [];
     let all_bits: any = num.toString(2);
     for (let i = 0; i < all_bits.length; i++) {
       if (i % 2) {
@@ -81,7 +81,7 @@ export class LayoutString {
 
     let s = '';
     for (let i = 0; i < 87; i++) {
-      let divmod: any = num.divmod(64);
+      const divmod: any = num.divmod(64);
       num = divmod.quotient;
 
       s = s + this.TABLE[divmod.remainder];
@@ -94,7 +94,7 @@ export class LayoutString {
   public compute_checksum(layout_number) {
     let s = 0;
     while (layout_number.greater(0)) {
-      let divmod = layout_number.divmod(32);
+      const divmod = layout_number.divmod(32);
       s = (s + divmod.remainder) % 32;
       layout_number = divmod.quotient;
     }
