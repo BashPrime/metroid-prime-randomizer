@@ -4,10 +4,11 @@
       <h2 class="centered">Metroid Prime Randomizer</h2>
       <div class="divider"></div>
       <md-nav-list>
-          <a md-list-item *ngFor="let navItem of navItems" routerLink="{{ navItem.link }}" routerLinkActive="active" (click)="sidenav.close()">
+          <a md-list-item *ngFor="let navItem of navItems" routerLink="{{ navItem.link }}" (click)="sidenav.close()">
             <md-icon md-list-icon>{{ navItem.icon }}</md-icon> {{ navItem.text }}
           </a>
           <a md-list-item href="https://github.com/etaylor8086/prime-randomizer-web"><md-icon md-list-icon>code</md-icon> View source code on GitHub</a>
+          <a md-list-item href="https://github.com/etaylor8086/prime-randomizer-web/issues"><md-icon md-list-icon>report problem</md-icon> Report an Issue</a>
       </md-nav-list>
     </section>
   </md-sidenav>
@@ -20,6 +21,10 @@
     <div class="spacer"></div>
     <a routerLink="/randomizer" routerLinkActive="active" md-button>Generate Randomized Game</a>
     <span class="fill-space"></span>
+    <button md-button [mdMenuTriggerFor]="helpMenu">Help</button>
+    <md-menu #helpMenu="mdMenu">
+      <a md-menu-item *ngFor="let helpItem of helpItems" routerLink="{{ helpItem.link }}">{{ helpItem.text }}</a>
+    </md-menu>
     <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" md-button>Report Issue</a>
   </md-toolbar>
   <div class="app-content">

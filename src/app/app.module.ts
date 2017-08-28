@@ -6,6 +6,7 @@ import {
   MdCardModule,
   MdIconModule,
   MdInputModule,
+  MdMenuModule,
   MdSelectModule,
   MdButtonModule,
   MdListModule
@@ -17,12 +18,16 @@ import { AppRoutingModule } from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RandomizerComponent} from './randomizer/randomizer.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ModesPageComponent } from './modes-page/modes-page.component';
+import { LogicsPageComponent } from './logics-page/logics-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RandomizerComponent,
-    HomePageComponent
+    HomePageComponent,
+    ModesPageComponent,
+    LogicsPageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -33,6 +38,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     MdCardModule,
     MdIconModule,
     MdInputModule,
+    MdMenuModule,
     MdSelectModule,
     MdButtonModule,
     MdListModule,

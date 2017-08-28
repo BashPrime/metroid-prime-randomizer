@@ -40,11 +40,15 @@
     <div>Difficulty: {{ randomizer.getDifficulty() }}</div>
     <div>Seed: {{ randomizer.getSeed() }}</div>
     <div>
-      <a href="https://github.com/aprilwade/randomprime">Item Layout</a>:
+      Item Layout:
       <md-input-container style="width: 90%;">
         <input mdInput type="text" [value]="layoutString" readonly />
       </md-input-container>
     </div>
+    <p>
+      To patch your .iso with the randomized items and start playing, download <a href="https://github.com/aprilwade/randomprime/releases">AprilWade's ISO patcher</a>
+      and <a href="https://github.com/aprilwade/randomprime#how-to-use-the-iso-patcher">read the patcher instructions</a>, using the above item layout. Enjoy!
+    </p>
     <button md-raised-button (click)="toggleSpoilers = !toggleSpoilers" style="margin-top: 1em;">{{ !toggleSpoilers ?
       "Show" : "Hide" }} Spoilers
     </button>

@@ -11,4 +11,8 @@ export class AppComponent {
     { link: '/home', icon: 'home', text: 'Home' },
     { link: '/randomizer', icon: 'shuffle', text: 'Generate Randomized Game' }
   ];
+  helpItems: Array<object> = [
+    { link: '/modes', text: 'Modes' },
+    { link: '/logics', text: 'Logics' }
+  ];
 }
