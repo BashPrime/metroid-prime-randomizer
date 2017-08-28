@@ -13,6 +13,7 @@ import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
 export class RandomizerComponent implements OnInit {
   randomizer: Randomizer;
   regions: Array<Region>;
+  selectedRegionIndex: number;
   locations: Array<Location>;
   selectedSeed: number;
   selectedMode: string;

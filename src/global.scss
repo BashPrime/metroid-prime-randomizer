@@ -3,3 +3,26 @@
 body {
   margin: 0;
 }
+
+md-sidenav-container {
+  height: 100vh;
+}
+
+md-sidenav {
+  width: 320px;
+}
+
+.app-content {
+  padding: 20px 70px 50px;
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.divider {
+  margin: 1em 0;
+  border-bottom: 1px solid #e5e5e5;
+}

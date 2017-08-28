@@ -1,4 +1,19 @@
-<md-toolbar color="primary">
-  <span>{{title}}</span>
-</md-toolbar>
-<app-randomizer></app-randomizer>
+<md-sidenav-container>
+  <md-sidenav #sidenav>
+    <section class="mat-typography sidenav-container">
+      <h2 class="centered">Navigation</h2>
+      <div class="divider"></div>
+    </section>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="sidenav.toggle()">
+      <md-icon>menu</md-icon>
+    </button>
+    <h1>{{title}}</h1>
+    <span class="fill-space"></span>
+    <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" md-button>Report Issue</a>
+  </md-toolbar>
+  <div class="app-content">
+    <app-randomizer></app-randomizer>
+  </div>
+</md-sidenav-container>

@@ -12,47 +12,6 @@ export class LayoutString {
     }
   }
 
-  public encodePickupLayout(layout: Array<number>) {
-    let num = bigInt(0);
-    for (const itemType of layout) {
-      num = num.times(36).plus(itemType);
-    }
-
-    const checksum = this.compute_checksum(num);
-    num = num.plus(bigInt(checksum).shiftLeft(517));
-
-    const even_bits = [];
-    const odd_bits = [];
-    let all_bits: any = num.toString(2);
-    for (let i = 0; i < all_bits.length; i++) {
-      if (i % 2) {
-        odd_bits.push(all_bits[i]);
-      }
-      else {
-        even_bits.push(all_bits[i]);
-      }
-    }
-
-    odd_bits.reverse();
-    all_bits = [];
-
-    for (let i = 0; i < even_bits.length; i++) {
-      all_bits.push(even_bits[i]);
-      all_bits.push(odd_bits[i]);
-    }
-    num = bigInt(all_bits.join(''), 2);
-
-    let s = '';
-    for (let i = 0; i < 87; i++) {
-      const divmod: any = num.divmod(64);
-      num = divmod.quotient;
-
-      s = s + this.TABLE[divmod.remainder];
-    }
-
-    return s;
-  }
-
   public encode_pickup_layout(layout: Array<number>) {
     let num = bigInt(0);
     layout.forEach(function (item_type) {

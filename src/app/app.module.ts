@@ -2,7 +2,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdToolbarModule,
+  MdSidenavModule,
   MdCardModule,
+  MdIconModule,
   MdInputModule,
   MdSelectModule,
   MdButtonModule,
@@ -23,7 +25,9 @@ import {RandomizerComponent} from './randomizer/randomizer.component';
     BrowserModule,
     BrowserAnimationsModule,
     MdToolbarModule,
+    MdSidenavModule,
     MdCardModule,
+    MdIconModule,
     MdInputModule,
     MdSelectModule,
     MdButtonModule,
