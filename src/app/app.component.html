@@ -1,19 +1,28 @@
 <md-sidenav-container>
   <md-sidenav #sidenav>
     <section class="mat-typography sidenav-container">
-      <h2 class="centered">Navigation</h2>
+      <h2 class="centered">Metroid Prime Randomizer</h2>
       <div class="divider"></div>
+      <md-nav-list>
+          <a md-list-item *ngFor="let navItem of navItems" routerLink="{{ navItem.link }}" routerLinkActive="active" (click)="sidenav.close()">
+            <md-icon md-list-icon>{{ navItem.icon }}</md-icon> {{ navItem.text }}
+          </a>
+          <a md-list-item href="https://github.com/etaylor8086/prime-randomizer-web"><md-icon md-list-icon>code</md-icon> View source code on GitHub</a>
+      </md-nav-list>
     </section>
   </md-sidenav>
   <md-toolbar color="primary">
     <button md-icon-button (click)="sidenav.toggle()">
       <md-icon>menu</md-icon>
     </button>
-    <h1>{{title}}</h1>
+    <div class="spacer-sm"></div>
+    <h1 id="siteTitle"><a routerLink="/home" routerLinkActive="active">{{title}}</a></h1>
+    <div class="spacer"></div>
+    <a routerLink="/randomizer" routerLinkActive="active" md-button>Generate Randomized Game</a>
     <span class="fill-space"></span>
     <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" md-button>Report Issue</a>
   </md-toolbar>
   <div class="app-content">
-    <app-randomizer></app-randomizer>
+    <router-outlet></router-outlet>
   </div>
 </md-sidenav-container>

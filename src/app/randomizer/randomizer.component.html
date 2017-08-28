@@ -1,4 +1,4 @@
-<md-card class="rando-card">
+<md-card>
   <h2>Generate Randomized Game</h2>
   <md-card-content>
     <form #randomizerForm="ngForm">
@@ -32,7 +32,7 @@
     </form>
   </md-card-content>
 </md-card>
-<md-card class="rando-card" *ngIf="regions !== undefined">
+<md-card *ngIf="regions !== undefined">
   <h2>Game Details</h2>
   <md-card-content>
     <div>Mode: {{ randomizer.getMode() }}</div>
