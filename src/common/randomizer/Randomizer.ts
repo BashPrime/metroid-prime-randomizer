@@ -36,6 +36,18 @@ export class Randomizer {
     return this.world;
   }
 
+  getMode(): string {
+    return this.mode;
+  }
+
+  getLogic(): string {
+    return this.logic;
+  }
+
+  getDifficulty(): string {
+    return this.difficulty;
+  }
+
   getSeed(): number {
     return this.seed;
   }
