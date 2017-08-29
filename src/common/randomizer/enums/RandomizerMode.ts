@@ -1,5 +1,5 @@
 export enum RandomizerMode {
-  STANDARD = 'Standard',
-  MAJORS = 'Majors',
-  OPEN = 'Open'
+  STANDARD = 'standard',
+  MAJOR_ITEMS = 'major-items',
+  OPEN = 'open'
 }

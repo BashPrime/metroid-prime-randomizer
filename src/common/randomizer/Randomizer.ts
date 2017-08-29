@@ -119,6 +119,10 @@ export class Randomizer {
     itemsMap.set(PrimeItemName.ICE_SPREADER, 1);
     itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
 
+    if (this.logic !== RandomizerLogic.NO_GLITCHES) {
+      itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
+    }
+
     itemsMap.forEach((value: number, key: string) => {
       for (let i = 0; i < value; i++) {
         items.push(Item.get(key));
@@ -132,8 +136,11 @@ export class Randomizer {
     const items: Array<Item> = [];
     const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItemName.MISSILE_EXPANSION, 49);
-    itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
     itemsMap.set(PrimeItemName.POWER_BOMB_EXPANSION, 4);
+
+    if (this.logic === RandomizerLogic.NO_GLITCHES) {
+      itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
+    }
 
     itemsMap.forEach((value: number, key: string) => {
       for (let i = 0; i < value; i++) {

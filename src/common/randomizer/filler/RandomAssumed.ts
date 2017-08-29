@@ -10,9 +10,10 @@ import {RandomizerLogic} from '../enums/RandomizerLogic';
 export class RandomAssumed extends Filler {
   fill(priorityItems: Array<Item>, upgrades: Array<Item>, artifacts: Array<Item>, expansions: Array<Item>): void {
     let randomizedLocations: Array<Location>;
-    let energyTanks: Array<Item>;
+    let energyTanks: Array<Item> = [];
+
     switch (this.world.getMode()) {
-      case RandomizerMode.MAJORS:
+      case RandomizerMode.MAJOR_ITEMS:
         randomizedLocations = this.shuffleLocations([...this.world.getUpgradeLocations()]);
         energyTanks = expansions.filter(item => item.getName() === PrimeItemName.ENERGY_TANK);
         expansions = expansions.filter(item => item.getName() !== PrimeItemName.ENERGY_TANK);
@@ -35,7 +36,7 @@ export class RandomAssumed extends Filler {
         this.fillItemsInLocations(new ItemCollection(this.shuffleItems(upgrades)), new LocationCollection(randomizedLocations));
     }
 
-    if (this.world.getMode() === RandomizerMode.MAJORS) {
+    if (this.world.getMode() === RandomizerMode.MAJOR_ITEMS) {
       randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
       this.fastFillItemsInLocations(energyTanks, randomizedLocations);
 
@@ -43,9 +44,7 @@ export class RandomAssumed extends Filler {
       this.fastFillItemsInLocations(artifacts, randomizedLocations);
 
       randomizedLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
-    }
-
-    else {
+    } else {
       randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
       this.fastFillItemsInLocations(artifacts, randomizedLocations);
     }
@@ -73,7 +72,7 @@ export class RandomAssumed extends Filler {
         return !location.hasItem() && location.canFillItem(item, assumedItems) && location.canEscape(item, assumedItems);
       }));
 
-      if (fillableLocations.size() == 0) {
+      if (fillableLocations.size() === 0) {
         throw new RangeError('No available locations to fill item: ' + item.getName());
       }
 

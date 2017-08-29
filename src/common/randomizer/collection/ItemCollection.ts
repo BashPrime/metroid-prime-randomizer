@@ -81,8 +81,17 @@ export class ItemCollection extends Collection {
   public hasMissileCount(count: number): boolean {
     if (this.hasMissiles()) {
       const expansionCount = this.has(PrimeItemName.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItemName.MISSILE_EXPANSION) : 0;
-      const launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0; // This should almost always be 1 or 0
+      // Launcher's count value will almost always be 1 or 0
+      const launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0;
       return expansionCount + launcherCount >= count;
+    }
+    return false;
+  }
+
+  public hasEnergyTankCount(count: number): boolean {
+    if (this.has(PrimeItemName.ENERGY_TANK)) {
+      const energyCount = this.has(PrimeItemName.ENERGY_TANK) ? this.itemCount.get(PrimeItemName.ENERGY_TANK) : 0;
+      return energyCount >= count;
     }
     return false;
   }
@@ -111,9 +120,20 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.canLayBombs() && this.hasAnySuit();
   }
 
+  public hasPhendranaReqsMinorGlitches(minVMRTanks: number): boolean {
+    return this.hasMissiles() && this.canLayBombs()
+      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
+  }
+
   public hasBackwardsPhendranaReqs(): boolean {
     return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
       && this.has(PrimeItemName.WAVE_BEAM);
+  }
+
+  public hasBackwardsPhendranaReqsMinorGlitches(minVMRTanks: number): boolean {
+    return this.hasMissiles() && this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItemName.WAVE_BEAM)
+      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
   }
 
   public hasMinesFromTallonReqs(): boolean {
@@ -121,8 +141,24 @@ export class ItemCollection extends Collection {
       && this.has(PrimeItemName.THERMAL_VISOR) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
   }
 
+  public hasMinesFromTallonReqsMinorGlitches(): boolean {
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
+  }
+
   public hasMinesFromMagmoorReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.hasAnySuit() && this.has(PrimeItemName.SPIDER_BALL) &&
-      this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
+    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.hasAnySuit()
+      && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.WAVE_BEAM)
+      && this.has(PrimeItemName.ICE_BEAM);
+  }
+
+  public hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks: number): boolean {
+    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM)
+      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks))
+  }
+
+  public canDoInfiniteSpeed(): boolean {
+    return this.canLayBombs() && this.has(PrimeItemName.BOOST_BALL);
   }
 }

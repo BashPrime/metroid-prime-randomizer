@@ -23,14 +23,15 @@ export class RandomizerComponent implements OnInit {
   toggleSpoilers = false;
   modes = [
     {name: 'Standard', value: RandomizerMode.STANDARD},
-    {name: 'Major Items', value: RandomizerMode.MAJORS},
+    {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
   ];
   logics = [
     {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
+    {name: 'Minor Glitches', value: RandomizerLogic.MINOR_GLITCHES},
     {name: 'Naive', value: RandomizerLogic.NAIVE}
   ];
   difficulties = [
-    {name: 'Normal', value: 'Normal'}
+    {name: 'Normal', value: 'normal'}
   ];
 
   constructor() {
