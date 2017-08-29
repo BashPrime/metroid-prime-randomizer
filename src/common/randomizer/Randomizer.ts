@@ -81,6 +81,9 @@ export class Randomizer {
     const items: Array<Item> = [];
     const itemsMap: Map<string, number> = new Map<string, number>();
     switch (this.logic) {
+      case RandomizerLogic.MINOR_GLITCHES:
+        itemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
+        break;
       case RandomizerLogic.NO_GLITCHES:
       default:
         itemsMap.set(PrimeItemName.MISSILE_LAUNCHER, 1);
@@ -120,6 +123,7 @@ export class Randomizer {
     itemsMap.set(PrimeItemName.FLAMETHROWER, 1);
 
     if (this.logic !== RandomizerLogic.NO_GLITCHES) {
+      itemsMap.set(PrimeItemName.MORPH_BALL, 1);
       itemsMap.set(PrimeItemName.ENERGY_TANK, 14);
     }
 

@@ -237,7 +237,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Ruined Fountain').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.SPIDER_BALL)
+      return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL) && items.has(PrimeItemName.SPIDER_BALL)
         && (items.canLayBombs() || items.has(PrimeItemName.SPACE_JUMP_BOOTS));
     };
 
@@ -288,7 +288,13 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Tower Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.has(PrimeItemName.WAVE_BEAM)
+        && (
+          items.has(PrimeItemName.SPACE_JUMP_BOOTS)
+          || (items.has(PrimeItemName.MORPH_BALL) && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPIDER_BALL)
+            && !items.has(PrimeItemName.GRAVITY_SUIT))
+          || (items.has(PrimeItemName.GRAVITY_SUIT) && items.canLayBombs())
+        );
     };
 
     this.locations.get('Ruined Nursery').canFillItem = function (item: Item, items: ItemCollection): boolean {

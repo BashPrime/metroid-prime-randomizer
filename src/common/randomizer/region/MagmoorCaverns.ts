@@ -107,7 +107,8 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Fiery Shores (Morph Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS)
+      return items.hasMissiles()
+        && (items.canLayBombs() || items.has(PrimeItemName.SPACE_JUMP_BOOTS))
         && (items.hasAnySuit() || items.hasEnergyTankCount(minVMRTanks));
     };
 
