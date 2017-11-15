@@ -1,15 +1,15 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MdToolbarModule,
-  MdSidenavModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdMenuModule,
-  MdSelectModule,
-  MdButtonModule,
-  MdListModule
+  MatToolbarModule,
+  MatSidenavModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatListModule
 } from '@angular/material';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -33,15 +33,15 @@ import { LogicsPageComponent } from './logics-page/logics-page.component';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdCardModule,
-    MdIconModule,
-    MdInputModule,
-    MdMenuModule,
-    MdSelectModule,
-    MdButtonModule,
-    MdListModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatListModule,
     FormsModule
   ],
   providers: [],
