@@ -7,12 +7,7 @@ import { ModesPageComponent } from './modes-page/modes-page.component';
 import { LogicsPageComponent } from './logics-page/logics-page.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  },
-  { path: 'home', component: HomePageComponent },
+  { path: '', component: HomePageComponent },
   { path: 'randomizer', component: RandomizerComponent },
   { path: 'modes', component: ModesPageComponent },
   { path: 'logics', component: LogicsPageComponent }

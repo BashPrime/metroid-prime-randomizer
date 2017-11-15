@@ -8,7 +8,7 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'Metroid Prime Randomizer';
   navItems: Array<object> = [
-    { link: '/home', icon: 'home', text: 'Home' },
+    { link: '/', icon: 'home', text: 'Home' },
     { link: '/randomizer', icon: 'shuffle', text: 'Generate Randomized Game' }
   ];
   helpItems: Array<object> = [
