@@ -12,21 +12,25 @@
       </mat-nav-list>
     </section>
   </mat-sidenav>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" id="">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       <div class="spacer-sm"></div>
-      <h1 id="siteTitle"><a routerLink="/" routerLinkActive="active">{{title}}</a></h1>
-      <div class="spacer"></div>
-      <a routerLink="/randomizer" routerLinkActive="active" mat-button>Generate Randomized Game</a>
-      <span class="fill-space"></span>
-      <button mat-button [matMenuTriggerFor]="helpMenu">Help</button>
-      <mat-menu #helpMenu="matMenu">
+      <button mat-button routerLink="/">
+        <span>{{ title }}</span>
+      </button>
+      <!-- <span><a routerLink="/">{{title}}</a></span> -->
+      <button mat-button routerLink="/randomizer" class="rando-navbar-hide-small">
+        <span>Generate Randomized Game</span>
+      </button>
+      <span class="toolbar-spacer"></span>
+      <button mat-button [matMenuTriggerFor]="helpMenu" class="rando-navbar-hide-small">Help</button>
+      <mat-menu #helpMenu="matMenu" class="rando-navbar-hide-small">
         <a mat-menu-item *ngFor="let helpItem of helpItems" routerLink="{{ helpItem.link }}">{{ helpItem.text }}</a>
       </mat-menu>
-      <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" mat-button>Report Issue</a>
+      <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" mat-button class="rando-navbar-hide-small">Report Issue</a>
     </mat-toolbar-row>
     
   </mat-toolbar>

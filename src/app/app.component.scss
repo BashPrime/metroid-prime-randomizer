@@ -20,3 +20,16 @@
 .spacer-sm {
   width: 0.5em;
 }
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 720px) {
+  .rando-navbar-hide-small {
+    display: none;
+  }
+  .rando-navbar-show-small {
+    display: block;
+  }
+}
