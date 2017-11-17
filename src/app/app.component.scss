@@ -25,6 +25,10 @@
   flex: 1 1 auto;
 }
 
+.rando-navbar-show-small {
+  display: none;
+}
+
 @media (max-width: 720px) {
   .rando-navbar-hide-small {
     display: none;

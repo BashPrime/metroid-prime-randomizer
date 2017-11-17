@@ -17,9 +17,8 @@
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <div class="spacer-sm"></div>
-      <button mat-button routerLink="/">
-        <span>{{ title }}</span>
+      <button mat-button routerLink="/" class="rando-navbar-hide-small">
+        <span style="font-size: 18px;">{{ title }}</span>
       </button>
       <!-- <span><a routerLink="/">{{title}}</a></span> -->
       <button mat-button routerLink="/randomizer" class="rando-navbar-hide-small">
@@ -27,7 +26,10 @@
       </button>
       <span class="toolbar-spacer"></span>
       <button mat-button [matMenuTriggerFor]="helpMenu" class="rando-navbar-hide-small">Help</button>
-      <mat-menu #helpMenu="matMenu" class="rando-navbar-hide-small">
+      <button mat-icon-button [matMenuTriggerFor]="helpMenu" class="rando-navbar-show-small">
+        <mat-icon>help</mat-icon>
+      </button>
+      <mat-menu #helpMenu="matMenu">
         <a mat-menu-item *ngFor="let helpItem of helpItems" routerLink="{{ helpItem.link }}">{{ helpItem.text }}</a>
       </mat-menu>
       <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" mat-button class="rando-navbar-hide-small">Report Issue</a>

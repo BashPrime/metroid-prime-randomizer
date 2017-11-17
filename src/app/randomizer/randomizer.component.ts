@@ -51,6 +51,7 @@ export class RandomizerComponent implements OnInit {
     this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedDifficulty);
 
     if (this.selectedSeed) {
+      this.selectedSeed = this.selectedSeed < 1 ? 1 : this.selectedSeed > 999999999 ? 999999999 : this.selectedSeed;      
       this.randomizer.randomize(this.selectedSeed);
     } else {
       this.randomizer.randomize();
