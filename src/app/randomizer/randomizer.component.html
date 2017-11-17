@@ -58,9 +58,10 @@
     <button mat-raised-button (click)="toggleSpoilers = !toggleSpoilers" style="margin-top: 1em;">{{ !toggleSpoilers ?
       "Show" : "Hide" }} Spoilers
     </button>
+    <a mat-raised-button color="primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
     <div *ngIf="regions !== undefined && toggleSpoilers">
       <div class="divider"></div>
-      <button mat-button color="primary" *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
+      <button mat-raised-button *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
       <div *ngFor="let region of regions; let i = index">
         <mat-list *ngIf="i === selectedRegionIndex">
           <h3>{{ region.getName() }}</h3>

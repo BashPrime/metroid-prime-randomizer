@@ -156,4 +156,18 @@ export class World {
 
     return layoutString.encode_pickup_layout(itemLayout);
   }
+
+  public toJson(): string {
+    let regionObj: {
+      [key: string]: object;
+    } = {};
+    for (let region of this.regions) {
+      let locationObj: {[key:string]: string} = {};
+      for (let location of region.getLocationsArray()) {
+        locationObj[location.getName()] = location.getItem().getName();
+      }
+      regionObj[region.getName()] = locationObj;
+    }
+    return JSON.stringify(regionObj);
+  }
 }

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 import {Randomizer} from '../../common/randomizer/Randomizer';
 import {Region} from '../../common/randomizer/Region';
 import {Location} from '../../common/randomizer/Location';
@@ -21,6 +23,9 @@ export class RandomizerComponent implements OnInit {
   selectedDifficulty: string;
   layoutString: string;
   toggleSpoilers = false;
+  spoilerLog: string;
+  spoilerFileName: string;
+  downloadJsonHref: SafeUrl;
   modes = [
     {name: 'Standard', value: RandomizerMode.STANDARD},
     {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
@@ -34,7 +39,7 @@ export class RandomizerComponent implements OnInit {
     {name: 'Normal', value: 'normal'}
   ];
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     this.selectedMode = this.modes[0].value;
     this.selectedLogic = this.logics[0].value;
     this.selectedDifficulty = this.difficulties[0].value;
@@ -48,6 +53,7 @@ export class RandomizerComponent implements OnInit {
   }
 
   runRandomizer(): void {
+    this.spoilerLog = undefined;
     this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedDifficulty);
 
     if (this.selectedSeed) {
@@ -59,6 +65,25 @@ export class RandomizerComponent implements OnInit {
     this.regions = this.randomizer.getWorld().getRegions();
     this.locations = this.randomizer.getWorld().getLocations();
     this.layoutString = this.randomizer.getWorld().generateLayout();
+    this.generateSpoilerLog();
+  }
+
+  generateSpoilerLog(): void {
+    let spoiler: any = {info: {}};
+    spoiler.info.mode = this.randomizer.getMode();
+    spoiler.info.logic = this.randomizer.getLogic();
+    spoiler.info.difficulty = this.randomizer.getDifficulty();
+    spoiler.info.seed = this.randomizer.getSeed();
+    spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
+
+    this.spoilerLog = JSON.stringify(spoiler, null, '\t');
+
+    let uri = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(this.spoilerLog));
+    this.downloadJsonHref = uri;
+
+    this.spoilerFileName = "prime_randomizer_" + this.randomizer.getMode() +
+      "_" + this.randomizer.getLogic() + "_" + this.randomizer.getDifficulty() +
+      "_" + this.randomizer.getSeed() + ".txt";
   }
 
 }
