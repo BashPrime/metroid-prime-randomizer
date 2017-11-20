@@ -197,7 +197,10 @@ export class PhendranaDrifts extends Region {
     const minVMRTanks = 6;
     this.locations.get('Phendrana Shorelines (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaReqsMinorGlitches(minVMRTanks)
-        && (items.has(PrimeItemName.PLASMA_BEAM) || items.canDoInfiniteSpeed());
+        && (
+          items.has(PrimeItemName.PLASMA_BEAM)
+          || (items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.canDoInfiniteSpeed())
+        );
     };
 
     this.locations.get('Phendrana Shorelines (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -207,7 +210,9 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get('Chozo Ice Temple').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaReqsMinorGlitches(minVMRTanks) && items.has(PrimeItemName.SPACE_JUMP_BOOTS)
-        && (items.has(PrimeItemName.PLASMA_BEAM) || items.canDoInfiniteSpeed());
+        && (
+          items.has(PrimeItemName.PLASMA_BEAM) || (items.has(PrimeItemName.WAVE_BEAM) && items.canDoInfiniteSpeed())
+        );
     };
 
     this.locations.get('Ice Ruins West').canFillItem = function (item: Item, items: ItemCollection): boolean {
