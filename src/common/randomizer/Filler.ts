@@ -13,7 +13,7 @@ export abstract class Filler {
     this.rng = rng;
   }
 
-  abstract fill(priorityItems: Array<Item>, upgrades: Array<Item>, artifacts: Array<Item>, expansions: Array<Item>): void;
+  abstract fill(fillItems: Array<Item>): void;
 
   fastFillItemsInLocations(fillItems: Array<Item>, locations: Array<Location>): void {
     for (const location of locations) {

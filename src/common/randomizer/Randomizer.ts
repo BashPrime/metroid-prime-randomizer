@@ -24,12 +24,25 @@ export class Randomizer {
   }
 
   randomize(seed?: number): void {
-    if (seed == null) {
-      seed = this.getRandomInt(1, 1000000000);
-    }
-    this.seed = seed;
+    // Generate pseudorandom seed if one wasn't provided by the user
+    this.seed = seed ? seed : this.getRandomInt(1, 1000000000);
+
     this.rng = new MersenneTwister(this.seed);
-    new RandomAssumed(this.world, this.rng).fill(this.getPriorityItems(), this.getUpgrades(), this.getArtifacts(), this.getExpansions());
+    const itemFiller = new RandomAssumed(this.world, this.rng);
+    const vmrTanks = 7; // Number of energy tanks to include in normal upgrade pool to allow for VMR seeds
+
+    // Logically fill the priority items, then the rest of the major upgrades
+    itemFiller.fill(this.getPriorityItems());
+    itemFiller.fill(this.getUpgrades(vmrTanks));
+
+    // Fill remaining energy tanks in major item locations if using the Major Items mode
+    if (this.mode === RandomizerMode.MAJOR_ITEMS) {
+      itemFiller.fill(this.getEnergyTanks(vmrTanks), true);
+    }
+
+    // Fast fill the artifacts and expansions
+    itemFiller.fill(this.getArtifacts(), true);
+    itemFiller.fill(this.getExpansions(vmrTanks), true, true);
   }
 
   getWorld(): World {
@@ -52,8 +65,18 @@ export class Randomizer {
     return this.seed;
   }
 
+  createItemsFromMap(itemsMap: Map<string, number>): Item[] {
+    const items: Item[] = [];
+    itemsMap.forEach((value: number, key: string) => {
+      for (let i = 0; i < value; i++) {
+        items.push(Item.get(key));
+      }
+    });
+
+    return items;
+  }
+
   getArtifacts(): Array<Item> {
-    const items: Array<Item> = [];
     const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, 1);
     itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, 1);
@@ -68,39 +91,33 @@ export class Randomizer {
     itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, 1);
     itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, 1);
 
-    itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++) {
-        items.push(Item.get(key));
-      }
-    });
+    return this.createItemsFromMap(itemsMap);
+  }
 
-    return items;
+  getEnergyTanks(vmrTanks: number): Array<Item> {
+    const itemsMap: Map<string, number> = new Map<string, number>();
+    const numTanks = this.logic === RandomizerLogic.NO_GLITCHES ? 14 : 14 - vmrTanks;
+
+    itemsMap.set(PrimeItem.ENERGY_TANK, numTanks);
+
+    return this.createItemsFromMap(itemsMap);
   }
 
   getPriorityItems(): Array<Item> {
-    const items: Array<Item> = [];
     const itemsMap: Map<string, number> = new Map<string, number>();
-    switch (this.logic) {
-      case RandomizerLogic.MINOR_GLITCHES:
-        itemsMap.set(PrimeItem.MISSILE_LAUNCHER, 1);
-        break;
-      case RandomizerLogic.NO_GLITCHES:
-      default:
-        itemsMap.set(PrimeItem.MISSILE_LAUNCHER, 1);
-        itemsMap.set(PrimeItem.MORPH_BALL, 1);
+
+    // Morph Ball should be among the first two items placed in no glitches logics
+    // This is to keep the fill algorithm from erroring out when placing the upgrades
+    if (this.logic === RandomizerLogic.NO_GLITCHES) {
+      itemsMap.set(PrimeItem.MORPH_BALL, 1);
     }
 
-    itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++) {
-        items.push(Item.get(key));
-      }
-    });
+    itemsMap.set(PrimeItem.MISSILE_LAUNCHER, 1);
 
-    return items;
+    return this.createItemsFromMap(itemsMap);
   }
 
-  getUpgrades(): Array<Item> {
-    const items: Array<Item> = [];
+  getUpgrades(vmrTanks: number): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
     itemsMap.set(PrimeItem.VARIA_SUIT, 1);
@@ -122,41 +139,28 @@ export class Randomizer {
     itemsMap.set(PrimeItem.ICE_SPREADER, 1);
     itemsMap.set(PrimeItem.FLAMETHROWER, 1);
 
+    // Allow VMR tanks and morph ball in upgrades pool for any glitched logics
     if (this.logic !== RandomizerLogic.NO_GLITCHES) {
       itemsMap.set(PrimeItem.MORPH_BALL, 1);
-      itemsMap.set(PrimeItem.ENERGY_TANK, 6);
+      itemsMap.set(PrimeItem.ENERGY_TANK, vmrTanks);
     }
 
-    itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++) {
-        items.push(Item.get(key));
-      }
-    });
-
-    return items;
+    return this.createItemsFromMap(itemsMap);
   }
 
-  getExpansions(): Array<Item> {
-    const items: Array<Item> = [];
+  getExpansions(vmrTanks: number): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
 
     itemsMap.set(PrimeItem.MISSILE_EXPANSION, 49);
-
-    if (this.logic === RandomizerLogic.NO_GLITCHES) {
-      itemsMap.set(PrimeItem.ENERGY_TANK, 14);
-    } else {
-      itemsMap.set(PrimeItem.ENERGY_TANK, 8);
-    }
-
     itemsMap.set(PrimeItem.POWER_BOMB_EXPANSION, 4);
 
-    itemsMap.forEach((value: number, key: string) => {
-      for (let i = 0; i < value; i++) {
-        items.push(Item.get(key));
-      }
-    });
-
-    return items;
+    // If filling VMR tanks in upgrades pool, use remainder of tanks in this item pool
+    if (this.mode !== RandomizerMode.MAJOR_ITEMS) {
+      const numTanks = this.logic === RandomizerLogic.NO_GLITCHES ? 14 : 14 - vmrTanks;
+      itemsMap.set(PrimeItem.ENERGY_TANK, numTanks);
+    }
+    
+    return this.createItemsFromMap(itemsMap);
   }
 
   getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {

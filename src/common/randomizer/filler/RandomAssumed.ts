@@ -8,50 +8,24 @@ import {RandomizerMode} from '../enums/RandomizerMode';
 import {RandomizerLogic} from '../enums/RandomizerLogic';
 
 export class RandomAssumed extends Filler {
-  fill(priorityItems: Array<Item>, upgrades: Array<Item>, artifacts: Array<Item>, expansions: Array<Item>): void {
-    let randomizedLocations: Array<Location>;
-    let energyTanks: Array<Item> = [];
+  fill(fillItems: Item[], fastFill?: boolean, forceAllLocations?: boolean): void {
+    // Shuffle items and locations before filling
+    const shuffledItems = this.shuffleItems(fillItems);
+    let shuffledLocations;
 
-    switch (this.world.getMode()) {
-      case RandomizerMode.MAJOR_ITEMS:
-        randomizedLocations = this.shuffleLocations([...this.world.getUpgradeLocations()]);
-        energyTanks = expansions.filter(item => item.getName() === PrimeItem.ENERGY_TANK);
-        expansions = expansions.filter(item => item.getName() !== PrimeItem.ENERGY_TANK);
-        break;
-
-      case RandomizerMode.STANDARD:
-      default:
-        randomizedLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
-    }
-
-    switch (this.world.getLogic()) {
-      case RandomizerLogic.NAIVE:
-        this.fastFillItemsInLocations(priorityItems, randomizedLocations);
-        randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-        this.fastFillItemsInLocations(upgrades, randomizedLocations);
-        break;
-      default:
-        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(priorityItems)), new LocationCollection(randomizedLocations));
-        randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-        this.fillItemsInLocations(new ItemCollection(this.shuffleItems(upgrades)), new LocationCollection(randomizedLocations));
-    }
-
-    if (this.world.getMode() === RandomizerMode.MAJOR_ITEMS) {
-      randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-      this.fastFillItemsInLocations(energyTanks, randomizedLocations);
-
-      randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-      this.fastFillItemsInLocations(artifacts, randomizedLocations);
-
-      randomizedLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
+    // Only use major item locations if the force flag is not set and the mode is Major Items
+    if (!forceAllLocations && this.world.getMode() === RandomizerMode.MAJOR_ITEMS) {
+      shuffledLocations = this.shuffleLocations([...this.world.getUpgradeLocations()]);
     } else {
-      randomizedLocations = this.shuffleLocations(new LocationCollection(randomizedLocations).getEmptyLocations().toArray());
-      this.fastFillItemsInLocations(artifacts, randomizedLocations);
+      shuffledLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
     }
 
-    randomizedLocations = new LocationCollection(randomizedLocations).getEmptyLocations().toArray();
-
-    this.fastFillItemsInLocations(expansions, randomizedLocations);
+    // Use logic-based fill if fast fill flag isn't set
+    if (!fastFill) {
+      this.fillItemsInLocations(new ItemCollection(shuffledItems), new LocationCollection(shuffledLocations));
+    } else {
+      this.fastFillItemsInLocations(shuffledItems, shuffledLocations);
+    }
   }
 
   fillItemsInLocations(fillItems: ItemCollection,
