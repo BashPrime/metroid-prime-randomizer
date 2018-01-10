@@ -1,6 +1,6 @@
 import {Collection} from './Collection';
 import {Item} from '../Item';
-import {PrimeItemName} from '../ItemType';
+import {PrimeItem} from '../enums/PrimeItem';
 
 export class ItemCollection extends Collection {
   protected items: Array<Item>;
@@ -52,10 +52,11 @@ export class ItemCollection extends Collection {
   protected incrementItemCount(item: Item) {
     const itemName = item.getName();
     const itemVal = this.itemCount.get(itemName);
-    if (itemVal === undefined)
+    if (itemVal === undefined) {
       this.itemCount.set(itemName, 1);
-    else
+    } else {
       this.itemCount.set(itemName, itemVal + 1);
+    }
   }
 
   public has(key: string): boolean {
@@ -75,45 +76,46 @@ export class ItemCollection extends Collection {
   }
 
   public hasMissiles(): boolean {
-    return this.has(PrimeItemName.MISSILE_EXPANSION) || this.has(PrimeItemName.MISSILE_LAUNCHER);
+    return this.has(PrimeItem.MISSILE_EXPANSION) || this.has(PrimeItem.MISSILE_LAUNCHER);
   }
 
   public hasMissileCount(count: number): boolean {
     if (this.hasMissiles()) {
-      const expansionCount = this.has(PrimeItemName.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItemName.MISSILE_EXPANSION) : 0;
+      const expansionCount = this.has(PrimeItem.MISSILE_EXPANSION) ? this.itemCount.get(PrimeItem.MISSILE_EXPANSION) : 0;
       // Launcher's count value will almost always be 1 or 0
-      const launcherCount = this.has(PrimeItemName.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItemName.MISSILE_LAUNCHER) : 0;
+      const launcherCount = this.has(PrimeItem.MISSILE_LAUNCHER) ? this.itemCount.get(PrimeItem.MISSILE_LAUNCHER) : 0;
       return expansionCount + launcherCount >= count;
     }
     return false;
   }
 
   public hasEnergyTankCount(count: number): boolean {
-    if (this.has(PrimeItemName.ENERGY_TANK)) {
-      const energyCount = this.has(PrimeItemName.ENERGY_TANK) ? this.itemCount.get(PrimeItemName.ENERGY_TANK) : 0;
+    if (this.has(PrimeItem.ENERGY_TANK)) {
+      const energyCount = this.has(PrimeItem.ENERGY_TANK) ? this.itemCount.get(PrimeItem.ENERGY_TANK) : 0;
       return energyCount >= count;
     }
     return false;
   }
 
   public hasAnySuit(): boolean {
-    return this.has(PrimeItemName.VARIA_SUIT) || this.has(PrimeItemName.GRAVITY_SUIT) || this.has(PrimeItemName.PHAZON_SUIT);
+    return this.has(PrimeItem.VARIA_SUIT) || this.has(PrimeItem.GRAVITY_SUIT) || this.has(PrimeItem.PHAZON_SUIT);
   }
 
   public canLayBombs(): boolean {
-    return this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.MORPH_BALL_BOMB);
+    return this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.MORPH_BALL_BOMB);
   }
 
   public canLayPowerBombs(): boolean {
-    return this.has(PrimeItemName.MORPH_BALL) && (this.has(PrimeItemName.POWER_BOMB) || this.has(PrimeItemName.POWER_BOMB_EXPANSION));
+    return this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.POWER_BOMB) || this.has(PrimeItem.POWER_BOMB_EXPANSION));
   }
 
   public canLayBombsOrPowerBombs(): boolean {
-    return this.has(PrimeItemName.MORPH_BALL) && (this.has(PrimeItemName.MORPH_BALL_BOMB) || this.has(PrimeItemName.POWER_BOMB) || this.has(PrimeItemName.POWER_BOMB_EXPANSION));
+    return this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || this.has(PrimeItem.POWER_BOMB)
+      || this.has(PrimeItem.POWER_BOMB_EXPANSION));
   }
 
   public canFireSuperMissiles(): boolean {
-    return this.hasMissiles() && this.has(PrimeItemName.CHARGE_BEAM) && this.has(PrimeItemName.SUPER_MISSILE);
+    return this.hasMissiles() && this.has(PrimeItem.CHARGE_BEAM) && this.has(PrimeItem.SUPER_MISSILE);
   }
 
   public hasPhendranaReqs(): boolean {
@@ -126,39 +128,39 @@ export class ItemCollection extends Collection {
   }
 
   public hasBackwardsPhendranaReqs(): boolean {
-    return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItemName.WAVE_BEAM);
+    return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)
+      && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM);
   }
 
   public hasBackwardsPhendranaReqsMinorGlitches(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.has(PrimeItemName.MORPH_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItemName.WAVE_BEAM)
+    return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItem.WAVE_BEAM)
       && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
   }
 
   public hasMinesFromTallonReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.GRAVITY_SUIT)
-      && this.has(PrimeItemName.THERMAL_VISOR) && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
+      && this.has(PrimeItem.THERMAL_VISOR) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
   }
 
   public hasMinesFromTallonReqsMinorGlitches(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM);
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
   }
 
   public hasMinesFromMagmoorReqs(): boolean {
     return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.hasAnySuit()
-      && this.has(PrimeItemName.SPIDER_BALL) && this.has(PrimeItemName.SPACE_JUMP_BOOTS) && this.has(PrimeItemName.WAVE_BEAM)
-      && this.has(PrimeItemName.ICE_BEAM);
+      && this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM)
+      && this.has(PrimeItem.ICE_BEAM);
   }
 
   public hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItemName.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItemName.WAVE_BEAM) && this.has(PrimeItemName.ICE_BEAM)
-      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks))
+    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM)
+      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
   }
 
   public canDoInfiniteSpeed(): boolean {
-    return this.canLayBombs() && this.has(PrimeItemName.BOOST_BALL);
+    return this.canLayBombs() && this.has(PrimeItem.BOOST_BALL);
   }
 }

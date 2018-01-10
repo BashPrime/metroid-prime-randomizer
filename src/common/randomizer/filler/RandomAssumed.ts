@@ -3,7 +3,7 @@ import {ItemCollection} from '../collection/ItemCollection';
 import {LocationCollection} from '../collection/LocationCollection';
 import {Item} from '../Item';
 import {Location} from '../Location';
-import {PrimeItemName} from '../ItemType';
+import {PrimeItem} from '../enums/PrimeItem';
 import {RandomizerMode} from '../enums/RandomizerMode';
 import {RandomizerLogic} from '../enums/RandomizerLogic';
 
@@ -15,8 +15,8 @@ export class RandomAssumed extends Filler {
     switch (this.world.getMode()) {
       case RandomizerMode.MAJOR_ITEMS:
         randomizedLocations = this.shuffleLocations([...this.world.getUpgradeLocations()]);
-        energyTanks = expansions.filter(item => item.getName() === PrimeItemName.ENERGY_TANK);
-        expansions = expansions.filter(item => item.getName() !== PrimeItemName.ENERGY_TANK);
+        energyTanks = expansions.filter(item => item.getName() === PrimeItem.ENERGY_TANK);
+        expansions = expansions.filter(item => item.getName() !== PrimeItem.ENERGY_TANK);
         break;
 
       case RandomizerMode.STANDARD:

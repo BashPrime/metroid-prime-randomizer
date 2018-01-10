@@ -1,7 +1,6 @@
 import {Collection} from './Collection';
 import {ItemCollection} from './ItemCollection';
 import {Location} from '../Location';
-import {PrimeItemName} from '../ItemType';
 
 export class LocationCollection extends Collection {
   protected items: Array<Location>;

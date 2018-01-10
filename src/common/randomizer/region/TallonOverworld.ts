@@ -2,7 +2,7 @@ import {Region} from '../Region';
 import {Location} from '../Location';
 import {Item} from '../Item';
 import {ItemCollection} from '../collection/ItemCollection';
-import {PrimeItemName} from '../ItemType';
+import {PrimeItem} from '../enums/PrimeItem';
 
 export class TallonOverworld extends Region {
   constructor() {
@@ -29,11 +29,11 @@ export class TallonOverworld extends Region {
 
   public initNoGlitches(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItemName.MORPH_BALL);
+      return items.has(PrimeItem.MORPH_BALL);
     };
 
     this.locations.get('Alcove').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.canLayBombs() && items.has(PrimeItemName.BOOST_BALL)) || items.has(PrimeItemName.SPACE_JUMP_BOOTS);
+      return (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
 
     this.locations.get('Artifact Temple').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -41,11 +41,11 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Root Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.GRAPPLE_BEAM) && items.has(PrimeItemName.XRAY_VISOR);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR);
     };
 
     this.locations.get('Arbor Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.GRAPPLE_BEAM) && items.has(PrimeItemName.XRAY_VISOR) && items.has(PrimeItemName.PLASMA_BEAM);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get('Transport Tunnel B').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -53,53 +53,53 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Frigate Crash Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL) && items.has(PrimeItemName.GRAVITY_SUIT) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
 
     this.locations.get('Overgrown Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.BOOST_BALL) && items.has(PrimeItemName.SPIDER_BALL)
-        && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)
+        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
 
     this.locations.get('Cargo Freight Lift to Deck Gamma').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.GRAVITY_SUIT)
-        && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.THERMAL_VISOR);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.THERMAL_VISOR);
     };
 
     this.locations.get('Biohazard Containment').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canFireSuperMissiles() && items.canLayBombs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.GRAVITY_SUIT)
-        && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.THERMAL_VISOR);
+      return items.canFireSuperMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.THERMAL_VISOR);
     };
 
     this.locations.get('Hydro Access Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.GRAVITY_SUIT) && items.has(PrimeItemName.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.THERMAL_VISOR);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.THERMAL_VISOR);
     };
 
     this.locations.get('Great Tree Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM)
-        && items.has(PrimeItemName.ICE_BEAM) && items.has(PrimeItemName.XRAY_VISOR);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+        && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.XRAY_VISOR);
     };
 
     this.locations.get('Life Grove Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPIDER_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Life Grove (Start)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPIDER_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Life Grove (Underwater Spinner)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPIDER_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
     };
   }
 
   public initMinorGlitches(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItemName.MORPH_BALL);
+      return items.has(PrimeItem.MORPH_BALL);
     };
 
     this.locations.get('Alcove').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -111,11 +111,11 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Root Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
 
     this.locations.get('Arbor Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.PLASMA_BEAM);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get('Transport Tunnel B').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -123,47 +123,47 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Frigate Crash Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.MORPH_BALL);
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL);
     };
 
     this.locations.get('Overgrown Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItemName.ICE_BEAM)
-        && (items.canLayBombs() || (items.has(PrimeItemName.MORPH_BALL) && items.has(PrimeItemName.SPACE_JUMP_BOOTS)));
+      return items.hasMissiles() && items.has(PrimeItem.ICE_BEAM)
+        && (items.canLayBombs() || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)));
     };
 
     this.locations.get('Cargo Freight Lift to Deck Gamma').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.GRAVITY_SUIT)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Biohazard Containment').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canFireSuperMissiles() && items.canLayBombs() && items.has(PrimeItemName.GRAVITY_SUIT)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.WAVE_BEAM) && items.has(PrimeItemName.ICE_BEAM);
+      return items.canFireSuperMissiles() && items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Hydro Access Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.GRAVITY_SUIT)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Great Tree Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItemName.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Life Grove Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Life Grove (Start)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Life Grove (Underwater Spinner)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItemName.BOOST_BALL)
-        && items.has(PrimeItemName.SPACE_JUMP_BOOTS) && items.has(PrimeItemName.ICE_BEAM);
+      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
     };
   }
 }

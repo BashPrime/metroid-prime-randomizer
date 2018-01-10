@@ -57,7 +57,7 @@ export class RandomizerComponent implements OnInit {
     this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedDifficulty);
 
     if (this.selectedSeed) {
-      this.selectedSeed = this.selectedSeed < 1 ? 1 : this.selectedSeed > 999999999 ? 999999999 : this.selectedSeed;      
+      this.selectedSeed = this.selectedSeed < 1 ? 1 : this.selectedSeed > 999999999 ? 999999999 : this.selectedSeed;
       this.randomizer.randomize(this.selectedSeed);
     } else {
       this.randomizer.randomize();
@@ -69,7 +69,7 @@ export class RandomizerComponent implements OnInit {
   }
 
   generateSpoilerLog(): void {
-    let spoiler: any = {info: {}};
+    const spoiler: any = {info: {}};
     spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.logic = this.randomizer.getLogic();
     spoiler.info.difficulty = this.randomizer.getDifficulty();
@@ -78,12 +78,12 @@ export class RandomizerComponent implements OnInit {
 
     this.spoilerLog = JSON.stringify(spoiler, null, '\t');
 
-    let uri = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(this.spoilerLog));
+    const uri = this.sanitizer.bypassSecurityTrustUrl('data:text/json;charset=UTF-8,' + encodeURIComponent(this.spoilerLog));
     this.downloadJsonHref = uri;
 
-    this.spoilerFileName = "prime_randomizer_" + this.randomizer.getMode() +
-      "_" + this.randomizer.getLogic() + "_" + this.randomizer.getDifficulty() +
-      "_" + this.randomizer.getSeed() + ".txt";
+    this.spoilerFileName = 'prime_randomizer_' + this.randomizer.getMode() +
+      '_' + this.randomizer.getLogic() + '_' + this.randomizer.getDifficulty() +
+      '_' + this.randomizer.getSeed() + '.txt';
   }
 
 }
