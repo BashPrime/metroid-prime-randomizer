@@ -79,7 +79,7 @@ export class MagmoorCaverns extends Region {
     };
   }
 
-  public initMinorGlitches(): void {
+  public initModerateGlitches(): void {
     const minVMRTanks = 6;
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)

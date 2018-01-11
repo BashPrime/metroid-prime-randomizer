@@ -219,7 +219,7 @@ export class ChozoRuins extends Region {
     };
   }
 
-  public initMinorGlitches(): void {
+  public initModerateGlitches(): void {
     this.locations.get('Main Plaza (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL));
     };

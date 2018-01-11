@@ -193,7 +193,7 @@ export class PhendranaDrifts extends Region {
     };
   }
 
-  public initMinorGlitches(): void {
+  public initModerateGlitches(): void {
     const minVMRTanks = 6;
     this.locations.get('Phendrana Shorelines (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaReqsMinorGlitches(minVMRTanks)

@@ -7,8 +7,8 @@ export abstract class Region {
 
   public init(logic: string = RandomizerLogic.NO_GLITCHES): void {
     switch (logic) {
-      case RandomizerLogic.MINOR_GLITCHES:
-        this.initMinorGlitches();
+      case RandomizerLogic.MODERATE_GLITCHES:
+        this.initModerateGlitches();
         break;
       case RandomizerLogic.NO_GLITCHES:
       default:
@@ -18,7 +18,7 @@ export abstract class Region {
 
   public abstract initNoGlitches(): void;
 
-  public abstract initMinorGlitches(): void;
+  public abstract initModerateGlitches(): void;
 
   public getName(): string {
     return this.name;

@@ -97,7 +97,7 @@ export class TallonOverworld extends Region {
     };
   }
 
-  public initMinorGlitches(): void {
+  public initModerateGlitches(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };
