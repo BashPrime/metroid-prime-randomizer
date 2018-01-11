@@ -33,7 +33,6 @@ export class RandomizerComponent implements OnInit {
   logics = [
     {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
     {name: 'Moderate Glitches', value: RandomizerLogic.MODERATE_GLITCHES},
-    {name: 'Naive', value: RandomizerLogic.NAIVE}
   ];
   difficulties = [
     {name: 'Normal', value: 'normal'}

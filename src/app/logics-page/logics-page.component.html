@@ -1,117 +1,109 @@
 <mat-card>
-    <h2>Game Logics</h2>
-    <mat-card-content>
-      <p>
-        There are logic rules in place which prevent you from being locked out of progression and guaranteeing
-        that you’ll be able to finish the game every time regardless of the distribution of items. The different
-        game modes use different logic and assume different levels of game knowledge and ability.
-      </p>
-      <mat-card>
-        <h3>No Glitches</h3>
-        <mat-card-content>
-          <p>This mode requires no advanced knowledge about the game, and is ideal for casual players.</p>
-          <p>
-            This logic is designed to prevent players from getting stuck in as many locations as possible,
-            but it is still possible to softlock when you enter a room that you're unable to leave (ex: vanilla
-            beam rooms without the necessary beam to escape, Elite Quarters without obtaining X-Ray visor).
-          </p>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <h3>Easy Glitches (to be added)</h3>
-        <mat-card-content>
-          <p>This mode accounts for some of the easier-to-execute glitches, techniques, and sequence breaks in the game. They are as follows:</p>
-          <ul>
-            <li>Dashing (such as scan dashing)</li>
-            <li>Slope Jumping</li>
-            <li>L Jumping</li>
-            <li>Visor skips for puzzles (such as power conduits, invisible platforms)</li>
-            <li>Exploiting collision you can stand on (allows access to rooms and items without Spider Ball, Grapple Beam, etc.)</li>
-          </ul>
-          <p>
-            You will never be forced to do any of the following:
-          </p>
-          <ul>
-            <li>NSJ (no space jump) techniques in rooms that expect you to have Space Jump Boots equipped (Pirate labs, Phazon Mines, etc.)</li>
-            <li>Underwater slope jumps without Space Jump Boots</li>
-            <li>Infinite Speed glitch</li>
-            <li>Traversing Magmoor Caverns without a suit</li>
-            <li>Traversing Twin Fires Tunnel by scan dashing or R jumping</li>
-            <li>Out of bounds sequences, or tricks requiring you to go out of bounds</li>
-            <li>Bars skip in Great Tree Hall</li>
-            <li>Life Grove/Life Grove Tunnel without Boost Ball</li>
-            <li>Geothermal Core puzzle without Boost Ball</li>
-            <li>Exit Gravity Chamber without Gravity Suit</li>
-            <li>Exit Quarantine Cave without Spider Ball or Grapple Beam</li>
-            <li>Quarantine Monitor without Spider Ball or Grapple Beam</li>
-            <li>Crashed Frigate without Gravity Suit or Wave Beam</li>
-            <li>Phazon Mines without Spider Ball</li>
-            <li>Spider Ball skips in Phazon Mines, such as spiderless shafts</li>
-            <li>Root Cave, Magma Pool, Training Chamber Access, and Training Chamber without Grapple Beam</li>
-            <li>"Early Wild" Infinite Bomb Jump</li>
-          </ul>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-          <h3>Moderate Glitches</h3>
-          <mat-card-content>
-            <p>This mode accounts for more significant sequence breaks and more difficult tricks than Easy Glitches:</p>
-          <ul>
-            <li>All dashes with Space Jump equipped</li>
-            <li>R Jumping</li>
-            <li>Using some of the easier NSJ (No Space Jump) movement in a few rooms</li>
-            <li>Underwater slope jumps without Space Jump equipped</li>
-            <li>"Early Wild" Infinite Bomb Jump (IBJ) in Sun Tower</li>
-            <li>The following uses of the Infinite Speed glitch:
-              <ul>
-                <li>"Early Sun" IS (in Chapel of the Elders)</li>
-                <li>Magma Pool IS</li>
-              </ul>
-            </li>
-            <li>Bars skip in Great Tree Hall</li>
-            <li>Climbing Frigate Crash Site (with Space Jump)</li>
-            <li>Grapple Beam is no longer required if you have Space Jump equipped</li>
-            <li>Skipping Boost Ball, Spider Ball, and Gravity Suit almost everywhere (see below for constraints)</li>
-            <li>Boost Ball is only required for Life Grove, Life Grove Tunnel, and Plasma Processing</li>
-            <li>Traversing most of Magmoor Caverns without a suit upgrade. The logic required a minimum of 5 Energy Tanks</li>
-            <li>If "Allow Out-of-Bounds" is checked, the following wallcrawls:
-              <ul>Wave/Sun IS</ul>
-              <ul>Arbor Chamber</ul>
-              <ul>Training Chamber/Training Chamber Access</ul>
-              <ul>Chozo Ruins floaty jump for Dynamo and Training Chamber IBJ</ul>
-              <ul>Magmoor Caverns floaty jump for Geothermal Core IBJ</ul>
-            </li>
-          </ul>
-          <p>
-            You will never be forced to do any of the following:
-          </p>
-          <ul>
-            <li>Most NSJ tricks, including:
-              <ul>
-                <li>Hyper Bomb Jump (HBJ)</li>
-                <li>Uber Bomb Jump (UBJ)</li>
-                <li>Half-pipe Bomb Jump (HPBJ)</li>
-                <li>Any tricks that skip using other upgrades such as Boost Ball, Spider Ball, Grapple Beam, etc.</li>
-              </ul>
-            </li>
-            <li>Life Grove and Life Grove Tunnel without Boost Ball and Power Bombs</li>
-            <li>Plasma Processing without Boost Ball</li>
-            <li>Crashed Frigate without Gravity Suit</li>
-            <li>Far Phendrana (except Transport Access), Magmoor past the Tallon elevator, and Phazon Mines without Space Jump</li>
-            <li>Dynamo (inbounds), Phendrana Shorelines, and Ice Ruins East spider tracks without Spider Ball</li>
-            <li>Any of the above out-of-bounds wallcrawls without Space Jump, Morph Ball, and bombs equipped</li>
-          </ul>
-          </mat-card-content>
-        </mat-card>
-      <mat-card>
-          <h3>Naive</h3>
-          <mat-card-content>
-            <p>This mode simply places items in random locations without any logic checking.</p>
-            <p>
-              This mode shouldn't be taken seriously, and is recommended for testing purposes only
-              due to the sheer number of incompleteable seeds it can produce.
-            </p>
-          </mat-card-content>
-        </mat-card>
-    </mat-card-content>
-  </mat-card>
+  <h2>Game Logics</h2>
+  <mat-card-content>
+    <p>
+      There are logic rules in place which prevent you from being locked out of progression and guaranteeing that you’ll be able
+      to finish the game every time regardless of the distribution of items. The different game modes use different logic
+      and assume different levels of game knowledge and ability.
+    </p>
+    <mat-card>
+      <h3>No Glitches</h3>
+      <mat-card-content>
+        <p>This mode requires no advanced knowledge about the game, and is ideal for casual players.</p>
+        <p>
+          This logic is designed to prevent players from getting stuck in as many locations as possible, but it is still possible to
+          softlock when you enter a room that you're unable to leave (ex: vanilla beam rooms without the necessary beam to
+          escape, Elite Quarters without obtaining X-Ray visor).
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <h3>Easy Glitches (to be added)</h3>
+      <mat-card-content>
+        <p>This mode accounts for some of the easier-to-execute glitches, techniques, and sequence breaks in the game. They
+          are as follows:</p>
+        <ul>
+          <li>Dashing (such as scan dashing)</li>
+          <li>Slope Jumping</li>
+          <li>L Jumping</li>
+          <li>Visor skips for puzzles (such as power conduits, invisible platforms)</li>
+          <li>Exploiting collision you can stand on (allows access to rooms and items without Spider Ball, Grapple Beam, etc.)</li>
+        </ul>
+        <p>
+          You will never be forced to do any of the following:
+        </p>
+        <ul>
+          <li>NSJ (no space jump) techniques in rooms that expect you to have Space Jump Boots equipped (Pirate labs, Phazon
+            Mines, etc.)</li>
+          <li>Underwater slope jumps without Space Jump Boots</li>
+          <li>Infinite Speed glitch</li>
+          <li>Traversing Magmoor Caverns without a suit</li>
+          <li>Traversing Twin Fires Tunnel by scan dashing or R jumping</li>
+          <li>Out of bounds sequences, or tricks requiring you to go out of bounds</li>
+          <li>Bars skip in Great Tree Hall</li>
+          <li>Life Grove/Life Grove Tunnel without Boost Ball</li>
+          <li>Geothermal Core puzzle without Boost Ball</li>
+          <li>Exit Gravity Chamber without Gravity Suit</li>
+          <li>Exit Quarantine Cave without Spider Ball or Grapple Beam</li>
+          <li>Quarantine Monitor without Spider Ball or Grapple Beam</li>
+          <li>Crashed Frigate without Gravity Suit or Wave Beam</li>
+          <li>Phazon Mines without Spider Ball</li>
+          <li>Spider Ball skips in Phazon Mines, such as spiderless shafts</li>
+          <li>Root Cave, Magma Pool, Training Chamber Access, and Training Chamber without Grapple Beam</li>
+          <li>"Early Wild" Infinite Bomb Jump</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <h3>Moderate Glitches</h3>
+      <mat-card-content>
+        <p>This mode accounts for more significant sequence breaks and more difficult tricks than Easy Glitches:</p>
+        <ul>
+          <li>All dashes with Space Jump equipped</li>
+          <li>R Jumping</li>
+          <li>Using some of the easier NSJ (No Space Jump) movement in a few rooms</li>
+          <li>Underwater slope jumps without Space Jump equipped</li>
+          <li>"Early Wild" Infinite Bomb Jump (IBJ) in Sun Tower</li>
+          <li>The following uses of the Infinite Speed glitch:
+            <ul>
+              <li>"Early Sun" IS (in Chapel of the Elders)</li>
+              <li>Magma Pool IS</li>
+            </ul>
+          </li>
+          <li>Bars skip in Great Tree Hall</li>
+          <li>Climbing Frigate Crash Site (with Space Jump)</li>
+          <li>Grapple Beam is no longer required if you have Space Jump equipped</li>
+          <li>Skipping Boost Ball, Spider Ball, and Gravity Suit almost everywhere (see below for constraints)</li>
+          <li>Boost Ball is only required for Life Grove, Life Grove Tunnel, and Plasma Processing</li>
+          <li>Traversing most of Magmoor Caverns without a suit upgrade. The logic required a minimum of 5 Energy Tanks</li>
+          <li>If "Allow Out-of-Bounds" is checked, the following wallcrawls:
+            <ul>Wave/Sun IS</ul>
+            <ul>Arbor Chamber</ul>
+            <ul>Training Chamber/Training Chamber Access</ul>
+            <ul>Chozo Ruins floaty jump for Dynamo and Training Chamber IBJ</ul>
+            <ul>Magmoor Caverns floaty jump for Geothermal Core IBJ</ul>
+          </li>
+        </ul>
+        <p>
+          You will never be forced to do any of the following:
+        </p>
+        <ul>
+          <li>Most NSJ tricks, including:
+            <ul>
+              <li>Hyper Bomb Jump (HBJ)</li>
+              <li>Uber Bomb Jump (UBJ)</li>
+              <li>Half-pipe Bomb Jump (HPBJ)</li>
+              <li>Any tricks that skip using other upgrades such as Boost Ball, Spider Ball, Grapple Beam, etc.</li>
+            </ul>
+          </li>
+          <li>Life Grove and Life Grove Tunnel without Boost Ball and Power Bombs</li>
+          <li>Plasma Processing without Boost Ball</li>
+          <li>Crashed Frigate without Gravity Suit</li>
+          <li>Far Phendrana (except Transport Access), Magmoor past the Tallon elevator, and Phazon Mines without Space Jump</li>
+          <li>Dynamo (inbounds), Phendrana Shorelines, and Ice Ruins East spider tracks without Spider Ball</li>
+          <li>Any of the above out-of-bounds wallcrawls without Space Jump, Morph Ball, and bombs equipped</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>
