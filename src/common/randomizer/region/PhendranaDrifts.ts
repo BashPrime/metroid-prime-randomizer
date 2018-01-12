@@ -193,6 +193,175 @@ export class PhendranaDrifts extends Region {
     };
   }
 
+  public initEasyGlitches(): void {
+    this.locations.get('Phendrana Shorelines (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.PLASMA_BEAM);
+    };
+
+    this.locations.get('Phendrana Shorelines (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && items.has(PrimeItem.SPIDER_BALL);
+    };
+
+    this.locations.get('Chozo Ice Temple').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM);
+    };
+
+    this.locations.get('Ice Ruins West').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM);
+    };
+
+    this.locations.get('Ice Ruins East (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.PLASMA_BEAM);
+    };
+
+    this.locations.get('Ice Ruins East (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.SPIDER_BALL);
+    };
+
+    this.locations.get('Chapel of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+    this.locations.get('Chapel of the Elders').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+
+    this.locations.get('Ruined Courtyard').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+
+    this.locations.get('Phendrana Canyon').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasPhendranaReqs();
+    };
+    // You'll softlock if you destroy the boxes, and don't have space jump or boost
+    this.locations.get('Phendrana Canyon').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.BOOST_BALL);
+    };
+
+    this.locations.get('Quarantine Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.WAVE_BEAM)
+        && items.canFireSuperMissiles())
+        || items.hasBackwardsPhendranaReqs();
+    };
+    this.locations.get('Quarantine Cave').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM);
+    };
+
+    this.locations.get('Quarantine Monitor').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM)))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.GRAPPLE_BEAM));
+    };
+
+    this.locations.get('Research Lab Hydra').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.canFireSuperMissiles()
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.WAVE_BEAM) && (items.has(PrimeItem.SPACE_JUMP_BOOTS)))
+          || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM))
+        );
+    };
+
+    this.locations.get('Observatory').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.BOOST_BALL))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM));
+    };
+
+    this.locations.get('Control Tower').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.BOOST_BALL))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM));
+    };
+
+    this.locations.get('Research Lab Aether (Tank)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.BOOST_BALL))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM));
+    };
+
+    this.locations.get('Research Lab Aether (Morph Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.BOOST_BALL))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM));
+    };
+
+    this.locations.get('Research Core').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.BOOST_BALL))
+        || (items.hasBackwardsPhendranaReqs() && items.has(PrimeItem.ICE_BEAM));
+    };
+
+    this.locations.get('Transport Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.ICE_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+
+    this.locations.get('Frost Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.ICE_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+
+    this.locations.get('Storage Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+
+    this.locations.get('Security Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+
+    this.locations.get('Gravity Chamber (Underwater)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.ICE_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+    this.locations.get('Gravity Chamber (Underwater)').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && (items.has(PrimeItem.THERMAL_VISOR) || items.hasBackwardsPhendranaReqs());
+    };
+
+    this.locations.get('Gravity Chamber (Grapple Ledge)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
+        && (
+          (items.hasPhendranaReqs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqs()
+        );
+    };
+  }
+
   public initModerateGlitches(): void {
     const minVMRTanks = 6;
     this.locations.get('Phendrana Shorelines (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -366,7 +535,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Gravity Chamber (Grapple Ledge)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
+      return items.has(PrimeItem.ICE_BEAM)
         && (
           (items.hasPhendranaReqsMinorGlitches(minVMRTanks) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
             && items.has(PrimeItem.WAVE_BEAM))

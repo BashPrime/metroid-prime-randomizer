@@ -7,6 +7,9 @@ export abstract class Region {
 
   public init(logic: string = RandomizerLogic.NO_GLITCHES): void {
     switch (logic) {
+      case RandomizerLogic.EASY_GLITCHES:
+        this.initEasyGlitches();
+        break;
       case RandomizerLogic.MODERATE_GLITCHES:
         this.initModerateGlitches();
         break;
@@ -17,6 +20,8 @@ export abstract class Region {
   }
 
   public abstract initNoGlitches(): void;
+
+  public abstract initEasyGlitches(): void;
 
   public abstract initModerateGlitches(): void;
 

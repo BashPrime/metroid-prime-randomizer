@@ -143,6 +143,11 @@ export class ItemCollection extends Collection {
       && this.has(PrimeItem.THERMAL_VISOR) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
   }
 
+  public hasMinesFromTallonReqsEasyGlitches(): boolean {
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM)
+      && this.has(PrimeItem.ICE_BEAM);
+  }
+
   public hasMinesFromTallonReqsMinorGlitches(): boolean {
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
       && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
