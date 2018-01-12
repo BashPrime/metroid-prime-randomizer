@@ -172,7 +172,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasMinesFromTallonReqsModerateGlitches(): boolean {
-    return this.hasMinesFromTallonReqsModerateGlitches();
+    return this.hasMinesFromTallonReqs();
   }
 
   // Bare minimum requirements to enter mines from Magmoor

@@ -29,10 +29,27 @@ export class Randomizer {
 
     this.rng = new MersenneTwister(this.seed);
     const itemFiller = new RandomAssumed(this.world, this.rng);
-    const vmrTanks = 7; // Number of energy tanks to include in normal upgrade pool to allow for VMR seeds
+    const vmrTanks = 5; // Number of energy tanks to include in normal upgrade pool to allow for VMR seeds
 
-    // Logically fill the priority items, then the rest of the major upgrades
+    // Logically fill the priority items first (currently, only Missile Launcher)
     itemFiller.fill(this.getPriorityItems());
+
+    if (this.mode === RandomizerMode.MAJOR_ITEMS) {
+      /*
+        If major items mode is used, Morph Ball and bombs need to be prioritized
+        before upgrades, but after Missile Launcher (bombs in no glitches logic only)
+      */
+      const majorPriorityItems: [{name: string, count: number}] = [
+        {name: PrimeItem.MORPH_BALL, count: 1},
+      ];
+
+      if (this.logic === RandomizerLogic.NO_GLITCHES) {
+        majorPriorityItems.push({name: PrimeItem.MORPH_BALL_BOMB, count: 1});
+      }
+      itemFiller.fill(this.getItems(majorPriorityItems));
+    }
+
+    // After priority items are filled, fill the upgrades
     itemFiller.fill(this.getUpgrades(vmrTanks));
 
     // Fill remaining energy tanks in major item locations if using the Major Items mode
@@ -96,22 +113,29 @@ export class Randomizer {
 
   getEnergyTanks(vmrTanks: number): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
-    const numTanks = this.logic === RandomizerLogic.NO_GLITCHES ? 14 : 14 - vmrTanks;
+    const numTanks = !this.logicUsesVMR() ? 14 : 14 - vmrTanks;
 
     itemsMap.set(PrimeItem.ENERGY_TANK, numTanks);
 
     return this.createItemsFromMap(itemsMap);
   }
 
-  getPriorityItems(): Array<Item> {
+  /**
+   * Retrieves an item array based on a parameterized list of item keys and their number of occurrences
+   * @param items Array of item objects containing a key name and the number of said items to place in the returned array
+   */
+  getItems(items: Array<{name: string, count: number}>): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
 
-    // Morph Ball should be among the first two items placed in no glitches logics
-    // This is to keep the fill algorithm from erroring out when placing the upgrades
-    if (this.logic === RandomizerLogic.NO_GLITCHES) {
-      itemsMap.set(PrimeItem.MORPH_BALL, 1);
+    for(const item of items) {
+      itemsMap.set(item.name, item.count);
     }
 
+    return this.createItemsFromMap(itemsMap);
+  }
+
+  getPriorityItems(): Array<Item> {
+    const itemsMap: Map<string, number> = new Map<string, number>();
     itemsMap.set(PrimeItem.MISSILE_LAUNCHER, 1);
 
     return this.createItemsFromMap(itemsMap);
@@ -119,7 +143,15 @@ export class Randomizer {
 
   getUpgrades(vmrTanks: number): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
-    itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
+    if (this.mode !== RandomizerMode.MAJOR_ITEMS) {
+      itemsMap.set(PrimeItem.MORPH_BALL, 1);
+    }
+
+    if (this.mode !== RandomizerMode.MAJOR_ITEMS || this.logic !== RandomizerLogic.NO_GLITCHES) {
+      itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
+    }
+
+    // itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
     itemsMap.set(PrimeItem.VARIA_SUIT, 1);
     itemsMap.set(PrimeItem.GRAVITY_SUIT, 1);
     itemsMap.set(PrimeItem.PHAZON_SUIT, 1);
@@ -139,9 +171,8 @@ export class Randomizer {
     itemsMap.set(PrimeItem.ICE_SPREADER, 1);
     itemsMap.set(PrimeItem.FLAMETHROWER, 1);
 
-    // Allow VMR tanks and morph ball in upgrades pool for any glitched logics
-    if (this.logic !== RandomizerLogic.NO_GLITCHES) {
-      itemsMap.set(PrimeItem.MORPH_BALL, 1);
+    // Allow VMR tanks for any glitched logics
+    if (this.logicUsesVMR()) {
       itemsMap.set(PrimeItem.ENERGY_TANK, vmrTanks);
     }
 
@@ -156,7 +187,7 @@ export class Randomizer {
 
     // If filling VMR tanks in upgrades pool, use remainder of tanks in this item pool
     if (this.mode !== RandomizerMode.MAJOR_ITEMS) {
-      const numTanks = this.logic === RandomizerLogic.NO_GLITCHES ? 14 : 14 - vmrTanks;
+      const numTanks = !this.logicUsesVMR() ? 14 : 14 - vmrTanks;
       itemsMap.set(PrimeItem.ENERGY_TANK, numTanks);
     }
     
@@ -165,5 +196,9 @@ export class Randomizer {
 
   getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
     return Math.floor(rng.random() * (max - min + 1)) + min;
+  }
+
+  logicUsesVMR(): boolean {
+    return this.logic !== RandomizerLogic.NO_GLITCHES && this.logic !== RandomizerLogic.EASY_GLITCHES;
   }
 }
