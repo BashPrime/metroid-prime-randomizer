@@ -467,8 +467,10 @@ export class ChozoRuins extends Region {
     this.locations.get('Magma Pool').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
       && (
-        items.hasAnySuit() && (items.has(PrimeItem.GRAPPLE_BEAM) || items.canDoInfiniteSpeed())
-        || (items.canLayPowerBombs() && items.has(PrimeItem.ENERGY_TANK) && items.has(PrimeItem.SPACE_JUMP_BOOTS))
+        (items.hasAnySuit() && items.canDoInfiniteSpeed() && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS)))
+        || (items.canLayPowerBombs()
+          && (items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM))
+            || (items.hasEnergyTankCount(2) && items.has(PrimeItem.SPACE_JUMP_BOOTS)))
       );
     };
 
