@@ -31,130 +31,132 @@ export class PhazonMines extends Region {
 
   public initNoGlitches(): void {
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqs() && items.has(PrimeItem.SPIDER_BALL)) || (items.hasMinesFromMagmoorReqs() && items.has(PrimeItem.THERMAL_VISOR));
+      return (items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL))
+      || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM));
     };
 
     this.locations.get('Security Access A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqs() && items.canLayPowerBombs()) || items.hasMinesFromMagmoorReqs();
+      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs())
+      || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM));
     };
 
     this.locations.get('Storage Depot A').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM)
         && (
-          (items.hasMinesFromTallonReqs() && items.canLayPowerBombs())
-          || (items.hasMinesFromMagmoorReqs() && items.has(PrimeItem.GRAPPLE_BEAM))
+          (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs())
+          || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM))
         );
     };
 
     this.locations.get('Elite Research (Phazon Elite)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL))
-        || (items.hasMinesFromMagmoorReqs() && items.has(PrimeItem.GRAPPLE_BEAM)));
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL))
+        || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM)));
     };
 
     this.locations.get('Elite Research (Laser)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        && (items.hasMinesFromTallonReqs() || (items.hasMinesFromMagmoorReqs() && items.has(PrimeItem.GRAPPLE_BEAM)));
+        && (items.hasMinesFromTallonReqsNoGlitches() || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM)));
     };
 
     this.locations.get('Storage Depot B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL))
-        || (items.hasMinesFromMagmoorReqs() && items.has(PrimeItem.GRAPPLE_BEAM));
+      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL))
+        || items.hasMinesFromMagmoorReqsNoGlitches();
     };
 
     this.locations.get('Fungal Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Phazon Mining Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
         && items.has(PrimeItem.PHAZON_SUIT)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || (items.hasMinesFromMagmoorReqs()));
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || (items.hasMinesFromMagmoorReqsNoGlitches()));
     };
 
     this.locations.get('Fungal Hall B').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Metroid Quarantine A').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Metroid Quarantine B').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.canFireSuperMissiles() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
         && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Elite Quarters').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Processing Center Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Phazon Processing Center').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs();
+      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches();
     };
 
     this.locations.get('Elite Control Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs();
+      return (items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches();
     };
 
     this.locations.get('Ventilation Shaft').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        && ((items.hasMinesFromTallonReqs() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
 
     this.locations.get('Central Dynamo').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && ((items.hasMinesFromTallonReqs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqs());
+      return items.has(PrimeItem.BOOST_BALL) && ((items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
     };
   }
 
   public initEasyGlitches(): void {
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqs();
+      return items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqsEasyGlitches();
     };
 
     this.locations.get('Security Access A').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs();
+        || items.hasMinesFromMagmoorReqsEasyGlitches();
     };
 
     this.locations.get('Storage Depot A').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM)
         && (
           (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqs()
+          || items.hasMinesFromMagmoorReqsEasyGlitches()
         );
     };
 
     this.locations.get('Elite Research (Phazon Elite)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        &&(items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-          || (items.hasMinesFromMagmoorReqs());
+        && (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
+          || (items.hasMinesFromMagmoorReqsEasyGlitches());
     };
 
     this.locations.get('Elite Research (Laser)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        && (items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqs());
+        && (items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqsEasyGlitches());
     };
 
     this.locations.get('Storage Depot B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqs();
+      return items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqsEasyGlitches();
     };
 
     this.locations.get('Fungal Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.BOOST_BALL)
         && (
           (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqs()
+          || items.hasMinesFromMagmoorReqsEasyGlitches()
         );
     };
 
@@ -162,7 +164,7 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.PHAZON_SUIT) && items.has(PrimeItem.BOOST_BALL)
         && (
           (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqs()
+          || items.hasMinesFromMagmoorReqsEasyGlitches()
         );
     };
 
@@ -170,7 +172,7 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.BOOST_BALL)
       && (
         (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs()
+        || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
@@ -178,7 +180,7 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.BOOST_BALL)
       && (
         (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs()
+        || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
@@ -186,7 +188,7 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.PLASMA_BEAM) && items.canFireSuperMissiles() && items.has(PrimeItem.BOOST_BALL)
       && (
         (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs()
+        || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
@@ -194,7 +196,7 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.BOOST_BALL)
       && (
         (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs()
+        || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
@@ -202,13 +204,13 @@ export class PhazonMines extends Region {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.BOOST_BALL)
       && (
         (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs()
+        || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
     this.locations.get('Phazon Processing Center').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (items.hasMinesFromTallonReqsEasyGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqs();
+        || items.hasMinesFromMagmoorReqsEasyGlitches();
     };
 
     this.locations.get('Elite Control Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -218,126 +220,120 @@ export class PhazonMines extends Region {
     this.locations.get('Ventilation Shaft').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
       && (
-        items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqs()
+        items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqsEasyGlitches()
       );
     };
 
     this.locations.get('Central Dynamo').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
         && (
-          items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqs()
+          items.hasMinesFromTallonReqsEasyGlitches() || items.hasMinesFromMagmoorReqsEasyGlitches()
         );
     };
   }
 
   public initModerateGlitches(): void {
-    const minVMRTanks = 6;
+    const minVMRTanks = 5;
 
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks);
+      return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Security Access A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks);
+      return (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Storage Depot A').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM)
         && (
-          (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+          (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+          || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
         );
     };
 
     this.locations.get('Elite Research (Phazon Elite)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-          || (items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks) && items.has(PrimeItem.BOOST_BALL));
+      return (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+          || (items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks) && items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get('Elite Research (Laser)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.BOOST_BALL)
-        && (items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks));
+        && (items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks));
     };
 
     this.locations.get('Storage Depot B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks);
+      return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Fungal Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM)
         && (
-          (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+          (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+          || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
         );
     };
 
     this.locations.get('Phazon Mining Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.PHAZON_SUIT)
         && (
-          (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-          || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+          (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+          || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
         );
     };
 
     this.locations.get('Fungal Hall B').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM)
       && (
-        (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+        (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
       );
     };
 
     this.locations.get('Metroid Quarantine A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks);
+      return (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Metroid Quarantine B').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM) && items.canFireSuperMissiles()
       && (
-        (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+        (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
       );
     };
 
     this.locations.get('Elite Quarters').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR)
       && (
-        (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+        (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
       );
     };
 
     this.locations.get('Processing Center Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR)
       && (
-        (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
+        (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks)
       );
     };
 
     this.locations.get('Phazon Processing Center').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsMinorGlitches() && items.canLayPowerBombs())
-        || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks);
+      return (items.hasMinesFromTallonReqsModerateGlitches() && items.canLayPowerBombs())
+        || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Elite Control Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromTallonReqsMinorGlitches();
+      return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromTallonReqsModerateGlitches();
     };
 
     this.locations.get('Ventilation Shaft').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL)
-      && (
-        items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
-      );
+      return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
 
     this.locations.get('Central Dynamo').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL)
-        && (
-          items.hasMinesFromTallonReqsMinorGlitches() || items.hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks)
-        );
+      return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
   }
 }

@@ -97,6 +97,10 @@ export class ItemCollection extends Collection {
     return false;
   }
 
+  public canVMR(vmrTanks: number): boolean {
+    return this.hasEnergyTankCount(vmrTanks) || (this.hasEnergyTankCount(vmrTanks + 1) && !this.has(PrimeItem.SPACE_JUMP_BOOTS));
+  }
+
   public hasAnySuit(): boolean {
     return this.has(PrimeItem.VARIA_SUIT) || this.has(PrimeItem.GRAVITY_SUIT) || this.has(PrimeItem.PHAZON_SUIT);
   }
@@ -118,51 +122,77 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.has(PrimeItem.CHARGE_BEAM) && this.has(PrimeItem.SUPER_MISSILE);
   }
 
+  // Bare minimum requirements to enter Phendrana Drifts, besides a suit/VMR
   public hasPhendranaReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.hasAnySuit();
+    return this.hasMissiles() && this.canLayBombs();
   }
 
-  public hasPhendranaReqsMinorGlitches(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.canLayBombs()
-      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
+  public hasPhendranaReqsNoGlitches(): boolean {
+    return this.hasPhendranaReqs() && this.hasAnySuit();
   }
 
+  public hasPhendranaReqsEasyGlitches(): boolean {
+    return this.hasPhendranaReqsNoGlitches();
+  }
+
+  public hasPhendranaReqsModerateGlitches(minVMRTanks: number): boolean {
+    return this.hasPhendranaReqs() && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+  }
+
+  // Bare minimum requirements to enter Phendrana backwards (besides suit)
   public hasBackwardsPhendranaReqs(): boolean {
-    return this.hasMissiles() && this.hasAnySuit() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)
-      && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM);
+    return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.WAVE_BEAM);
   }
 
-  public hasBackwardsPhendranaReqsMinorGlitches(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItem.WAVE_BEAM)
-      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
+  public hasBackwardsPhendranaReqsNoGlitches(): boolean {
+    return this.hasBackwardsPhendranaReqs() && this.hasAnySuit() && this.has(PrimeItem.SPIDER_BALL)
+      && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 
+  public hasBackwardsPhendranaReqsEasyGlitches(): boolean {
+    return this.hasBackwardsPhendranaReqsNoGlitches();
+  }
+
+  public hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks: number): boolean {
+    return this.hasBackwardsPhendranaReqs() && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+  }
+
+  // Bare minimum requirements to enter mines from Tallon
   public hasMinesFromTallonReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
-      && this.has(PrimeItem.THERMAL_VISOR) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
+  }
+
+  public hasMinesFromTallonReqsNoGlitches(): boolean {
+    return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
+      && this.has(PrimeItem.THERMAL_VISOR);
   }
 
   public hasMinesFromTallonReqsEasyGlitches(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM)
-      && this.has(PrimeItem.ICE_BEAM);
+    return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 
-  public hasMinesFromTallonReqsMinorGlitches(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
+  public hasMinesFromTallonReqsModerateGlitches(): boolean {
+    return this.hasMinesFromTallonReqs();
   }
 
+  // Bare minimum requirements to enter mines from Magmoor
   public hasMinesFromMagmoorReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.hasAnySuit()
-      && this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM)
+    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.WAVE_BEAM)
       && this.has(PrimeItem.ICE_BEAM);
   }
 
-  public hasMinesFromMagmoorReqsMinorGlitches(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM)
-      && (this.hasAnySuit() || this.hasEnergyTankCount(minVMRTanks));
+  public hasMinesFromMagmoorReqsNoGlitches(): boolean {
+    return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.SPIDER_BALL) && this.hasAnySuit();
+  }
+
+  public hasMinesFromMagmoorReqsEasyGlitches(): boolean {
+    return this.hasMinesFromMagmoorReqsNoGlitches();
+  }
+
+  public hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks: number): boolean {
+    return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+
   }
 
   public canDoInfiniteSpeed(): boolean {
