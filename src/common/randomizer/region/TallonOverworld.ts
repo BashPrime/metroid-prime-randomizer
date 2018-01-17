@@ -199,7 +199,8 @@ export class TallonOverworld extends Region {
 
     this.locations.get('Overgrown Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.ICE_BEAM)
-        && (items.canLayBombs() || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)));
+        && ((items.canLayBombs() && items.has(PrimeItem.BOOST_BALL))
+          || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)));
     };
 
     this.locations.get('Cargo Freight Lift to Deck Gamma').canFillItem = function (item: Item, items: ItemCollection): boolean {

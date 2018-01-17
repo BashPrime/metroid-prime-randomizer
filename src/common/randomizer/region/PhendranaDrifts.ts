@@ -675,40 +675,22 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Frost Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM)
-        && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
-        && (
-          (items.hasPhendranaReqsModerateGlitches(minVMRTanks)
-            // Labs or quarantine cave
-            && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
-              || (items.canFireSuperMissiles() && (items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM)))
-            && items.has(PrimeItem.WAVE_BEAM)))
-          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks)
-        );
+      return items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && ((items.hasPhendranaReqsModerateGlitches(minVMRTanks) && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks));
     };
 
     this.locations.get('Storage Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
-        && (
-          (items.hasPhendranaReqsModerateGlitches(minVMRTanks)
-            // Labs or quarantine cave
-            && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
-              || (items.canFireSuperMissiles() && (items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM)))
-            && items.has(PrimeItem.WAVE_BEAM)))
-          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks)
-        );
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && ((items.hasPhendranaReqsModerateGlitches(minVMRTanks) && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks));
     };
 
     this.locations.get('Security Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM)
-        && (
-          (items.hasPhendranaReqsModerateGlitches(minVMRTanks)
-            // Labs or quarantine cave
-            && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
-              || (items.canFireSuperMissiles() && (items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM)))
-            && items.has(PrimeItem.WAVE_BEAM)))
-          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks)
-        );
+      return items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && ((items.hasPhendranaReqsModerateGlitches(minVMRTanks) && items.has(PrimeItem.WAVE_BEAM))
+          || items.hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks));
     };
 
     this.locations.get('Gravity Chamber (Underwater)').canFillItem = function (item: Item, items: ItemCollection): boolean {

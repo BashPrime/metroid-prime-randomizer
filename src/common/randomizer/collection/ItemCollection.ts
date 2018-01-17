@@ -154,7 +154,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasBackwardsPhendranaReqsModerateGlitches(minVMRTanks: number): boolean {
-    return this.hasBackwardsPhendranaReqs() && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+    return this.hasBackwardsPhendranaReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasAnySuit() || this.canVMR(minVMRTanks));
   }
 
   // Bare minimum requirements to enter mines from Tallon
@@ -172,6 +172,10 @@ export class ItemCollection extends Collection {
   }
 
   public hasMinesFromTallonReqsModerateGlitches(): boolean {
+    return this.hasMinesFromTallonReqsEasyGlitches();
+  }
+
+  public hasMinesFromTallonReqsHardGlitches(): boolean {
     return this.hasMinesFromTallonReqs();
   }
 
@@ -192,7 +196,11 @@ export class ItemCollection extends Collection {
   public hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks: number): boolean {
     return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+  }
 
+  public hasMinesFromMagmoorReqsHardGlitches(minVMRTanks: number): boolean {
+    return this.hasMinesFromMagmoorReqs()
+      && (this.hasAnySuit() || this.canVMR(minVMRTanks));
   }
 
   public canDoInfiniteSpeed(): boolean {
