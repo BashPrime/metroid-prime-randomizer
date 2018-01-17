@@ -143,7 +143,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Sunchamber (Ghosts)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasMissiles() && items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL);
     };
 
     this.locations.get('Watery Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -326,7 +326,7 @@ export class ChozoRuins extends Region {
 
     this.locations.get('Sunchamber (Ghosts)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       // Don't require early wild
-      return items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasMissiles() && items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL);
     };
 
     this.locations.get('Watery Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -519,8 +519,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Sunchamber (Ghosts)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      // Can do early wild, but can't place any of the following items here to prevent softlocking
-      return items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasMissiles() && items.canLayBombs();
     };
 
     this.locations.get('Watery Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -594,6 +593,197 @@ export class ChozoRuins extends Region {
 
     this.locations.get('Antechamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM)
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          || (items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)));
+    };
+    this.locations.get('Antechamber').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.has(PrimeItem.ICE_BEAM);
+    };
+  }
+
+  public initHardGlitches(): void {
+    this.locations.get('Main Plaza (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL));
+    };
+
+    this.locations.get('Main Plaza (Grapple Ledge)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+
+    this.locations.get('Main Plaza (Tree)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.canFireSuperMissiles();
+    };
+
+    this.locations.get('Main Plaza (Locked Door)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
+    };
+
+    this.locations.get('Ruined Fountain').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPIDER_BALL)
+        && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS));
+    };
+
+    this.locations.get('Ruined Shrine (Beetle Battle)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles();
+    };
+    this.locations.get('Ruined Shrine (Beetle Battle)').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+
+    this.locations.get('Ruined Shrine (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.BOOST_BALL));
+    };
+
+    this.locations.get('Ruined Shrine (Lower Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs();
+    };
+
+    this.locations.get('Vault').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs();
+    };
+
+    this.locations.get('Training Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM)
+        && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)));
+    };
+
+    this.locations.get('Training Chamber Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)));
+    };
+
+    this.locations.get('Magma Pool').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
+      && (
+        (items.hasAnySuit() && items.canDoInfiniteSpeed() && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS)))
+        || (items.canLayPowerBombs()
+          && (items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM))
+            || (items.hasEnergyTankCount(2) && items.has(PrimeItem.SPACE_JUMP_BOOTS)))
+      );
+    };
+
+    this.locations.get('Tower of Light').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
+
+    this.locations.get('Tower Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM)
+        && (
+          items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          || (items.has(PrimeItem.MORPH_BALL) && !items.has(PrimeItem.GRAVITY_SUIT))
+          || (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
+        );
+    };
+
+    this.locations.get('Ruined Nursery').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.canLayBombs();
+    };
+
+    this.locations.get('Ruined Gallery (Missile Wall)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles();
+    };
+
+    this.locations.get('Ruined Gallery (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.canLayBombs();
+    };
+
+    this.locations.get('Transport Access North').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles();
+    };
+
+    this.locations.get('Gathering Hall').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs()
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.canLayBombs());
+    };
+
+    this.locations.get('Hive Totem').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return true;
+    };
+
+    this.locations.get('Sunchamber (Flaahgra)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs();
+    };
+
+    this.locations.get('Sunchamber (Ghosts)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs();
+    };
+
+    this.locations.get('Watery Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL);
+    };
+
+    this.locations.get('Watery Hall (Scan Puzzle)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL);
+    };
+
+    this.locations.get('Watery Hall (Underwater)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL);
+    };
+
+    this.locations.get('Dynamo (Lower)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs();
+    };
+
+    this.locations.get('Dynamo (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPIDER_BALL);
+    };
+
+    this.locations.get('Burn Dome (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs();
+    };
+    this.locations.get('Burn Dome (Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.canLayBombs();
+    };
+
+    this.locations.get('Burn Dome (I. Drone)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL);
+    };
+    this.locations.get('Burn Dome (I. Drone)').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item !== undefined) {
+        items = new ItemCollection([...items.toArray(), item]);
+      }
+      return items.canLayBombs();
+    };
+
+    this.locations.get('Furnace (Spider Tracks)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs()
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SPIDER_BALL));
+    };
+
+    this.locations.get('Furnace (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs();
+    };
+
+    this.locations.get('Hall of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SPIDER_BALL));
+    };
+
+    this.locations.get('Crossway').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs()
+        && (items.has(PrimeItem.WAVE_BEAM) || items.has(PrimeItem.ICE_BEAM))
+        && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          || (items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)));
+    };
+
+    this.locations.get('Elder Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+      && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SPIDER_BALL));
+    };
+
+    this.locations.get('Antechamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      return items.hasMissiles() && items.canLayBombs()
         && (items.has(PrimeItem.SPACE_JUMP_BOOTS)
           || (items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)));
     };

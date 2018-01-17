@@ -336,4 +336,8 @@ export class PhazonMines extends Region {
       return items.hasMinesFromTallonReqsModerateGlitches() || items.hasMinesFromMagmoorReqsModerateGlitches(minVMRTanks);
     };
   }
+
+  public initHardGlitches(): void {
+    this.initModerateGlitches();
+  }
 }

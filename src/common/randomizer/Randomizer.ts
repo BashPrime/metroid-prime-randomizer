@@ -29,7 +29,15 @@ export class Randomizer {
 
     this.rng = new MersenneTwister(this.seed);
     const itemFiller = new RandomAssumed(this.world, this.rng);
-    const vmrTanks = 5; // Number of energy tanks to include in normal upgrade pool to allow for VMR seeds
+    let vmrTanks;
+
+    switch (this.logic) {
+      case RandomizerLogic.HARD_GLITCHES:
+        vmrTanks = 4;
+        break;
+      default:
+        vmrTanks = 5;
+    }
 
     // Logically fill the priority items first (currently, only Missile Launcher)
     itemFiller.fill(this.getPriorityItems());
@@ -40,7 +48,7 @@ export class Randomizer {
         before upgrades, but after Missile Launcher (bombs in no glitches logic only)
       */
       const majorPriorityItems: [{name: string, count: number}] = [
-        {name: PrimeItem.MORPH_BALL, count: 1},
+        {name: PrimeItem.MORPH_BALL, count: 1}
       ];
 
       if (this.logic === RandomizerLogic.NO_GLITCHES) {

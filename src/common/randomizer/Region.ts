@@ -13,6 +13,9 @@ export abstract class Region {
       case RandomizerLogic.MODERATE_GLITCHES:
         this.initModerateGlitches();
         break;
+      case RandomizerLogic.HARD_GLITCHES:
+        this.initHardGlitches();
+        break;
       case RandomizerLogic.NO_GLITCHES:
       default:
         this.initNoGlitches();
@@ -24,6 +27,8 @@ export abstract class Region {
   public abstract initEasyGlitches(): void;
 
   public abstract initModerateGlitches(): void;
+
+  public abstract initHardGlitches(): void;
 
   public getName(): string {
     return this.name;
