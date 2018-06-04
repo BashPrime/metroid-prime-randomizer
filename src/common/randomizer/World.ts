@@ -24,7 +24,7 @@ export class World {
   protected locations: Array<Location>;
   protected collectableLocations: Array<Location>;
 
-  constructor(mode: string = RandomizerMode.STANDARD, logic: string = RandomizerLogic.NO_GLITCHES, difficulty: string = 'Normal') {
+  constructor(mode: string = RandomizerMode.STANDARD, logic: string = RandomizerLogic.CASUAL, difficulty: string = 'Normal') {
     this.mode = mode;
     this.logic = logic;
     this.difficulty = difficulty;

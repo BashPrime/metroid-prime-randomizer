@@ -5,30 +5,30 @@ export abstract class Region {
   protected name: string;
   protected locations: Map<string, Location>;
 
-  public init(logic: string = RandomizerLogic.NO_GLITCHES): void {
+  public init(logic: string = RandomizerLogic.CASUAL): void {
     switch (logic) {
-      case RandomizerLogic.EASY_GLITCHES:
-        this.initEasyGlitches();
+      case RandomizerLogic.NORMAL:
+        this.initNormal();
         break;
-      case RandomizerLogic.MODERATE_GLITCHES:
-        this.initModerateGlitches();
+      case RandomizerLogic.HARD:
+        this.initHard();
         break;
-      case RandomizerLogic.HARD_GLITCHES:
-        this.initHardGlitches();
+      case RandomizerLogic.INSANE:
+        this.initInsane();
         break;
-      case RandomizerLogic.NO_GLITCHES:
+      case RandomizerLogic.CASUAL:
       default:
-        this.initNoGlitches();
+        this.initCasual();
     }
   }
 
-  public abstract initNoGlitches(): void;
+  public abstract initCasual(): void;
 
-  public abstract initEasyGlitches(): void;
+  public abstract initNormal(): void;
 
-  public abstract initModerateGlitches(): void;
+  public abstract initHard(): void;
 
-  public abstract initHardGlitches(): void;
+  public abstract initInsane(): void;
 
   public getName(): string {
     return this.name;

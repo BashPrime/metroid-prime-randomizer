@@ -31,10 +31,10 @@ export class RandomizerComponent implements OnInit {
     {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
   ];
   logics = [
-    {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
-    {name: 'Easy Glitches', value: RandomizerLogic.EASY_GLITCHES},
-    {name: 'Moderate Glitches', value: RandomizerLogic.MODERATE_GLITCHES},
-    {name: 'Hard Glitches', value: RandomizerLogic.HARD_GLITCHES}
+    {name: 'Casual', value: RandomizerLogic.CASUAL},
+    {name: 'Normal', value: RandomizerLogic.NORMAL},
+    {name: 'Hard', value: RandomizerLogic.HARD},
+    {name: 'Insane', value: RandomizerLogic.INSANE}
   ];
   difficulties = [
     {name: 'Normal', value: 'normal'}

@@ -22,7 +22,7 @@ export class MagmoorCaverns extends Region {
     ]);
   }
 
-  public initNoGlitches(): void {
+  public initCasual(): void {
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.hasAnySuit() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
@@ -79,7 +79,7 @@ export class MagmoorCaverns extends Region {
     };
   }
 
-  public initEasyGlitches(): void {
+  public initNormal(): void {
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.hasAnySuit();
     };
@@ -143,7 +143,7 @@ export class MagmoorCaverns extends Region {
     };
   }
 
-  public initModerateGlitches(): void {
+  public initHard(): void {
     const minVMRTanks = 5;
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
@@ -217,7 +217,7 @@ export class MagmoorCaverns extends Region {
     };
   }
 
-  public initHardGlitches(): void {
+  public initInsane(): void {
     const minVMRTanks = 4;
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)

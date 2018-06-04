@@ -27,7 +27,7 @@ export class TallonOverworld extends Region {
     ]);
   }
 
-  public initNoGlitches(): void {
+  public initCasual(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };
@@ -97,7 +97,7 @@ export class TallonOverworld extends Region {
     };
   }
 
-  public initEasyGlitches(): void {
+  public initNormal(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };
@@ -168,7 +168,7 @@ export class TallonOverworld extends Region {
     };
   }
 
-  public initModerateGlitches(): void {
+  public initHard(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };
@@ -239,7 +239,7 @@ export class TallonOverworld extends Region {
     };
   }
 
-  public initHardGlitches(): void {
+  public initInsane(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };

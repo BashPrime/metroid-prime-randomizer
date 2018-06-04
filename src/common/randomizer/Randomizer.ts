@@ -32,7 +32,7 @@ export class Randomizer {
     let vmrTanks;
 
     switch (this.logic) {
-      case RandomizerLogic.HARD_GLITCHES:
+      case RandomizerLogic.INSANE:
         vmrTanks = 4;
         break;
       default:
@@ -51,7 +51,7 @@ export class Randomizer {
         {name: PrimeItem.MORPH_BALL, count: 1}
       ];
 
-      if (this.logic === RandomizerLogic.NO_GLITCHES) {
+      if (this.logic === RandomizerLogic.CASUAL) {
         majorPriorityItems.push({name: PrimeItem.MORPH_BALL_BOMB, count: 1});
       }
       itemFiller.fill(this.getItems(majorPriorityItems));
@@ -155,7 +155,7 @@ export class Randomizer {
       itemsMap.set(PrimeItem.MORPH_BALL, 1);
     }
 
-    if (this.mode !== RandomizerMode.MAJOR_ITEMS || this.logic !== RandomizerLogic.NO_GLITCHES) {
+    if (this.mode !== RandomizerMode.MAJOR_ITEMS || this.logic !== RandomizerLogic.CASUAL) {
       itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
     }
 
@@ -207,6 +207,6 @@ export class Randomizer {
   }
 
   logicUsesVMR(): boolean {
-    return this.logic !== RandomizerLogic.NO_GLITCHES && this.logic !== RandomizerLogic.EASY_GLITCHES;
+    return this.logic !== RandomizerLogic.CASUAL && this.logic !== RandomizerLogic.NORMAL;
   }
 }
