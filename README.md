@@ -13,6 +13,3 @@ npm install
 ng serve # for dev/autobuild/autoreload
 ng build # to build
 ```
-
-## License
-[GPLv3](LICENSE)
