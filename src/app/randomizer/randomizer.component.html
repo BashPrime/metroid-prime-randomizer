@@ -24,6 +24,13 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
+          <mat-select placeholder="Artifacts" [(ngModel)]="selectedArtifacts" name="artifacts" style="margin-right: 0.5em;">
+            <mat-option *ngFor="let artifact of artifacts" [value]="artifact.value">
+              {{ artifact.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
           <mat-select placeholder="Difficulty" [(ngModel)]="selectedDifficulty" name="difficulty"
             style="margin-right: 0.5em;">
             <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
@@ -43,6 +50,7 @@
   <mat-card-content>
     <div>Mode: {{ randomizer.getMode() }}</div>
     <div>Logic: {{ randomizer.getLogic() }}</div>
+    <div>Randomized Artifacts: {{ randomizer.getRandomizedArtifacts() }}</div>
     <div>Difficulty: {{ randomizer.getDifficulty() }}</div>
     <div>Seed: {{ randomizer.getSeed() }}</div>
     <div>

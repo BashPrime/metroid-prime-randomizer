@@ -10,15 +10,17 @@ import {PrimeItem} from './enums/PrimeItem';
 export class Randomizer {
   protected mode: string;
   protected logic: string;
+  protected randomizedArtifacts: boolean;
   protected difficulty: string;
   protected goal: string;
   protected world: World;
   protected rng: MersenneTwister;
   protected seed: number;
 
-  constructor(mode: string, logic: string, difficulty: string) {
+  constructor(mode: string, logic: string, randomizedArtifacts: boolean, difficulty: string) {
     this.mode = mode;
     this.logic = logic;
+    this.randomizedArtifacts = randomizedArtifacts;
     this.difficulty = difficulty;
     this.world = new World(this.mode, this.logic, this.difficulty);
   }
@@ -37,6 +39,11 @@ export class Randomizer {
         break;
       default:
         vmrTanks = 5;
+    }
+    
+    // Set artifacts in vanilla locations if not randomized
+    if (!this.randomizedArtifacts) {
+      this.world.setVanillaArtifacts();
     }
 
     // Logically fill the priority items first (currently, only Missile Launcher)
@@ -66,7 +73,9 @@ export class Randomizer {
     }
 
     // Fast fill the artifacts and expansions
-    itemFiller.fill(this.getArtifacts(), true);
+    if (this.randomizedArtifacts) {
+      itemFiller.fill(this.getArtifacts(), true);
+    }
     itemFiller.fill(this.getExpansions(vmrTanks), true, true);
   }
 
@@ -80,6 +89,10 @@ export class Randomizer {
 
   getLogic(): string {
     return this.logic;
+  }
+
+  getRandomizedArtifacts(): boolean { 
+    return this.randomizedArtifacts;
   }
 
   getDifficulty(): string {

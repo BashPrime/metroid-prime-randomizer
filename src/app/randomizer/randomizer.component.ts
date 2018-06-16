@@ -21,6 +21,7 @@ export class RandomizerComponent implements OnInit {
   selectedMode: string;
   selectedLogic: string;
   selectedDifficulty: string;
+  selectedArtifacts: boolean;
   layoutString: string;
   toggleSpoilers = false;
   spoilerLog: string;
@@ -39,11 +40,16 @@ export class RandomizerComponent implements OnInit {
   difficulties = [
     {name: 'Normal', value: 'normal'}
   ];
+  artifacts = [
+    {name: 'Not Randomized', value: false},
+    {name: 'Randomized', value: true}
+  ];
 
   constructor(private sanitizer: DomSanitizer) {
     this.selectedMode = this.modes[0].value;
     this.selectedLogic = this.logics[0].value;
     this.selectedDifficulty = this.difficulties[0].value;
+    this.selectedArtifacts = this.artifacts[0].value;
   }
 
   ngOnInit() {
@@ -55,7 +61,7 @@ export class RandomizerComponent implements OnInit {
 
   runRandomizer(): void {
     this.spoilerLog = undefined;
-    this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedDifficulty);
+    this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedArtifacts, this.selectedDifficulty);
 
     if (this.selectedSeed) {
       this.selectedSeed = this.selectedSeed < 1 ? 1 : this.selectedSeed > 999999999 ? 999999999 : this.selectedSeed;
@@ -73,6 +79,7 @@ export class RandomizerComponent implements OnInit {
     const spoiler: any = {info: {}};
     spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.logic = this.randomizer.getLogic();
+    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts();
     spoiler.info.difficulty = this.randomizer.getDifficulty();
     spoiler.info.seed = this.randomizer.getSeed();
     spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
