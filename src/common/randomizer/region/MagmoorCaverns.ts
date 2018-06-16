@@ -22,6 +22,11 @@ export class MagmoorCaverns extends Region {
     ]);
   }
 
+  public setVanillaArtifacts() {
+    this.locations.get('Lava Lake').setItem(Item.get(PrimeItem.ARTIFACT_OF_NATURE));
+    this.locations.get('Warrior Shrine').setItem(Item.get(PrimeItem.ARTIFACT_OF_STRENGTH));
+  }
+
   public initCasual(): void {
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.hasAnySuit() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);

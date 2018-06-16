@@ -27,6 +27,11 @@ export class TallonOverworld extends Region {
     ]);
   }
 
+  public setVanillaArtifacts() {
+    this.locations.get('Artifact Temple').setItem(Item.get(PrimeItem.ARTIFACT_OF_TRUTH));
+    this.locations.get('Life Grove (Underwater Spinner)').setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
+  }
+
   public initCasual(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);

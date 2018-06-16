@@ -29,6 +29,11 @@ export class PhazonMines extends Region {
     ]);
   }
 
+  public setVanillaArtifacts() {
+    this.locations.get('Elite Research (Phazon Elite)').setItem(Item.get(PrimeItem.ARTIFACT_OF_WARRIOR));
+    this.locations.get('Phazon Mining Tunnel').setItem(Item.get(PrimeItem.ARTIFACT_OF_NEWBORN));
+  }
+
   public initCasual(): void {
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (items.hasMinesFromTallonReqsCasual() && items.has(PrimeItem.SPIDER_BALL))

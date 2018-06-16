@@ -170,4 +170,10 @@ export class World {
     }
     return JSON.stringify(regionObj);
   }
+
+  public setVanillaArtifacts() {
+    this.regions.forEach(region => {
+      region.setVanillaArtifacts();
+    })
+  }
 }

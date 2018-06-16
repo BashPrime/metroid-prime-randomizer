@@ -41,4 +41,6 @@ export abstract class Region {
   public getLocationsArray(): Array<Location> {
     return Array.from(this.locations.values());
   }
+
+  public abstract setVanillaArtifacts(): void;
 }
