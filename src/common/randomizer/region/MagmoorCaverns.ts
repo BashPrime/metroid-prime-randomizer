@@ -151,23 +151,19 @@ export class MagmoorCaverns extends Region {
   public initHard(): void {
     const minVMRTanks = 5;
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.hasAnySuit();
     };
 
     this.locations.get('Triclops Pit').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.hasAnySuit();
     };
 
     this.locations.get('Storage Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.hasAnySuit();
     };
 
     this.locations.get('Transport Tunnel A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs()
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.canLayBombs() && items.hasAnySuit();
     };
 
     this.locations.get('Shore Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -176,17 +172,13 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Fiery Shores (Morph Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles()
-        && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS))
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.hasAnySuit()
+      && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayPowerBombs()
-        && (
-          (items.hasAnySuit() && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS)))
-            || (items.canVMR(minVMRTanks) && items.has(PrimeItem.SPACE_JUMP_BOOTS))
-        );
+      return items.hasMissiles() && items.hasAnySuit() && items.canLayPowerBombs()
+      && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
     this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item !== undefined) {
@@ -196,17 +188,14 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Warrior Shrine').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles()
-      && (
-        (items.hasAnySuit() && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS)))
-          || (items.canVMR(minVMRTanks) && items.has(PrimeItem.SPACE_JUMP_BOOTS))
-      );
+      return items.hasMissiles() && items.hasAnySuit()
+      && (items.canLayBombs() || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get('Plasma Processing').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.BOOST_BALL)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM)
+      && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (items.hasAnySuit() || items.hasEnergyTankCount(1));
     };
     this.locations.get('Plasma Processing').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item !== undefined) {
@@ -216,9 +205,7 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Magmoor Workstation').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.WAVE_BEAM)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
+      return items.hasBackwardsPhendranaReqsHard();
     };
   }
 

@@ -136,7 +136,9 @@ export class ItemCollection extends Collection {
   }
 
   public hasPhendranaReqsHard(minVMRTanks: number): boolean {
-    return this.hasPhendranaReqs() && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+    return this.hasMissiles() && this.canLayBombs() && (
+      this.hasAnySuit() || (this.hasEnergyTankCount(minVMRTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS))
+    );
   }
 
   // Bare minimum requirements to enter Phendrana backwards (besides suit)
@@ -146,15 +148,33 @@ export class ItemCollection extends Collection {
 
   public hasBackwardsPhendranaReqsCasual(): boolean {
     return this.hasBackwardsPhendranaReqs() && this.hasAnySuit() && this.has(PrimeItem.SPIDER_BALL)
-      && this.has(PrimeItem.SPACE_JUMP_BOOTS);
+    && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 
   public hasBackwardsPhendranaReqsNormal(): boolean {
-    return this.hasBackwardsPhendranaReqsCasual();
+    return this.hasBackwardsPhendranaReqs() && (this.hasAnySuit() || this.hasEnergyTankCount(2))
+    && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 
-  public hasBackwardsPhendranaReqsHard(minVMRTanks: number): boolean {
-    return this.hasBackwardsPhendranaReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+  public hasBackwardsPhendranaReqsHard(minVMRTanks?: number): boolean {
+    return this.hasBackwardsPhendranaReqs()
+    && (
+      (this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasEnergyTankCount(1) || this.hasAnySuit()))
+      || (this.has(PrimeItem.SPIDER_BALL) && (this.hasEnergyTankCount(2) || this.hasAnySuit()))
+    );
+  }
+
+  public hasMagmoorSouthThroughThardusRequirementsHard(): boolean {
+    // From Magmoor South, through Thardus's Room(NEED SPACE JUMP, SO IS REDUNDANT)
+    // Missiles & Morph & Wave & (Space Jump OR (Spider & Boost)) & (Etanks OR Suit)
+    return this.hasBackwardsPhendranaReqsHard()
+    && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || (this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.BOOST_BALL)))
+  }
+
+  public hasMagmoorSouthThroughFrozenPikeRequirementsHard(): boolean {
+    // From Magmoor South, through Frozen Pike
+    // Missiles & Morph & Wave & Ice & (Etanks OR Suit) & (Space Jump OR Spider)
+    return this.hasBackwardsPhendranaReqsHard() && this.has(PrimeItem.ICE_BEAM);
   }
 
   // Bare minimum requirements to enter mines from Tallon
@@ -172,7 +192,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasMinesFromTallonReqsHard(): boolean {
-    return this.hasMinesFromTallonReqsNormal();
+    return this.hasMinesFromTallonReqs();
   }
 
   public hasMinesFromTallonReqsInsane(): boolean {
@@ -193,9 +213,9 @@ export class ItemCollection extends Collection {
     return this.hasMinesFromMagmoorReqsNoGlitches();
   }
 
-  public hasMinesFromMagmoorReqsHard(minVMRTanks: number): boolean {
+  public hasMinesFromMagmoorReqsHard(minVMRTanks?: number): boolean {
     return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && (this.hasAnySuit() || this.canVMR(minVMRTanks));
+    && (this.hasAnySuit() || this.hasEnergyTankCount(1));
   }
 
   public hasMinesFromMagmoorReqsInsane(minVMRTanks: number): boolean {
