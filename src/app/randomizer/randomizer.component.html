@@ -50,7 +50,7 @@
   <mat-card-content>
     <div>Mode: {{ randomizer.getMode() }}</div>
     <div>Logic: {{ randomizer.getLogic() }}</div>
-    <div>Randomized Artifacts: {{ randomizer.getRandomizedArtifacts() }}</div>
+    <div>Randomized Artifacts: {{ randomizer.getRandomizedArtifacts() ? 'yes' : 'no' }}</div>
     <div>Difficulty: {{ randomizer.getDifficulty() }}</div>
     <div>Seed: {{ randomizer.getSeed() }}</div>
     <div>

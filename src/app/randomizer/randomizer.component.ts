@@ -34,8 +34,7 @@ export class RandomizerComponent implements OnInit {
   logics = [
     {name: 'Casual', value: RandomizerLogic.CASUAL},
     {name: 'Normal', value: RandomizerLogic.NORMAL},
-    {name: 'Hard', value: RandomizerLogic.HARD},
-    {name: 'Insane', value: RandomizerLogic.INSANE}
+    {name: 'Hard', value: RandomizerLogic.HARD}
   ];
   difficulties = [
     {name: 'Normal', value: 'normal'}
@@ -56,6 +55,9 @@ export class RandomizerComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.regions = undefined;
+    this.locations = undefined;
+    this.layoutString = undefined;
     this.runRandomizer();
   }
 
@@ -79,7 +81,7 @@ export class RandomizerComponent implements OnInit {
     const spoiler: any = {info: {}};
     spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.logic = this.randomizer.getLogic();
-    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts();
+    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts() ? 'yes' : 'no';
     spoiler.info.difficulty = this.randomizer.getDifficulty();
     spoiler.info.seed = this.randomizer.getSeed();
     spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
