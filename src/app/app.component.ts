@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'Metroid Prime Randomizer';
+  version: string = environment.version;
   navItems: Array<object> = [
     { link: '/', icon: 'home', text: 'Home' },
     { link: '/randomizer', icon: 'shuffle', text: 'Generate Randomized Game' }

@@ -2,6 +2,7 @@
   <mat-sidenav #sidenav>
     <section class="mat-typography sidenav-container">
       <h2 class="centered">Metroid Prime Randomizer</h2>
+      <h3 class="centered">v{{ version }}</h3>
       <div class="divider"></div>
       <mat-nav-list>
           <a mat-list-item *ngFor="let navItem of navItems" routerLink="{{ navItem.link }}" (click)="sidenav.close()">

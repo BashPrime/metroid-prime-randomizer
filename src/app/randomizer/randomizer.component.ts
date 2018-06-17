@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
+import { environment } from '../../environments/environment';
 import {Randomizer} from '../../common/randomizer/Randomizer';
 import {Region} from '../../common/randomizer/Region';
 import {Location} from '../../common/randomizer/Location';
@@ -13,6 +14,7 @@ import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
   styleUrls: ['./randomizer.component.scss']
 })
 export class RandomizerComponent implements OnInit {
+  version: string = environment.version;
   randomizer: Randomizer;
   regions: Array<Region>;
   selectedRegionIndex: number;
@@ -46,7 +48,7 @@ export class RandomizerComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer) {
     this.selectedMode = this.modes[0].value;
-    this.selectedLogic = this.logics[0].value;
+    this.selectedLogic = this.logics[1].value;
     this.selectedDifficulty = this.difficulties[0].value;
     this.selectedArtifacts = this.artifacts[0].value;
   }
@@ -84,6 +86,7 @@ export class RandomizerComponent implements OnInit {
     spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts() ? 'yes' : 'no';
     spoiler.info.difficulty = this.randomizer.getDifficulty();
     spoiler.info.seed = this.randomizer.getSeed();
+    spoiler.info.version = this.version;
     spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
 
     this.spoilerLog = JSON.stringify(spoiler, null, '\t');
