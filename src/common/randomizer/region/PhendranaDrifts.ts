@@ -431,7 +431,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Quarantine Monitor').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasBackwardsPhendranaReqs() && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS));
+      return items.hasBackwardsPhendranaReqsHard() && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get('Research Lab Hydra').canFillItem = function (item: Item, items: ItemCollection): boolean {
