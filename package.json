@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "node": "node_modules/.bin/ts-node -P src/tsconfig.node.json src/node/main.ts"
+    "node": "node_modules/.bin/ts-node -P src/tsconfig.node.json src/node/main.ts",
+    "server": "node app.js"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +26,9 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
     "big-integer": "^1.6.24",
+    "body-parser": "^1.18.3",
     "core-js": "^2.4.1",
+    "express": "^4.16.3",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
