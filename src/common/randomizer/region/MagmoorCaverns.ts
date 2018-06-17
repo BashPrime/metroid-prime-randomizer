@@ -210,65 +210,7 @@ export class MagmoorCaverns extends Region {
   }
 
   public initInsane(): void {
-    const minVMRTanks = 4;
-    this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Triclops Pit').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Storage Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Transport Tunnel A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Shore Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayPowerBombs() && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Fiery Shores (Morph Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs()
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs()
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-    this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined) {
-        items = new ItemCollection([...items.toArray(), item]);
-      }
-      return items.canLayBombs();
-    };
-
-    this.locations.get('Warrior Shrine').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles()
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-
-    this.locations.get('Plasma Processing').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.BOOST_BALL)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
-    this.locations.get('Plasma Processing').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined) {
-        items = new ItemCollection([...items.toArray(), item]);
-      }
-      return items.has(PrimeItem.PLASMA_BEAM);
-    };
-
-    this.locations.get('Magmoor Workstation').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.WAVE_BEAM)
-        && (items.hasAnySuit() || items.canVMR(minVMRTanks));
-    };
+    // stub for now
+    this.initHard();
   }
 }
