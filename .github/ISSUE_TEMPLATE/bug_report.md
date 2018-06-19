@@ -4,10 +4,6 @@ about: Create a report to help us improve
 
 ---
 
-Console, Nintendont, or Emulator:
-
-Version for Nintendont/Emulator:
-
 Seed:
 
 Mode:
