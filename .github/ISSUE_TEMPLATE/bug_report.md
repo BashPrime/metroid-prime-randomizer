@@ -6,6 +6,8 @@ about: Create a report to help us improve
 
 Seed:
 
+Layout Descriptor:
+
 Mode:
 Logic:
 Randomized Artifacts:
