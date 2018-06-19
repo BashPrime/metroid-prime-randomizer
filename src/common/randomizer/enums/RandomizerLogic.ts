@@ -1,5 +1,5 @@
 export enum RandomizerLogic {
-  CASUAL = 'casual',
+  NO_GLITCHES = 'no-glitches',
   NORMAL = 'normal',
   HARD = 'hard',
   INSANE = 'insane',

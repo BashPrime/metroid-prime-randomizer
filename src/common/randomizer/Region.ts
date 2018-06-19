@@ -5,7 +5,7 @@ export abstract class Region {
   protected name: string;
   protected locations: Map<string, Location>;
 
-  public init(logic: string = RandomizerLogic.CASUAL): void {
+  public init(logic: string = RandomizerLogic.NO_GLITCHES): void {
     switch (logic) {
       case RandomizerLogic.NORMAL:
         this.initNormal();
@@ -16,13 +16,13 @@ export abstract class Region {
       case RandomizerLogic.INSANE:
         this.initInsane();
         break;
-      case RandomizerLogic.CASUAL:
+      case RandomizerLogic.NO_GLITCHES:
       default:
-        this.initCasual();
+        this.initNoGlitches();
     }
   }
 
-  public abstract initCasual(): void;
+  public abstract initNoGlitches(): void;
 
   public abstract initNormal(): void;
 

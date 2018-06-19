@@ -38,7 +38,7 @@ export class RandomizerComponent implements OnInit {
     {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
   ];
   logics = [
-    {name: 'Casual', value: RandomizerLogic.CASUAL},
+    {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
     {name: 'Normal', value: RandomizerLogic.NORMAL},
     {name: 'Hard', value: RandomizerLogic.HARD}
   ];
@@ -51,10 +51,10 @@ export class RandomizerComponent implements OnInit {
   ];
 
   constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
-    this.selectedMode = this.modes[0].value;
-    this.selectedLogic = this.logics[1].value;
-    this.selectedDifficulty = this.difficulties[0].value;
-    this.selectedArtifacts = this.artifacts[0].value;
+    this.selectedMode = RandomizerMode.STANDARD;
+    this.selectedLogic = RandomizerLogic.NO_GLITCHES
+    this.selectedDifficulty = 'normal';
+    this.selectedArtifacts = false;
   }
 
   ngOnInit() {

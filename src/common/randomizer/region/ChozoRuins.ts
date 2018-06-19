@@ -53,7 +53,7 @@ export class ChozoRuins extends Region {
     this.locations.get('Elder Chamber').setItem(Item.get(PrimeItem.ARTIFACT_OF_WORLD));
   }
 
-  public initCasual(): void {
+  public initNoGlitches(): void {
     this.locations.get('Main Plaza (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL);
     };

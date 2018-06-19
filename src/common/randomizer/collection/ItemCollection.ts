@@ -127,12 +127,12 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.canLayBombs();
   }
 
-  public hasPhendranaReqsCasual(): boolean {
+  public hasPhendranaReqsNoGlitches(): boolean {
     return this.hasPhendranaReqs() && this.hasAnySuit();
   }
 
   public hasPhendranaReqsNormal(): boolean {
-    return this.hasPhendranaReqsCasual();
+    return this.hasPhendranaReqsNoGlitches();
   }
 
   public hasPhendranaReqsHard(minVMRTanks: number): boolean {
@@ -146,7 +146,7 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.WAVE_BEAM);
   }
 
-  public hasBackwardsPhendranaReqsCasual(): boolean {
+  public hasBackwardsPhendranaReqsNoGlitches(): boolean {
     return this.hasBackwardsPhendranaReqs() && this.hasAnySuit() && this.has(PrimeItem.SPIDER_BALL)
     && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
@@ -182,7 +182,7 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
   }
 
-  public hasMinesFromTallonReqsCasual(): boolean {
+  public hasMinesFromTallonReqsNoGlitches(): boolean {
     return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
       && this.has(PrimeItem.THERMAL_VISOR);
   }

@@ -32,7 +32,7 @@ export class TallonOverworld extends Region {
     this.locations.get('Life Grove (Underwater Spinner)').setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
   }
 
-  public initCasual(): void {
+  public initNoGlitches(): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };

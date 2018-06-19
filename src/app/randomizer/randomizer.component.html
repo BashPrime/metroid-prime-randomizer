@@ -99,13 +99,13 @@
         </ol>
       </div>
     </div>
-    <button mat-flat-button (click)="toggleSpoilers = !toggleSpoilers" class="has-spacing-right" style="margin-top: 1em; background-color: #606060;">{{ !toggleSpoilers ?
+    <button mat-flat-button (click)="toggleSpoilers = !toggleSpoilers" class="flat-btn-light has-spacing-right" style="margin-top: 1em;">{{ !toggleSpoilers ?
       "Show" : "Hide" }} Spoilers
     </button>
     <a mat-flat-button color="primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
     <div *ngIf="regions !== undefined && toggleSpoilers">
       <div class="divider"></div>
-      <button mat-raised-button *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
+      <button mat-flat-button class="flat-btn-light has-spacing-right" *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
       <div *ngFor="let region of regions; let i = index">
         <mat-list *ngIf="i === selectedRegionIndex">
           <h3>{{ region.getName() }}</h3>
