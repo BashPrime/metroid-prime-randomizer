@@ -9,10 +9,12 @@ import {
   MatMenuModule,
   MatSelectModule,
   MatButtonModule,
-  MatListModule
+  MatListModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -42,7 +44,9 @@ import { LogicsPageComponent } from './logics-page/logics-page.component';
     MatSelectModule,
     MatButtonModule,
     MatListModule,
-    FormsModule
+    MatSnackBarModule,
+    FormsModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

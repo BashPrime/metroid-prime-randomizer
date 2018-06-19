@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
+import { ClipboardService } from 'ngx-clipboard';
 
 import { environment } from '../../environments/environment';
 import {Randomizer} from '../../common/randomizer/Randomizer';
@@ -24,11 +27,12 @@ export class RandomizerComponent implements OnInit {
   selectedLogic: string;
   selectedDifficulty: string;
   selectedArtifacts: boolean;
-  layoutString: string;
+  layoutDescriptor: string;
   toggleSpoilers = false;
   spoilerLog: string;
   spoilerFileName: string;
   downloadJsonHref: SafeUrl;
+  showPatchingInstructions: boolean = false;
   modes = [
     {name: 'Standard', value: RandomizerMode.STANDARD},
     {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
@@ -46,7 +50,7 @@ export class RandomizerComponent implements OnInit {
     {name: 'Randomized', value: true}
   ];
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
     this.selectedMode = this.modes[0].value;
     this.selectedLogic = this.logics[1].value;
     this.selectedDifficulty = this.difficulties[0].value;
@@ -59,7 +63,7 @@ export class RandomizerComponent implements OnInit {
   onSubmit(): void {
     this.regions = undefined;
     this.locations = undefined;
-    this.layoutString = undefined;
+    this.layoutDescriptor = undefined;
     this.runRandomizer();
   }
 
@@ -75,7 +79,8 @@ export class RandomizerComponent implements OnInit {
     }
     this.regions = this.randomizer.getWorld().getRegions();
     this.locations = this.randomizer.getWorld().getLocations();
-    this.layoutString = this.randomizer.getWorld().generateLayout();
+    this.layoutDescriptor = this.randomizer.getWorld().generateLayout();
+    this.clipboardService.copyFromContent(this.layoutDescriptor);
     this.generateSpoilerLog();
   }
 
@@ -97,6 +102,12 @@ export class RandomizerComponent implements OnInit {
     this.spoilerFileName = 'prime_randomizer_' + this.randomizer.getMode() +
       '_' + this.randomizer.getLogic() + '_' + this.randomizer.getDifficulty() +
       '_' + this.randomizer.getSeed() + '.txt';
+  }
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2500
+    });
   }
 
 }

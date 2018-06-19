@@ -1,29 +1,29 @@
 <mat-card>
   <h2>Generate Randomized Game</h2>
   <mat-card-content>
-    <form #randomizerForm="ngForm">
+    <form #randomizerForm="ngForm" class="formContainer">
       <div style="margin-bottom: 1em;">
         <mat-form-field>
           <input matInput type="number" min="1" max="999999999" name="seed" placeholder="Seed Number (optional)"
                  [(ngModel)]="selectedSeed" #seed="ngModel"/>
         </mat-form-field>
       </div>
-      <div style="margin-bottom: 2em;">
-        <mat-form-field>
+      <div style="margin-bottom: 1em;">
+        <mat-form-field class="has-spacing-right">
           <mat-select placeholder="Mode" [(ngModel)]="selectedMode" name="mode" style="margin-right: 0.5em;">
             <mat-option *ngFor="let mode of modes" [value]="mode.value">
               {{ mode.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="has-spacing-right">
           <mat-select placeholder="Logic" [(ngModel)]="selectedLogic" name="logic" style="margin-right: 0.5em;">
             <mat-option *ngFor="let logic of logics" [value]="logic.value">
               {{ logic.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="has-spacing-right">
           <mat-select placeholder="Artifacts" [(ngModel)]="selectedArtifacts" name="artifacts" style="margin-right: 0.5em;">
             <mat-option *ngFor="let artifact of artifacts" [value]="artifact.value">
               {{ artifact.name }}
@@ -40,7 +40,7 @@
         </mat-form-field>
       </div>
       <div>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Randomize</button>
+        <button mat-flat-button color="primary" (click)="onSubmit()">Randomize</button>
       </div>
     </form>
   </mat-card-content>
@@ -53,20 +53,56 @@
     <div>Randomized Artifacts: {{ randomizer.getRandomizedArtifacts() ? 'yes' : 'no' }}</div>
     <div>Difficulty: {{ randomizer.getDifficulty() }}</div>
     <div>Seed: {{ randomizer.getSeed() }}</div>
-    <div>
-      Item Layout:
-      <mat-form-field style="width: 90%;">
-        <input matInput type="text" [value]="layoutString" readonly />
+    <div style="margin: 1em 0;">
+      <mat-form-field style="width: 100%; margin-right: 1em;">
+        <input matInput type="text" [value]="layoutDescriptor" placeholder="Layout Descriptor" readonly />
       </mat-form-field>
+      <div>
+        <button mat-flat-button
+          color="primary"
+          ngxClipboard
+          [cbContent]="layoutDescriptor"
+          (cbOnSuccess)="openSnackBar('Copied to clipboard.', 'Close')"
+        >
+          Copy to Clipboard
+        </button>
+      </div>
     </div>
-    <p>
-      To patch your .iso with the randomized items and start playing, download and run <a href="https://github.com/aprilwade/randomprime/releases">AprilWade's ISO patcher</a>
-      (version 0.2.0 or above is recommended). When you're asked to provide an item descriptor, copy the text box labeled "Item Layout" and paste it into the program. Enjoy!
-    </p>
-    <button mat-raised-button (click)="toggleSpoilers = !toggleSpoilers" style="margin-top: 1em;">{{ !toggleSpoilers ?
+    <div>
+      <h3 class="has-spacing-right" style="display: inline-block;">Patching Instructions</h3>
+      <button mat-button
+        (click)="showPatchingInstructions = !showPatchingInstructions"
+      >
+        {{ showPatchingInstructions ? "Hide" : "Show" }}
+      </button>
+      <div *ngIf="showPatchingInstructions">
+        <ol class="list-instructions">
+          <li>Acquire a Metroid Prime ISO file.
+            <b>Make sure it is the NTSC 0-00 version.</b>
+          </li>
+          <li><a href="https://github.com/aprilwade/randomprime/releases/latest">Download the latest version
+            of the randomprime patcher</a> if you have not already done so.</li>
+          <li>Run the randomprime patcher. It will ask you for the following:
+            <ul>
+              <li><i>Input file name</i>. This is the relative file path of your Metroid Prime ISO file. You only need to type this once. Press Enter.</li>
+              <li><i>Layout descriptor</i>. This is your randomized item layout. Copy the Layout Descriptor text on this page, then paste it into
+                the program. Press Enter.</li>
+              <li><i>Output file name</i>. This can be whatever file name you want. You only need to type this once. Press Enter.</li>
+              <li><i>Skip Frigate</i>. It should already be defaulted to "Yes", so just press Enter.</li>
+            </ul>
+          </li>
+          <li>Your randomized Metroid Prime ISO file will be created, and you can run it using whichever Wii or GameCube loader you
+            prefer, or with an emulator.</li>
+          <li>After running the randomprime patcher for the first time, it will save your file name and frigate settings.
+              Now, you can run the patcher and simply press Enter for everything except the layout descriptor, which you will
+              need to copy and paste from this website.</li>
+        </ol>
+      </div>
+    </div>
+    <button mat-flat-button (click)="toggleSpoilers = !toggleSpoilers" class="has-spacing-right" style="margin-top: 1em; background-color: #606060;">{{ !toggleSpoilers ?
       "Show" : "Hide" }} Spoilers
     </button>
-    <a mat-raised-button color="primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
+    <a mat-flat-button color="primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
     <div *ngIf="regions !== undefined && toggleSpoilers">
       <div class="divider"></div>
       <button mat-raised-button *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
