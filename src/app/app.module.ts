@@ -22,6 +22,7 @@ import {RandomizerComponent} from './randomizer/randomizer.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ModesPageComponent } from './modes-page/modes-page.component';
 import { LogicsPageComponent } from './logics-page/logics-page.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LogicsPageComponent } from './logics-page/logics-page.component';
     RandomizerComponent,
     HomePageComponent,
     ModesPageComponent,
-    LogicsPageComponent
+    LogicsPageComponent,
+    NavigationComponent
   ],
   imports: [
     AppRoutingModule,

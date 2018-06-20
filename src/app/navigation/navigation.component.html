@@ -1,0 +1,30 @@
+<nav class="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" routerLink="/">
+      Metroid Prime Randomizer
+    </a>
+    <div class="navbar-burger burger" [ngClass]="{ 'is-active': showNav }" (click)="showNav = !showNav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="navbar-menu" [ngClass]="{ 'is-active': showNav }">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="/randomizer" routerLinkActive="is-active">
+        Generate Randomized Game
+      </a>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Help
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" *ngFor="let helpItem of helpItems" routerLink="{{ helpItem.link }}">{{ helpItem.text }}</a>
+        </div>
+      </div>
+      <a class="navbar-item" href="https://github.com/etaylor8086/prime-randomizer-web/issues">Report Issue</a>
+    </div>
+  </div>
+</nav>

@@ -21,6 +21,8 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/bulma/bulma.sass",
+              "node_modules/font-awesome/scss/font-awesome.scss",
               "src/global.scss"
             ],
             "scripts": []
@@ -71,6 +73,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "node_modules/bulma/bulma.sass",
+              "node_modules/font-awesome/scss/font-awesome.scss",
               "src/global.scss"
             ],
             "assets": [

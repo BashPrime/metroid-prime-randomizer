@@ -1,4 +1,10 @@
-<mat-sidenav-container>
+<app-navigation></app-navigation>
+<section class="section">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</section>
+<!-- <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <section class="mat-typography sidenav-container">
       <h2 class="centered">Metroid Prime Randomizer</h2>
@@ -21,7 +27,6 @@
       <button mat-button routerLink="/" class="rando-navbar-hide-small">
         <span style="font-size: 18px;">{{ title }}</span>
       </button>
-      <!-- <span><a routerLink="/">{{title}}</a></span> -->
       <button mat-button routerLink="/randomizer" class="rando-navbar-hide-small">
         <span>Generate Randomized Game</span>
       </button>
@@ -35,9 +40,9 @@
       </mat-menu>
       <a href="https://github.com/etaylor8086/prime-randomizer-web/issues" mat-button class="rando-navbar-hide-small">Report Issue</a>
     </mat-toolbar-row>
-    
+
   </mat-toolbar>
   <div class="app-content">
     <router-outlet></router-outlet>
   </div>
-</mat-sidenav-container>
+</mat-sidenav-container> -->

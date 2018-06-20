@@ -1,4 +1,73 @@
-<mat-card>
+<h2 class="title">Generate Randomized Game</h2>
+<form #randomizerForm="ngForm" class="formContainer">
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Seed</label>
+                <div class="control">
+                    <input class="input" type="number" min="1" max="999999999" name="seed" placeholder="Random Seed"
+                    [(ngModel)]="selectedSeed" #seed="ngModel"/>
+                </div>
+              </div>
+              <div class="field">
+                  <label class="label">Logic</label>
+                  <div class="control">
+                    <div class="select" style="width: 100%;">
+                      <select style="width: inherit;">
+                        <option *ngFor="let logic of logics" [value]="logic.value">
+                          {{ logic.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+              <div class="field">
+                <label class="label">Mode</label>
+                <div class="control">
+                  <div class="select" style="width: 100%;">
+                    <select style="width: inherit;">
+                      <option *ngFor="let mode of modes" [value]="mode.value">
+                        {{ mode.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="column">
+            <div class="field">
+                <label class="label">Artifacts</label>
+                <div class="control">
+                  <div class="select" style="width: 100%;">
+                    <select style="width: inherit;">
+                      <option *ngFor="let artifact of artifacts" [value]="artifact.value">
+                        {{ artifact.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Difficulty</label>
+                <div class="control">
+                  <div class="select" style="width: 100%;">
+                    <select style="width: inherit;">
+                      <option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
+                        {{ difficulty.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-link" (click)="onSubmit()">Randomize</button>
+        </div>
+      </div>
+</form>
+<!-- <mat-card>
   <h2>Generate Randomized Game</h2>
   <mat-card-content>
     <form #randomizerForm="ngForm" class="formContainer">
@@ -44,7 +113,7 @@
       </div>
     </form>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
 <mat-card *ngIf="regions !== undefined">
   <h2>Game Details</h2>
   <mat-card-content>

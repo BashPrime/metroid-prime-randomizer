@@ -25,7 +25,9 @@
     "@angular/platform-browser-dynamic": "^6.0.5",
     "@angular/router": "^6.0.5",
     "big-integer": "^1.6.31",
+    "bulma": "^0.7.1",
     "core-js": "^2.5.4",
+    "font-awesome": "^4.7.0",
     "ngx-clipboard": "^11.1.1",
     "rxjs": "^6.2.1",
     "zone.js": "^0.8.26"
