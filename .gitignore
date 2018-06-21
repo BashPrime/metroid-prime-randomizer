@@ -37,5 +37,8 @@ yarn-error.log
 .DS_Store
 Thumbs.db
 
+# Image assets
+/src/assets/banners/
+
 # Randomizer output
 /out/

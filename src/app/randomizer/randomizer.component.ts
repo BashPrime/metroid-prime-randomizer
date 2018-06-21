@@ -10,6 +10,7 @@ import {Region} from '../../common/randomizer/Region';
 import {Location} from '../../common/randomizer/Location';
 import {RandomizerMode} from '../../common/randomizer/enums/RandomizerMode';
 import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
+import {RandomizerArtifacts} from '../../common/randomizer/enums/RandomizerArtifacts';
 
 @Component({
   selector: 'app-randomizer',
@@ -20,13 +21,14 @@ export class RandomizerComponent implements OnInit {
   version: string = environment.version;
   randomizer: Randomizer;
   regions: Array<Region>;
-  selectedRegionIndex: number;
+  selectedRegionIndex: number = 0;
   locations: Array<Location>;
   selectedSeed: number;
   selectedMode: string;
   selectedLogic: string;
+  defaultLogic: string = RandomizerLogic.NO_GLITCHES;
   selectedDifficulty: string;
-  selectedArtifacts: boolean;
+  selectedArtifacts: string;
   layoutDescriptor: string;
   toggleSpoilers = false;
   spoilerLog: string;
@@ -46,15 +48,15 @@ export class RandomizerComponent implements OnInit {
     {name: 'Normal', value: 'normal'}
   ];
   artifacts = [
-    {name: 'Not Randomized', value: false},
-    {name: 'Randomized', value: true}
+    {name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA},
+    {name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED}
   ];
 
   constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
     this.selectedMode = RandomizerMode.STANDARD;
-    this.selectedLogic = RandomizerLogic.NO_GLITCHES
+    this.selectedLogic = RandomizerLogic.NO_GLITCHES;
     this.selectedDifficulty = 'normal';
-    this.selectedArtifacts = false;
+    this.selectedArtifacts = RandomizerArtifacts.VANILLA;
   }
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class RandomizerComponent implements OnInit {
     const spoiler: any = {info: {}};
     spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.logic = this.randomizer.getLogic();
-    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts() ? 'yes' : 'no';
+    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts();
     spoiler.info.difficulty = this.randomizer.getDifficulty();
     spoiler.info.seed = this.randomizer.getSeed();
     spoiler.info.version = this.version;

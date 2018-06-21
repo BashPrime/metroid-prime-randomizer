@@ -22,7 +22,6 @@
             ],
             "styles": [
               "node_modules/bulma/bulma.sass",
-              "node_modules/font-awesome/scss/font-awesome.scss",
               "src/global.scss"
             ],
             "scripts": []
@@ -74,7 +73,6 @@
             "scripts": [],
             "styles": [
               "node_modules/bulma/bulma.sass",
-              "node_modules/font-awesome/scss/font-awesome.scss",
               "src/global.scss"
             ],
             "assets": [

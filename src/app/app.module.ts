@@ -1,5 +1,5 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatToolbarModule,
   MatSidenavModule,
@@ -12,30 +12,35 @@ import {
   MatListModule,
   MatSnackBarModule
 } from '@angular/material';
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
-import {AppComponent} from './app.component';
-import {RandomizerComponent} from './randomizer/randomizer.component';
+import { AppComponent } from './app.component';
+import { RandomizerComponent } from './randomizer/randomizer.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { ModesPageComponent } from './modes-page/modes-page.component';
-import { LogicsPageComponent } from './logics-page/logics-page.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { HelpComponent } from './help/help.component';
+
+import { FileService } from './services/file.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RandomizerComponent,
     HomePageComponent,
-    ModesPageComponent,
-    LogicsPageComponent,
-    NavigationComponent
+    NavigationComponent,
+    HelpComponent,
+    FooterComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -50,7 +55,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     FormsModule,
     ClipboardModule
   ],
-  providers: [],
+  providers: [FileService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

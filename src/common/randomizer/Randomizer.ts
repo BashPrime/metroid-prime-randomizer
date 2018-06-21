@@ -6,18 +6,19 @@ import {RandomAssumed} from './filler/RandomAssumed';
 import {RandomizerMode} from './enums/RandomizerMode';
 import {RandomizerLogic} from './enums/RandomizerLogic';
 import {PrimeItem} from './enums/PrimeItem';
+import { RandomizerArtifacts } from './enums/RandomizerArtifacts';
 
 export class Randomizer {
   protected mode: string;
   protected logic: string;
-  protected randomizedArtifacts: boolean;
+  protected randomizedArtifacts: string;
   protected difficulty: string;
   protected goal: string;
   protected world: World;
   protected rng: MersenneTwister;
   protected seed: number;
 
-  constructor(mode: string, logic: string, randomizedArtifacts: boolean, difficulty: string) {
+  constructor(mode: string, logic: string, randomizedArtifacts: string, difficulty: string) {
     this.mode = mode;
     this.logic = logic;
     this.randomizedArtifacts = randomizedArtifacts;
@@ -42,7 +43,7 @@ export class Randomizer {
     }
     
     // Set artifacts in vanilla locations if not randomized
-    if (!this.randomizedArtifacts) {
+    if (this.randomizedArtifacts === RandomizerArtifacts.VANILLA) {
       this.world.setVanillaArtifacts();
     }
 
@@ -73,7 +74,7 @@ export class Randomizer {
     }
 
     // Fast fill the artifacts and expansions
-    if (this.randomizedArtifacts) {
+    if (this.randomizedArtifacts !== RandomizerArtifacts.VANILLA) {
       itemFiller.fill(this.getArtifacts(), true);
     }
     itemFiller.fill(this.getExpansions(vmrTanks), true, true);
@@ -91,7 +92,7 @@ export class Randomizer {
     return this.logic;
   }
 
-  getRandomizedArtifacts(): boolean { 
+  getRandomizedArtifacts(): string { 
     return this.randomizedArtifacts;
   }
 

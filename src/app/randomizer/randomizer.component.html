@@ -1,189 +1,170 @@
-<h2 class="title">Generate Randomized Game</h2>
-<form #randomizerForm="ngForm" class="formContainer">
+<section class="section">
+  <div class="container">
+    <h2 class="title is-size-3">Generate Randomized Game</h2>
     <div class="columns">
-        <div class="column">
+      <div class="column is-3">
+        <aside class="menu box">
+          <form #randomizerForm="ngForm" (ngSubmit)="onSubmit()">
+            <p class="menu-label">Seed Number</p>
             <div class="field">
-                <label class="label">Seed</label>
-                <div class="control">
-                    <input class="input" type="number" min="1" max="999999999" name="seed" placeholder="Random Seed"
-                    [(ngModel)]="selectedSeed" #seed="ngModel"/>
-                </div>
+              <div class="control">
+                <input class="input" type="number" min="1" max="999999999" name="seed" placeholder="Random Seed" [(ngModel)]="selectedSeed"
+                  #seed="ngModel" />
               </div>
-              <div class="field">
-                  <label class="label">Logic</label>
-                  <div class="control">
-                    <div class="select" style="width: 100%;">
-                      <select style="width: inherit;">
-                        <option *ngFor="let logic of logics" [value]="logic.value">
-                          {{ logic.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-              </div>
-              <div class="field">
-                <label class="label">Mode</label>
-                <div class="control">
-                  <div class="select" style="width: 100%;">
-                    <select style="width: inherit;">
-                      <option *ngFor="let mode of modes" [value]="mode.value">
-                        {{ mode.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-        </div>
-        <div class="column">
-            <div class="field">
-                <label class="label">Artifacts</label>
-                <div class="control">
-                  <div class="select" style="width: 100%;">
-                    <select style="width: inherit;">
-                      <option *ngFor="let artifact of artifacts" [value]="artifact.value">
-                        {{ artifact.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
             </div>
+            <p class="menu-label">Logic</p>
             <div class="field">
-                <label class="label">Difficulty</label>
-                <div class="control">
-                  <div class="select" style="width: 100%;">
-                    <select style="width: inherit;">
-                      <option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
-                        {{ difficulty.name }}
-                      </option>
-                    </select>
-                  </div>
+              <div class="control">
+                <div class="select">
+                  <select [(ngModel)]="selectedLogic" name="logic">
+                    <option *ngFor="let logic of logics" [value]="logic.value">
+                      {{ logic.name }}
+                    </option>
+                  </select>
                 </div>
+                <p class="has-text-danger" *ngIf="selectedLogic !== defaultLogic">
+                  This logic requires knowledge of glitches and more advanced movement.
+                </p>
+              </div>
             </div>
+            <p class="menu-label">Mode</p>
+            <div class="field">
+              <div class="control">
+                <div class="select">
+                  <select [(ngModel)]="selectedMode" name="mode">
+                    <option *ngFor="let mode of modes" [value]="mode.value">
+                      {{ mode.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <p class="menu-label">Artifacts</p>
+            <div class="field">
+              <div class="control">
+                <div class="select">
+                  <select [(ngModel)]="selectedArtifacts" name="artifacts">
+                    <option *ngFor="let artifact of artifacts" [value]="artifact.value">
+                      {{ artifact.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <p class="menu-label">Difficulty</p>
+            <div class="field">
+              <div class="control">
+                <div class="select">
+                  <select [(ngModel)]="selectedDifficulty" name="difficulty">
+                    <option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
+                      {{ difficulty.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <button class="button is-primary is-large is-fullwidth" type="submit">Randomize</button>
+          </form>
+        </aside>
+        <p class="has-text-weight-bold has-text-centered">
+          <a routerLink="/help/patching-instructions">Patching Instructions</a>
+        </p>
+      </div>
+      <div class="column">
+        <p class="subtitle is-size-3 has-text-centered" *ngIf="!regions">Click the Randomize button to generate a game!</p>
+        <div class="hero is-small is-primary" style="margin-bottom: 2em;" *ngIf="regions">
+          <div class="hero-body">
+            <h3 class="title">Game Details</h3>
+          </div>
+        </div>
+        <div *ngIf="regions">
+          <table class="table is-striped is-fullwidth">
+            <tbody>
+              <tr>
+                <th>Mode</th>
+                <td>{{ randomizer.getMode() }}</td>
+              </tr>
+              <tr>
+                <th>Logic</th>
+                <td>{{ randomizer.getLogic() }}</td>
+              </tr>
+              <tr>
+                <th>Artifacts</th>
+                <td>{{ randomizer.getRandomizedArtifacts() }}</td>
+              </tr>
+              <tr>
+                <th>Difficulty</th>
+                <td>{{ randomizer.getDifficulty() }}</td>
+              </tr>
+              <tr>
+                <th>Seed</th>
+                <td>{{ randomizer.getSeed() }}</td>
+              </tr>
+              <tr>
+                <th>Version</th>
+                <td>{{ version }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="field">
+            <label class="label">Layout Descriptor</label>
+            <div class="control is-expanded">
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <input class="input" type="text" [value]="layoutDescriptor" readonly />
+                </div>
+                <div class="control">
+                  <button class="button is-primary" ngxClipboard [cbContent]="layoutDescriptor" (cbOnSuccess)="openSnackBar('Copied to clipboard.', 'Close')">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Spoilers</label>
+            <div class="control">
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-light" (click)="toggleSpoilers = !toggleSpoilers">{{ !toggleSpoilers ? "Show" : "Hide" }} Spoilers</button>
+                </div>
+                <div class="control">
+                  <a class="button is-primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="toggleSpoilers">
+            <hr>
+            <div class="field is-grouped">
+              <div class="control">
+                <div class="select">
+                  <select [(ngModel)]="selectedRegionIndex">
+                    <option *ngFor="let region of regions; let i = index" [value]="i">
+                      {{ region.getName() }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div *ngFor="let region of regions; let i = index">
+              <table class="table is-striped is-fullwidth" *ngIf="selectedRegionIndex == i">
+                <thead>
+                  <tr>
+                    <th title="Location">Location</th>
+                    <th title="Item">Item</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let location of region.getLocationsArray()">
+                    <td>{{ location.getName() }}</td>
+                    <td>{{ location.getItem().getName() }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="field">
-        <div class="control">
-          <button class="button is-link" (click)="onSubmit()">Randomize</button>
-        </div>
-      </div>
-</form>
-<!-- <mat-card>
-  <h2>Generate Randomized Game</h2>
-  <mat-card-content>
-    <form #randomizerForm="ngForm" class="formContainer">
-      <div style="margin-bottom: 1em;">
-        <mat-form-field>
-          <input matInput type="number" min="1" max="999999999" name="seed" placeholder="Seed Number (optional)"
-                 [(ngModel)]="selectedSeed" #seed="ngModel"/>
-        </mat-form-field>
-      </div>
-      <div style="margin-bottom: 1em;">
-        <mat-form-field class="has-spacing-right">
-          <mat-select placeholder="Mode" [(ngModel)]="selectedMode" name="mode" style="margin-right: 0.5em;">
-            <mat-option *ngFor="let mode of modes" [value]="mode.value">
-              {{ mode.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="has-spacing-right">
-          <mat-select placeholder="Logic" [(ngModel)]="selectedLogic" name="logic" style="margin-right: 0.5em;">
-            <mat-option *ngFor="let logic of logics" [value]="logic.value">
-              {{ logic.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="has-spacing-right">
-          <mat-select placeholder="Artifacts" [(ngModel)]="selectedArtifacts" name="artifacts" style="margin-right: 0.5em;">
-            <mat-option *ngFor="let artifact of artifacts" [value]="artifact.value">
-              {{ artifact.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Difficulty" [(ngModel)]="selectedDifficulty" name="difficulty"
-            style="margin-right: 0.5em;">
-            <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
-              {{ difficulty.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-flat-button color="primary" (click)="onSubmit()">Randomize</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card> -->
-<mat-card *ngIf="regions !== undefined">
-  <h2>Game Details</h2>
-  <mat-card-content>
-    <div>Mode: {{ randomizer.getMode() }}</div>
-    <div>Logic: {{ randomizer.getLogic() }}</div>
-    <div>Randomized Artifacts: {{ randomizer.getRandomizedArtifacts() ? 'yes' : 'no' }}</div>
-    <div>Difficulty: {{ randomizer.getDifficulty() }}</div>
-    <div>Seed: {{ randomizer.getSeed() }}</div>
-    <div style="margin: 1em 0;">
-      <mat-form-field style="width: 100%; margin-right: 1em;">
-        <input matInput type="text" [value]="layoutDescriptor" placeholder="Layout Descriptor" readonly />
-      </mat-form-field>
-      <div>
-        <button mat-flat-button
-          color="primary"
-          ngxClipboard
-          [cbContent]="layoutDescriptor"
-          (cbOnSuccess)="openSnackBar('Copied to clipboard.', 'Close')"
-        >
-          Copy to Clipboard
-        </button>
-      </div>
     </div>
-    <div>
-      <h3 class="has-spacing-right" style="display: inline-block;">Patching Instructions</h3>
-      <button mat-button
-        (click)="showPatchingInstructions = !showPatchingInstructions"
-      >
-        {{ showPatchingInstructions ? "Hide" : "Show" }}
-      </button>
-      <div *ngIf="showPatchingInstructions">
-        <ol class="list-instructions">
-          <li>Acquire a Metroid Prime ISO file.
-            <b>Make sure it is the NTSC 0-00 version.</b>
-          </li>
-          <li><a href="https://github.com/aprilwade/randomprime/releases/latest">Download the latest version
-            of the randomprime patcher</a> if you have not already done so.</li>
-          <li>Run the randomprime patcher. It will ask you for the following:
-            <ul>
-              <li><i>Input file name</i>. This is the relative file path of your Metroid Prime ISO file. You only need to type this once. Press Enter.</li>
-              <li><i>Layout descriptor</i>. This is your randomized item layout. Copy the Layout Descriptor text on this page, then paste it into
-                the program. Press Enter.</li>
-              <li><i>Output file name</i>. This can be whatever file name you want. You only need to type this once. Press Enter.</li>
-              <li><i>Skip Frigate</i>. It should already be defaulted to "Yes", so just press Enter.</li>
-            </ul>
-          </li>
-          <li>Your randomized Metroid Prime ISO file will be created, and you can run it using whichever Wii or GameCube loader you
-            prefer, or with an emulator.</li>
-          <li>After running the randomprime patcher for the first time, it will save your file name and frigate settings.
-              Now, you can run the patcher and simply press Enter for everything except the layout descriptor, which you will
-              need to copy and paste from this website.</li>
-        </ol>
-      </div>
-    </div>
-    <button mat-flat-button (click)="toggleSpoilers = !toggleSpoilers" class="flat-btn-light has-spacing-right" style="margin-top: 1em;">{{ !toggleSpoilers ?
-      "Show" : "Hide" }} Spoilers
-    </button>
-    <a mat-flat-button color="primary" title="Download Spoiler Log" [href]="downloadJsonHref" download="{{spoilerFileName}}">Download Spoiler Log</a>
-    <div *ngIf="regions !== undefined && toggleSpoilers">
-      <div class="divider"></div>
-      <button mat-flat-button class="flat-btn-light has-spacing-right" *ngFor="let region of regions; let i = index" (click)="selectedRegionIndex = i">{{ region.getName() }}</button>
-      <div *ngFor="let region of regions; let i = index">
-        <mat-list *ngIf="i === selectedRegionIndex">
-          <h3>{{ region.getName() }}</h3>
-          <mat-list-item *ngFor="let location of region.getLocationsArray()">
-            <h4 matLine>{{ location.getName() }}</h4>
-            <p matLine> {{ location.getItem().getName() }}</p>
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</section>

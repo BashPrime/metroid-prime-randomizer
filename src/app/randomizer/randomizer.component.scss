@@ -14,3 +14,15 @@
     color: #000000;
     background-color: #e0e0e0;
 }
+
+.select {
+    width: 100%;
+
+    select {
+        width: inherit;
+    }
+}
+
+.randomize-button {
+    margin-top: 1em;
+}

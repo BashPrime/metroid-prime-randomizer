@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 export class NavigationComponent implements OnInit {
   showNav = false;
   helpItems: Array<object> = [
-    { link: '/modes', text: 'Modes' },
-    { link: '/logics', text: 'Logics' }
+    { link: '/help/modes', text: 'Modes' },
+    { link: '/help/logics', text: 'Logics' },
+    { link: '/help/patching-instructions', text: 'Patching Instructions' }
   ];
 
   constructor(private router: Router) {
