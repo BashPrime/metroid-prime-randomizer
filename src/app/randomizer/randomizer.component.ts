@@ -89,7 +89,7 @@ export class RandomizerComponent implements OnInit {
     const spoiler: any = {info: {}};
     spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.logic = this.randomizer.getLogic();
-    spoiler.info.randomizedArtifacts = this.randomizer.getRandomizedArtifacts();
+    spoiler.info.artifacts = this.randomizer.getRandomizedArtifacts();
     spoiler.info.difficulty = this.randomizer.getDifficulty();
     spoiler.info.seed = this.randomizer.getSeed();
     spoiler.info.version = this.version;
