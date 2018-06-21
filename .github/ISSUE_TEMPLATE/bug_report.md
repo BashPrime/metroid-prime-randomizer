@@ -4,14 +4,14 @@ about: Create a report to help us improve
 
 ---
 
-Seed:
-
-Layout Descriptor:
-
 Mode:
 Logic:
-Randomized Artifacts:
+Artifacts:
 Difficulty:
+Seed:
+Version:
+
+Layout Descriptor:
 
 Description of problem:
 
