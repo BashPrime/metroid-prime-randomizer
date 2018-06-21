@@ -82,7 +82,6 @@ export class RandomizerComponent implements OnInit {
     this.regions = this.randomizer.getWorld().getRegions();
     this.locations = this.randomizer.getWorld().getLocations();
     this.layoutDescriptor = this.randomizer.getWorld().generateLayout();
-    this.clipboardService.copyFromContent(this.layoutDescriptor);
     this.generateSpoilerLog();
   }
 
