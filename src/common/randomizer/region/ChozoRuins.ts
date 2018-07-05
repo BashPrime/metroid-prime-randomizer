@@ -1,8 +1,8 @@
-import {Region} from '../Region';
-import {Location} from '../Location';
-import {Item} from '../Item';
-import {ItemCollection} from '../collection/ItemCollection';
-import {PrimeItem} from '../enums/PrimeItem';
+import { Region } from '../Region';
+import { Location } from '../Location';
+import { Item } from '../Item';
+import { ItemCollection } from '../collection/ItemCollection';
+import { PrimeItem } from '../enums/PrimeItem';
 
 export class ChozoRuins extends Region {
   constructor() {
@@ -458,18 +458,16 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Training Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (
-        (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL))
-        || (items.has(PrimeItem.WAVE_BEAM) && items.hasAnySuit() && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM)))
-        || (items.hasEnergyTankCount(2) && items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      return items.canLayBombs() && (
+        (items.has(PrimeItem.WAVE_BEAM) && ((items.hasAnySuit() && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))) || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasEnergyTankCount(2))) && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)) // natural route
+        || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)) // wallcrawl from main plaza
       );
     };
 
     this.locations.get('Training Chamber Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL) && (
-        (items.has(PrimeItem.WAVE_BEAM) && items.hasAnySuit() && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM)))
-        || (items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasEnergyTankCount(2))
-        || (items.has(PrimeItem.WAVE_BEAM) && items.hasMissiles() && items.canLayBombs())
+        (items.has(PrimeItem.WAVE_BEAM) && ((items.hasAnySuit() && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))) || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasEnergyTankCount(2)))) // natural route
+        || (items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // wallcrawl from main plaza
       );
     };
 
@@ -576,7 +574,7 @@ export class ChozoRuins extends Region {
       return items.hasMissiles() && items.canLayBombs();
     };
 
-    this.locations.get('Hall of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {      
+    this.locations.get('Hall of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombs() && (
         items.has(PrimeItem.SPACE_JUMP_BOOTS)
         || (items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPIDER_BALL))
