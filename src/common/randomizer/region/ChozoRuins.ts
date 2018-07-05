@@ -200,23 +200,21 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Hall of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasChozoHoteReqsNoGlitches() && items.has(PrimeItem.ICE_BEAM);
     };
 
     this.locations.get('Crossway').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)
-        && items.has(PrimeItem.WAVE_BEAM);
+        && (items.has(PrimeItem.WAVE_BEAM) || items.has(PrimeItem.ICE_BEAM));
     };
 
     this.locations.get('Elder Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasChozoHoteReqsNoGlitches() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get('Antechamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return (items.hasChozoHoteReqsNoGlitches() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.BOOST_BALL)) // natural route
+      || (items.hasFrigateReqsNoGlitches() && items.has(PrimeItem.BOOST_BALL)); // backwards chozo through frigate
     };
     this.locations.get('Antechamber').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item !== undefined)

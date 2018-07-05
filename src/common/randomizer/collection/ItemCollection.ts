@@ -223,6 +223,16 @@ export class ItemCollection extends Collection {
       && (this.hasAnySuit() || this.canVMR(minVMRTanks));
   }
 
+  public hasFrigateReqsNoGlitches(): boolean {
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
+    && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.THERMAL_VISOR);
+  }
+
+  public hasChozoHoteReqsNoGlitches(): boolean {
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM));
+  }
+
   public canDoInfiniteSpeed(): boolean {
     return this.canLayBombs() && this.has(PrimeItem.BOOST_BALL);
   }
