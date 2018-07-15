@@ -5,10 +5,17 @@
       <div class="column is-3">
         <aside class="menu box">
           <form #randomizerForm="ngForm" (ngSubmit)="onSubmit()">
+            <p class="menu-label">Permalink</p>
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" name="permalink" [(ngModel)]="selectedPermalink"
+                  (ngModelChange)="onPermalinkChange($event)" #permalink="ngModel" />
+              </div>
+            </div>
             <p class="menu-label">Seed Number</p>
             <div class="field">
               <div class="control">
-                <input class="input" type="number" min="1" max="999999999" name="seed" placeholder="Random Seed" [(ngModel)]="selectedSeed"
+                <input class="input" type="number" min="1" max="999999999" name="seed" placeholder="Random Seed" [(ngModel)]="model['seed']"
                   #seed="ngModel" />
               </div>
             </div>
@@ -16,13 +23,13 @@
             <div class="field">
               <div class="control">
                 <div class="select">
-                  <select [(ngModel)]="selectedLogic" name="logic">
+                  <select [(ngModel)]="model['logic']" name="logic">
                     <option *ngFor="let logic of logics" [value]="logic.value">
                       {{ logic.name }}
                     </option>
                   </select>
                 </div>
-                <p class="has-text-danger" *ngIf="selectedLogic !== defaultLogic">
+                <p class="has-text-danger" *ngIf="model['logic'] !== defaultLogic">
                   This logic requires knowledge of glitches and more advanced movement.
                 </p>
               </div>
@@ -31,7 +38,7 @@
             <div class="field">
               <div class="control">
                 <div class="select">
-                  <select [(ngModel)]="selectedMode" name="mode">
+                  <select [(ngModel)]="model['mode']" name="mode">
                     <option *ngFor="let mode of modes" [value]="mode.value">
                       {{ mode.name }}
                     </option>
@@ -43,7 +50,7 @@
             <div class="field">
               <div class="control">
                 <div class="select">
-                  <select [(ngModel)]="selectedArtifacts" name="artifacts">
+                  <select [(ngModel)]="model['artifacts']" name="artifacts">
                     <option *ngFor="let artifact of artifacts" [value]="artifact.value">
                       {{ artifact.name }}
                     </option>
@@ -55,7 +62,7 @@
             <div class="field">
               <div class="control">
                 <div class="select">
-                  <select [(ngModel)]="selectedDifficulty" name="difficulty">
+                  <select [(ngModel)]="model['difficulty']" name="difficulty">
                     <option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
                       {{ difficulty.name }}
                     </option>

@@ -23,12 +23,13 @@ export class RandomizerComponent implements OnInit {
   regions: Array<Region>;
   selectedRegionIndex: number = 0;
   locations: Array<Location>;
-  selectedSeed: number;
-  selectedMode: string;
-  selectedLogic: string;
-  defaultLogic: string = RandomizerLogic.NO_GLITCHES;
-  selectedDifficulty: string;
-  selectedArtifacts: string;
+  selectedPermalink: string;
+  model: any = {
+    logic: RandomizerLogic.NO_GLITCHES,
+    mode: RandomizerMode.STANDARD,
+    difficulty: 'normal',
+    artifacts: RandomizerArtifacts.VANILLA
+  };
   layoutDescriptor: string;
   toggleSpoilers = false;
   spoilerLog: string;
@@ -53,10 +54,6 @@ export class RandomizerComponent implements OnInit {
   ];
 
   constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
-    this.selectedMode = RandomizerMode.STANDARD;
-    this.selectedLogic = RandomizerLogic.NO_GLITCHES;
-    this.selectedDifficulty = 'normal';
-    this.selectedArtifacts = RandomizerArtifacts.VANILLA;
   }
 
   ngOnInit() {
@@ -71,17 +68,20 @@ export class RandomizerComponent implements OnInit {
 
   runRandomizer(): void {
     this.spoilerLog = undefined;
-    this.randomizer = new Randomizer(this.selectedMode, this.selectedLogic, this.selectedArtifacts, this.selectedDifficulty);
+    this.randomizer = new Randomizer(this.model['mode'], this.model['logic'], this.model['artifacts'], this.model['difficulty']);
 
-    if (this.selectedSeed) {
-      this.selectedSeed = this.selectedSeed < 1 ? 1 : this.selectedSeed > 999999999 ? 999999999 : this.selectedSeed;
-      this.randomizer.randomize(this.selectedSeed);
+    if (this.model['seed']) {
+      this.model['seed'] = this.model['seed'] < 1 ? 1 : this.model['seed'] > 999999999 ? 999999999 : this.model['seed'];
+      this.randomizer.randomize(this.model['seed']);
     } else {
       this.randomizer.randomize();
     }
     this.regions = this.randomizer.getWorld().getRegions();
     this.locations = this.randomizer.getWorld().getLocations();
     this.layoutDescriptor = this.randomizer.getWorld().generateLayout();
+    let permaObj = JSON.parse(JSON.stringify(this.model));
+    permaObj['seed'] = this.randomizer.getSeed();
+    this.selectedPermalink = btoa(JSON.stringify(permaObj));
     this.generateSpoilerLog();
   }
 
@@ -109,6 +109,16 @@ export class RandomizerComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2500
     });
+  }
+
+  onPermalinkChange(e: any) {
+    try {
+      let decoded = atob(e);
+      this.model = JSON.parse(decoded);
+    } catch (exception) {
+      if (!e)
+        alert("Not valid base64");
+    }
   }
 
 }
