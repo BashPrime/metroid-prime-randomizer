@@ -95,12 +95,20 @@
           <table class="table is-striped is-fullwidth">
             <tbody>
               <tr>
-                <th>Mode</th>
-                <td>{{ randomizer.getMode() }}</td>
+                <th>Version</th>
+                <td>{{ version }}</td>
+              </tr>
+              <tr>
+                <th>Seed</th>
+                <td>{{ randomizer.getSeed() }}</td>
               </tr>
               <tr>
                 <th>Logic</th>
                 <td>{{ randomizer.getLogic() }}</td>
+              </tr>
+              <tr>
+                <th>Mode</th>
+                <td>{{ randomizer.getMode() }}</td>
               </tr>
               <tr>
                 <th>Artifacts</th>
@@ -109,14 +117,6 @@
               <tr>
                 <th>Difficulty</th>
                 <td>{{ randomizer.getDifficulty() }}</td>
-              </tr>
-              <tr>
-                <th>Seed</th>
-                <td>{{ randomizer.getSeed() }}</td>
-              </tr>
-              <tr>
-                <th>Version</th>
-                <td>{{ version }}</td>
               </tr>
             </tbody>
           </table>

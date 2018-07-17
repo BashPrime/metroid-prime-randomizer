@@ -93,12 +93,14 @@ export class RandomizerComponent implements OnInit {
 
   generateSpoilerLog(): void {
     const spoiler: any = {info: {}};
-    spoiler.info.mode = this.randomizer.getMode();
+    spoiler.info.version = this.version;
+    spoiler.info.permalink = this.model['permalink'];
+    spoiler.info.seed = this.randomizer.getSeed();
     spoiler.info.logic = this.randomizer.getLogic();
+    spoiler.info.mode = this.randomizer.getMode();
     spoiler.info.artifacts = this.randomizer.getRandomizedArtifacts();
     spoiler.info.difficulty = this.randomizer.getDifficulty();
-    spoiler.info.seed = this.randomizer.getSeed();
-    spoiler.info.version = this.version;
+    spoiler.info.layoutDescriptor = this.layoutDescriptor;
     spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
 
     this.spoilerLog = JSON.stringify(spoiler, null, '\t');
@@ -106,9 +108,9 @@ export class RandomizerComponent implements OnInit {
     const uri = this.sanitizer.bypassSecurityTrustUrl('data:text/json;charset=UTF-8,' + encodeURIComponent(this.spoilerLog));
     this.downloadJsonHref = uri;
 
-    this.spoilerFileName = 'prime_randomizer_' + this.randomizer.getMode() +
-      '_' + this.randomizer.getLogic() + '_' + this.randomizer.getDifficulty() +
-      '_' + this.randomizer.getSeed() + '.txt';
+    this.spoilerFileName = 'prime_randomizer_' + this.version + '_' + this.randomizer.getLogic() +
+      '_' + this.randomizer.getMode() + '_' + this.randomizer.getRandomizedArtifacts() + '_' +
+      this.randomizer.getDifficulty() + '_' + this.randomizer.getSeed() + '.txt';
   }
   
   openSnackBar(message: string, action: string) {
