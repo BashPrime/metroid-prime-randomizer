@@ -4,13 +4,13 @@ about: Create a report to help us improve
 
 ---
 
-Mode:
+Version:
+Permalink:
+Seed:
 Logic:
+Mode:
 Artifacts:
 Difficulty:
-Seed:
-Version:
-
 Layout Descriptor:
 
 Description of problem:
