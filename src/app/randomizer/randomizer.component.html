@@ -1,17 +1,23 @@
 <section class="section">
   <div class="container">
     <h2 class="title is-size-3">Generate Randomized Game</h2>
+    <div class="field">
+      <label class="label">Permalink</label>
+      <div class="control is-expanded">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input class="input" type="text" [(ngModel)]="model['permalink']" (ngModelChange)="onPermalinkChange($event)">
+          </div>
+          <div class="control">
+            <button class="button is-primary" ngxClipboard [disabled]="!model['permalink']" [cbContent]="model['permalink']" (cbOnSuccess)="openSnackBar('Copied permalink to clipboard.', 'Close')">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="columns">
       <div class="column is-3">
         <aside class="menu box">
           <form #randomizerForm="ngForm" (ngSubmit)="onSubmit()">
-            <p class="menu-label">Permalink</p>
-            <div class="field">
-              <div class="control">
-                <input class="input" type="text" name="permalink" [(ngModel)]="selectedPermalink"
-                  (ngModelChange)="onPermalinkChange($event)" #permalink="ngModel" />
-              </div>
-            </div>
             <p class="menu-label">Seed Number</p>
             <div class="field">
               <div class="control">
@@ -24,7 +30,7 @@
               <div class="control">
                 <div class="select">
                   <select [(ngModel)]="model['logic']" name="logic">
-                    <option *ngFor="let logic of logics" [value]="logic.value">
+                    <option *ngFor="let logic of dropdowns['logic']" [value]="logic.value">
                       {{ logic.name }}
                     </option>
                   </select>
@@ -39,7 +45,7 @@
               <div class="control">
                 <div class="select">
                   <select [(ngModel)]="model['mode']" name="mode">
-                    <option *ngFor="let mode of modes" [value]="mode.value">
+                    <option *ngFor="let mode of dropdowns['mode']" [value]="mode.value">
                       {{ mode.name }}
                     </option>
                   </select>
@@ -51,7 +57,7 @@
               <div class="control">
                 <div class="select">
                   <select [(ngModel)]="model['artifacts']" name="artifacts">
-                    <option *ngFor="let artifact of artifacts" [value]="artifact.value">
+                    <option *ngFor="let artifact of dropdowns['artifacts']" [value]="artifact.value">
                       {{ artifact.name }}
                     </option>
                   </select>
@@ -63,7 +69,7 @@
               <div class="control">
                 <div class="select">
                   <select [(ngModel)]="model['difficulty']" name="difficulty">
-                    <option *ngFor="let difficulty of difficulties" [value]="difficulty.value">
+                    <option *ngFor="let difficulty of dropdowns['difficulty']" [value]="difficulty.value">
                       {{ difficulty.name }}
                     </option>
                   </select>
