@@ -1,21 +1,21 @@
 <section class="section">
   <div class="container">
     <h2 class="title is-size-3">Generate Randomized Game</h2>
-    <div class="field">
-      <label class="label">Permalink</label>
-      <div class="control is-expanded">
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <input class="input" type="text" [(ngModel)]="model['permalink']" (ngModelChange)="onPermalinkChange($event)">
-          </div>
-          <div class="control">
-            <button class="button is-primary" ngxClipboard [disabled]="!model['permalink']" [cbContent]="model['permalink']" (cbOnSuccess)="openSnackBar('Copied permalink to clipboard.', 'Close')">Copy</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="columns">
       <div class="column is-3">
+        <div class="field">
+          <label class="label">Permalink</label>
+          <div class="control is-expanded">
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input class="input" type="text" [(ngModel)]="model['permalink']" (ngModelChange)="onPermalinkChange($event)">
+              </div>
+              <div class="control">
+                <button class="button is-primary" ngxClipboard [disabled]="!model['permalink']" [cbContent]="model['permalink']" (cbOnSuccess)="openSnackBar('Copied permalink to clipboard.', 'Close')">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <aside class="menu box">
           <form #randomizerForm="ngForm" (ngSubmit)="onSubmit()">
             <p class="menu-label">Seed Number</p>
