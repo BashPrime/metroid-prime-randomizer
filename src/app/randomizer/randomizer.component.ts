@@ -30,6 +30,7 @@ export class RandomizerComponent implements OnInit {
     difficulty: 'normal',
     artifacts: RandomizerArtifacts.VANILLA
   };
+  generatedPermalink: string;
   defaultLogic = RandomizerLogic.NO_GLITCHES;
   layoutDescriptor: string;
   toggleSpoilers = false;
@@ -86,7 +87,8 @@ export class RandomizerComponent implements OnInit {
 
     let game = JSON.parse(JSON.stringify(this.model));
     game['seed'] = this.randomizer.getSeed();
-    this.model['permalink'] = this.getPermalinkFromGame(game);
+    this.generatedPermalink = this.getPermalinkFromGame(game);
+    this.model['permalink'] = this.generatedPermalink;
 
     this.generateSpoilerLog();
   }
@@ -94,7 +96,7 @@ export class RandomizerComponent implements OnInit {
   generateSpoilerLog(): void {
     const spoiler: any = {info: {}};
     spoiler.info.version = this.version;
-    spoiler.info.permalink = this.model['permalink'];
+    spoiler.info.permalink = this.generatedPermalink;
     spoiler.info.seed = this.randomizer.getSeed();
     spoiler.info.logic = this.randomizer.getLogic();
     spoiler.info.mode = this.randomizer.getMode();
