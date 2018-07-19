@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -59,16 +58,10 @@ export class RandomizerComponent implements OnInit {
   };
   hexStringFormat = ['logic', 'mode', 'difficulty', 'artifacts'];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
+  constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const permalink = params['permalink'];
-      if (permalink)
-        this.onPermalinkChange(permalink);
-        this.runRandomizer();
-    });
   }
 
   onSubmit(): void {
