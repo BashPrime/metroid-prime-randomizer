@@ -8,6 +8,7 @@ import { HelpComponent } from './help/help.component';
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'randomizer', component: RandomizerComponent },
+  { path: 'randomizer/:permalink', component: RandomizerComponent },
   { path: 'help/:article', component: HelpComponent },
 ];
 
