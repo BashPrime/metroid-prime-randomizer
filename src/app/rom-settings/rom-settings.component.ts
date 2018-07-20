@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
 
 @Component({
@@ -9,24 +10,25 @@ import { ElectronService } from '../services/electron.service';
 })
 export class RomSettingsComponent implements OnInit {
   model = {};
-  constructor(private electronService: ElectronService) { }
+  constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }
 
   ngOnInit() {
+    this.model = this.randomizerService.getSettings();
   }
 
-  selectIso() {
+  selectCleanIso() {
     return this.electronService.dialog.showOpenDialog({
       filters: [
         { name: 'GC ISO Files', extensions: ['iso', 'gcm'] }
       ],
       properties: ['openFile']
-    });
+    })[0];
   }
 
   selectFolder() {
     return this.electronService.dialog.showOpenDialog({
       properties: ['openDirectory']
-    });
+    })[0];
   }
 
 }

@@ -29,6 +29,7 @@ import { FileService } from './services/file.service';
 import { FooterComponent } from './footer/footer.component';
 import { RandomComponent } from './random/random.component';
 import { RomSettingsComponent } from './rom-settings/rom-settings.component';
+import { MainRulesComponent } from './main-rules/main-rules.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { RomSettingsComponent } from './rom-settings/rom-settings.component';
     HelpComponent,
     FooterComponent,
     RandomComponent,
-    RomSettingsComponent
+    RomSettingsComponent,
+    MainRulesComponent
   ],
   imports: [
     AppRoutingModule,

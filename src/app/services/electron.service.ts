@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { remote } from 'electron';
+import { remote, ipcMain, ipcRenderer } from 'electron';
 const { dialog } = remote;
 
 @Injectable({
@@ -8,5 +8,6 @@ const { dialog } = remote;
 })
 export class ElectronService {
   dialog = dialog;
+  ipcRenderer = ipcRenderer;
   constructor() {}
 }

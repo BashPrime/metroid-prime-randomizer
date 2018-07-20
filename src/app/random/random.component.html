@@ -1,11 +1,8 @@
 <section class="section">
   <div class="container">
-    <div class="tabs">
+    <div class="tabs is-toggle is-fullwidth">
       <ul>
-        <li *ngFor="let tab of tabs; let i = index"
-          [ngClass]="{'is-active': selectedTab === i}"
-          (click)="selectedTab = i"
-        >
+        <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === i}" (click)="selectedTab = i">
           <a>{{ tab }}</a>
         </li>
       </ul>
@@ -14,6 +11,24 @@
       <section *ngIf="selectedTab === 0">
         <app-rom-settings></app-rom-settings>
       </section>
+      <section *ngIf="selectedTab === 1">
+        <app-main-rules></app-main-rules>
+      </section>
     </div>
+    <hr>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Seed Number</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed">
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="button is-primary is-large" (click)="runRandomizer()" [ngClass]="{'is-loading': patching}">Randomize</button>
+    <p *ngIf="patching">{{ patchUpdate }}</p>
   </div>
 </section>

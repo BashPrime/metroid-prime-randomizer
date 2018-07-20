@@ -1,4 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
+import { Patcher } from './patcher/Patcher';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -68,3 +69,5 @@ try {
   // Catch Error
   // throw e;
 }
+
+const patcher = new Patcher();

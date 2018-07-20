@@ -1,0 +1,61 @@
+<div class="columns">
+  <div class="column">
+    <p class="label">Logic</p>
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="model['logic']" name="logic">
+            <option *ngFor="let logic of dropdowns['logic']" [value]="logic.value">
+              {{ logic.name }}
+            </option>
+          </select>
+        </div>
+        <p class="has-text-danger" *ngIf="model['logic'] !== defaultLogic">
+          This logic requires knowledge of glitches and more advanced movement.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <p class="label">Mode</p>
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="model['mode']" name="mode">
+            <option *ngFor="let mode of dropdowns['mode']" [value]="mode.value">
+              {{ mode.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <p class="label">Artifacts</p>
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="model['artifacts']" name="artifacts">
+            <option *ngFor="let artifact of dropdowns['artifacts']" [value]="artifact.value">
+              {{ artifact.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <p class="label">Difficulty</p>
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="model['difficulty']" name="difficulty">
+            <option *ngFor="let difficulty of dropdowns['difficulty']" [value]="difficulty.value">
+              {{ difficulty.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
