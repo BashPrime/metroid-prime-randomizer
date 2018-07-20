@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
 import { Randomizer } from '../../common/randomizer/Randomizer';
@@ -18,30 +18,49 @@ export class RandomComponent implements OnInit {
   ];
   selectedTab = 0;
   patching = false;
-  patchUpdate;
+  patchUpdate: string;
+  errorOccurred: boolean;
+  
 
-  constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }
+  constructor(private changeDetectorRef: ChangeDetectorRef, private randomizerService: RandomizerService, private electronService: ElectronService) { }
 
   ngOnInit() {
     this.model = this.randomizerService.getSettings();
 
-    this.electronService.ipcRenderer.on('patched', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-complete', (event, arg) => {
       this.patchUpdate = null;
-      alert('Game has been patched');
       this.patching = false;
+      this.changeDetectorRef.detectChanges();
+      if (!this.errorOccurred) {
+        this.electronService.dialog.showMessageBox({
+          type: 'info',
+          message: 'Game has been successfully patched.'
+        });
+      }
     });
 
     this.electronService.ipcRenderer.on('patching-error', (event, arg) => {
-      alert('An error occurred during patching: ' + JSON.stringify(arg));
       this.patching = false;
+      this.errorOccurred = true;
+      console.log(JSON.stringify(arg));
+      this.changeDetectorRef.detectChanges();
+      this.electronService.dialog.showMessageBox({
+        type: 'error',
+        title: 'Error',
+        message: arg
+      });
     });
 
     this.electronService.ipcRenderer.on('patch-update', (event, arg) => {
-      this.patchUpdate = arg;
+      if (this.patching) {
+        this.patchUpdate = arg;
+        this.changeDetectorRef.detectChanges();
+      }
     });
   }
 
   runRandomizer() {
+    this.errorOccurred = false;
     this.patching = true;
     const game = JSON.parse(JSON.stringify(this.randomizerService.getSettings()));
     const randomizer = new Randomizer(game['mode'], game['logic'], game['artifacts'], game['difficulty']);
@@ -57,6 +76,10 @@ export class RandomComponent implements OnInit {
     game['layoutDescriptor'] = randomizer.getWorld().generateLayout();
 
     this.electronService.ipcRenderer.send('randomizer', game);
+  }
+
+  setDefaultSettings() {
+    this.randomizerService.resetSettings();
   }
 
 }

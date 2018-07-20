@@ -22,8 +22,7 @@ export class Patcher {
 
         const child = execFile(randomprime, params, function (error, stdout, stderr) {
             if (error) {
-                console.log(error);
-                console.log(stderr);
+                console.log('error', error);
                 if (event) {
                     event.sender.send('patching-error', error);
                 }
@@ -31,21 +30,37 @@ export class Patcher {
         });
 
         // use event hooks to provide a callback to execute when data are available:
+        // hook on stdout for progress updates, send progress to view
         child.stdout.on('data', function (data) {
-            console.log(data.toString());
+            console.log('stdout', data.toString());
+
+            // mark game as successfully patched if stdout reaches Done
             if (event) {
-                event.sender.send('patch-update', data.toString());
+                if (data.toString().indexOf('Done') > -1) {
+                    event.sender.send('patch-complete');
+                } else {
+                    event.sender.send('patch-update', data.toString());
+                }
             }
         });
 
+        // send errors to view if needed
         child.stderr.on('data', function (data) {
-            console.log(data.toString());
+            const msg = data.toString();
+            console.log('stderr', msg);
+            if (event) {
+                let errMsg = msg;
+                const errorIndex = msg.indexOf('error: ');
+                if (errorIndex > -1) {
+                    errMsg = msg.substr(errorIndex + 'error: '.length);
+                }
+                event.sender.send('patching-error', errMsg);
+            }
         });
 
+        // output error code to Electron main console
         child.on('exit', (code, signal) => {
-            if (event) {
-                event.sender.send('patched');
-            }
+            console.log('exit code', code);
         });
     }
 }

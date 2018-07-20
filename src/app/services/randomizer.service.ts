@@ -10,17 +10,23 @@ import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArt
   providedIn: 'root'
 })
 export class RandomizerService {
-  private settings = {
-    version: environment.version,
-    logic: RandomizerLogic.NO_GLITCHES,
-    mode: RandomizerMode.STANDARD,
-    artifacts: RandomizerArtifacts.VANILLA,
-    difficulty: 'normal'
-  };
+  private settings;
 
-  constructor() { }
+  constructor() {
+    this.resetSettings();
+  }
 
   getSettings() {
     return this.settings;
+  }
+
+  resetSettings() {
+    this.settings = JSON.parse(JSON.stringify({
+      version: environment.version,
+      logic: RandomizerLogic.NO_GLITCHES,
+      mode: RandomizerMode.STANDARD,
+      artifacts: RandomizerArtifacts.VANILLA,
+      difficulty: 'normal'
+    }));
   }
 }
