@@ -1,0 +1,30 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Clean ISO</label>
+  </div>
+  <div class="field-body">
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <input class="input" type="text" [(ngModel)]="model['cleanIso']">
+      </div>
+      <div class="control">
+        <button class="button file-cta" (click)="model['cleanIso'] = selectIso()">Select ISO</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Output Folder</label>
+  </div>
+  <div class="field-body">
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <input class="input" type="text" [(ngModel)]="model['outputFolder']">
+      </div>
+      <div class="control">
+        <button class="button file-cta" (click)="model['outputFolder'] = selectFolder()">Select Folder</button>
+      </div>
+    </div>
+  </div>
+</div>

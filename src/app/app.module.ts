@@ -27,6 +27,8 @@ import { HelpComponent } from './help/help.component';
 
 import { FileService } from './services/file.service';
 import { FooterComponent } from './footer/footer.component';
+import { RandomComponent } from './random/random.component';
+import { RomSettingsComponent } from './rom-settings/rom-settings.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FooterComponent } from './footer/footer.component';
     HomePageComponent,
     NavigationComponent,
     HelpComponent,
-    FooterComponent
+    FooterComponent,
+    RandomComponent,
+    RomSettingsComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,0 +1,19 @@
+<section class="section">
+  <div class="container">
+    <div class="tabs">
+      <ul>
+        <li *ngFor="let tab of tabs; let i = index"
+          [ngClass]="{'is-active': selectedTab === i}"
+          (click)="selectedTab = i"
+        >
+          <a>{{ tab }}</a>
+        </li>
+      </ul>
+    </div>
+    <div id="tab-container" class="container">
+      <section *ngIf="selectedTab === 0">
+        <app-rom-settings></app-rom-settings>
+      </section>
+    </div>
+  </div>
+</section>

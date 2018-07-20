@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { ClipboardService } from 'ngx-clipboard';
 
 import { environment } from '../../environments/environment';
-import {Randomizer} from '../../common/randomizer/Randomizer';
-import {Region} from '../../common/randomizer/Region';
-import {Location} from '../../common/randomizer/Location';
-import {RandomizerMode} from '../../common/randomizer/enums/RandomizerMode';
-import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
-import {RandomizerArtifacts} from '../../common/randomizer/enums/RandomizerArtifacts';
-import {Utilities} from '../../common/Utilities';
+import { Randomizer } from '../../common/randomizer/Randomizer';
+import { Region } from '../../common/randomizer/Region';
+import { Location } from '../../common/randomizer/Location';
+import { RandomizerMode } from '../../common/randomizer/enums/RandomizerMode';
+import { RandomizerLogic } from '../../common/randomizer/enums/RandomizerLogic';
+import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArtifacts';
+import { Utilities } from '../../common/Utilities';
 
 @Component({
   selector: 'app-randomizer',
@@ -22,7 +22,7 @@ export class RandomizerComponent implements OnInit {
   version: string = environment.version;
   randomizer: Randomizer;
   regions: Array<Region>;
-  selectedRegionIndex: number = 0;
+  selectedRegionIndex = 0;
   locations: Array<Location>;
   model: any = {
     logic: RandomizerLogic.NO_GLITCHES,
@@ -40,20 +40,20 @@ export class RandomizerComponent implements OnInit {
   showPatchingInstructions: boolean = false;
   dropdowns: any = {
     logic: [
-      {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
-      {name: 'Normal', value: RandomizerLogic.NORMAL},
-      {name: 'Hard', value: RandomizerLogic.HARD}
+      { name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES },
+      { name: 'Normal', value: RandomizerLogic.NORMAL },
+      { name: 'Hard', value: RandomizerLogic.HARD }
     ],
     mode: [
-      {name: 'Standard', value: RandomizerMode.STANDARD},
-      {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
+      { name: 'Standard', value: RandomizerMode.STANDARD },
+      { name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS }
     ],
     difficulty: [
-      {name: 'Normal', value: 'normal'}
+      { name: 'Normal', value: 'normal' }
     ],
     artifacts: [
-      {name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA},
-      {name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED}
+      { name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA },
+      { name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED }
     ]
   };
   hexStringFormat = ['logic', 'mode', 'difficulty', 'artifacts'];
@@ -94,7 +94,7 @@ export class RandomizerComponent implements OnInit {
   }
 
   generateSpoilerLog(): void {
-    const spoiler: any = {info: {}};
+    const spoiler: any = { info: {} };
     spoiler.info.version = this.version;
     spoiler.info.permalink = this.generatedPermalink;
     spoiler.info.seed = this.randomizer.getSeed();
@@ -114,7 +114,7 @@ export class RandomizerComponent implements OnInit {
       '_' + this.randomizer.getMode() + '_' + this.randomizer.getRandomizedArtifacts() + '_' +
       this.randomizer.getDifficulty() + '_' + this.randomizer.getSeed() + '.txt';
   }
-  
+
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2500
@@ -129,7 +129,7 @@ export class RandomizerComponent implements OnInit {
       if (game) {
         this.model = JSON.parse(JSON.stringify(game));
         this.model['permalink'] = permalink;
-      } 
+      }
     }
   }
 
@@ -172,7 +172,7 @@ export class RandomizerComponent implements OnInit {
 
     // Generate game object
     let game = this.getGamePrefsFromHexString(permalinkSeg[2]);
-    
+
     if (!game) {
       alert(invalidText);
       return null;
@@ -216,5 +216,5 @@ export class RandomizerComponent implements OnInit {
     return gamePrefs;
   }
 
-  
+
 }
