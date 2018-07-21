@@ -1,5 +1,7 @@
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import { execFile } from 'child_process';
+import { mkdirSync, existsSync } from 'fs';
+import { dirname } from 'path';
 
 export class Patcher {
     constructor() {
@@ -9,9 +11,19 @@ export class Patcher {
     }
 
     public patchRandomizedGame(game, event?) {
+        // Use default output folder if one isn't provided
+        if (!game['outputFolder']) {
+            game['outputFolder'] = dirname(app.getPath('exe')) + '/output';
+
+            // Create default output folder if it doesn't exist
+            if (!existsSync(game['outputFolder'])) {
+                mkdirSync(game['outputFolder']);
+            }
+        }
         const randomprime = './patcher/exec/randomprime_patcher.win_64bit.exe';
         const outputFileName = 'Prime_' + game['version'] + '_' + game['logic'] + '_' + game['mode']
             + '_' + game['artifacts'] + '_' + game['difficulty'] + '_' + game['seed'] + '.iso';
+
         const params = [
             '--skip-frigate',
             '--non-modal-item-messages',
