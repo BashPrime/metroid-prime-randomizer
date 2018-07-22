@@ -212,7 +212,7 @@ export class Randomizer {
       const numTanks = !this.logicUsesVMR() ? 14 : 14 - vmrTanks;
       itemsMap.set(PrimeItem.ENERGY_TANK, numTanks);
     }
-    
+
     return this.createItemsFromMap(itemsMap);
   }
 

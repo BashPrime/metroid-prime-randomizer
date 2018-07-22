@@ -75,7 +75,9 @@ export class RandomComponent implements OnInit {
       seed: [''],
       rom: fb.group({
         baseIso: ['', Validators.required],
-        outputFolder: ['']
+        outputFolder: [''],
+        spoiler: [true],
+        createIso: [true]
       }),
       settings: this.setDefaultSettings()
     });
@@ -83,7 +85,7 @@ export class RandomComponent implements OnInit {
 
   runRandomizer() {
     this.randomizerService.updateSubmittedFlag(true);
-    const game = this.randomizerForm.value;
+    const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
 
     if (this.randomizerForm.valid) {
       this.errorOccurred = false;
@@ -104,6 +106,10 @@ export class RandomComponent implements OnInit {
       }
 
       game.layoutDescriptor = randomizer.getWorld().generateLayout();
+
+      if (game.rom.spoiler) {
+        game.spoiler = this.generateSpoilerLog(randomizer);
+      }
 
       this.electronService.ipcRenderer.send('randomizer', game);
     }
@@ -132,4 +138,17 @@ export class RandomComponent implements OnInit {
     });
   }
 
+  generateSpoilerLog(randomizer: Randomizer) {
+    const spoiler: any = { info: {} };
+    spoiler.info.version = environment.version;
+    // spoiler.info.permalink = this.generatedPermalink;
+    spoiler.info.seed = randomizer.getSeed();
+    spoiler.info.logic = randomizer.getLogic();
+    spoiler.info.mode = randomizer.getMode();
+    spoiler.info.artifacts = randomizer.getRandomizedArtifacts();
+    spoiler.info.difficulty = randomizer.getDifficulty();
+    spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
+
+    return JSON.stringify(spoiler, null, '\t');
+  }
 }
