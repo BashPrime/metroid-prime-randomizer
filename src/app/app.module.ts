@@ -13,7 +13,7 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ClipboardModule } from 'ngx-clipboard';
@@ -59,6 +59,7 @@ import { MainRulesComponent } from './main-rules/main-rules.component';
     MatListModule,
     MatSnackBarModule,
     FormsModule,
+    ReactiveFormsModule,
     ClipboardModule
   ],
   providers: [FileService],

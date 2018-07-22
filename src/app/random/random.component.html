@@ -1,3 +1,4 @@
+{{ randomizerForm.value | json }}
 <section class="section">
   <div class="container">
     <div class="tabs is-toggle is-fullwidth">
@@ -9,27 +10,30 @@
     </div>
     <div id="tab-container" class="container">
       <section *ngIf="selectedTab === 0">
-        <app-rom-settings></app-rom-settings>
+        <app-rom-settings [group]="randomizerForm.controls['rom']"></app-rom-settings>
       </section>
       <section *ngIf="selectedTab === 1">
-        <app-main-rules></app-main-rules>
+        <app-main-rules [group]="randomizerForm.controls['settings']"></app-main-rules>
       </section>
     </div>
     <div class="section randomizer-footer">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Seed Number</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed" [(ngModel)]="model['seed']">
+      <form [formGroup]="randomizerForm">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Seed Number</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed"
+                  formControlName="seed">
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
       <div class="buttons is-centered" style="margin-top: 2em;">
-        <button class="button" (click)="setDefaultSettings()">Reset Settings to Default</button>
+        <button class="button" (click)="resetSettings()">Reset Settings to Default</button>
         <button class="button is-primary " (click)="runRandomizer()" [ngClass]="{'is-loading': patching === true}">Randomize</button>
       </div>
       <p *ngIf="patching" class="has-text-centered">{{ patchUpdate }}</p>

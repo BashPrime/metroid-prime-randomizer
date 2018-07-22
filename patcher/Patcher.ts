@@ -22,24 +22,24 @@ export class Patcher {
 
     public patchRandomizedGame(game, event?) {
         // Set default output folder to working directory if one isn't provided by the user
-        if (!game['outputFolder']) {
-            game['outputFolder'] = this.workingFolder + '/output';
+        if (!game.rom.outputFolder) {
+            game.rom.outputFolder = this.workingFolder + '/output';
 
             // Create default output folder if it doesn't exist
-            if (!existsSync(game['outputFolder'])) {
-                mkdirSync(game['outputFolder']);
+            if (!existsSync(game.rom.outputFolder)) {
+                mkdirSync(game.rom.outputFolder);
             }
         }
         const randomprime = './patcher/exec/randomprime_patcher.win_64bit.exe';
-        const outputFileName = 'Prime_' + game['version'] + '_' + game['logic'] + '_' + game['mode']
-            + '_' + game['artifacts'] + '_' + game['difficulty'] + '_' + game['seed'] + '.iso';
+        const outputFileName = 'Prime_' + game.version + '_' + game.settings.logic + '_' + game.settings.mode
+            + '_' + game.settings.artifacts + '_' + game.settings.difficulty + '_' + game.seed + '.iso';
 
         const params = [
             '--skip-frigate',
             '--non-modal-item-messages',
-            '--input-iso', game['cleanIso'],
-            '--output-iso', game['outputFolder'] + '/' + outputFileName,
-            '--layout', game['layoutDescriptor']
+            '--input-iso', game.rom.baseIso,
+            '--output-iso', game.rom.outputFolder + '/' + outputFileName,
+            '--layout', game.layoutDescriptor
         ];
 
         const child = execFile(randomprime, params, function (error, stdout, stderr) {

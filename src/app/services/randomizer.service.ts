@@ -11,6 +11,7 @@ import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArt
 })
 export class RandomizerService {
   private settings;
+  private submitted$ = new BehaviorSubject(false);
 
   constructor() {
     this.resetSettings();
@@ -28,5 +29,13 @@ export class RandomizerService {
       artifacts: RandomizerArtifacts.VANILLA,
       difficulty: 'normal'
     }));
+  }
+
+  getSubmittedFlag() {
+    return this.submitted$;
+  }
+
+  updateSubmittedFlag(submitted: boolean) {
+    this.submitted$.next(submitted);
   }
 }

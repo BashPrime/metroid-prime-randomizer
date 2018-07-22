@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 
@@ -12,6 +13,7 @@ import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArt
   styleUrls: ['./main-rules.component.scss']
 })
 export class MainRulesComponent implements OnInit {
+  @Input('group') private settingsForm: FormGroup;
   model = {};
   dropdowns: any = {
     logic: [
