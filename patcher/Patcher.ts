@@ -4,16 +4,26 @@ import { mkdirSync, existsSync } from 'fs';
 import { dirname } from 'path';
 
 export class Patcher {
+    workingFolder: string;
+
     constructor() {
+        // If Windows portable file, use enviornment variable to properly set working directory
+        // due to the relative path being within the unpacked application in AppData
+        this.workingFolder = process.env.PORTABLE_EXECUTABLE_DIR;
+        if (!this.workingFolder) {
+            this.workingFolder = '.';
+        }
+
+        // Handle IPC randomizer call from renderer
         ipcMain.on('randomizer', (event, arg) => {
             this.patchRandomizedGame(arg, event);
         });
     }
 
     public patchRandomizedGame(game, event?) {
-        // Use default output folder if one isn't provided
+        // Set default output folder to working directory if one isn't provided by the user
         if (!game['outputFolder']) {
-            game['outputFolder'] = dirname(app.getPath('exe')) + '/output';
+            game['outputFolder'] = this.workingFolder + '/output';
 
             // Create default output folder if it doesn't exist
             if (!existsSync(game['outputFolder'])) {
