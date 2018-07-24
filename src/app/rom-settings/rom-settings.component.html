@@ -7,7 +7,8 @@
       <div class="field is-expanded">
         <div class="field has-addons">
           <div class="control is-expanded">
-            <input class="input" type="text" formControlName="baseIso" required [ngClass]="{'is-danger': submitted && romSettingsForm.get('baseIso').errors}">
+            <input class="input" type="text" formControlName="baseIso"
+              [ngClass]="{'is-danger': submitted && romSettingsForm.get('baseIso').errors}">
           </div>
           <div class="control">
             <button class="button file-cta" (click)="selectBaseIso()">Select ISO</button>

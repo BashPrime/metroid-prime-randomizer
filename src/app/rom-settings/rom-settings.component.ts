@@ -10,7 +10,7 @@ import { ElectronService } from '../services/electron.service';
   styleUrls: ['./rom-settings.component.scss']
 })
 export class RomSettingsComponent implements OnInit {
-  @Input('group') private romSettingsForm: FormGroup;
+  @Input('group') romSettingsForm: FormGroup;
   model = {};
   submitted = false;
   constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }

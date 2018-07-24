@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
 import { execFile } from 'child_process';
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
+import { Randomizer } from '../randomizer/Randomizer';
 
 export class Patcher {
     workingFolder: string;
@@ -15,11 +16,27 @@ export class Patcher {
 
         // Handle IPC randomizer call from renderer
         ipcMain.on('randomizer', (event, arg) => {
-            this.patchRandomizedGame(arg, event);
+            this.randomizeAndPatch(arg, event);
         });
     }
 
-    public patchRandomizedGame(game, event?) {
+    public randomizeAndPatch(game, event?) {
+        // Create randomizer object and run based on settings
+        const randomizer = new Randomizer(
+            game.settings.mode,
+            game.settings.logic,
+            game.settings.artifacts,
+            game.settings.difficulty
+        );
+
+        if (game.seed) {
+            randomizer.randomize(game.seed);
+        } else {
+            randomizer.randomize();
+        }
+
+        const layoutDescriptor = randomizer.getWorld().generateLayout();
+
         // Set default output folder to working directory if one isn't provided by the user
         if (!game.rom.outputFolder) {
             game.rom.outputFolder = this.workingFolder + '/output';
@@ -30,20 +47,20 @@ export class Patcher {
             }
         }
 
-        const randomprime = './patcher/exec/randomprime_patcher.win_64bit.exe';
-        const outputFile = 'Prime_' + game.version + '_' + game.settings.logic + '_' + game.settings.mode
-        + '_' + game.settings.artifacts + '_' + game.settings.difficulty + '_' + game.seed;
+        const randomprime = './bin/randomprime_patcher.win_64bit.exe';
+        const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
+        + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getDifficulty() + '_' + randomizer.getSeed();
 
         const params = [
             '--skip-frigate',
             '--non-modal-item-messages',
             '--input-iso', game.rom.baseIso,
             '--output-iso', game.rom.outputFolder + '/' + outputFile + '.iso',
-            '--layout', game.layoutDescriptor
+            '--layout', layoutDescriptor
         ];
 
         if (game.rom.spoiler) {
-            this.writeSpoilerLog(game, outputFile);
+            this.writeSpoilerLog(randomizer, game.version, game.rom.outputFolder + '/' + outputFile + '_spoiler.txt');
         }
 
         let child;
@@ -95,7 +112,22 @@ export class Patcher {
         }
     }
 
-    public writeSpoilerLog(game, outputFile) {
-        writeFileSync(game.rom.outputFolder + '/' + outputFile + '_spoiler.txt', game.spoiler);
+    public writeSpoilerLog(randomizer: Randomizer, version: string, path: string) {
+        const spoiler = this.generateSpoilerLog(randomizer, version);
+        writeFileSync(path, spoiler);
     }
+
+    generateSpoilerLog(randomizer: Randomizer, version: string) {
+        const spoiler: any = { info: {} };
+        spoiler.info.version = version;
+        // spoiler.info.permalink = this.generatedPermalink;
+        spoiler.info.seed = randomizer.getSeed();
+        spoiler.info.logic = randomizer.getLogic();
+        spoiler.info.mode = randomizer.getMode();
+        spoiler.info.artifacts = randomizer.getRandomizedArtifacts();
+        spoiler.info.difficulty = randomizer.getDifficulty();
+        spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
+
+        return JSON.stringify(spoiler, null, '\t');
+      }
 }

@@ -20,7 +20,7 @@
     "!tslint.json"
   ],
   "extraFiles": [
-    "patcher/exec/randomprime_patcher.win_64bit.exe"
+    "bin/randomprime_patcher.win_64bit.exe"
   ],
   "win": {
     "icon": "dist",

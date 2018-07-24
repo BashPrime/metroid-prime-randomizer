@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
-import { Randomizer } from '../../common/randomizer/Randomizer';
 import { RandomizerMode } from '../../common/randomizer/enums/RandomizerMode';
 import { RandomizerLogic } from '../../common/randomizer/enums/RandomizerLogic';
 import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArtifacts';
@@ -90,27 +89,6 @@ export class RandomComponent implements OnInit {
     if (this.randomizerForm.valid) {
       this.errorOccurred = false;
       this.patching = true;
-      const randomizer = new Randomizer(
-        game.settings.mode,
-        game.settings.logic,
-        game.settings.artifacts,
-        game.settings.difficulty
-      );
-
-      if (game.seed) {
-        game.seed = game.seed < 1 ? 1 : game.seed > 999999999 ? 999999999 : game.seed;
-        randomizer.randomize(game.seed);
-      } else {
-        randomizer.randomize();
-        game.seed = randomizer.getSeed();
-      }
-
-      game.layoutDescriptor = randomizer.getWorld().generateLayout();
-
-      if (game.rom.spoiler) {
-        game.spoiler = this.generateSpoilerLog(randomizer);
-      }
-
       this.electronService.ipcRenderer.send('randomizer', game);
     }
   }
@@ -136,19 +114,5 @@ export class RandomComponent implements OnInit {
         difficulty: 'normal',
       }
     });
-  }
-
-  generateSpoilerLog(randomizer: Randomizer) {
-    const spoiler: any = { info: {} };
-    spoiler.info.version = environment.version;
-    // spoiler.info.permalink = this.generatedPermalink;
-    spoiler.info.seed = randomizer.getSeed();
-    spoiler.info.logic = randomizer.getLogic();
-    spoiler.info.mode = randomizer.getMode();
-    spoiler.info.artifacts = randomizer.getRandomizedArtifacts();
-    spoiler.info.difficulty = randomizer.getDifficulty();
-    spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
-
-    return JSON.stringify(spoiler, null, '\t');
   }
 }

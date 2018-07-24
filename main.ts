@@ -1,5 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
-import { Patcher } from './patcher/Patcher';
+import { Patcher } from './common/patcher/Patcher';
 import * as path from 'path';
 import * as url from 'url';
 

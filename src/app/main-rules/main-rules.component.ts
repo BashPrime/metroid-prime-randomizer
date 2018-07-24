@@ -13,7 +13,7 @@ import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArt
   styleUrls: ['./main-rules.component.scss']
 })
 export class MainRulesComponent implements OnInit {
-  @Input('group') private settingsForm: FormGroup;
+  @Input('group') settingsForm: FormGroup;
   model = {};
   dropdowns: any = {
     logic: [
