@@ -7,6 +7,7 @@
 /app-builds
 main.js
 common/**/*.js
+/build
 
 # dependencies
 /node_modules

@@ -17,7 +17,8 @@
     "!_config.yml",
     "!karma.conf.js",
     "!tsconfig.json",
-    "!tslint.json"
+    "!tslint.json",
+    "!build/"
   ],
   "extraFiles": [
     "bin/randomprime_patcher.win_64bit.exe"
