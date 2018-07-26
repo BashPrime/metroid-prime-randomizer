@@ -17,8 +17,6 @@ export class RandomComponent implements OnInit {
   tabs = [
     'ROM Settings',
     'Main Rules',
-    // 'Detailed Logic',
-    // 'Other'
   ];
   selectedTab = 0;
   patching = false;

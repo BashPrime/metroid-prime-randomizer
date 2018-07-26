@@ -1,9 +1,8 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-// body {
-//   background-color: #fafafa;
-//   margin: 0;
-// }
+html {
+  overflow: auto;
+}
 
 .mat-sidenav-container {
   height: 100vh;
