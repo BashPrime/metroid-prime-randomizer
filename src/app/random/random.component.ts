@@ -35,7 +35,7 @@ export class RandomComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
-    this.electronService.ipcRenderer.on('patch-complete', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
       this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
@@ -47,10 +47,9 @@ export class RandomComponent implements OnInit {
       }
     });
 
-    this.electronService.ipcRenderer.on('patching-error', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-error', (event, arg) => {
       this.patching = false;
       this.errorOccurred = true;
-      console.log(JSON.stringify(arg));
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
         type: 'error',
@@ -59,9 +58,9 @@ export class RandomComponent implements OnInit {
       });
     });
 
-    this.electronService.ipcRenderer.on('patch-update', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-progress', (event, arg) => {
       if (this.patching) {
-        this.patchUpdate = arg;
+        this.patchUpdate = arg.percent + ': ' + arg.msg;
         this.changeDetectorRef.detectChanges();
       }
     });

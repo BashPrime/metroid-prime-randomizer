@@ -4,7 +4,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps",
+    "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps && npm run native:build",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     "ng": "ng",
@@ -20,6 +20,7 @@
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
+    "native:build": "./node_modules/.bin/electron-rebuild",
     "gyp:build": "node-gyp configure build",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e"

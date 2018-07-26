@@ -1,8 +1,7 @@
 import { ipcMain } from 'electron';
-import { execFile } from 'child_process';
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import { Randomizer } from '../randomizer/Randomizer';
-const addon = require('../../build/Release/randomprime');
+const randomPrimeNative = require('../../build/Release/randomprime');
 
 export class Patcher {
     workingFolder: string;
@@ -17,11 +16,11 @@ export class Patcher {
 
         // Handle IPC randomizer call from renderer
         ipcMain.on('randomizer', (event, arg) => {
-            this.randomizeAndPatch(arg, event);
+            this.runRandomizerAndPatchIso(arg, event);
         });
     }
 
-    public randomizeAndPatch(game, event?) {
+    public runRandomizerAndPatchIso(game, event) {
         // Create randomizer object and run based on settings
         const randomizer = new Randomizer(
             game.settings.mode,
@@ -50,66 +49,41 @@ export class Patcher {
 
         const randomprime = './bin/randomprime_patcher.win_64bit.exe';
         const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
-        + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getDifficulty() + '_' + randomizer.getSeed();
+            + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getDifficulty() + '_' + randomizer.getSeed();
 
-        const params = [
-            '--skip-frigate',
-            '--non-modal-item-messages',
-            '--input-iso', game.rom.baseIso,
-            '--output-iso', game.rom.outputFolder + '/' + outputFile + '.iso',
-            '--layout', layoutDescriptor
-        ];
+        const configObj = {
+            input_iso: game.rom.baseIso,
+            output_iso: game.rom.outputFolder + '/' + outputFile + '.iso',
+            layout_string: layoutDescriptor
+        }
 
         if (game.rom.spoiler) {
             this.writeSpoilerLog(randomizer, game.version, game.rom.outputFolder + '/' + outputFile + '_spoiler.txt');
         }
 
-        let child;
         if (game.rom.createIso) {
-            child = execFile(randomprime, params, function (error, stdout, stderr) {
-                if (error) {
-                    console.log('error', error);
-                    if (event) {
-                        event.sender.send('patching-error', error);
+            randomPrimeNative.patchRandomizedGame(JSON.stringify(configObj), message => {
+                const messageObj: {type: string, percent: number, msg: string} = JSON.parse(message);
+                switch (messageObj.type) {
+                    case 'progress': {
+                        event.sender.send('patch-progress', messageObj);
+                        break;
+                    }
+                    case 'success': {
+                        event.sender.send('patch-success', messageObj.msg);
+                        break;
+                    }
+                    case 'error': {
+                        event.sender.send('patch-error', messageObj.msg);
+                        break;
+                    }
+                    default: {
+                        // Do nothing
                     }
                 }
             });
-
-            // use event hooks to provide a callback to execute when data are available:
-            // hook on stdout for progress updates, send progress to view
-            child.stdout.on('data', function (data) {
-                console.log('stdout', data.toString());
-
-                // mark game as successfully patched if stdout reaches Done
-                if (event) {
-                    if (data.toString().indexOf('Done') > -1) {
-                        event.sender.send('patch-complete');
-                    } else {
-                        event.sender.send('patch-update', data.toString());
-                    }
-                }
-            });
-
-            // send errors to view if needed
-            child.stderr.on('data', function (data) {
-                const msg = data.toString();
-                console.log('stderr', msg);
-                if (event) {
-                    let errMsg = msg;
-                    const errorIndex = msg.indexOf('error: ');
-                    if (errorIndex > -1) {
-                        errMsg = msg.substr(errorIndex + 'error: '.length);
-                    }
-                    event.sender.send('patching-error', errMsg);
-                }
-            });
-
-            // output error code to Electron main console
-            child.on('exit', (code, signal) => {
-                console.log('exit code', code);
-            });
-        } else if (event) {
-            event.sender.send('patch-complete');
+        } else {
+            event.sender.send('patch-success');
         }
     }
 
@@ -130,5 +104,5 @@ export class Patcher {
         spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 
         return JSON.stringify(spoiler, null, '\t');
-      }
+    }
 }
