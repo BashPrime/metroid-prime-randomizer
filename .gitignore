@@ -37,7 +37,6 @@ npm-debug.log
 testem.log
 /typings
 package-lock.json
-/output
 
 # e2e
 /e2e/*.js
@@ -52,4 +51,4 @@ Thumbs.db
 /src/assets/banners/
 
 # Randomizer output
-/out/
+/output
