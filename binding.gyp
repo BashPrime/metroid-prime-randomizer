@@ -1,8 +1,8 @@
 {
   "targets": [
     {
-        "target_name": "module",
-        "sources": [ "./native/module.c" ],
+        "target_name": "randomprime",
+        "sources": [ "./native/randomprime.c" ],
         "libraries": [
           "-l<(module_root_dir)/native/lib/randomprime",
           "-lcredui.lib",

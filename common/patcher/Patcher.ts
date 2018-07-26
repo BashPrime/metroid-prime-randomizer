@@ -2,6 +2,7 @@ import { ipcMain } from 'electron';
 import { execFile } from 'child_process';
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import { Randomizer } from '../randomizer/Randomizer';
+const addon = require('../../build/Release/randomprime');
 
 export class Patcher {
     workingFolder: string;
