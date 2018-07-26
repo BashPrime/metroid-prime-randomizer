@@ -2,31 +2,9 @@
     padding: 1.5rem;
 }
 
-.has-spacing-right {
-    margin-right: 0.5em;
-}
-
-.list-instructions > li {
-    line-height: 1.6;
-}
-
-.flat-btn {
-    background-color: #808080
-}
-
-.flat-btn-light {
-    color: #000000;
-    background-color: #e0e0e0;
-}
-
-.select {
+.randomizer-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-
-    select {
-        width: inherit;
-    }
-}
-
-.randomize-button {
-    margin-top: 1em;
 }

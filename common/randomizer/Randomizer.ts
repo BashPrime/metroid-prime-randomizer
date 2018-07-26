@@ -12,18 +12,16 @@ export class Randomizer {
   protected mode: string;
   protected logic: string;
   protected randomizedArtifacts: string;
-  protected difficulty: string;
   protected goal: string;
   protected world: World;
   protected rng: MersenneTwister;
   protected seed: number;
 
-  constructor(mode: string, logic: string, randomizedArtifacts: string, difficulty: string) {
+  constructor(mode: string, logic: string, randomizedArtifacts: string) {
     this.mode = mode;
     this.logic = logic;
     this.randomizedArtifacts = randomizedArtifacts;
-    this.difficulty = difficulty;
-    this.world = new World(this.mode, this.logic, this.difficulty);
+    this.world = new World(this.mode, this.logic);
   }
 
   randomize(seed?: number): void {
@@ -94,10 +92,6 @@ export class Randomizer {
 
   getRandomizedArtifacts(): string { 
     return this.randomizedArtifacts;
-  }
-
-  getDifficulty(): string {
-    return this.difficulty;
   }
 
   getSeed(): number {

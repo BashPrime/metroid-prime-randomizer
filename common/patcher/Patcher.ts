@@ -26,7 +26,6 @@ export class Patcher {
             game.settings.mode,
             game.settings.logic,
             game.settings.artifacts,
-            game.settings.difficulty
         );
 
         if (game.seed) {
@@ -49,7 +48,7 @@ export class Patcher {
 
         const randomprime = './bin/randomprime_patcher.win_64bit.exe';
         const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
-            + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getDifficulty() + '_' + randomizer.getSeed();
+            + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getSeed();
 
         const configObj = {
             input_iso: game.rom.baseIso,
@@ -100,7 +99,6 @@ export class Patcher {
         spoiler.info.logic = randomizer.getLogic();
         spoiler.info.mode = randomizer.getMode();
         spoiler.info.artifacts = randomizer.getRandomizedArtifacts();
-        spoiler.info.difficulty = randomizer.getDifficulty();
         spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 
         return JSON.stringify(spoiler, null, '\t');

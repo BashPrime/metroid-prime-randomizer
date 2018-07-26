@@ -11,12 +11,10 @@ import { ElectronService } from '../services/electron.service';
 })
 export class RomSettingsComponent implements OnInit {
   @Input('group') romSettingsForm: FormGroup;
-  model = {};
   submitted = false;
   constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }
 
   ngOnInit() {
-    this.model = this.randomizerService.getSettings();
     this.randomizerService.getSubmittedFlag().subscribe(submitted => {
       this.submitted = submitted;
     });
@@ -25,12 +23,12 @@ export class RomSettingsComponent implements OnInit {
   selectBaseIso() {
     const result = this.electronService.dialog.showOpenDialog({
       filters: [
-        { name: 'GC ISO Files', extensions: ['iso', 'gcm'] }
+        { name: 'GC ISO Files', extensions: ['iso', 'gcm'] },
+        { name: 'All Files', extensions: ['*'] }
       ],
       properties: ['openFile']
     });
 
-    this.model['baseIso'] = result ? result[0] : undefined;
     if (result) {
       this.romSettingsForm.get('baseIso').setValue(result[0]);
     }

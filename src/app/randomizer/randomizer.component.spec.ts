@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {RandomizerComponent} from './randomizer.component';
+import { RandomizerComponent } from './randomizer.component';
 
 describe('RandomizerComponent', () => {
   let component: RandomizerComponent;
@@ -8,8 +8,9 @@ describe('RandomizerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RandomizerComponent]
-    }).compileComponents();
+      declarations: [ RandomizerComponent ]
+    })
+    .compileComponents();
   }));
 
   beforeEach(() => {
@@ -18,7 +19,7 @@ describe('RandomizerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

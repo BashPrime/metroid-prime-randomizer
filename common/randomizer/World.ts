@@ -18,16 +18,14 @@ import {PrimeItem} from './enums/PrimeItem';
 export class World {
   protected mode: string;
   protected logic: string;
-  protected difficulty: string;
   protected goal: string;
   protected regions: Array<Region>;
   protected locations: Array<Location>;
   protected collectableLocations: Array<Location>;
 
-  constructor(mode: string = RandomizerMode.STANDARD, logic: string = RandomizerLogic.NO_GLITCHES, difficulty: string = 'Normal') {
+  constructor(mode: string = RandomizerMode.STANDARD, logic: string = RandomizerLogic.NO_GLITCHES) {
     this.mode = mode;
     this.logic = logic;
-    this.difficulty = difficulty;
 
     this.regions = [
       new TallonOverworld(),
@@ -54,10 +52,6 @@ export class World {
 
   public getLogic(): string {
     return this.logic;
-  }
-
-  public getDifficulty(): string {
-    return this.difficulty;
   }
 
   public getGoal(): string {

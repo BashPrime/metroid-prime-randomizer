@@ -11,7 +11,7 @@
               </option>
             </select>
           </div>
-          <p class="has-text-danger" *ngIf="model['logic'] !== defaultLogic">
+          <p class="has-text-danger" *ngIf="settingsForm.get('logic').value !== defaultLogic">
             This logic requires knowledge of glitches and more advanced movement.
           </p>
         </div>
@@ -40,20 +40,6 @@
               <option *ngFor="let artifact of dropdowns['artifacts']" [value]="artifact.value">
                 {{ artifact.name }}
               </option>`
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <p class="label">Difficulty</p>
-      <div class="field">
-        <div class="control is-expanded">
-          <div class="select is-fullwidth">
-            <select formControlName="difficulty">
-              <option *ngFor="let difficulty of dropdowns['difficulty']" [value]="difficulty.value">
-                {{ difficulty.name }}
-              </option>
             </select>
           </div>
         </div>

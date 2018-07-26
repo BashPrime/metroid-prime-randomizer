@@ -3,9 +3,9 @@ import { FormGroup } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 
-import { RandomizerMode } from '../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArtifacts';
+import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
+import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
+import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
 
 @Component({
   selector: 'app-main-rules',
@@ -14,7 +14,6 @@ import { RandomizerArtifacts } from '../../common/randomizer/enums/RandomizerArt
 })
 export class MainRulesComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
-  model = {};
   dropdowns: any = {
     logic: [
       { name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES },
@@ -25,9 +24,6 @@ export class MainRulesComponent implements OnInit {
       { name: 'Standard', value: RandomizerMode.STANDARD },
       { name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS }
     ],
-    difficulty: [
-      { name: 'Normal', value: 'normal' }
-    ],
     artifacts: [
       { name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA },
       { name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED }
@@ -37,8 +33,6 @@ export class MainRulesComponent implements OnInit {
 
   constructor(private randomizerService: RandomizerService) { }
 
-  ngOnInit() {
-    this.model = this.randomizerService.getSettings();
-  }
+  ngOnInit() {}
 
 }

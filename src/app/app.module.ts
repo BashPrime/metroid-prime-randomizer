@@ -20,14 +20,9 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RandomizerComponent } from './randomizer/randomizer.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { HelpComponent } from './help/help.component';
 
 import { FileService } from './services/file.service';
-import { FooterComponent } from './footer/footer.component';
-import { RandomComponent } from './random/random.component';
+import { RandomizerComponent } from './randomizer/randomizer.component';
 import { RomSettingsComponent } from './rom-settings/rom-settings.component';
 import { MainRulesComponent } from './main-rules/main-rules.component';
 
@@ -35,11 +30,6 @@ import { MainRulesComponent } from './main-rules/main-rules.component';
   declarations: [
     AppComponent,
     RandomizerComponent,
-    HomePageComponent,
-    NavigationComponent,
-    HelpComponent,
-    FooterComponent,
-    RandomComponent,
     RomSettingsComponent,
     MainRulesComponent
   ],
