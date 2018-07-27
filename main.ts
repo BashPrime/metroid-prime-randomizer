@@ -1,11 +1,11 @@
 import { app, BrowserWindow, screen, ipcMain } from 'electron';
-// import { Patcher } from './common/patcher/Patcher';
+import { Patcher } from './common/patcher/Patcher';
+import { Utilities } from './common/Utilities';
 import * as path from 'path';
 import * as url from 'url';
 
 let win, serve;
-const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+serve = Utilities.isServe();
 
 function createWindow() {
 
@@ -20,8 +20,9 @@ function createWindow() {
 
   if (serve) {
     require('electron-reload')(__dirname, {
-     electron: require(`${__dirname}/node_modules/electron`)});
+      electron: require(`${__dirname}/node_modules/electron`)});
     win.loadURL('http://localhost:4200');
+    win.webContents.openDevTools();
   } else {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
@@ -29,8 +30,6 @@ function createWindow() {
       slashes: true
     }));
   }
-
-  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -70,16 +69,5 @@ try {
   // throw e;
 }
 
-ipcMain.on('randomizer', (event, arg) => {
-  try {
-    const workingAppFolder = path.dirname(app.getPath('exe'));
-    const addon = require(workingAppFolder + '/build/Release/randomprime');
-    event.sender.send('patch-success', 'Randomprime native module successfully opened');
-  } catch (err) {
-    console.log(err);
-    event.sender.send('patch-error', app.getPath('exe'));
-    // event.sender.send('patch-error', path.dirname(app.getPath('exe')));
-  }
-});
-// const patcher = new Patcher();
+const patcher = new Patcher();
 

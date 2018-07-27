@@ -1,12 +1,25 @@
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
+import * as path from 'path';
+
+import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
-const randomPrimeNative = require('../../build/Release/randomprime');
 
 export class Patcher {
     workingFolder: string;
+    randomPrime: any;
 
     constructor() {
+        const serve = Utilities.isServe();
+        const randomPrimePath = (serve ? '../..' : path.dirname(app.getPath('exe'))) + '/build/Release/randomprime';
+
+        // Gracefully handle unresolved randomprime native path
+        try {
+            this.randomPrime = require(randomPrimePath);
+        } catch(err) {
+            throw new ReferenceError('Cannot resolve the randomprime native module');
+        }
+
         // If Windows portable file, use enviornment variable to properly set working directory
         // due to the relative path being within the unpacked application in AppData
         this.workingFolder = process.env.PORTABLE_EXECUTABLE_DIR;
@@ -61,7 +74,7 @@ export class Patcher {
         }
 
         if (game.rom.createIso) {
-            randomPrimeNative.patchRandomizedGame(JSON.stringify(configObj), message => {
+            this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
                 const messageObj: {type: string, percent: number, msg: string} = JSON.parse(message);
                 switch (messageObj.type) {
                     case 'progress': {

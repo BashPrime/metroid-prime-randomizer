@@ -18,7 +18,9 @@
     "!karma.conf.js",
     "!tsconfig.json",
     "!tslint.json",
-    "!build/"
+    "!build/",
+    "!bin/",
+    "!output/"
   ],
   "extraFiles": [
     "build/Release/randomprime.node"
