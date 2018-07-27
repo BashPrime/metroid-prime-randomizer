@@ -34,6 +34,7 @@ export class RandomizerComponent implements OnInit {
     this.createForm();
 
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
+      console.log(arg);
       this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
@@ -46,6 +47,7 @@ export class RandomizerComponent implements OnInit {
     });
 
     this.electronService.ipcRenderer.on('patch-error', (event, arg) => {
+      console.log(arg);
       this.patching = false;
       this.errorOccurred = true;
       this.changeDetectorRef.detectChanges();

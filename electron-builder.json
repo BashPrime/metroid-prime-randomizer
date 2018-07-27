@@ -21,7 +21,7 @@
     "!build/"
   ],
   "extraFiles": [
-    "bin/randomprime_patcher.win_64bit.exe"
+    "build/Release/randomprime.node"
   ],
   "win": {
     "icon": "dist",

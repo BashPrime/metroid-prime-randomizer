@@ -54,7 +54,7 @@ export class Patcher {
             input_iso: game.rom.baseIso,
             output_iso: game.rom.outputFolder + '/' + outputFile + '.iso',
             layout_string: layoutDescriptor
-        }
+        };
 
         if (game.rom.spoiler) {
             this.writeSpoilerLog(randomizer, game.version, game.rom.outputFolder + '/' + outputFile + '_spoiler.txt');
