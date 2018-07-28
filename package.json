@@ -2,6 +2,18 @@
   "name": "prime-randomizer-web",
   "version": "0.3.0",
   "main": "main.js",
+  "description": "Metroid Prime Item Randomizer",
+  "contributors": [
+    {
+      "name": "BashPrime"
+    },
+    {
+      "name": "Pwootage"
+    },
+    {
+      "name": "April Wade"
+    }
+  ],
   "private": true,
   "scripts": {
     "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps && npm run native:build",
