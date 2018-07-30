@@ -7,6 +7,7 @@ import * as url from 'url';
 
 let win, serve;
 serve = Utilities.isServe();
+const version = require('./package.json').version
 
 function createWindow() {
 
@@ -16,7 +17,8 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 1024,
-    height: 768
+    height: 768,
+    title: 'Metroid Prime Randomizer ' + version
   });
 
   if (serve) {
