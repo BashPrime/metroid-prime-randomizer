@@ -1,0 +1,49 @@
+<form [formGroup]="settingsForm">
+  <div class="columns">
+    <div class="column">
+      <p class="label">Logic</p>
+      <div class="field">
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select formControlName="logic">
+              <option *ngFor="let logic of dropdowns['logic']" [value]="logic.value">
+                {{ logic.name }}
+              </option>
+            </select>
+          </div>
+          <p class="has-text-danger" *ngIf="settingsForm.get('logic').value !== defaultLogic">
+            This logic requires knowledge of glitches and more advanced movement.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Mode</p>
+      <div class="field">
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select formControlName="mode">
+              <option *ngFor="let mode of dropdowns['mode']" [value]="mode.value">
+                {{ mode.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Artifacts</p>
+      <div class="field">
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select formControlName="artifacts">
+              <option *ngFor="let artifact of dropdowns['artifacts']" [value]="artifact.value">
+                {{ artifact.name }}
+              </option>`
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,220 +1,222 @@
-import {Component, OnInit} from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ClipboardService } from 'ngx-clipboard';
-
+import { RandomizerService } from '../services/randomizer.service';
+import { ElectronService } from '../services/electron.service';
+import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
+import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
+import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
-import {Randomizer} from '../../common/randomizer/Randomizer';
-import {Region} from '../../common/randomizer/Region';
-import {Location} from '../../common/randomizer/Location';
-import {RandomizerMode} from '../../common/randomizer/enums/RandomizerMode';
-import {RandomizerLogic} from '../../common/randomizer/enums/RandomizerLogic';
-import {RandomizerArtifacts} from '../../common/randomizer/enums/RandomizerArtifacts';
-import {Utilities} from '../../common/Utilities';
 
 @Component({
-  selector: 'app-randomizer',
+  selector: 'app-random',
   templateUrl: './randomizer.component.html',
   styleUrls: ['./randomizer.component.scss']
 })
 export class RandomizerComponent implements OnInit {
-  version: string = environment.version;
-  randomizer: Randomizer;
-  regions: Array<Region>;
-  selectedRegionIndex: number = 0;
-  locations: Array<Location>;
-  model: any = {
-    logic: RandomizerLogic.NO_GLITCHES,
-    mode: RandomizerMode.STANDARD,
-    difficulty: 'normal',
-    artifacts: RandomizerArtifacts.VANILLA
-  };
-  generatedPermalink: string;
-  defaultLogic = RandomizerLogic.NO_GLITCHES;
-  layoutDescriptor: string;
-  toggleSpoilers = false;
-  spoilerLog: string;
-  spoilerFileName: string;
-  downloadJsonHref: SafeUrl;
-  showPatchingInstructions: boolean = false;
-  dropdowns: any = {
-    logic: [
-      {name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES},
-      {name: 'Normal', value: RandomizerLogic.NORMAL},
-      {name: 'Hard', value: RandomizerLogic.HARD}
-    ],
-    mode: [
-      {name: 'Standard', value: RandomizerMode.STANDARD},
-      {name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS}
-    ],
-    difficulty: [
-      {name: 'Normal', value: 'normal'}
-    ],
-    artifacts: [
-      {name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA},
-      {name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED}
-    ]
-  };
-  hexStringFormat = ['logic', 'mode', 'difficulty', 'artifacts'];
+  tabs = [
+    'ROM Settings',
+    'Main Rules',
+  ];
+  selectedTab = 0;
+  patching = false;
+  patchUpdate: string;
+  randomizerForm: FormGroup;
+  settings = {};
+  permalink = '';
+  valueSub: any;
 
-  constructor(private sanitizer: DomSanitizer, private clipboardService: ClipboardService, public snackBar: MatSnackBar) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private randomizerService: RandomizerService,
+    private electronService: ElectronService
+  ) {
+    this.settings = this.randomizerService.getSettings();
   }
 
   ngOnInit() {
-  }
+    this.createForm();
+    this.importSettingsFromFile();
 
-  onSubmit(): void {
-    this.regions = undefined;
-    this.locations = undefined;
-    this.layoutDescriptor = undefined;
-    this.runRandomizer();
-  }
+    this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
+      this.permalink = this.getPermalink();
 
-  runRandomizer(): void {
-    this.spoilerLog = undefined;
-    this.randomizer = new Randomizer(this.model['mode'], this.model['logic'], this.model['artifacts'], this.model['difficulty']);
+      // Send settings to main process for writing later
+      this.electronService.ipcRenderer.send('settings-post', this.randomizerForm.value);
+    });
 
-    if (this.model['seed']) {
-      this.model['seed'] = this.model['seed'] < 1 ? 1 : this.model['seed'] > 999999999 ? 999999999 : this.model['seed'];
-      this.randomizer.randomize(this.model['seed']);
-    } else {
-      this.randomizer.randomize();
-    }
-    this.regions = this.randomizer.getWorld().getRegions();
-    this.locations = this.randomizer.getWorld().getLocations();
-    this.layoutDescriptor = this.randomizer.getWorld().generateLayout();
+    // New settings from main process, apply to the form
+    this.electronService.ipcRenderer.on('new-settings', (event, settings) => {
+      this.randomizerForm.patchValue(settings);
+      this.changeDetectorRef.detectChanges();
+    });
 
-    let game = JSON.parse(JSON.stringify(this.model));
-    game['seed'] = this.randomizer.getSeed();
-    this.generatedPermalink = this.getPermalinkFromGame(game);
-    this.model['permalink'] = this.generatedPermalink;
+    // Handle successful file patch
+    this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
+      console.log(arg);
+      this.patchUpdate = null;
+      this.patching = false;
+      this.changeDetectorRef.detectChanges();
+      this.electronService.dialog.showMessageBox({
+        type: 'info',
+        message: 'Game has been successfully patched.'
+      });
+    });
 
-    this.generateSpoilerLog();
-  }
+    // Error occurred during patching.
+    this.electronService.ipcRenderer.on('patch-error', (event, arg) => {
+      console.log(arg);
+      this.patching = false;
+      this.changeDetectorRef.detectChanges();
+      this.electronService.dialog.showMessageBox({
+        type: 'error',
+        title: 'Error',
+        message: arg
+      });
+    });
 
-  generateSpoilerLog(): void {
-    const spoiler: any = {info: {}};
-    spoiler.info.version = this.version;
-    spoiler.info.permalink = this.generatedPermalink;
-    spoiler.info.seed = this.randomizer.getSeed();
-    spoiler.info.logic = this.randomizer.getLogic();
-    spoiler.info.mode = this.randomizer.getMode();
-    spoiler.info.artifacts = this.randomizer.getRandomizedArtifacts();
-    spoiler.info.difficulty = this.randomizer.getDifficulty();
-    spoiler.info.layoutDescriptor = this.layoutDescriptor;
-    spoiler.locations = JSON.parse(this.randomizer.getWorld().toJson());
-
-    this.spoilerLog = JSON.stringify(spoiler, null, '\t');
-
-    const uri = this.sanitizer.bypassSecurityTrustUrl('data:text/json;charset=UTF-8,' + encodeURIComponent(this.spoilerLog));
-    this.downloadJsonHref = uri;
-
-    this.spoilerFileName = 'prime_randomizer_' + this.version + '_' + this.randomizer.getLogic() +
-      '_' + this.randomizer.getMode() + '_' + this.randomizer.getRandomizedArtifacts() + '_' +
-      this.randomizer.getDifficulty() + '_' + this.randomizer.getSeed() + '.txt';
-  }
-  
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2500
+    // Patch update, send to view
+    this.electronService.ipcRenderer.on('patch-progress', (event, arg) => {
+      if (this.patching) {
+        this.patchUpdate = arg.percent + ': ' + arg.msg;
+        this.changeDetectorRef.detectChanges();
+      }
     });
   }
 
-  onPermalinkChange(permalink: string) {
-    this.clearPermalink();
-    if (permalink) {
-      const game = this.getGameFromPermalink(permalink);
-
-      if (game) {
-        this.model = JSON.parse(JSON.stringify(game));
-        this.model['permalink'] = permalink;
-      } 
-    }
+  ngOnDestroy() {
+    this.valueSub.unsubscribe();
   }
 
-  clearPermalink() {
-    this.model['permalink'] = null;
+  createForm() {
+    const fb = new FormBuilder();
+    this.randomizerForm = fb.group({
+      seed: [''],
+      rom: fb.group({
+        baseIso: ['', Validators.required],
+        outputFolder: [''],
+        spoiler: [true],
+        createIso: [true]
+      }),
+      settings: this.setDefaultSettings()
+    });
   }
 
-  getPermalinkFromGame(game: any): string {
-    let permalink = this.version + ',' + game['seed'] + ',';
-    return btoa(this.version + ',' + game['seed'] + ',' + this.getHexStringFromGamePrefs(game));
-  }
+  runRandomizer() {
+    this.randomizerService.updateSubmittedFlag(true);
 
-  getGameFromPermalink(permalink: string): any {
-    let permalinkRaw;
-    const invalidText = 'This permalink is invalid.';
-    try {
-      permalinkRaw = atob(permalink);
-    } catch {
-      alert(invalidText);
-      return null;
-    }
-
-    const permalinkSeg = permalinkRaw.split(',');
-
-    if (permalinkSeg.length !== 3) {
-      alert(invalidText);
-      return null;
-    }
-
-    // Validate matching versions
-    if (permalinkSeg[0].match(/\d\.\d\.\d/g)) {
-      if (permalinkSeg[0] !== this.version) {
-        alert('This permalink was generated with a different version of the randomizer and cannot be used.');
-        return null;
+    if (this.randomizerForm.valid) {
+      if (!this.randomizerForm.get('seed').value) {
+        this.getNewSeed();
       }
-    } else {
-      alert(invalidText);
-      return null;
+      const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
+      game['version'] = environment.version;
+      game['permalink'] = this.getPermalink();
+      this.patching = true;
+      this.electronService.ipcRenderer.send('randomizer', game);
     }
-
-    // Generate game object
-    let game = this.getGamePrefsFromHexString(permalinkSeg[2]);
-    
-    if (!game) {
-      alert(invalidText);
-      return null;
-    }
-
-    game['seed'] = permalinkSeg[1];
-    return game;
   }
 
-  getHexStringFromGamePrefs(gamePrefs: any): string {
-    let hexStr = '';
-    for (let key of this.hexStringFormat) {
-      this.dropdowns[key].find((dropdown: any, index: number) => {
-        // Convert dropdown index value into half-byte hex value (1ch)
-        if (dropdown.value === gamePrefs[key])
-          hexStr += Utilities.toPaddedHexString(index, 1);
+  setDefaultSettings() {
+    const fb = new FormBuilder();
+
+    return fb.group({
+      logic: [RandomizerLogic.NO_GLITCHES],
+      mode: [RandomizerMode.STANDARD],
+      artifacts: [RandomizerArtifacts.VANILLA],
+    });
+  }
+
+  resetSettings() {
+    this.randomizerForm.patchValue({
+      seed: '',
+      settings: {
+        logic: RandomizerLogic.NO_GLITCHES,
+        mode: RandomizerMode.STANDARD,
+        artifacts: RandomizerArtifacts.VANILLA,
+      }
+    });
+  }
+
+  getPermalink(): string {
+    const seed = this.randomizerForm.get('seed').value;
+    const settingsHex = this.getHexStringFromSettings();
+    if (seed && settingsHex)
+      return btoa(seed + ',' + settingsHex);
+    return '';
+  }
+
+  importPermalink(): void {
+    let settingsToImport;
+    try {
+      settingsToImport = atob(this.permalink).split(',');
+      if (settingsToImport.length === 2) {
+        const newSeed = settingsToImport[0];
+        let newSettings = this.getSettingsFromHexString(settingsToImport[1]);
+        if (!newSettings) {
+          newSettings = this.getSettingsFromHexString('000');
+        }
+        this.randomizerForm.patchValue({
+          seed: newSeed,
+          settings: newSettings
+        });
+      } else {
+        this.electronService.dialog.showMessageBox({
+          type: 'error',
+          title: 'Error',
+          message: 'This permalink is invalid.'
+        });
+      }
+    } catch {
+      console.error(new TypeError('Base64 invalid').toString());
+      this.electronService.dialog.showMessageBox({
+        type: 'error',
+        title: 'Error',
+        message: 'This permalink is invalid.'
+      });
+    }
+  }
+
+  getHexStringFromSettings(): string {
+    let hexString = '';
+    const settings = this.randomizerForm.get('settings').value;
+    const keys = Object.keys(settings);
+
+    for (const key of keys) {
+      this.settings[key].find((setting: any, index: number) => {
+        if (setting.value === settings[key]) {
+          hexString += index.toString(16);
+        }
       });
     }
 
-    return hexStr;
+    return hexString;
   }
 
-  getGamePrefsFromHexString(hexStr: string) {
-    let gamePrefs: any = {};
-    // Hex values are half a byte, so we need to segment every one character
-    let hexSegments = hexStr.match(/.{1,1}/g);
-
-    // Hex string is invalid if lengths don't match
-    if (hexSegments.length !== this.hexStringFormat.length)
+  getSettingsFromHexString(hexString: string): object {
+    const settings = {};
+    const keys = Object.keys(this.settings);
+    try {
+      let index = 0;
+      for (const key of keys) {
+        const hexWidth = (this.settings[key].length - 1).toString(16).length;
+        const settingVal = hexString.substr(index, hexWidth);
+        settings[key] = this.settings[key][settingVal].value;
+        index += hexWidth;
+      }
+      return settings;
+    } catch {
+      console.log(new RangeError('More settings than hex string values').toString());
       return null;
-
-    for (let i = 0; i < hexSegments.length; i++) {
-      const key = this.hexStringFormat[i];
-      const index = parseInt(hexSegments[i], 16);
-      if (!this.dropdowns[key][index])
-        return null;
-
-      gamePrefs[key] = this.dropdowns[key][index].value;
     }
-
-    return gamePrefs;
   }
 
-  
+  getNewSeed() {
+    this.randomizerForm.patchValue({seed: Utilities.getRandomInt(1, 999999999)});
+  }
+
+  importSettingsFromFile() {
+    this.electronService.ipcRenderer.send('settings-get');
+  }
 }

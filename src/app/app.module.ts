@@ -13,29 +13,25 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RandomizerComponent } from './randomizer/randomizer.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { HelpComponent } from './help/help.component';
 
 import { FileService } from './services/file.service';
-import { FooterComponent } from './footer/footer.component';
+import { RandomizerComponent } from './randomizer/randomizer.component';
+import { RomSettingsComponent } from './rom-settings/rom-settings.component';
+import { MainRulesComponent } from './main-rules/main-rules.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RandomizerComponent,
-    HomePageComponent,
-    NavigationComponent,
-    HelpComponent,
-    FooterComponent
+    RomSettingsComponent,
+    MainRulesComponent
   ],
   imports: [
     AppRoutingModule,
@@ -53,6 +49,7 @@ import { FooterComponent } from './footer/footer.component';
     MatListModule,
     MatSnackBarModule,
     FormsModule,
+    ReactiveFormsModule,
     ClipboardModule
   ],
   providers: [FileService],

@@ -1,0 +1,46 @@
+{
+  "productName": "prime-randomizer-web",
+  "directories": {
+    "output": "app-builds"
+  },
+  "files": [
+    "**/*",
+    "!*.ts",
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!.angular-cli.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json",
+    "!build/",
+    "!bin/",
+    "!output/"
+  ],
+  "extraFiles": [
+    "build/Release/randomprime.node"
+  ],
+  "win": {
+    "icon": "dist",
+    "target": [
+      "portable"
+    ]
+  },
+  "mac": {
+    "icon": "dist",
+    "target": [
+      "dmg"
+    ]
+  },
+  "linux": {
+    "icon": "dist",
+    "target": [
+      "AppImage"
+    ]
+  }
+}

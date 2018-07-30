@@ -2,7 +2,14 @@
 
 # compiled output
 /dist
-/aot
+/tmp
+/out-tsc
+/app-builds
+main.js
+common/**/*.js
+/build
+/bin
+settings.json
 
 # dependencies
 /node_modules
@@ -31,7 +38,12 @@
 npm-debug.log
 testem.log
 /typings
-yarn-error.log
+package-lock.json
+
+# e2e
+/e2e/*.js
+!/e2e/protractor.conf.js
+/e2e/*.map
 
 # System Files
 .DS_Store
@@ -41,4 +53,4 @@ Thumbs.db
 /src/assets/banners/
 
 # Randomizer output
-/out/
+/output

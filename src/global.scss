@@ -1,9 +1,8 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-// body {
-//   background-color: #fafafa;
-//   margin: 0;
-// }
+html {
+  overflow: auto;
+}
 
 .mat-sidenav-container {
   height: 100vh;
@@ -30,4 +29,9 @@
 .divider {
   margin: 1em 0;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.label.is-required:after {
+  content: ' *';
+  color: red;
 }
