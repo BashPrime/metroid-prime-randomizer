@@ -54,14 +54,15 @@ export class Patcher {
         }
 
         const randomprime = './bin/randomprime_patcher.win_64bit.exe';
-        // const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
-        //     + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getSeed();
         const outputFile = 'Prime_' + game.permalink;
 
         const configObj = {
             input_iso: game.rom.baseIso,
             output_iso: game.rom.outputFolder + '/' + outputFile + '.iso',
-            layout_string: layoutDescriptor
+            layout_string: layoutDescriptor,
+            skip_frigate: true,
+            skip_hudmenus: true,
+            comment: 'prime-randomizer-web ' + game.version + ' permalink: ' + game.permalink
         };
 
         if (game.rom.spoiler) {
