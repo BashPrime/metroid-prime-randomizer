@@ -12,19 +12,13 @@ export class Patcher {
     constructor() {
         const serve = Utilities.isServe();
         const randomPrimePath = (serve ? '../..' : path.dirname(app.getPath('exe'))) + '/build/Release/randomprime';
+        this.workingFolder = Utilities.getWorkingFolder();
 
         // Gracefully handle unresolved randomprime native path
         try {
             this.randomPrime = require(randomPrimePath);
         } catch(err) {
             throw new ReferenceError('Cannot resolve the randomprime native module');
-        }
-
-        // If Windows portable file, use enviornment variable to properly set working directory
-        // due to the relative path being within the unpacked application in AppData
-        this.workingFolder = process.env.PORTABLE_EXECUTABLE_DIR;
-        if (!this.workingFolder) {
-            this.workingFolder = '.';
         }
 
         // Handle IPC randomizer call from renderer
@@ -60,8 +54,9 @@ export class Patcher {
         }
 
         const randomprime = './bin/randomprime_patcher.win_64bit.exe';
-        const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
-            + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getSeed();
+        // const outputFile = 'Prime_' + game.version + '_' + randomizer.getLogic() + '_' + randomizer.getMode()
+        //     + '_' + randomizer.getRandomizedArtifacts() + '_' + randomizer.getSeed();
+        const outputFile = 'Prime_' + game.permalink;
 
         const configObj = {
             input_iso: game.rom.baseIso,
@@ -70,7 +65,7 @@ export class Patcher {
         };
 
         if (game.rom.spoiler) {
-            this.writeSpoilerLog(randomizer, game.version, game.rom.outputFolder + '/' + outputFile + '_spoiler.txt');
+            this.writeSpoilerLog(randomizer, game, game.rom.outputFolder + '/' + outputFile + '_spoiler.txt');
         }
 
         if (game.rom.createIso) {
@@ -99,15 +94,15 @@ export class Patcher {
         }
     }
 
-    public writeSpoilerLog(randomizer: Randomizer, version: string, path: string) {
-        const spoiler = this.generateSpoilerLog(randomizer, version);
+    public writeSpoilerLog(randomizer: Randomizer, game: any, path: string) {
+        const spoiler = this.generateSpoilerLog(randomizer, game);
         writeFileSync(path, spoiler);
     }
 
-    generateSpoilerLog(randomizer: Randomizer, version: string) {
+    generateSpoilerLog(randomizer: Randomizer, game: any) {
         const spoiler: any = { info: {} };
-        spoiler.info.version = version;
-        // spoiler.info.permalink = this.generatedPermalink;
+        spoiler.info.version = game.version;
+        spoiler.info.permalink = game.permalink;
         spoiler.info.seed = randomizer.getSeed();
         spoiler.info.logic = randomizer.getLogic();
         spoiler.info.mode = randomizer.getMode();

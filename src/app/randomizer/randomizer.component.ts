@@ -6,7 +6,7 @@ import { ElectronService } from '../services/electron.service';
 import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
 import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
 import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
-import { MersenneTwister } from '../../../common/randomizer/MersenneTwister';
+import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -22,7 +22,6 @@ export class RandomizerComponent implements OnInit {
   selectedTab = 0;
   patching = false;
   patchUpdate: string;
-  errorOccurred: boolean;
   randomizerForm: FormGroup;
   settings = {};
   permalink = '';
@@ -38,28 +37,37 @@ export class RandomizerComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.importSettingsFromFile();
 
     this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
       this.permalink = this.getPermalink();
+
+      // Send settings to main process for writing later
+      this.electronService.ipcRenderer.send('settings-post', this.randomizerForm.value);
     });
 
+    // New settings from main process, apply to the form
+    this.electronService.ipcRenderer.on('new-settings', (event, settings) => {
+      this.randomizerForm.patchValue(settings);
+      this.changeDetectorRef.detectChanges();
+    });
+
+    // Handle successful file patch
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
       console.log(arg);
       this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
-      if (!this.errorOccurred) {
-        this.electronService.dialog.showMessageBox({
-          type: 'info',
-          message: 'Game has been successfully patched.'
-        });
-      }
+      this.electronService.dialog.showMessageBox({
+        type: 'info',
+        message: 'Game has been successfully patched.'
+      });
     });
 
+    // Error occurred during patching.
     this.electronService.ipcRenderer.on('patch-error', (event, arg) => {
       console.log(arg);
       this.patching = false;
-      this.errorOccurred = true;
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
         type: 'error',
@@ -68,6 +76,7 @@ export class RandomizerComponent implements OnInit {
       });
     });
 
+    // Patch update, send to view
     this.electronService.ipcRenderer.on('patch-progress', (event, arg) => {
       if (this.patching) {
         this.patchUpdate = arg.percent + ': ' + arg.msg;
@@ -76,10 +85,13 @@ export class RandomizerComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.valueSub.unsubscribe();
+  }
+
   createForm() {
     const fb = new FormBuilder();
     this.randomizerForm = fb.group({
-      version: environment.version,
       seed: [''],
       rom: fb.group({
         baseIso: ['', Validators.required],
@@ -93,10 +105,14 @@ export class RandomizerComponent implements OnInit {
 
   runRandomizer() {
     this.randomizerService.updateSubmittedFlag(true);
-    const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
 
     if (this.randomizerForm.valid) {
-      this.errorOccurred = false;
+      if (!this.randomizerForm.get('seed').value) {
+        this.getNewSeed();
+      }
+      const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
+      game['version'] = environment.version;
+      game['permalink'] = this.getPermalink();
       this.patching = true;
       this.electronService.ipcRenderer.send('randomizer', game);
     }
@@ -126,8 +142,9 @@ export class RandomizerComponent implements OnInit {
   getPermalink(): string {
     const seed = this.randomizerForm.get('seed').value;
     const settingsHex = this.getHexStringFromSettings();
-
-    return btoa(seed + ',' + settingsHex);
+    if (seed && settingsHex)
+      return btoa(seed + ',' + settingsHex);
+    return '';
   }
 
   importPermalink(): void {
@@ -136,14 +153,28 @@ export class RandomizerComponent implements OnInit {
       settingsToImport = atob(this.permalink).split(',');
       if (settingsToImport.length === 2) {
         const newSeed = settingsToImport[0];
-        const newSettings = this.getSettingsFromHexString(settingsToImport[1]);
+        let newSettings = this.getSettingsFromHexString(settingsToImport[1]);
+        if (!newSettings) {
+          newSettings = this.getSettingsFromHexString('000');
+        }
         this.randomizerForm.patchValue({
           seed: newSeed,
           settings: newSettings
         });
+      } else {
+        this.electronService.dialog.showMessageBox({
+          type: 'error',
+          title: 'Error',
+          message: 'This permalink is invalid.'
+        });
       }
     } catch {
       console.error(new TypeError('Base64 invalid').toString());
+      this.electronService.dialog.showMessageBox({
+        type: 'error',
+        title: 'Error',
+        message: 'This permalink is invalid.'
+      });
     }
   }
 
@@ -179,5 +210,13 @@ export class RandomizerComponent implements OnInit {
       console.log(new RangeError('More settings than hex string values').toString());
       return null;
     }
+  }
+
+  getNewSeed() {
+    this.randomizerForm.patchValue({seed: Utilities.getRandomInt(1, 999999999)});
+  }
+
+  importSettingsFromFile() {
+    this.electronService.ipcRenderer.send('settings-get');
   }
 }

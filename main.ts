@@ -1,5 +1,6 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import { Patcher } from './common/patcher/Patcher';
+import { Settings } from './common/settings/Settings';
 import { Utilities } from './common/Utilities';
 import * as path from 'path';
 import * as url from 'url';
@@ -36,6 +37,9 @@ function createWindow() {
     // Dereference the window object, usually you would store window
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+
+    // Write settings file if changes have been made.
+    settings.writeSettingsFile();
     win = null;
   });
 }
@@ -70,4 +74,4 @@ try {
 }
 
 const patcher = new Patcher();
-
+const settings = new Settings();

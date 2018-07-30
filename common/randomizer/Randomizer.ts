@@ -1,12 +1,13 @@
-import {World} from './World';
-import {Item} from './Item';
-import {MersenneTwister} from './MersenneTwister';
-import {Filler} from './Filler';
-import {RandomAssumed} from './filler/RandomAssumed';
-import {RandomizerMode} from './enums/RandomizerMode';
-import {RandomizerLogic} from './enums/RandomizerLogic';
-import {PrimeItem} from './enums/PrimeItem';
+import { World } from './World';
+import { Item } from './Item';
+import { MersenneTwister } from './MersenneTwister';
+import { Filler } from './Filler';
+import { RandomAssumed } from './filler/RandomAssumed';
+import { RandomizerMode } from './enums/RandomizerMode';
+import { RandomizerLogic } from './enums/RandomizerLogic';
+import { PrimeItem } from './enums/PrimeItem';
 import { RandomizerArtifacts } from './enums/RandomizerArtifacts';
+import { Utilities } from '../Utilities';
 
 export class Randomizer {
   protected mode: string;
@@ -26,7 +27,7 @@ export class Randomizer {
 
   randomize(seed?: number): void {
     // Generate pseudorandom seed if one wasn't provided by the user
-    this.seed = seed ? seed : this.getRandomInt(1, 1000000000);
+    this.seed = seed ? seed : Utilities.getRandomInt(1, 1000000000);
 
     this.rng = new MersenneTwister(this.seed);
     const itemFiller = new RandomAssumed(this.world, this.rng);
@@ -39,7 +40,7 @@ export class Randomizer {
       default:
         vmrTanks = 5;
     }
-    
+
     // Set artifacts in vanilla locations if not randomized
     if (this.randomizedArtifacts === RandomizerArtifacts.VANILLA) {
       this.world.setVanillaArtifacts();
@@ -53,12 +54,12 @@ export class Randomizer {
         If major items mode is used, Morph Ball and bombs need to be prioritized
         before upgrades, but after Missile Launcher (bombs in no glitches logic only)
       */
-      const majorPriorityItems: [{name: string, count: number}] = [
-        {name: PrimeItem.MORPH_BALL, count: 1}
+      const majorPriorityItems: [{ name: string, count: number }] = [
+        { name: PrimeItem.MORPH_BALL, count: 1 }
       ];
 
       if (this.logic === RandomizerLogic.NO_GLITCHES) {
-        majorPriorityItems.push({name: PrimeItem.MORPH_BALL_BOMB, count: 1});
+        majorPriorityItems.push({ name: PrimeItem.MORPH_BALL_BOMB, count: 1 });
       }
       itemFiller.fill(this.getItems(majorPriorityItems));
     }
@@ -90,7 +91,7 @@ export class Randomizer {
     return this.logic;
   }
 
-  getRandomizedArtifacts(): string { 
+  getRandomizedArtifacts(): string {
     return this.randomizedArtifacts;
   }
 
@@ -140,10 +141,10 @@ export class Randomizer {
    * Retrieves an item array based on a parameterized list of item keys and their number of occurrences
    * @param items Array of item objects containing a key name and the number of said items to place in the returned array
    */
-  getItems(items: Array<{name: string, count: number}>): Array<Item> {
+  getItems(items: Array<{ name: string, count: number }>): Array<Item> {
     const itemsMap: Map<string, number> = new Map<string, number>();
 
-    for(const item of items) {
+    for (const item of items) {
       itemsMap.set(item.name, item.count);
     }
 
@@ -208,10 +209,6 @@ export class Randomizer {
     }
 
     return this.createItemsFromMap(itemsMap);
-  }
-
-  getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
-    return Math.floor(rng.random() * (max - min + 1)) + min;
   }
 
   logicUsesVMR(): boolean {

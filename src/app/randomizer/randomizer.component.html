@@ -22,10 +22,15 @@
             <label class="label">Seed Number</label>
           </div>
           <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed"
-                  formControlName="seed">
+            <div class="field is-expanded">
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed"
+                    formControlName="seed">
+                </div>
+                <div class="control">
+                  <button class="button file-cta" (click)="getNewSeed()">New Seed</button>
+                </div>
               </div>
             </div>
           </div>

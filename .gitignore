@@ -9,6 +9,7 @@ main.js
 common/**/*.js
 /build
 /bin
+settings.json
 
 # dependencies
 /node_modules
