@@ -30,6 +30,23 @@
             </div>
           </div>
         </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Permalink</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-expanded">
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <input class="input" type="text" [(ngModel)]="permalink" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="control">
+                  <button class="button file-cta" (click)="importPermalink()">Import</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
       <div class="buttons is-centered" style="margin-top: 2em;">
         <button class="button" (click)="resetSettings()">Reset Settings to Default</button>

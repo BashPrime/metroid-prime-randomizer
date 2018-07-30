@@ -14,24 +14,12 @@ import { RandomizerArtifacts } from '../../../common/randomizer/enums/Randomizer
 })
 export class MainRulesComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
-  dropdowns: any = {
-    logic: [
-      { name: 'No Glitches', value: RandomizerLogic.NO_GLITCHES },
-      { name: 'Normal', value: RandomizerLogic.NORMAL },
-      { name: 'Hard', value: RandomizerLogic.HARD }
-    ],
-    mode: [
-      { name: 'Standard', value: RandomizerMode.STANDARD },
-      { name: 'Major Items', value: RandomizerMode.MAJOR_ITEMS }
-    ],
-    artifacts: [
-      { name: 'Vanilla (Not Randomized)', value: RandomizerArtifacts.VANILLA },
-      { name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED }
-    ]
-  };
+  dropdowns: any = {};
   defaultLogic = RandomizerLogic.NO_GLITCHES;
 
-  constructor(private randomizerService: RandomizerService) { }
+  constructor(private randomizerService: RandomizerService) {
+    this.dropdowns = this.randomizerService.getSettings();
+  }
 
   ngOnInit() {}
 

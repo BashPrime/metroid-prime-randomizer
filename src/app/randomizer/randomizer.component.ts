@@ -6,6 +6,7 @@ import { ElectronService } from '../services/electron.service';
 import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
 import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
 import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { MersenneTwister } from '../../../common/randomizer/MersenneTwister';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -23,15 +24,24 @@ export class RandomizerComponent implements OnInit {
   patchUpdate: string;
   errorOccurred: boolean;
   randomizerForm: FormGroup;
+  settings = {};
+  permalink = '';
+  valueSub: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
     private electronService: ElectronService
-  ) { }
+  ) {
+    this.settings = this.randomizerService.getSettings();
+  }
 
   ngOnInit() {
     this.createForm();
+
+    this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
+      this.permalink = this.getPermalink();
+    });
 
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
       console.log(arg);
@@ -111,5 +121,63 @@ export class RandomizerComponent implements OnInit {
         artifacts: RandomizerArtifacts.VANILLA,
       }
     });
+  }
+
+  getPermalink(): string {
+    const seed = this.randomizerForm.get('seed').value;
+    const settingsHex = this.getHexStringFromSettings();
+
+    return btoa(seed + ',' + settingsHex);
+  }
+
+  importPermalink(): void {
+    let settingsToImport;
+    try {
+      settingsToImport = atob(this.permalink).split(',');
+      if (settingsToImport.length === 2) {
+        const newSeed = settingsToImport[0];
+        const newSettings = this.getSettingsFromHexString(settingsToImport[1]);
+        this.randomizerForm.patchValue({
+          seed: newSeed,
+          settings: newSettings
+        });
+      }
+    } catch {
+      console.error(new TypeError('Base64 invalid').toString());
+    }
+  }
+
+  getHexStringFromSettings(): string {
+    let hexString = '';
+    const settings = this.randomizerForm.get('settings').value;
+    const keys = Object.keys(settings);
+
+    for (const key of keys) {
+      this.settings[key].find((setting: any, index: number) => {
+        if (setting.value === settings[key]) {
+          hexString += index.toString(16);
+        }
+      });
+    }
+
+    return hexString;
+  }
+
+  getSettingsFromHexString(hexString: string): object {
+    const settings = {};
+    const keys = Object.keys(this.settings);
+    try {
+      let index = 0;
+      for (const key of keys) {
+        const hexWidth = (this.settings[key].length - 1).toString(16).length;
+        const settingVal = hexString.substr(index, hexWidth);
+        settings[key] = this.settings[key][settingVal].value;
+        index += hexWidth;
+      }
+      return settings;
+    } catch {
+      console.log(new RangeError('More settings than hex string values').toString());
+      return null;
+    }
   }
 }
