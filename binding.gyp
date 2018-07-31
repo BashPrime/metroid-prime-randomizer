@@ -16,8 +16,14 @@
             "-luserenv.lib",
             "-lmsvcrt.lib"
           ]
+        }],
+        ["OS!='win'", {
+          "libraries": [
+            "<(module_root_dir)/native/lib/librandomprime.a"
+          ]
         }]
       ]
     }
   ]
 }
+
