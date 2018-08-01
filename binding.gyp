@@ -17,9 +17,14 @@
             "-lmsvcrt.lib"
           ]
         }],
-        ["OS!='win'", {
+        ["OS=='mac'", {
           "libraries": [
-            "<(module_root_dir)/native/lib/librandomprime.a"
+            "<(module_root_dir)/native/lib/librandomprime_mac.a"
+          ]
+        }],
+        ["OS=='linux'", {
+          "libraries": [
+            "<(module_root_dir)/native/lib/librandomprime_linux.a"
           ]
         }]
       ]
