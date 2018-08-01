@@ -11,14 +11,14 @@ export class Patcher {
 
     constructor() {
         const serve = Utilities.isServe();
-        const randomPrimePath = (serve ? '../..' : path.dirname(app.getPath('exe'))) + '/build/Release/randomprime';
+        const randomPrimePath = this.getRandomPrimePath();
         this.workingFolder = Utilities.getWorkingFolder();
 
         // Gracefully handle unresolved randomprime native path
         try {
             this.randomPrime = require(randomPrimePath);
         } catch(err) {
-            throw new ReferenceError('Cannot resolve the randomprime native module');
+            throw new ReferenceError('Cannot resolve the randomprime native module' + randomPrimePath);
         }
 
         // Handle IPC randomizer call from renderer
@@ -111,5 +111,24 @@ export class Patcher {
         spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 
         return JSON.stringify(spoiler, null, '\t');
+    }
+
+    getRandomPrimePath(): string {
+      const serve = Utilities.isServe();
+      const buildPath = 'build/Release/randomprime';
+
+      // Return if running in development mode
+      if (serve) {
+        return path.join('../..', buildPath);
+      }
+
+      switch (process.platform) {
+        case 'darwin': {
+          return path.join(path.dirname(app.getPath('exe')), '..', buildPath);
+        }
+        default: {
+          return path.join(path.dirname(app.getPath('exe')), buildPath);
+        }
+      }
     }
 }
