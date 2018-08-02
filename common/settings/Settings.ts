@@ -1,12 +1,14 @@
 import { app, ipcMain } from 'electron';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
+import * as path from 'path';
+
 
 export class Settings {
   private settings: object;
   private filePath: string;
 
   constructor() {
-    this.filePath = app.getPath('userData') + '/settings.json';
+    this.filePath = path.join(app.getPath('userData'), 'settings.json');
 
     // Request from renderer to get settings file from main process
     ipcMain.on('settings-get', (event, arg) => {

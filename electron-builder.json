@@ -18,8 +18,9 @@
     "!karma.conf.js",
     "!tsconfig.json",
     "!tslint.json",
-    "!build/",
     "!bin/",
+    "!build/",
+    "!native/",
     "!output/"
   ],
   "extraFiles": [
@@ -28,19 +29,19 @@
   "win": {
     "icon": "dist",
     "target": [
-      "portable"
+      "portable", "zip"
     ]
   },
   "mac": {
     "icon": "dist",
     "target": [
-      "dmg"
+      "dmg", "zip"
     ]
   },
   "linux": {
     "icon": "dist",
     "target": [
-      "AppImage"
+      "AppImage", "tar.gz"
     ]
   }
 }
