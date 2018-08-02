@@ -25,10 +25,10 @@ export class Utilities {
         return app.getAppPath();
       }
 
-      if (process.platform === 'win32') {
-        return path.join(app.getAppPath(), '../../');
-      } else {
+      if (process.platform === 'darwin') {
         return path.join(app.getAppPath(), '../../../../');
+      } else {
+        return path.join(app.getAppPath(), '../../');
       }
     }
 }
