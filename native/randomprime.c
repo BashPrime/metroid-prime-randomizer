@@ -9,11 +9,16 @@ struct callback_data {
   napi_value cb;
 };
 
+struct async_carrier {
+  char* inputJson;
+  struct callback_data cb;
+  napi_async_work _request;
+};
+
 typedef void (*callback_t)(void *, const char *);
 void randomprime_patch_iso(const char *, void *, callback_t);
 
-void callback(void *data, const char *message)
-{
+void callback(void *data, const char *message) {
   struct callback_data *cbData = (struct callback_data*) data;
   napi_status status;
   napi_env env = cbData->env;
@@ -33,6 +38,17 @@ void callback(void *data, const char *message)
   napi_value result;
   status = napi_call_function(env, global, cb, 1, cbArgs, &result);
   assert (status == napi_ok);
+}
+
+void Execute(napi_env env, void *data) {
+  struct async_carrier *carrierData = (struct async_carrier*) data;
+  randomprime_patch_iso(carrierData->inputJson, (void *) &carrierData->cb, callback);
+}
+
+void Complete(napi_env env, napi_status status, void* data) {
+  struct async_carrier* c = (struct async_carrier*) data;
+  free(c->inputJson);
+  napi_delete_async_work(env, c->_request);
 }
 
 // C function for randomPrime.patchRandomizedGame(configJson, function(message)) in Node
@@ -77,12 +93,21 @@ napi_value PatchRandomizedGame(napi_env env, napi_callback_info info) {
 
   // Build callback data struct
   struct callback_data cbData = {env, args[1]};
+  struct async_carrier carrier = {inputJson, cbData, NULL};
+
+  napi_value resource_name;
+  status=napi_create_string_utf8(env,"TestResource",NAPI_AUTO_LENGTH,&resource_name);
+	assert(status==napi_ok);
+
+  status = napi_create_async_work(env, NULL, resource_name, Execute, Complete, &carrier, &carrier._request);
+  assert(status==napi_ok);
+	status=napi_queue_async_work(env, carrier._request);
 
   // Patch the game using json input string, passing callback data struct as well
-  randomprime_patch_iso(inputJson, (void *) &cbData, callback);
+  // randomprime_patch_iso(inputJson, (void *) &cbData, callback);
 
   // Free up allocated memory
-  free(inputJson);
+  // free(inputJson);
   return NULL;
 }
 
