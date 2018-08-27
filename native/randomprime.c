@@ -10,9 +10,8 @@ struct callback_data {
 };
 
 struct async_carrier {
-  char* inputJson;
-  struct callback_data cb;
-  napi_async_work _request;
+  char* json;
+  napi_ref callbackRef;
 };
 
 typedef void (*callback_t)(void *, const char *);
@@ -40,22 +39,53 @@ void callback(void *data, const char *message) {
   assert (status == napi_ok);
 }
 
-void Execute(napi_env env, void *data) {
-  struct async_carrier *carrierData = (struct async_carrier*) data;
-  randomprime_patch_iso(carrierData->inputJson, (void *) &carrierData->cb, callback);
+void executePatch(napi_env env, void *data) {
+  printf("Starting patch\n");
+
+  // Double for loop to simulate work being done in the execution async context
+  for(int i = 0; i < 2000000000; i++) {
+    if (i % 1000000000 == 0) {
+      printf("Hit modulo\n");
+    }
+  }
 }
 
-void Complete(napi_env env, napi_status status, void* data) {
-  struct async_carrier* c = (struct async_carrier*) data;
-  free(c->inputJson);
-  napi_delete_async_work(env, c->_request);
+void patchComplete(napi_env env, napi_status status, void *data) {
+  // Set up instance variable, get carrier from data argument
+  napi_value callback;
+  struct async_carrier *carrier = (struct async_carrier *) data;
+  char* json = carrier->json;
+
+  // Get our callback value from the reference, and then delete the reference
+  status = napi_get_reference_value(env, carrier->callbackRef, &callback);
+  assert(status == napi_ok);
+  status = napi_delete_reference(env, carrier->callbackRef);
+  assert(status == napi_ok);
+
+  // Add message string to callback argument
+  napi_value cbArgs[1]; // this is the argument array for the callback function, length of 1 (just the message)
+  status = napi_create_string_utf8(env, json, strlen(json), cbArgs);
+  assert(status == napi_ok);
+
+  // Set global napi object for callback
+  napi_value global;
+  status = napi_get_global(env, &global);
+  assert(status == napi_ok);
+
+  // Send JSON message as an argument to node callback function
+  napi_value result;
+  status = napi_call_function(env, global, callback, 1, cbArgs, &result);
+  assert (status == napi_ok);
 }
 
-// C function for randomPrime.patchRandomizedGame(configJson, function(message)) in Node
-napi_value PatchRandomizedGame(napi_env env, napi_callback_info info) {
+napi_value patchRandomizedGame(napi_env env, napi_callback_info info) {
   napi_status status;
-  size_t argc = 2;
+	napi_async_work work;
+	napi_value async_resource_name;
+
+  // Build up arguments array from js call
   napi_value args[2];
+  size_t argc = 2;
   status = napi_get_cb_info(env, info, &argc, args, NULL, NULL);
   assert(status == napi_ok);
 
@@ -81,48 +111,53 @@ napi_value PatchRandomizedGame(napi_env env, napi_callback_info info) {
   }
 
   // Get length of json string parameter
-  size_t length;
-  status = napi_get_value_string_utf8(env, args[0], NULL, 0, &length);
+  size_t jsonLength;
+  status = napi_get_value_string_utf8(env, args[0], NULL, 0, &jsonLength);
   assert(status == napi_ok);
 
   // Assign json string to buffer
-  char* inputJson = malloc((length + 1) * sizeof(char));
+  char* inputJson = malloc((jsonLength + 1) * sizeof(char));
   size_t res;
-  status = napi_get_value_string_utf8(env, args[0], inputJson, length+1, &res);
+  status = napi_get_value_string_utf8(env, args[0], inputJson, jsonLength + 1, &res);
   assert(status == napi_ok);
 
-  // Build callback data struct
-  struct callback_data cbData = {env, args[1]};
-  struct async_carrier carrier = {inputJson, cbData, NULL};
+  // Create reference to callback function argument so it doesn't get lost to the stack (if this makes sense)
+  napi_ref callbackRef;
+  status = napi_create_reference(env, args[1], 1, &callbackRef);
+  assert(status == napi_ok);
 
-  napi_value resource_name;
-  status=napi_create_string_utf8(env,"TestResource",NAPI_AUTO_LENGTH,&resource_name);
-	assert(status==napi_ok);
+  // Allocate heap memory for carrier struct and pass in json, napi callback reference
+  struct async_carrier *carrier = malloc(sizeof(inputJson) + sizeof(callbackRef));
+  carrier->json = inputJson;
+  carrier->callbackRef = callbackRef;  
 
-  status = napi_create_async_work(env, NULL, resource_name, Execute, Complete, &carrier, &carrier._request);
-  assert(status==napi_ok);
-	status=napi_queue_async_work(env, carrier._request);
+  // Create resource name for async work
+	napi_create_string_utf8(env, "patchRandomizedGame", NAPI_AUTO_LENGTH, &async_resource_name);
 
-  // Patch the game using json input string, passing callback data struct as well
-  // randomprime_patch_iso(inputJson, (void *) &cbData, callback);
+  // Create and queue the async work
+	napi_create_async_work(env, NULL, async_resource_name, executePatch, patchComplete, carrier, &work);
+	napi_queue_async_work(env, work);
 
-  // Free up allocated memory
-  // free(inputJson);
-  return NULL;
+	return NULL;
 }
 
-napi_value Init(napi_env env, napi_value exports)
+napi_value init(napi_env env, napi_value exports)
 {
   napi_status status;
-  napi_value fn;
-
-  // Create and set NAPI patcher function around C function
-  status = napi_create_function(env, NULL, 0, PatchRandomizedGame, NULL, &fn);
-  assert(status == napi_ok);
-  status = napi_set_named_property(env, exports, "patchRandomizedGame", fn);
-  assert(status == napi_ok);
+  napi_property_descriptor desc[] = {
+		{
+			.utf8name = "patchRandomizedGame",
+			.method = patchRandomizedGame,
+			.getter = NULL,
+			.setter = NULL,
+			.value = NULL,
+			.attributes = napi_default,
+			.data = NULL
+		}
+	};
+	status = napi_define_properties(env, exports, 1, desc);
 
   return exports;
 }
 
-NAPI_MODULE(NODE_GYP_MODULE_NAME, Init)
+NAPI_MODULE(randomprime, init)
