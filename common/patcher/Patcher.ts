@@ -81,25 +81,24 @@ export class Patcher {
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
         console.log('Logging in JS: ' + message);
-        event.sender.send('patch-success');
-        // const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
-        // switch (messageObj.type) {
-        //   case 'progress': {
-        //     event.sender.send('patch-progress', messageObj);
-        //     break;
-        //   }
-        //   case 'success': {
-        //     event.sender.send('patch-success', messageObj.msg);
-        //     break;
-        //   }
-        //   case 'error': {
-        //     event.sender.send('patch-error', messageObj.msg);
-        //     break;
-        //   }
-        //   default: {
-        //     // Do nothing
-        //   }
-        // }
+        const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
+        switch (messageObj.type) {
+          case 'progress': {
+            event.sender.send('patch-progress', messageObj);
+            break;
+          }
+          case 'success': {
+            event.sender.send('patch-success', messageObj.msg);
+            break;
+          }
+          case 'error': {
+            event.sender.send('patch-error', messageObj.msg);
+            break;
+          }
+          default: {
+            event.sender.send('patch-error', 'An unknown error occurred.');
+          }
+        }
       });
     } else {
       event.sender.send('patch-success');

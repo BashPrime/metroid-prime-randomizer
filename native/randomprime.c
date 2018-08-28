@@ -4,57 +4,38 @@
 #include <stdlib.h>
 #include <assert.h>
 
-struct callback_data {
-  napi_env env;
-  napi_value cb;
-};
-
-struct async_carrier {
+typedef struct async_carrier {
   char* json;
   napi_ref callbackRef;
-};
+  char* callbackText;
+} async_carrier;
 
 typedef void (*callback_t)(void *, const char *);
 void randomprime_patch_iso(const char *, void *, callback_t);
 
 void callback(void *data, const char *message) {
-  struct callback_data *cbData = (struct callback_data*) data;
-  napi_status status;
-  napi_env env = cbData->env;
-  napi_value cb = cbData->cb;
+  // Get carrier from data argument
+  async_carrier *carrier = (async_carrier *) data;
 
-  // Add message string to callback argument
-  napi_value cbArgs[1]; // this is the argument array for the callback function, length of 1 (just the message)
-  status = napi_create_string_utf8(env, message, strlen(message), cbArgs);
-  assert(status == napi_ok);
-
-  // Set global napi object for callback
-  napi_value global;
-  status = napi_get_global(env, &global);
-  assert(status == napi_ok);
-
-  // Send JSON message as an argument to node callback function
-  napi_value result;
-  status = napi_call_function(env, global, cb, 1, cbArgs, &result);
-  assert (status == napi_ok);
+  free(carrier->callbackText);
+  carrier->callbackText = malloc(strlen(message) + 1);
+  strcpy(carrier->callbackText, message);
 }
 
 void executePatch(napi_env env, void *data) {
-  printf("Starting patch\n");
+  // Get carrier from data argument
+  async_carrier *carrier = (async_carrier *) data;
+  char* json = carrier->json;
 
-  // Double for loop to simulate work being done in the execution async context
-  for(int i = 0; i < 2000000000; i++) {
-    if (i % 1000000000 == 0) {
-      printf("Hit modulo\n");
-    }
-  }
+  // Patch the randomized iso. No callbacks for now as I'm not sure how to make callbacks to javascript from a napi_async_execute_callback yet.
+  randomprime_patch_iso(json, carrier, callback);
 }
 
 void patchComplete(napi_env env, napi_status status, void *data) {
   // Set up instance variable, get carrier from data argument
   napi_value callback;
-  struct async_carrier *carrier = (struct async_carrier *) data;
-  char* json = carrier->json;
+  async_carrier *carrier = (async_carrier *) data;
+  char* callbackText = carrier->callbackText;
 
   // Get our callback value from the reference, and then delete the reference
   status = napi_get_reference_value(env, carrier->callbackRef, &callback);
@@ -64,7 +45,7 @@ void patchComplete(napi_env env, napi_status status, void *data) {
 
   // Add message string to callback argument
   napi_value cbArgs[1]; // this is the argument array for the callback function, length of 1 (just the message)
-  status = napi_create_string_utf8(env, json, strlen(json), cbArgs);
+  status = napi_create_string_utf8(env, callbackText, strlen(callbackText), cbArgs);
   assert(status == napi_ok);
 
   // Set global napi object for callback
@@ -76,6 +57,11 @@ void patchComplete(napi_env env, napi_status status, void *data) {
   napi_value result;
   status = napi_call_function(env, global, callback, 1, cbArgs, &result);
   assert (status == napi_ok);
+
+  // Free allocated values
+  free(carrier->json);
+  free(carrier->callbackText);
+  free(carrier);
 }
 
 napi_value patchRandomizedGame(napi_env env, napi_callback_info info) {
@@ -127,9 +113,11 @@ napi_value patchRandomizedGame(napi_env env, napi_callback_info info) {
   assert(status == napi_ok);
 
   // Allocate heap memory for carrier struct and pass in json, napi callback reference
-  struct async_carrier *carrier = malloc(sizeof(inputJson) + sizeof(callbackRef));
+  // async_carrier *carrier = malloc(sizeof(inputJson) + sizeof(callbackRef));
+  async_carrier *carrier = malloc(sizeof(async_carrier));
   carrier->json = inputJson;
-  carrier->callbackRef = callbackRef;  
+  carrier->callbackRef = callbackRef;
+  carrier->callbackText = malloc(sizeof(char)); // temporarily allocate to avoid issues freeing from memory later
 
   // Create resource name for async work
 	napi_create_string_utf8(env, "patchRandomizedGame", NAPI_AUTO_LENGTH, &async_resource_name);
