@@ -4,12 +4,13 @@ import * as path from 'path';
 
 import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
+const ProgressBar = require('electron-progressbar');
 
 export class Patcher {
   private appRoot: string;
   private randomPrime: any;
   private serve: boolean;
-  private defaultOutputFolderName: string = 'prime-randomizer-output';
+  private defaultOutputFolderName = 'prime-randomizer-output';
 
   constructor() {
     this.serve = Utilities.isServe();
@@ -30,6 +31,17 @@ export class Patcher {
   }
 
   public runRandomizerAndPatchIso(game, event) {
+    // Open indeterminate progress bar
+    const progressBar = new ProgressBar({
+      title: 'Generating Seed',
+      text: 'Getting Ready...'
+    });
+
+    progressBar
+      .on('completed', () => {
+        progressBar.text = 'Completed!';
+      });
+
     // Create randomizer object and run based on settings
     const randomizer = new Randomizer(
       game.settings.mode,
@@ -68,6 +80,8 @@ export class Patcher {
       this.writeSpoilerLog(randomizer, game, path.join(game.rom.outputFolder, outputFile + '_spoiler.txt'));
     }
 
+    progressBar.text = 'Patching ROM...';
+
     if (game.rom.createIso) {
       const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {
@@ -80,7 +94,6 @@ export class Patcher {
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
-        console.log('Logging in JS: ' + message);
         const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
         switch (messageObj.type) {
           case 'progress': {
@@ -88,6 +101,7 @@ export class Patcher {
             break;
           }
           case 'success': {
+            progressBar.setCompleted();
             event.sender.send('patch-success', messageObj.msg);
             break;
           }
@@ -102,6 +116,7 @@ export class Patcher {
       });
     } else {
       event.sender.send('patch-success');
+      progressBar.setCompleted();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
@@ -10,11 +10,11 @@ import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'app-random',
+  selector: 'app-randomizer',
   templateUrl: './randomizer.component.html',
   styleUrls: ['./randomizer.component.scss']
 })
-export class RandomizerComponent implements OnInit {
+export class RandomizerComponent implements OnInit, OnDestroy {
   tabs = [
     'ROM Settings',
     'Main Rules',
@@ -54,19 +54,18 @@ export class RandomizerComponent implements OnInit {
 
     // Handle successful file patch
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
-      console.log(arg);
       this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
         type: 'info',
+        title: 'Success',
         message: 'Game has been successfully patched.'
       });
     });
 
     // Error occurred during patching.
     this.electronService.ipcRenderer.on('patch-error', (event, arg) => {
-      console.log(arg);
       this.patching = false;
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
