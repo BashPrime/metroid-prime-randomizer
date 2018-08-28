@@ -96,7 +96,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         baseIso: ['', Validators.required],
         outputFolder: [''],
         spoiler: [true],
-        createIso: [true]
+        createIso: [true],
+        skipFrigate: [true],
+        skipHudPopups: [true]
       }),
       settings: this.setDefaultSettings()
     });

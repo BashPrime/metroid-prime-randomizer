@@ -88,8 +88,8 @@ export class Patcher {
         input_iso: game.rom.baseIso,
         output_iso: path.join(game.rom.outputFolder, outputFile + '.iso'),
         layout_string: layoutDescriptor,
-        skip_frigate: true,
-        skip_hudmenus: true,
+        skip_frigate: game.rom.skipFrigate,
+        skip_hudmenus: game.rom.skipHudPopups,
         comment: 'prime-randomizer-web ' + game.version + ' permalink: ' + game.permalink
       };
 
