@@ -27,7 +27,7 @@ void executePatch(napi_env env, void *data) {
   async_carrier *carrier = (async_carrier *) data;
   char* json = carrier->json;
 
-  // Patch the randomized iso. No callbacks for now as I'm not sure how to make callbacks to javascript from a napi_async_execute_callback yet.
+  // Patch the randomized iso
   randomprime_patch_iso(json, carrier, callback);
 }
 
