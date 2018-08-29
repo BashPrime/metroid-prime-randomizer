@@ -30,7 +30,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
-    private electronService: ElectronService
+    public electronService: ElectronService
   ) {
     this.settings = this.randomizerService.getSettings();
   }
