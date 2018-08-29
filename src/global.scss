@@ -4,6 +4,11 @@ html {
   overflow: auto;
 }
 
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
 .mat-sidenav-container {
   height: 100vh;
 }

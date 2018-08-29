@@ -1,5 +1,5 @@
-<section class="section">
-  <div class="container">
+<div class="rando-wrapper">
+  <div class="section rando-header">
     <div class="tabs is-toggle is-fullwidth">
       <ul>
         <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === i}" (click)="selectedTab = i">
@@ -7,56 +7,46 @@
         </li>
       </ul>
     </div>
-    <div id="tab-container" class="container">
-      <section *ngIf="selectedTab === 0">
-        <app-rom-settings [group]="randomizerForm.controls['rom']"></app-rom-settings>
-      </section>
-      <section *ngIf="selectedTab === 1">
-        <app-main-rules [group]="randomizerForm.controls['settings']"></app-main-rules>
-      </section>
-    </div>
-    <div class="section randomizer-footer">
-      <form [formGroup]="randomizerForm">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Seed Number</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-expanded">
-              <div class="field has-addons">
-                <div class="control is-expanded">
-                  <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed"
-                    formControlName="seed">
-                </div>
-                <div class="control">
-                  <button class="button file-cta" (click)="getNewSeed()">New Seed</button>
-                </div>
-              </div>
+  </div>
+  <div class="section rando-content">
+    <section *ngIf="selectedTab === 0">
+      <app-rom-settings [group]="randomizerForm.controls['rom']"></app-rom-settings>
+    </section>
+    <section *ngIf="selectedTab === 1">
+      <app-main-rules [group]="randomizerForm.controls['settings']"></app-main-rules>
+    </section>
+  </div>
+  <div class="section rando-footer">
+    <hr>
+    <form [formGroup]="randomizerForm">
+      <div class="columns">
+        <div class="column">
+          <label class="label">Seed Number</label>
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed" formControlName="seed">
+            </div>
+            <div class="control">
+              <button class="button file-cta" (click)="getNewSeed()">New Seed</button>
             </div>
           </div>
         </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Permalink</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-expanded">
-              <div class="field has-addons">
-                <div class="control is-expanded">
-                  <input class="input" type="text" [(ngModel)]="permalink" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="control">
-                  <button class="button file-cta" (click)="importPermalink()">Import</button>
-                </div>
-              </div>
+        <div class="column">
+          <label class="label">Permalink</label>
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" [(ngModel)]="permalink" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="control">
+              <button class="button file-cta" (click)="importPermalink()">Import</button>
             </div>
           </div>
         </div>
-      </form>
-      <div class="buttons is-centered" style="margin-top: 2em;">
-        <button class="button" (click)="resetSettings()">Reset Settings to Default</button>
-        <button class="button is-primary " (click)="runRandomizer()" [disabled]="patching">Randomize</button>
       </div>
+    </form>
+    <div class="buttons is-centered" style="margin-top: 2em;">
+      <button class="button" (click)="resetSettings()">Reset Settings to Default</button>
+      <button class="button is-primary " (click)="runRandomizer()" [disabled]="patching">Randomize</button>
     </div>
   </div>
-</section>
+</div>

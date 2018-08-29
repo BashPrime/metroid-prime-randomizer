@@ -42,6 +42,8 @@ export class Patcher {
         progressBar.text = 'Completed!';
       });
 
+    progressBar.text = 'Placing items...';
+
     // Create randomizer object and run based on settings
     const randomizer = new Randomizer(
       game.settings.mode,
@@ -58,6 +60,7 @@ export class Patcher {
     const outputFile = 'Prime_' + game.permalink;
 
     if (!game.rom.outputFolder) {
+      progressBar.text = 'Creating spoiler log...';
       game.rom.outputFolder = path.join(this.appRoot, this.defaultOutputFolderName);
 
       // Handle bundled Windows portable app

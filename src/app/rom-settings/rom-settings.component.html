@@ -1,94 +1,49 @@
 <form [formGroup]="romSettingsForm">
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label is-required">Base ISO</label>
+  <label class="label is-required">Base ISO</label>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <input class="input" type="text" formControlName="baseIso" [ngClass]="{'is-danger': submitted && romSettingsForm.get('baseIso').errors}">
     </div>
-    <div class="field-body">
-      <div class="field is-expanded">
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <input class="input" type="text" formControlName="baseIso"
-              [ngClass]="{'is-danger': submitted && romSettingsForm.get('baseIso').errors}">
-          </div>
-          <div class="control">
-            <button class="button file-cta" (click)="selectBaseIso()">Select ISO</button>
-          </div>
-        </div>
-        <p class="help is-danger" *ngIf="submitted && romSettingsForm.get('baseIso').errors?.required">This field is required</p>
-      </div>
+    <div class="control">
+      <button class="button file-cta" (click)="selectBaseIso()">Select ISO</button>
     </div>
   </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Output Folder</label>
+  <p class="help is-danger" *ngIf="submitted && romSettingsForm.get('baseIso').errors?.required">This field is required</p>
+  <label class="label">Output Folder</label>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <input class="input" type="text" formControlName="outputFolder">
     </div>
-    <div class="field-body">
-      <div class="field is-expanded">
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <input class="input" type="text" formControlName="outputFolder">
-          </div>
-          <div class="control">
-            <button class="button file-cta" (click)="selectOutputFolder()">Select Folder</button>
-          </div>
-        </div>
-      </div>
+    <div class="control">
+      <button class="button file-cta" (click)="selectOutputFolder()">Select Folder</button>
     </div>
   </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Create Spoiler</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" formControlName="spoiler">
-          </label>
-        </div>
-      </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="spoiler"> Create Spoiler
+      </label>
     </div>
   </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Create ISO</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" formControlName="createIso">
-          </label>
-        </div>
-      </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="createIso"> Create ISO
+      </label>
     </div>
   </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Skip Frigate</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" formControlName="skipFrigate">
-          </label>
-        </div>
-      </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="skipFrigate"> Skip Frigate
+      </label>
     </div>
   </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Skip HUD Popups</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" formControlName="skipHudPopups">
-          </label>
-        </div>
-      </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="skipHudPopups"> Skip HUD Popups
+      </label>
     </div>
   </div>
 </form>
