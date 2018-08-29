@@ -10,8 +10,6 @@ Seed:
 Logic:
 Mode:
 Artifacts:
-Difficulty:
-Layout Descriptor:
 
 Description of problem:
 
