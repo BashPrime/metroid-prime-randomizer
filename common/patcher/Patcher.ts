@@ -105,20 +105,22 @@ export class Patcher {
           }
           case 'success': {
             progressBar.setCompleted();
-            event.sender.send('patch-success', messageObj.msg);
+            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + game.rom.outputFolder);
             break;
           }
           case 'error': {
+            progressBar.close();
             event.sender.send('patch-error', messageObj.msg);
             break;
           }
           default: {
+            progressBar.close();
             event.sender.send('patch-error', 'An unknown error occurred.');
           }
         }
       });
     } else {
-      event.sender.send('patch-success');
+      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + game.rom.outputFolder);
       progressBar.setCompleted();
     }
   }

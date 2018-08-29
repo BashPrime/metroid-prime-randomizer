@@ -45,6 +45,7 @@
       </div>
     </form>
     <div class="buttons is-centered" style="margin-top: 2em;">
+      <button class="button" (click)="electronService.openExternalLink('https://randomizer.metroidprime.run/help/modes')">Help</button>
       <button class="button" (click)="resetSettings()">Reset Settings to Default</button>
       <button class="button is-primary " (click)="runRandomizer()" [disabled]="patching">Randomize</button>
     </div>

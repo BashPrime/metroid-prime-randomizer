@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { remote, ipcMain, ipcRenderer } from 'electron';
+import { remote, ipcMain, ipcRenderer, shell } from 'electron';
 const { dialog } = remote;
 
 @Injectable({
@@ -9,5 +9,10 @@ const { dialog } = remote;
 export class ElectronService {
   dialog = dialog;
   ipcRenderer = ipcRenderer;
+  shell = shell;
   constructor() {}
+
+  openExternalLink(url: string) {
+    this.shell.openExternal(url);
+  }
 }

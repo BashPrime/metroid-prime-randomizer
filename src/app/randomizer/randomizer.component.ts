@@ -60,7 +60,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'info',
         title: 'Success',
-        message: 'Game has been successfully patched.'
+        message: arg
       });
     });
 
