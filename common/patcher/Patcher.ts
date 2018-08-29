@@ -59,14 +59,9 @@ export class Patcher {
 
     const outputFile = 'Prime_' + game.permalink;
 
+    // If no folder is specified, use default output folder
     if (!game.rom.outputFolder) {
-      progressBar.text = 'Creating spoiler log...';
-      game.rom.outputFolder = path.join(this.appRoot, this.defaultOutputFolderName);
-
-      // Handle bundled Windows portable app
-      if (process.platform === 'win32' && process.env.PORTABLE_EXECUTABLE_DIR) {
-        game.rom.outputFolder = path.join(process.env.PORTABLE_EXECUTABLE_DIR, this.defaultOutputFolderName);
-      }
+      game.rom.outputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
 
       // Create default output folder if it doesn't exist
       if (!existsSync(game.rom.outputFolder)) {
@@ -80,12 +75,12 @@ export class Patcher {
     }
 
     if (game.rom.spoiler) {
+      progressBar.text = 'Creating spoiler log...';
       this.writeSpoilerLog(randomizer, game, path.join(game.rom.outputFolder, outputFile + '_spoiler.txt'));
     }
 
-    progressBar.text = 'Patching ROM...';
-
     if (game.rom.createIso) {
+      progressBar.text = 'Patching ROM...';
       const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {
         input_iso: game.rom.baseIso,
@@ -125,9 +120,9 @@ export class Patcher {
     }
   }
 
-  public writeSpoilerLog(randomizer: Randomizer, game: any, path: string) {
+  public writeSpoilerLog(randomizer: Randomizer, game: any, filePath: string) {
     const spoiler = this.generateSpoilerLog(randomizer, game);
-    writeFileSync(path, spoiler);
+    writeFileSync(filePath, spoiler);
   }
 
   generateSpoilerLog(randomizer: Randomizer, game: any) {
