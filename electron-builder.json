@@ -29,7 +29,7 @@
   "win": {
     "icon": "dist",
     "target": [
-      "portable", "zip"
+      "nsis", "zip"
     ]
   },
   "mac": {
