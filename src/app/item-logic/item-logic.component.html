@@ -1,0 +1,255 @@
+<form [formGroup]="logicForm">
+  <div class="columns">
+    <div class="column">
+      <p class="label">Restrictions</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noSupers"> Don't require Super Missiles
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noBurnDomeBombs"> Bombs required for Burn Dome
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noVanillaBeams"> No vanilla beams
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No early Phazon Suit
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noPhendranaBombsSupers"> No Bombs or Super Missiles in Phendrana Drifts
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="requireVisors"> Require visors for power conduits, invisible platforms, Thardus
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noCrashedFrigate"> Nothing in Crashed Frigate
+            </label>
+          </div>
+        </div>
+      </div>
+      <p class="label">Out of Bounds</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="rootCaveSW"> Root Cave Secret World
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="ibbf"> "IBBF" Wallcrawl for late Chozo access
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="trainingChamberOOB"> Training Chamber (Access) Wallcrawl
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="waveSun"> Wave/Sun Infinite Speed
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="workstationToPlasmaProcessing"> Magmoor Workstation SW to Plasma Processing
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="gthWallcrawl"> Great Tree Hall SW to Life Grove
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyNewborn"> Early Newborn
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="oobNoMorphOrBombs"> Allow OOB without Morph Ball/Bombs
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="floatyJump"> Floaty Jump
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Expected Tricks</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="dashing"> Dashing/Scan Dashing
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="standableTerrain"> Standable terrain exploits
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="lJumping"> L Jumping
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="rJumping"> R Jumping
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyWild"> Sunchamber ghost fight early
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteSpeed"> Infinite Speed (Early Sun/Magma Pool)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteSpeedHote"> Infinite Speed (Hall of the Elders)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="tftSpiderless"> Twin Fires Tunnel without Spider Ball
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="gateSkip"> Great Tree Hall Gate Skip
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spinnersNoBoost"> Life Grove/Elite Research spinners without Boost Ball
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spiderlessShafts"> Spiderless Shafts (Phazon Mines)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="phazonMiningTunnelNoPhazonSuit"> Phazon Mining Tunnel without Phazon Suit
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="halfPipeBombJumps"> Half pipe bomb jumps
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="hbj"> Hyper Bomb Jumps (HBJs)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="ubj"> Uber Bomb Jumps (UBJs)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="vmr"> Suitless Magmoor Run to Phendrana/Mines
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="vmrTanks"> Minimum Energy Tanks for Suitless Magmoor Run
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyMagmoorNoSuit"> Early Magmoor items without a suit
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

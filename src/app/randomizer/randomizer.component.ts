@@ -18,6 +18,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   tabs = [
     'ROM Settings',
     'Main Rules',
+    'Item Logic'
   ];
   selectedTab = 0;
   patching = false;
