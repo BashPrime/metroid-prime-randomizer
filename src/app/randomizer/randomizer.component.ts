@@ -6,6 +6,8 @@ import { ElectronService } from '../services/electron.service';
 import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
 import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
 import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { Config } from '../../../common/randomizer/Config';
+import { OptionType } from '../../../common/randomizer/Option';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
@@ -97,11 +99,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         baseIso: ['', Validators.required],
         outputFolder: [''],
         spoiler: [true],
-        createIso: [true],
-        skipFrigate: [true],
-        skipHudPopups: [true]
+        createIso: [true]
       }),
-      settings: this.setDefaultSettings()
+      settings: this.getDefaultSettings()
     });
   }
 
@@ -120,32 +120,71 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     }
   }
 
-  setDefaultSettings() {
+  getDefaultSettings() {
     const fb = new FormBuilder();
 
     return fb.group({
-      logic: [RandomizerLogic.NO_GLITCHES],
-      mode: [RandomizerMode.STANDARD],
-      artifacts: [RandomizerArtifacts.VANILLA],
+      skipFrigate: [true],
+      skipHudPopups: [true],
+      shuffleArtifacts: [true],
+      shuffleMissileLauncher: [true],
+      shuffleMorph: [true],
+      shuffleBombs: [true],
+      shuffleCharge: [true],
+      shuffleSupers: [true],
+      shuffleBeams: [true],
+      shufflePBs: [true],
+      noSupers: [false],
+      noBurnDomeBombs: [false],
+      noVanillaBeams: [false],
+      noEarlyPhazonSuit: [false],
+      noPhendranaBombsSupers: [false],
+      requireVisors: [false],
+      noCrashedFrigate: [false],
+      rootCaveSW: [false],
+      ibbf: [false],
+      trainingChamberOOB: [false],
+      waveSun: [false],
+      workstationToPlasmaProcessing: [false],
+      gthWallcrawl: [false],
+      earlyNewborn: [false],
+      oobNoMorphOrBombs: [false],
+      floatyJump: [false],
+      dashing: [false],
+      standableTerrain: [false],
+      lJumping: [false],
+      rJumping: [false],
+      earlyWild: [false],
+      infiniteSpeedEarlySun: [false],
+      infiniteSpeedHote: [false],
+      barsSkip: [false],
+      spinnersNoBoost: [false],
+      spiderlessShafts: [false],
+      phazonMiningTunnelNoPhazonSuit: [false],
+      halfPipeBombJumps: [false],
+      dbj: [false],
+      hbj: [false],
+      ubj: [false],
+      vmr: [false],
+      vmrTanks: [5],
+      earlyMagmoorNoSuit: [false],
+      earlyMagmoorNoSuitTanks: [5]
     });
   }
 
   resetSettings() {
     this.randomizerForm.patchValue({
       seed: '',
-      settings: {
-        logic: RandomizerLogic.NO_GLITCHES,
-        mode: RandomizerMode.STANDARD,
-        artifacts: RandomizerArtifacts.VANILLA,
-      }
+      settings: this.getDefaultSettings().value
     });
   }
 
   getPermalink(): string {
     const seed = this.randomizerForm.get('seed').value;
     const settingsHex = this.getHexStringFromSettings();
+    const settingsString = seed + ',' + settingsHex;
     if (seed && settingsHex)
-      return btoa(seed + ',' + settingsHex);
+      return btoa(settingsString);
     return '';
   }
 
@@ -157,7 +196,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         const newSeed = settingsToImport[0];
         let newSettings = this.getSettingsFromHexString(settingsToImport[1]);
         if (!newSettings) {
-          newSettings = this.getSettingsFromHexString('000');
+          newSettings = this.getDefaultSettings().value;
         }
         this.randomizerForm.patchValue({
           seed: newSeed,
@@ -182,15 +221,25 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   getHexStringFromSettings(): string {
     let hexString = '';
-    const settings = this.randomizerForm.get('settings').value;
+    const settings = this.getSettingsFromForm();
+    // const settings = this.randomizerForm.get('settings').value;
+    const config = new Config();
     const keys = Object.keys(settings);
 
-    for (const key of keys) {
-      this.settings[key].find((setting: any, index: number) => {
-        if (setting.value === settings[key]) {
-          hexString += index.toString(16);
+    for (let key of keys) {
+      const configOption = config.getOptionByName(key);
+
+      if (configOption && configOption.shared) {
+        switch (configOption.type) {
+          case OptionType.BOOLEAN: {
+            hexString += settings[key] ? 1 : 0;
+            break;
+          }
+          case OptionType.NUMBER: {
+            hexString += settings[key].toString(16);
+          }
         }
-      });
+      }
     }
 
     return hexString;
@@ -198,15 +247,29 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   getSettingsFromHexString(hexString: string): object {
     const settings = {};
-    const keys = Object.keys(this.settings);
+    const config = new Config();
+
     try {
       let index = 0;
-      for (const key of keys) {
-        const hexWidth = (this.settings[key].length - 1).toString(16).length;
-        const settingVal = hexString.substr(index, hexWidth);
-        settings[key] = this.settings[key][settingVal].value;
-        index += hexWidth;
+      for (const option of config.options) {
+        if (option.shared) {
+          const hexWidth = option.hexWidth;
+          const settingVal = parseInt(hexString.substr(index, hexWidth), 16);
+
+          switch (option.type) {
+            case OptionType.BOOLEAN: {
+              settings[option.name] = settingVal == 1 ? true : false;
+              break;
+            }
+            case OptionType.NUMBER: {
+              settings[option.name] = settingVal;
+              break;
+            }
+          }
+          index += hexWidth;
+        }
       }
+
       return settings;
     } catch {
       console.log(new RangeError('More settings than hex string values').toString());
@@ -215,10 +278,25 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   }
 
   getNewSeed() {
-    this.randomizerForm.patchValue({seed: Utilities.getRandomInt(1, 999999999)});
+    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, 999999999) });
   }
 
   importSettingsFromFile() {
     this.electronService.ipcRenderer.send('settings-get');
+  }
+
+  getSettingsFromForm() {
+    const settings = {};
+    const formValue = this.randomizerForm.value;
+
+    for (let key of Object.keys(formValue)) {
+      if (typeof (formValue[key]) !== 'object') {
+        settings[key] = formValue[key];
+      } else {
+        Object.assign(settings, formValue[key]);
+      }
+    }
+
+    return settings;
   }
 }

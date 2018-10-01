@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./item-logic.component.scss']
 })
 export class ItemLogicComponent implements OnInit {
-  @Input('group') logicForm: FormGroup;
+  @Input('group') settingsForm: FormGroup;
 
   constructor() { }
 

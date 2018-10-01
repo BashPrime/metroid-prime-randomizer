@@ -16,7 +16,7 @@
       <app-main-rules [group]="randomizerForm.controls['settings']"></app-main-rules>
     </section>
     <section *ngIf="selectedTab === 2">
-      <app-item-logic></app-item-logic>
+      <app-item-logic [group]="randomizerForm.controls['settings']"></app-item-logic>
     </section>
   </div>
   <div class="section rando-footer">
