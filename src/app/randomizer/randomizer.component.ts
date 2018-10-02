@@ -98,7 +98,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       rom: fb.group({
         baseIso: ['', Validators.required],
         outputFolder: [''],
-        spoiler: [true],
         createIso: [true]
       }),
       settings: this.getDefaultSettings()
@@ -124,6 +123,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     const fb = new FormBuilder();
 
     return fb.group({
+      spoiler: [false],
       skipFrigate: [true],
       skipHudPopups: [true],
       shuffleArtifacts: [true],
