@@ -9,6 +9,11 @@ export class Utilities {
         return '0'.repeat(len - str.length) + str;
     }
 
+    static toPaddedBitString(num: number, len: number): string {
+      const str = num.toString(2);
+      return '0'.repeat(len - str.length) + str;
+    }
+
     static getRandomInt(min: number, max: number, rng: MersenneTwister = new MersenneTwister()) {
       return Math.floor(rng.random() * (max - min + 1)) + min;
     }
