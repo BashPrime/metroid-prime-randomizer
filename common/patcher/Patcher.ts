@@ -30,7 +30,7 @@ export class Patcher {
     });
   }
 
-  public runRandomizerAndPatchIso(game, event) {
+  public runRandomizerAndPatchIso(randomizerConfig, event) {
     // Open indeterminate progress bar
     const progressBar = new ProgressBar({
       title: 'Generating Seed',
@@ -45,28 +45,19 @@ export class Patcher {
     progressBar.text = 'Placing items...';
 
     // Create randomizer object and run based on settings
-    const randomizer = new Randomizer(
-      game.settings.mode,
-      game.settings.logic,
-      game.settings.artifacts,
-    );
+    const randomizer = new Randomizer(randomizerConfig);
+    randomizer.randomize();
 
-    if (game.seed) {
-      randomizer.randomize(game.seed);
-    } else {
-      randomizer.randomize();
-    }
-
-    const outputFile = 'Prime_' + game.permalink;
+    const outputFile = 'Prime_' + randomizerConfig.permalink;
 
     // If no folder is specified, use default output folder
-    if (!game.rom.outputFolder) {
-      game.rom.outputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
+    if (!randomizerConfig.rom.outputFolder) {
+      randomizerConfig.rom.outputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
 
       // Create default output folder if it doesn't exist
-      if (!existsSync(game.rom.outputFolder)) {
+      if (!existsSync(randomizerConfig.rom.outputFolder)) {
         try {
-          mkdirSync(game.rom.outputFolder);
+          mkdirSync(randomizerConfig.rom.outputFolder);
         } catch (err) {
           const dirError = new Error(err);
           event.sender.send('patch-error', dirError.toString());
@@ -74,21 +65,21 @@ export class Patcher {
       }
     }
 
-    if (game.rom.spoiler) {
+    if (randomizerConfig.rom.spoiler) {
       progressBar.text = 'Creating spoiler log...';
-      this.writeSpoilerLog(randomizer, game, path.join(game.rom.outputFolder, outputFile + '_spoiler.txt'));
+      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.rom.outputFolder, outputFile + '_spoiler.txt'));
     }
 
-    if (game.rom.createIso) {
+    if (randomizerConfig.rom.createIso) {
       progressBar.text = 'Patching ROM...';
       const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {
-        input_iso: game.rom.baseIso,
-        output_iso: path.join(game.rom.outputFolder, outputFile + '.iso'),
+        input_iso: randomizerConfig.rom.baseIso,
+        output_iso: path.join(randomizerConfig.rom.outputFolder, outputFile + '.iso'),
         layout_string: layoutDescriptor,
-        skip_frigate: game.rom.skipFrigate,
-        skip_hudmenus: game.rom.skipHudPopups,
-        comment: 'prime-randomizer-web ' + game.version + ' permalink: ' + game.permalink
+        skip_frigate: randomizerConfig.rom.skipFrigate,
+        skip_hudmenus: randomizerConfig.rom.skipHudPopups,
+        comment: 'prime-randomizer-web ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
@@ -100,7 +91,7 @@ export class Patcher {
           }
           case 'success': {
             progressBar.setCompleted();
-            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + game.rom.outputFolder);
+            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.rom.outputFolder);
             break;
           }
           case 'error': {
@@ -115,7 +106,7 @@ export class Patcher {
         }
       });
     } else {
-      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + game.rom.outputFolder);
+      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.rom.outputFolder);
       progressBar.setCompleted();
     }
   }
@@ -130,9 +121,7 @@ export class Patcher {
     spoiler.info.version = game.version;
     spoiler.info.permalink = game.permalink;
     spoiler.info.seed = randomizer.getSeed();
-    spoiler.info.logic = randomizer.getLogic();
-    spoiler.info.mode = randomizer.getMode();
-    spoiler.info.artifacts = randomizer.getRandomizedArtifacts();
+    spoiler.info.settings = game.settings;
     spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 
     return JSON.stringify(spoiler, null, '\t');

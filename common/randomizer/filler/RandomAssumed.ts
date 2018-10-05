@@ -4,21 +4,12 @@ import {LocationCollection} from '../collection/LocationCollection';
 import {Item} from '../Item';
 import {Location} from '../Location';
 import {PrimeItem} from '../enums/PrimeItem';
-import {RandomizerMode} from '../enums/RandomizerMode';
-import {RandomizerLogic} from '../enums/RandomizerLogic';
 
 export class RandomAssumed extends Filler {
-  fill(fillItems: Item[], fastFill?: boolean, forceAllLocations?: boolean): void {
+  fill(fillItems: Item[], fastFill?: boolean): void {
     // Shuffle items and locations before filling
     const shuffledItems = this.shuffleItems(fillItems);
-    let shuffledLocations;
-
-    // Only use major item locations if the force flag is not set and the mode is Major Items
-    if (!forceAllLocations && this.world.getMode() === RandomizerMode.MAJOR_ITEMS) {
-      shuffledLocations = this.shuffleLocations([...this.world.getUpgradeLocations()]);
-    } else {
-      shuffledLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
-    }
+    const shuffledLocations = this.shuffleLocations([...this.world.getEmptyLocations()]);
 
     // Use logic-based fill if fast fill flag isn't set
     if (!fastFill) {

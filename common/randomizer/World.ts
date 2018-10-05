@@ -1,31 +1,27 @@
-import {Region} from './Region';
-import {Location} from './Location';
-import {ItemCollection} from './collection/ItemCollection';
-import {LocationCollection} from './collection/LocationCollection';
+import { Region } from './Region';
+import { Location } from './Location';
+import { ItemCollection } from './collection/ItemCollection';
+import { LocationCollection } from './collection/LocationCollection';
 
-import {TallonOverworld} from './region/TallonOverworld';
-import {ChozoRuins} from './region/ChozoRuins';
-import {MagmoorCaverns} from './region/MagmoorCaverns';
-import {PhendranaDrifts} from './region/PhendranaDrifts';
-import {PhazonMines} from './region/PhazonMines';
+import { TallonOverworld } from './region/TallonOverworld';
+import { ChozoRuins } from './region/ChozoRuins';
+import { MagmoorCaverns } from './region/MagmoorCaverns';
+import { PhendranaDrifts } from './region/PhendranaDrifts';
+import { PhazonMines } from './region/PhazonMines';
 
-import {LayoutString} from './LayoutString';
+import { LayoutString } from './LayoutString';
 
-import {RandomizerMode} from './enums/RandomizerMode';
-import {RandomizerLogic} from './enums/RandomizerLogic';
-import {PrimeItem} from './enums/PrimeItem';
+import { PrimeItem } from './enums/PrimeItem';
 
 export class World {
-  protected mode: string;
-  protected logic: string;
-  protected goal: string;
+  private config: any;
   protected regions: Array<Region>;
   protected locations: Array<Location>;
+  protected locationsMap: Map<string, Location>;
   protected collectableLocations: Array<Location>;
 
-  constructor(mode: string = RandomizerMode.STANDARD, logic: string = RandomizerLogic.NO_GLITCHES) {
-    this.mode = mode;
-    this.logic = logic;
+  constructor(config: any) {
+    this.config = config;
 
     this.regions = [
       new TallonOverworld(),
@@ -36,26 +32,16 @@ export class World {
     ];
 
     this.locations = [];
+    this.locationsMap = new Map<string, Location>();
 
     for (const region of this.regions) {
-      region.init(logic);
+      region.init(this.config);
 
       region.getLocations().forEach((value: Location, key: string) => {
         this.locations.push(value);
+        this.locationsMap.set(key, value);
       });
     }
-  }
-
-  public getMode(): string {
-    return this.mode;
-  }
-
-  public getLogic(): string {
-    return this.logic;
-  }
-
-  public getGoal(): string {
-    return this.goal;
   }
 
   public getRegions(): Array<Region> {
@@ -64,6 +50,10 @@ export class World {
 
   public getLocations(): Array<Location> {
     return this.locations;
+  }
+
+  public getLocationsMap(): Map<string, Location> {
+    return this.locationsMap;
   }
 
   public getEmptyLocations(): Array<Location> {
@@ -156,7 +146,7 @@ export class World {
       [key: string]: object;
     } = {};
     for (let region of this.regions) {
-      let locationObj: {[key: string]: string} = {};
+      let locationObj: { [key: string]: string } = {};
       for (let location of region.getLocationsArray()) {
         locationObj[location.getName()] = location.getItem().getName();
       }
