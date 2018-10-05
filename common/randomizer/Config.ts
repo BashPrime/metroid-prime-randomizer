@@ -58,7 +58,8 @@ export class Config {
 
   settingsToBase32Text(settings): string {
     const settingKeys = Object.keys(settings).filter(key => {
-      return this.getOptionByName(key).shared;
+      const option = this.getOptionByName(key);
+      return option && option.shared;
     });
     let bitString = '';
 
@@ -80,7 +81,7 @@ export class Config {
     return this.bitStringToBase32Text(bitString);
   }
 
-  bitStringToBase32Text(bitString): string {
+  private bitStringToBase32Text(bitString): string {
     // Pad the bitString to a multiple of 5 if needed
     if (bitString.length % 5 > 0) {
       bitString += '0'.repeat(5 - bitString.length % 5);
@@ -126,7 +127,7 @@ export class Config {
     return settings;
   }
 
-  base32TextToBitString(text): string {
+  private base32TextToBitString(text): string {
     let bitString = '';
     for (let value of text) {
       const index = this.letters.indexOf(value);

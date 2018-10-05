@@ -180,24 +180,23 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   }
 
   getPermalink(): string {
+    const config = new Config();
     const seed = this.randomizerForm.get('seed').value;
-    const settingsHex = this.getHexStringFromSettings();
-    const settingsString = seed + ',' + settingsHex;
-    if (seed && settingsHex)
-      return btoa(settingsString);
+    const settingsString = config.settingsToBase32Text(this.getSettingsFromForm());
+    const fullString = seed + ',' + settingsString;
+    if (seed && fullString)
+      return btoa(fullString);
     return '';
   }
 
   importPermalink(): void {
     let settingsToImport;
     try {
+      const config = new Config();
       settingsToImport = atob(this.permalink).split(',');
       if (settingsToImport.length === 2) {
         const newSeed = settingsToImport[0];
-        let newSettings = this.getSettingsFromHexString(settingsToImport[1]);
-        if (!newSettings) {
-          newSettings = this.getDefaultSettings().value;
-        }
+        let newSettings = config.base32TextToSettings(settingsToImport[1]);
         this.randomizerForm.patchValue({
           seed: newSeed,
           settings: newSettings
@@ -216,64 +215,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         title: 'Error',
         message: 'This permalink is invalid.'
       });
-    }
-  }
-
-  getHexStringFromSettings(): string {
-    let hexString = '';
-    const settings = this.getSettingsFromForm();
-    // const settings = this.randomizerForm.get('settings').value;
-    const config = new Config();
-    const keys = Object.keys(settings);
-
-    for (let key of keys) {
-      const configOption = config.getOptionByName(key);
-
-      if (configOption && configOption.shared) {
-        switch (configOption.type) {
-          case OptionType.BOOLEAN: {
-            hexString += settings[key] ? 1 : 0;
-            break;
-          }
-          case OptionType.NUMBER: {
-            hexString += settings[key].toString(16);
-          }
-        }
-      }
-    }
-
-    return hexString;
-  }
-
-  getSettingsFromHexString(hexString: string): object {
-    const settings = {};
-    const config = new Config();
-
-    try {
-      let index = 0;
-      for (const option of config.options) {
-        if (option.shared) {
-          const hexWidth = option.hexWidth;
-          const settingVal = parseInt(hexString.substr(index, hexWidth), 16);
-
-          switch (option.type) {
-            case OptionType.BOOLEAN: {
-              settings[option.name] = settingVal == 1 ? true : false;
-              break;
-            }
-            case OptionType.NUMBER: {
-              settings[option.name] = settingVal;
-              break;
-            }
-          }
-          index += hexWidth;
-        }
-      }
-
-      return settings;
-    } catch {
-      console.log(new RangeError('More settings than hex string values').toString());
-      return null;
     }
   }
 
