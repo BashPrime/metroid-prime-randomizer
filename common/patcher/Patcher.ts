@@ -65,7 +65,7 @@ export class Patcher {
       }
     }
 
-    if (randomizerConfig.rom.spoiler) {
+    if (randomizerConfig.settings.spoiler) {
       progressBar.text = 'Creating spoiler log...';
       this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.rom.outputFolder, outputFile + '_spoiler.txt'));
     }
