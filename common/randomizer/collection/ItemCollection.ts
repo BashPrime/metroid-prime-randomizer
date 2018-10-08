@@ -251,7 +251,7 @@ export class ItemCollection extends Collection {
       && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
       && (
         (this.has(PrimeItem.WAVE_BEAM) && (this.has(PrimeItem.BOOST_BALL)
-          || (settings.lJumping || settings.rJumping || settings.ghettoJumping || settings.hpbj))) // Furnace to Crossway
+          || (settings.lJumping || settings.rJumping || settings.ghettoJumping || settings.halfPipeBombJumps))) // Furnace to Crossway
         || (this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // Furnace to Hall of the Elders
       )
       && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM))
