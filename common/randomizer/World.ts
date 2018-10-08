@@ -35,7 +35,7 @@ export class World {
     this.locationsMap = new Map<string, Location>();
 
     for (const region of this.regions) {
-      region.init(this.config);
+      region.init(this.config.settings);
 
       region.getLocations().forEach((value: Location, key: string) => {
         this.locations.push(value);
@@ -153,11 +153,5 @@ export class World {
       regionObj[region.getName()] = locationObj;
     }
     return JSON.stringify(regionObj);
-  }
-
-  public setVanillaArtifacts() {
-    this.regions.forEach(region => {
-      region.setVanillaArtifacts();
-    })
   }
 }

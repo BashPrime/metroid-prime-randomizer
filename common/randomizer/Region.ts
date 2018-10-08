@@ -5,7 +5,7 @@ export abstract class Region {
   protected name: string;
   protected locations: Map<string, Location>;
 
-  public abstract init(config: any): void;
+  public abstract init(settings: any): void;
 
   public getName(): string {
     return this.name;
@@ -18,6 +18,4 @@ export abstract class Region {
   public getLocationsArray(): Array<Location> {
     return Array.from(this.locations.values());
   }
-
-  public abstract setVanillaArtifacts(): void;
 }

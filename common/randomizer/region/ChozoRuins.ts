@@ -47,13 +47,7 @@ export class ChozoRuins extends Region {
     ]);
   }
 
-  public setVanillaArtifacts() {
-    this.locations.get('Tower Chamber').setItem(Item.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
-    this.locations.get('Sunchamber (Ghosts)').setItem(Item.get(PrimeItem.ARTIFACT_OF_WILD));
-    this.locations.get('Elder Chamber').setItem(Item.get(PrimeItem.ARTIFACT_OF_WORLD));
-  }
-
-  public init(config: any): void {
+  public init(settings: any): void {
     this.locations.get('Main Plaza (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL);
     };

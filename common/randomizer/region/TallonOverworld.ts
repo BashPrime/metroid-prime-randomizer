@@ -27,18 +27,15 @@ export class TallonOverworld extends Region {
     ]);
   }
 
-  public setVanillaArtifacts() {
-    this.locations.get('Artifact Temple').setItem(Item.get(PrimeItem.ARTIFACT_OF_TRUTH));
-    this.locations.get('Life Grove (Underwater Spinner)').setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
-  }
-
-  public init(config: any): void {
+  public init(settings: any): void {
     this.locations.get('Landing Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.MORPH_BALL);
     };
 
     this.locations.get('Alcove').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return settings.dashing // Space Jump first scan dash
+        || (settings.dbj && items.canLayBombs()) // DBJ off the ship to the ledge
+        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPACE_JUMP_BOOTS); // glitchless
     };
 
     this.locations.get('Artifact Temple').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -46,11 +43,16 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Root Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (items.has(PrimeItem.GRAPPLE_BEAM) || settings.dashing) // allow dashing to skip grapple beam
+      && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check
     };
 
     this.locations.get('Arbor Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM);
+      return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (items.has(PrimeItem.PLASMA_BEAM) || settings.rootCaveSW) // plasma or wallcrawl from root cave
+      && (items.has(PrimeItem.GRAPPLE_BEAM) || settings.dashing) // allow dashing to skip grapple beam
+      && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check
     };
 
     this.locations.get('Transport Tunnel B').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -58,46 +60,68 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Frigate Crash Site').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (
+        settings.dashing // scan dash from the shore
+          || (settings.ghettoJumping && !items.has(PrimeItem.GRAVITY_SUIT)) // ghetto jump underwater
+          || (items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // developer intended
+      );
     };
 
     this.locations.get('Overgrown Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasChozoHoteReqsNoGlitches() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.BOOST_BALL)) // natural route
-      || (items.hasFrigateReqsNoGlitches() && items.has(PrimeItem.BOOST_BALL)); // backwards chozo through frigate
+      return items.hasReflectingPoolReqs(settings) // Through late chozo
+      || items.canClimbFrigateCrashSite(settings) && items.has(PrimeItem.MORPH_BALL_BOMB) // FCS Climb
     };
 
     this.locations.get('Cargo Freight Lift to Deck Gamma').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFrigateReqsNoGlitches();
+      return items.hasFrigateReqs(settings);
     };
 
     this.locations.get('Biohazard Containment').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFrigateReqsNoGlitches() && items.canFireSuperMissiles();
+      return items.hasFrigateReqs(settings) && items.canFireSuperMissiles();
     };
 
     this.locations.get('Hydro Access Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFrigateReqsNoGlitches();
+      return items.hasFrigateReqs(settings)
+      || (settings.dbj && items.hasReflectingPoolReqs(settings) && items.has(PrimeItem.GRAVITY_SUIT)
+        && items.has(PrimeItem.ICE_BEAM)); // gate skip
     };
 
     this.locations.get('Great Tree Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.XRAY_VISOR) && (
-        (items.hasChozoHoteReqsNoGlitches() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.BOOST_BALL)) // natural route
-        || (items.hasFrigateReqsNoGlitches() && items.has(PrimeItem.BOOST_BALL)) // backwards chozo through frigate
+      return (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors) && items.has(PrimeItem.ICE_BEAM)
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasFrigateReqs(settings) && (settings.dbj || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
       );
     };
 
     this.locations.get('Life Grove Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
-        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs()
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && ((settings.dbj && settings.hpbj) || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasFrigateReqs(settings) && (settings.dbj || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
 
     this.locations.get('Life Grove (Start)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
-        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs()
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && (settings.hpbj || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasFrigateReqs(settings) && (settings.dbj || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
 
     this.locations.get('Life Grove (Underwater Spinner)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
-        && items.has(PrimeItem.SPIDER_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs()
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && ((settings.hpbj && settings.spinnerManip) || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasFrigateReqs(settings) && (settings.dbj || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
   }
 }

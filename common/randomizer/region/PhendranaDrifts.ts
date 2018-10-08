@@ -35,13 +35,7 @@ export class PhendranaDrifts extends Region {
     ]);
   }
 
-  public setVanillaArtifacts() {
-    this.locations.get('Control Tower').setItem(Item.get(PrimeItem.ARTIFACT_OF_ELDER));
-    this.locations.get('Chozo Ice Temple').setItem(Item.get(PrimeItem.ARTIFACT_OF_SUN));
-    this.locations.get('Storage Cave').setItem(Item.get(PrimeItem.ARTIFACT_OF_SPIRIT));
-  }
-
-  public init(config: any): void {
+  public init(settings: any): void {
     this.locations.get('Phendrana Shorelines (Behind Ice)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaReqsNoGlitches() && items.has(PrimeItem.PLASMA_BEAM);
     };

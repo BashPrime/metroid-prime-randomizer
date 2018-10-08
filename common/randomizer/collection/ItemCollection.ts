@@ -258,6 +258,18 @@ export class ItemCollection extends Collection {
     );
   }
 
+  public hasReflectingPoolReqs(settings: any) {
+    // Reflecting Pool from Overgrown Cavern Tallon elevator
+    if (this.canClimbFrigateCrashSite(settings) && this.has(PrimeItem.MORPH_BALL_BOMB)) {
+      return true;
+    }
+
+    // Late Chozo reqs
+    return this.hasLateChozoReqs(settings)
+    && (this.has(PrimeItem.BOOST_BALL) || settings.ghettoJumping)
+    && (this.has(PrimeItem.WAVE_BEAM) || settings.hbj)
+  }
+
   public canClimbFrigateCrashSite(settings: any) {
     return settings.standableTerrain && settings.ghettoJumping
     && this.hasMissiles() && this.has(PrimeItem.MORPH_BALL)
