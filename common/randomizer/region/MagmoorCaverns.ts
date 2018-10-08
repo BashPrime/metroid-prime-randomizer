@@ -24,58 +24,78 @@ export class MagmoorCaverns extends Region {
 
   public init(settings: any): void {
     this.locations.get('Lava Lake').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
+      && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
     };
 
     this.locations.get('Triclops Pit').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.XRAY_VISOR);
+      return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
     };
 
     this.locations.get('Storage Cavern').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.has(PrimeItem.MORPH_BALL);
+      return items.hasEarlyMagmoorItemReqs(settings) && items.has(PrimeItem.MORPH_BALL);
     };
 
     this.locations.get('Transport Tunnel A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayBombs();
+      return items.hasEarlyMagmoorItemReqs(settings) && items.canLayBombs();
     };
 
     this.locations.get('Shore Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasEarlyMagmoorItemReqs(settings) && items.canLayPowerBombs();
+    };
+    this.locations.get('Shore Tunnel').canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item)
+        items = new ItemCollection([...items.toArray(), item]);
+
+      return items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.dbj && items.canLayBombs());
     };
 
     this.locations.get('Fiery Shores (Morph Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasEarlyMagmoorItemReqs(settings) && (
+        (settings.standableTerrain && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump on the morph ball tunnel to reach the item
+        || items.canLayBombs() // morph and bomb through the tunnel, developer intended
+      );
     };
 
     this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL)
-        && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasEarlyMagmoorItemReqs(settings) && items.canLayPowerBombs()
+      && ((settings.dbj && items.canLayBombs()) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      && (
+        settings.dashing // dash to the door off a puffer/pirate
+        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) // spinner, bombs to avoid softlocking
+      );
     };
     this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.canLayBombs();
     };
 
     this.locations.get('Warrior Shrine').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasEarlyMagmoorItemReqs(settings)
+      && ((settings.dbj && items.canLayBombs()) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      && (
+        settings.dashing // dash to the door off a puffer/pirate
+        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) // spinner, bombs to avoid softlocking
+      );
     };
 
     this.locations.get('Plasma Processing').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.hasAnySuit() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)
-        && items.has(PrimeItem.GRAPPLE_BEAM);
+      return items.hasLateMagmoorItemReqs(settings) && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)
+      && items.has(PrimeItem.ICE_BEAM) && (!settings.noVanillaBeams || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
+      && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
+      && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto to the bomb slot, spider track platforms
     };
     this.locations.get('Plasma Processing').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get('Magmoor Workstation').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.hasAnySuit() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
-        && items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasLateChozoReqs(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
+      && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
     };
   }
 }

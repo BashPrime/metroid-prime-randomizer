@@ -304,4 +304,22 @@ export class ItemCollection extends Collection {
       || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
     );
   }
+
+  /*
+  * The missile requirement is there so that the randomizer assumes the player is coming from the Tallon elevator for most
+  * of these checks. This is so the player can bypass taking double heat damage from Lava Lake, except for getting the
+  * Lava Lake item itself.
+  */
+  public hasEarlyMagmoorItemReqs(settings: any): boolean {
+    return ((settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks) && this.hasMissiles()) || this.hasAnySuit());
+  }
+
+  public hasLateMagmoorItemReqs(settings: any): boolean {
+    return this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    && (
+      (settings.dashing || settings.lJumping || settings.rJumping || settings.dbj) // cross Twin Fires Tunnel without morph or spider
+      || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
+    )
+    && ((settings.vmr && this.hasEnergyTankCount(settings.vmrTanks) && this.hasMissiles()) || this.hasAnySuit());
+  }
 }

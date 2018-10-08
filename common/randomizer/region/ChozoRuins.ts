@@ -273,7 +273,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Antechamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasReflectingPoolReqs(settings) && items.hasMissiles();
+      return items.hasReflectingPoolReqs(settings) && items.hasMissiles() && (!settings.noVanillaBeams || items.has(PrimeItem.ICE_BEAM));
     };
     this.locations.get('Antechamber').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
