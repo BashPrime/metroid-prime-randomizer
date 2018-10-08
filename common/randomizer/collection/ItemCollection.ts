@@ -236,7 +236,7 @@ export class ItemCollection extends Collection {
 
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
-    && (this.has(PrimeItem.THERMAL_VISOR) || settings.requireVisors) // Thermal Visor for power conduits
+    && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireVisors) // Thermal Visor for power conduits
   }
 
   public hasLateChozoReqs(settings: any): boolean {
@@ -290,6 +290,18 @@ export class ItemCollection extends Collection {
   }
 
   public canWallcrawl(settings: any): boolean {
-    return this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.canLayBombs() || settings.oobNoMorphOrBombs);
+    return this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || settings.oobNoBombs);
+  }
+
+  public canCrossMagmaPool(settings: any): boolean {
+    return (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasEnergyTankCount(1) || this.hasAnySuit())) // E tank or suit for safety
+    || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
+  }
+
+  public canAccessTowerOfLight(settings: any): boolean {
+    return this.hasMissiles() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM) && (
+      (settings.dashing && settings.standableTerrain) // dash to the door
+      || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
+    );
   }
 }

@@ -19,7 +19,7 @@ export class Config {
     new Option('shufflePBs', OptionType.BOOLEAN, 1, true),
     // Item Logic
     new Option('noSupers', OptionType.BOOLEAN, 1, true),
-    new Option('noBurnDomeBombs', OptionType.BOOLEAN, 1, true),
+    new Option('noBombsInBurnDome', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
     new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
     new Option('noPhendranaBombsSupers', OptionType.BOOLEAN, 1, true),
@@ -32,7 +32,7 @@ export class Config {
     new Option('workstationToPlasmaProcessing', OptionType.BOOLEAN, 1, true),
     new Option('gthWallcrawl', OptionType.BOOLEAN, 1, true),
     new Option('earlyNewborn', OptionType.BOOLEAN, 1, true),
-    new Option('oobNoMorphOrBombs', OptionType.BOOLEAN, 1, true),
+    new Option('oobNoBombs', OptionType.BOOLEAN, 1, true),
     new Option('floatyJump', OptionType.BOOLEAN, 1, true),
     new Option('dashing', OptionType.BOOLEAN, 1, true),
     new Option('standableTerrain', OptionType.BOOLEAN, 1, true),
