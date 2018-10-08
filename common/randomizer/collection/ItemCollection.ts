@@ -228,6 +228,42 @@ export class ItemCollection extends Collection {
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.THERMAL_VISOR);
   }
 
+  public hasFrigateReqs(settings: any): boolean {
+    // Automatically return false if "No Crashed Frigate" option is selected.
+    if (settings.noCrashedFrigate) {
+      return false;
+    }
+
+    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
+    && (this.has(PrimeItem.THERMAL_VISOR) || settings.requireVisors) // Thermal Visor for power conduits
+  }
+
+  public hasLateChozoReqs(settings: any): boolean {
+    // IBBF
+    if (settings.ibbf) {
+      return this.hasMissiles() && this.canWallcrawl(settings);
+    }
+
+    // Inbounds
+    return (this.canClimbFrigateCrashSite(settings) && this.canLayBombs()) || ( // FCS climb to reflecting pool
+      this.hasMissiles() && this.canLayBombs()
+      && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
+      && (
+        (this.has(PrimeItem.WAVE_BEAM) && (this.has(PrimeItem.BOOST_BALL)
+          || (settings.lJumping || settings.rJumping || settings.ghettoJumping || settings.hpbj))) // Furnace to Crossway
+        || (this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // Furnace to Hall of the Elders
+      )
+      && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM))
+    );
+  }
+
+  public canClimbFrigateCrashSite(settings: any) {
+    return settings.standableTerrain && settings.ghettoJumping
+    && this.hasMissiles() && this.has(PrimeItem.MORPH_BALL)
+    && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS);
+  }
+
   public hasChozoHoteReqsNoGlitches(): boolean {
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM));
@@ -239,5 +275,9 @@ export class ItemCollection extends Collection {
 
   public canFloaty(): boolean {
     return this.hasMissiles() && this.canLayBombs() && !this.has(PrimeItem.GRAVITY_SUIT);
+  }
+
+  public canWallcrawl(settings: any): boolean {
+    return this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.canLayBombs() || settings.oobNoMorphOrBombs);
   }
 }
