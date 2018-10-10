@@ -37,7 +37,6 @@ export class Randomizer {
       */
       const valueToHash = this.seed ? this.seed.toString(16) : (this.config.seed + this.config.settingsString);
       this.seed = this.getSafeSha256Integer(valueToHash);
-      console.log(this.seed);
 
       randomizerSuccess = this.fillItems();
     }
