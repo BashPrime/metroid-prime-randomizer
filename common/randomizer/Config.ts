@@ -23,7 +23,7 @@ export class Config {
     new Option('noBombsInBurnDome', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
     new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
-    new Option('noPhendranaBombsSupers', OptionType.BOOLEAN, 1, true),
+    new Option('noPhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('requireVisors', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', OptionType.BOOLEAN, 1, true),

@@ -97,10 +97,6 @@ export class ItemCollection extends Collection {
     return false;
   }
 
-  public canVMR(vmrTanks: number): boolean {
-    return this.hasEnergyTankCount(vmrTanks) || (this.hasEnergyTankCount(vmrTanks + 1) && !this.has(PrimeItem.SPACE_JUMP_BOOTS));
-  }
-
   public hasAnySuit(): boolean {
     return this.has(PrimeItem.VARIA_SUIT) || this.has(PrimeItem.GRAVITY_SUIT) || this.has(PrimeItem.PHAZON_SUIT);
   }
@@ -122,61 +118,6 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.has(PrimeItem.CHARGE_BEAM) && this.has(PrimeItem.SUPER_MISSILE);
   }
 
-  // Bare minimum requirements to enter Phendrana Drifts, besides a suit/VMR
-  public hasPhendranaReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs();
-  }
-
-  public hasPhendranaReqsNoGlitches(): boolean {
-    return this.hasPhendranaReqs() && this.hasAnySuit();
-  }
-
-  public hasPhendranaReqsNormal(): boolean {
-    return this.hasPhendranaReqsNoGlitches();
-  }
-
-  public hasPhendranaReqsHard(minVMRTanks: number): boolean {
-    return this.hasMissiles() && this.canLayBombs() && (
-      this.hasAnySuit() || (this.hasEnergyTankCount(minVMRTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS))
-    );
-  }
-
-  // Bare minimum requirements to enter Phendrana backwards (besides suit)
-  public hasBackwardsPhendranaReqs(): boolean {
-    return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.WAVE_BEAM);
-  }
-
-  public hasBackwardsPhendranaReqsNoGlitches(): boolean {
-    return this.hasBackwardsPhendranaReqs() && this.hasAnySuit() && this.has(PrimeItem.SPIDER_BALL)
-    && this.has(PrimeItem.SPACE_JUMP_BOOTS);
-  }
-
-  public hasBackwardsPhendranaReqsNormal(): boolean {
-    return this.hasBackwardsPhendranaReqs() && (this.hasAnySuit() || this.hasEnergyTankCount(2))
-    && this.has(PrimeItem.SPACE_JUMP_BOOTS);
-  }
-
-  public hasBackwardsPhendranaReqsHard(minVMRTanks?: number): boolean {
-    return this.hasBackwardsPhendranaReqs()
-    && (
-      (this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasEnergyTankCount(1) || this.hasAnySuit()))
-      || (this.has(PrimeItem.SPIDER_BALL) && (this.hasEnergyTankCount(2) || this.hasAnySuit()))
-    );
-  }
-
-  public hasMagmoorSouthThroughThardusRequirementsHard(): boolean {
-    // From Magmoor South, through Thardus's Room(NEED SPACE JUMP, SO IS REDUNDANT)
-    // Missiles & Morph & Wave & (Space Jump OR (Spider & Boost)) & (Etanks OR Suit)
-    return this.hasBackwardsPhendranaReqsHard()
-    && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || (this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.BOOST_BALL)))
-  }
-
-  public hasMagmoorSouthThroughFrozenPikeRequirementsHard(): boolean {
-    // From Magmoor South, through Frozen Pike
-    // Missiles & Morph & Wave & Ice & (Etanks OR Suit) & (Space Jump OR Spider)
-    return this.hasBackwardsPhendranaReqsHard() && this.has(PrimeItem.ICE_BEAM);
-  }
-
   // Bare minimum requirements to enter mines from Tallon
   public hasMinesFromTallonReqs(): boolean {
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
@@ -185,18 +126,6 @@ export class ItemCollection extends Collection {
   public hasMinesFromTallonReqsNoGlitches(): boolean {
     return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
       && this.has(PrimeItem.THERMAL_VISOR);
-  }
-
-  public hasMinesFromTallonReqsNormal(): boolean {
-    return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS);
-  }
-
-  public hasMinesFromTallonReqsHard(): boolean {
-    return this.hasMinesFromTallonReqs();
-  }
-
-  public hasMinesFromTallonReqsInsane(): boolean {
-    return this.hasMinesFromTallonReqs();
   }
 
   // Bare minimum requirements to enter mines from Magmoor
@@ -209,26 +138,11 @@ export class ItemCollection extends Collection {
     return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.SPIDER_BALL) && this.hasAnySuit();
   }
 
-  public hasMinesFromMagmoorReqsNormal(): boolean {
-    return this.hasMinesFromMagmoorReqsNoGlitches();
+  public canDoInfiniteSpeed(): boolean {
+    return this.canLayBombs() && this.has(PrimeItem.BOOST_BALL);
   }
 
-  public hasMinesFromMagmoorReqsHard(minVMRTanks?: number): boolean {
-    return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-    && (this.hasAnySuit() || this.hasEnergyTankCount(1));
-  }
-
-  public hasMinesFromMagmoorReqsInsane(minVMRTanks: number): boolean {
-    return this.hasMinesFromMagmoorReqs()
-      && (this.hasAnySuit() || this.canVMR(minVMRTanks));
-  }
-
-  public hasFrigateReqsNoGlitches(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
-    && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.THERMAL_VISOR);
-  }
-
-  public hasFrigateReqs(settings: any): boolean {
+  public hasCrashedFrigateReqs(settings: any): boolean {
     // Automatically return false if "No Crashed Frigate" option is selected.
     if (settings.noCrashedFrigate) {
       return false;
@@ -276,19 +190,6 @@ export class ItemCollection extends Collection {
     && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 
-  public hasChozoHoteReqsNoGlitches(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPIDER_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-    && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM));
-  }
-
-  public canDoInfiniteSpeed(): boolean {
-    return this.canLayBombs() && this.has(PrimeItem.BOOST_BALL);
-  }
-
-  public canFloaty(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && !this.has(PrimeItem.GRAVITY_SUIT);
-  }
-
   public canWallcrawl(settings: any): boolean {
     return this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || settings.oobNoBombs);
   }
@@ -305,21 +206,65 @@ export class ItemCollection extends Collection {
     );
   }
 
-  /*
-  * The missile requirement is there so that the randomizer assumes the player is coming from the Tallon elevator for most
-  * of these checks. This is so the player can bypass taking double heat damage from Lava Lake, except for getting the
-  * Lava Lake item itself.
-  */
   public hasEarlyMagmoorItemReqs(settings: any): boolean {
-    return ((settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks) && this.hasMissiles()) || this.hasAnySuit());
+    return this.hasMissiles() && (this.hasAnySuit() || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)));
   }
 
   public hasLateMagmoorItemReqs(settings: any): boolean {
-    return this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    return this.hasMissiles() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && (
-      (settings.dashing || settings.lJumping || settings.rJumping || settings.dbj) // cross Twin Fires Tunnel without morph or spider
-      || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
+      (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
+      || (settings.dashing || settings.lJumping || settings.rJumping || settings.dbj) // cross Twin Fires Tunnel without morph or spider
     )
-    && ((settings.vmr && this.hasEnergyTankCount(settings.vmrTanks) && this.hasMissiles()) || this.hasAnySuit());
+    && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
+  }
+
+  // "Front" Phendrana Requirements from Magmoor, near Shorelines
+  public hasPhendranaMagmoorWestReqs(settings: any): boolean {
+    return this.hasMissiles() && this.canLayBombs()
+    && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
+  }
+
+  // "Back" Phendrana Requirements from Magmoor, near Phednrana's Edge/Thardus
+  public hasPhendranaMagmoorSouthReqs(settings: any): boolean {
+    return this.hasLateMagmoorItemReqs(settings) && (!settings.noPhendranaBombs || this.canLayBombs());
+  }
+
+  // Checks whether Magmoor West elevator can be accessed from Magmoor or in Phendrana
+  public canAccessPhendranaMagmoorWest(settings): boolean {
+    return this.hasPhendranaMagmoorWestReqs(settings) || (
+      this.hasPhendranaMagmoorSouthReqs(settings) && this.canLayBombs() && (
+        (this.has(PrimeItem.SPIDER_BALL) || settings.ghettoJumping) // through quarantine cave
+        || (this.has(PrimeItem.ICE_BEAM) && (this.has(PrimeItem.BOOST_BALL) || settings.dashing) && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain)) // reverse labs (boost to prevent softlocking in observatory)
+      )
+    );
+  }
+
+  // Checks whether Magmoor South elevator can be accessed from Magmoor or in Phendrana
+  public canAccessPhendranaMagmoorSouth(settings: any): boolean {
+    return this.hasPhendranaMagmoorSouthReqs(settings) || (
+      this.hasPhendranaMagmoorWestReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && ((settings.standableTerrain && settings.ghettoJumping) || this.has(PrimeItem.BOOST_BALL)) // climb Ruined Courtyard
+      && (
+        (this.canFireSuperMissiles() && (this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM))
+          && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR))) // through Quarantine cave
+        || (this.has(PrimeItem.ICE_BEAM) && (this.has(PrimeItem.BOOST_BALL) || settings.dashing)) // through labs
+      )
+    );
+  }
+
+  public canAccessPhendranaLabs(settings: any, requireBoost: boolean): boolean {
+    return (
+      this.hasPhendranaMagmoorWestReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && ((settings.standableTerrain && settings.ghettoJumping) || this.has(PrimeItem.BOOST_BALL)) // climb Ruined Courtyard
+    ) || (
+      this.hasPhendranaMagmoorSouthReqs(settings) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.MORPH_BALL)
+      && (requireBoost && (this.has(PrimeItem.BOOST_BALL) || settings.dashing)) // prevent softlocking in observatory
+      && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // access frozen pike from south elevator
+    );
+  }
+
+  public hasPhendranaReqs(settings: boolean) {
+    return this.canAccessPhendranaMagmoorWest(settings) || this.canAccessPhendranaMagmoorSouth(settings);
   }
 }

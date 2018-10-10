@@ -142,7 +142,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       noBombsInBurnDome: [false],
       noVanillaBeams: [false],
       noEarlyPhazonSuit: [false],
-      noPhendranaBombsSupers: [false],
+      noPhendranaBombs: [false],
       requireVisors: [false],
       noCrashedFrigate: [false],
       rootCaveSW: [false],
