@@ -120,7 +120,7 @@ export class Patcher {
     const spoiler: any = { info: {} };
     spoiler.info.version = game.version;
     spoiler.info.permalink = game.permalink;
-    spoiler.info.seed = randomizer.getSeed();
+    spoiler.info.seed = game.seed;
     spoiler.info.settings = game.settings;
     spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 

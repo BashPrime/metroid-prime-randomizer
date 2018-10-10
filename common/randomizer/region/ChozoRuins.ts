@@ -261,8 +261,6 @@ export class ChozoRuins extends Region {
         (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // L jump and ledge clip into tunnel
         || (items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)) // developer intended
       )
-      return items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)
-        && (items.has(PrimeItem.WAVE_BEAM) || items.has(PrimeItem.ICE_BEAM));
     };
 
     this.locations.get('Elder Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {

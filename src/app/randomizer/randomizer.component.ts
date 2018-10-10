@@ -28,6 +28,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   randomizerForm: FormGroup;
   settings = {};
   permalink = '';
+  private settingsString = '';
   valueSub: any;
 
   constructor(
@@ -108,12 +109,14 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     this.randomizerService.updateSubmittedFlag(true);
 
     if (this.randomizerForm.valid) {
+      const config = new Config();
       if (!this.randomizerForm.get('seed').value) {
         this.getNewSeed();
       }
       const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
       game['version'] = environment.version;
       game['permalink'] = this.getPermalink();
+      game['settingsString'] = config.settingsToBase32Text(this.getSettingsFromForm());
       this.patching = true;
       this.electronService.ipcRenderer.send('randomizer', game);
     }
@@ -131,6 +134,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       shuffleMorph: [true],
       shuffleBombs: [true],
       shuffleCharge: [true],
+      shuffleSpaceJump: [true],
       shuffleSupers: [true],
       shuffleBeams: [true],
       shufflePBs: [true],

@@ -64,7 +64,7 @@ export class PhendranaDrifts extends Region {
       return items.hasPhendranaReqsNoGlitches() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
     this.locations.get('Chapel of the Elders').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.WAVE_BEAM) && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.canLayBombs());
     };
@@ -78,7 +78,7 @@ export class PhendranaDrifts extends Region {
     };
     // You'll softlock if you destroy the boxes, and don't have space jump or boost
     this.locations.get('Phendrana Canyon').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.BOOST_BALL);
     };
@@ -89,7 +89,7 @@ export class PhendranaDrifts extends Region {
         || (items.hasBackwardsPhendranaReqsNoGlitches() && items.has(PrimeItem.THERMAL_VISOR));
     };
     this.locations.get('Quarantine Cave').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM);
     };
@@ -101,9 +101,8 @@ export class PhendranaDrifts extends Region {
         || (items.hasBackwardsPhendranaReqsNoGlitches() && items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM));
     };
     this.locations.get('Quarantine Monitor').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined) {
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      }
       return items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM);
     };
 
@@ -139,7 +138,7 @@ export class PhendranaDrifts extends Region {
         || (items.hasBackwardsPhendranaReqsNoGlitches() && items.has(PrimeItem.ICE_BEAM));
     };
     this.locations.get('Research Core').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.ICE_BEAM);
     };
@@ -179,7 +178,7 @@ export class PhendranaDrifts extends Region {
           || items.hasBackwardsPhendranaReqsNoGlitches());
     };
     this.locations.get('Gravity Chamber (Underwater)').canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item !== undefined)
+      if (item)
         items = new ItemCollection([...items.toArray(), item]);
       return items.has(PrimeItem.GRAVITY_SUIT) && (items.has(PrimeItem.THERMAL_VISOR) || items.hasBackwardsPhendranaReqsNoGlitches());
     };

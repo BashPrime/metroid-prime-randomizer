@@ -14,6 +14,7 @@ export class Config {
     new Option('shuffleMorph', OptionType.BOOLEAN, 1, true),
     new Option('shuffleBombs', OptionType.BOOLEAN, 1, true),
     new Option('shuffleCharge', OptionType.BOOLEAN, 1, true),
+    new Option('shuffleSpaceJump', OptionType.BOOLEAN, 1, true),
     new Option('shuffleSupers', OptionType.BOOLEAN, 1, true),
     new Option('shuffleBeams', OptionType.BOOLEAN, 1, true),
     new Option('shufflePBs', OptionType.BOOLEAN, 1, true),
