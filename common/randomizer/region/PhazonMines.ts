@@ -31,91 +31,89 @@ export class PhazonMines extends Region {
 
   public init(settings: any): void {
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL))
-      || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM));
+      return items.hasUpperMinesAccess(settings)
+      && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR))
+      && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL));
     };
 
     this.locations.get('Security Access A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs())
-      || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM));
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs();
     };
 
     this.locations.get('Storage Depot A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.PLASMA_BEAM)
-        && (
-          (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs())
-          || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM))
-        );
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM);
     };
 
+    // Note that with the upper mines requirements, you are able to reach Elite Research without needing boost ball
     this.locations.get('Elite Research (Phazon Elite)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL))
-        || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM)));
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs();
     };
-
+   
     this.locations.get('Elite Research (Laser)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL)
-        && (items.hasMinesFromTallonReqsNoGlitches() || (items.hasMinesFromMagmoorReqsNoGlitches() && items.has(PrimeItem.GRAPPLE_BEAM)));
+      return items.hasUpperMinesAccess(settings)
+      && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // visor requirement
+      && (settings.spinnersNoBoost || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL))); // spinner manip without boost
     };
 
     this.locations.get('Storage Depot B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL))
-        || items.hasMinesFromMagmoorReqsNoGlitches();
+      return items.hasMinesReqsMagmoorSouth(settings)
+      || (items.hasMinesReqsTallonSouth(settings) && items.canClimbOreProcessing(settings));
     };
 
+    // Overriding lower mines access checks because grapple isn't needed for this room
     this.locations.get('Fungal Hall Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasUpperMinesAccess(settings) && items.canLayBombs() && items.canLayPowerBombs()
+      && items.has(PrimeItem.PLASMA_BEAM)
+      && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings)
+      && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
+      && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || items.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
     };
 
     this.locations.get('Phazon Mining Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && items.has(PrimeItem.PHAZON_SUIT)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || (items.hasMinesFromMagmoorReqsNoGlitches()));
+      return items.hasLowerMinesAccess(settings)
+      && ((settings.phazonMiningTunnelNoPhazonSuit && items.hasEnergyTankCount(11) && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.PHAZON_SUIT));
     };
 
     this.locations.get('Fungal Hall B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasLowerMinesAccess(settings)
+      && (!settings.requireVisors || (items.has(PrimeItem.THERMAL_VISOR) || items.has(PrimeItem.XRAY_VISOR)));
     };
 
     this.locations.get('Metroid Quarantine A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs()
+      && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings)
+      && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR))
+      && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || items.has(PrimeItem.SPIDER_BALL));
     };
 
     this.locations.get('Metroid Quarantine B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canFireSuperMissiles() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && items.has(PrimeItem.PLASMA_BEAM)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasLowerMinesAccess(settings) && (!settings.noSupers && items.canFireSuperMissiles());
     };
 
     this.locations.get('Elite Quarters').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasLowerMinesAccess(settings) && items.has(PrimeItem.XRAY_VISOR);
     };
 
     this.locations.get('Processing Center Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.GRAPPLE_BEAM)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasLowerMinesAccess(settings) && items.has(PrimeItem.XRAY_VISOR);
     };
 
     this.locations.get('Phazon Processing Center').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches();
+      return items.hasUpperMinesAccess(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings);
     };
 
     this.locations.get('Elite Control Access').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches();
+      return items.hasUpperMinesAccess(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings);
     };
 
     this.locations.get('Ventilation Shaft').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL)
-        && ((items.hasMinesFromTallonReqsNoGlitches() && items.canLayPowerBombs() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs()
+      && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings);
     };
 
     this.locations.get('Central Dynamo').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.BOOST_BALL) && ((items.hasMinesFromTallonReqsNoGlitches() && items.has(PrimeItem.SPIDER_BALL)) || items.hasMinesFromMagmoorReqsNoGlitches());
+      return items.hasUpperMinesAccess(settings)
+      && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings);
     };
   }
 }

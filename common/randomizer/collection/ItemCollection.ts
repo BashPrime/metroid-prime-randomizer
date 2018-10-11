@@ -118,36 +118,11 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.has(PrimeItem.CHARGE_BEAM) && this.has(PrimeItem.SUPER_MISSILE);
   }
 
-  // Bare minimum requirements to enter mines from Tallon
-  public hasMinesFromTallonReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM);
-  }
-
-  public hasMinesFromTallonReqsNoGlitches(): boolean {
-    return this.hasMinesFromTallonReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.GRAVITY_SUIT)
-      && this.has(PrimeItem.THERMAL_VISOR);
-  }
-
-  // Bare minimum requirements to enter mines from Magmoor
-  public hasMinesFromMagmoorReqs(): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.WAVE_BEAM)
-      && this.has(PrimeItem.ICE_BEAM);
-  }
-
-  public hasMinesFromMagmoorReqsNoGlitches(): boolean {
-    return this.hasMinesFromMagmoorReqs() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.SPIDER_BALL) && this.hasAnySuit();
-  }
-
   public canDoInfiniteSpeed(): boolean {
     return this.canLayBombs() && this.has(PrimeItem.BOOST_BALL);
   }
 
   public hasCrashedFrigateReqs(settings: any): boolean {
-    // Automatically return false if "No Crashed Frigate" option is selected.
-    if (settings.noCrashedFrigate) {
-      return false;
-    }
-
     return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
     && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireVisors) // Thermal Visor for power conduits
@@ -164,11 +139,12 @@ export class ItemCollection extends Collection {
       this.hasMissiles() && this.canLayBombs()
       && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
       && (
-        (this.has(PrimeItem.WAVE_BEAM) && (this.has(PrimeItem.BOOST_BALL)
-          || (settings.lJumping || settings.rJumping || settings.ghettoJumping || settings.halfPipeBombJumps))) // Furnace to Crossway
+        (this.has(PrimeItem.WAVE_BEAM)
+          && (this.has(PrimeItem.BOOST_BALL) || ((settings.lJumping || settings.rJumping || settings.ghettoJumping)
+            && this.has(PrimeItem.SPACE_JUMP_BOOTS)) || settings.halfPipeBombJumps)) // Furnace to Crossway
         || (this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // Furnace to Hall of the Elders
       )
-      && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM))
+      && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM)) // access crossway or hote
     );
   }
 
@@ -220,51 +196,126 @@ export class ItemCollection extends Collection {
   }
 
   // "Front" Phendrana Requirements from Magmoor, near Shorelines
-  public hasPhendranaMagmoorWestReqs(settings: any): boolean {
+  public hasPhendranaReqsMagmoorWest(settings: any): boolean {
     return this.hasMissiles() && this.canLayBombs()
     && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
   }
 
-  // "Back" Phendrana Requirements from Magmoor, near Phednrana's Edge/Thardus
-  public hasPhendranaMagmoorSouthReqs(settings: any): boolean {
-    return this.hasLateMagmoorItemReqs(settings) && (!settings.noPhendranaBombs || this.canLayBombs());
+  // "Back" Phendrana Requirements from Magmoor, near Phednrana's Edge/Quarantine Cave
+  public hasPhendranaReqsMagmoorSouth(settings: any): boolean {
+    return this.hasLateMagmoorItemReqs(settings) && this.has(PrimeItem.MORPH_BALL)
+    && (!settings.noPhendranaBombs || this.has(PrimeItem.MORPH_BALL));
   }
 
-  // Checks whether Magmoor West elevator can be accessed from Magmoor or in Phendrana
-  public canAccessPhendranaMagmoorWest(settings): boolean {
-    return this.hasPhendranaMagmoorWestReqs(settings) || (
-      this.hasPhendranaMagmoorSouthReqs(settings) && this.canLayBombs() && (
-        (this.has(PrimeItem.SPIDER_BALL) || settings.ghettoJumping) // through quarantine cave
-        || (this.has(PrimeItem.ICE_BEAM) && (this.has(PrimeItem.BOOST_BALL) || settings.dashing) && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain)) // reverse labs (boost to prevent softlocking in observatory)
-      )
-    );
+  // Phendrana sub-regions
+  // Front (no wave)
+  // Mid (ruined courtyard, labs, quarantine cave)
+  // Back (Phendrana's Edge)
+
+  // Possible routes
+  // Magmor South --> Quarantine Cave --> Ruined Courtyard (requires mid access)
+  // Magmoor South --> Phendrana's Edge --> Labs --> Ruined Courtyard (requires back access)
+  // Magmoor West --> Ruined Courtyard (requires mid access)
+  // Magmoor West --> Ruined Courtyard --> Quarantine Cave --> Magmoor South (mid access + quarantine cave reqs)
+  // Magmoor West --> Ruined Courtyard --> Labs --> Far Phendrana (far access + labs reqs)
+
+  // The base requirements for getting into courtyard and climbing it, ignoring requirements to enter Phendrana
+  public canClimbRuinedCourtyard(settings: any): boolean {
+    return this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    && ((settings.standableTerrain) && settings.ghettoJumping || ((this.canLayBombs() && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.SPIDER_BALL))) // actually climbing the room
   }
 
-  // Checks whether Magmoor South elevator can be accessed from Magmoor or in Phendrana
-  public canAccessPhendranaMagmoorSouth(settings: any): boolean {
-    return this.hasPhendranaMagmoorSouthReqs(settings) || (
-      this.hasPhendranaMagmoorWestReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && ((settings.standableTerrain && settings.ghettoJumping) || this.has(PrimeItem.BOOST_BALL)) // climb Ruined Courtyard
+  // base requirements for Observatory room, ignoring requirements to enter phendrana/labs
+  public canClimbObservatory(settings: any): boolean {
+    return settings.dashing || (this.canLayBombs() && this.has(PrimeItem.BOOST_BALL));
+  }
+
+  // base requirements to enter Quarantine Cave from Ruined Courtyard
+  public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
+    return this.canFireSuperMissiles() && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+  }
+
+  // base requirements to exit Quarantine Cave to the Magmoor South elevator room
+  public canExitQuarantineCaveToMagmoorSouth(settings: any): boolean {
+    return this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM);
+  }
+
+  // base requirements to exit Quarantine Cave to Ruined Courtyard
+  public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
+    return this.canFireSuperMissiles() && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL));
+  }
+
+  // base requirements to exit the ice door at the top of the Magmoor South elevator room
+  public canExitMagmoorSouthToFarPhendrana(settings: any): boolean {
+    return this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.ICE_BEAM)
+    && (settings.standableTerrain || this.has(PrimeItem.SPIDER_BALL));
+  }
+
+  public hasFrontPhendranaAccess(settings: any): boolean {
+    return this.hasPhendranaReqsMagmoorWest(settings)
+    || (this.hasPhendranaReqsMagmoorSouth(settings) && this.canExitQuarantineCaveToRuinedCourtyard(settings));
+  }
+
+  public hasMidPhendranaAccess(settings: any): boolean {
+    return this.hasFrontPhendranaAccess(settings) && this.canClimbRuinedCourtyard(settings);
+  }
+
+  public hasFarPhendranaAccess(settings: any): boolean {
+    return this.has(PrimeItem.ICE_BEAM) && (
+      this.hasMidPhendranaAccess(settings)
       && (
-        (this.canFireSuperMissiles() && (this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM))
-          && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR))) // through Quarantine cave
-        || (this.has(PrimeItem.ICE_BEAM) && (this.has(PrimeItem.BOOST_BALL) || settings.dashing)) // through labs
-      )
+        this.canClimbObservatory(settings)
+        || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
+          && this.canExitMagmoorSouthToFarPhendrana(settings)))
     );
   }
 
-  public canAccessPhendranaLabs(settings: any, requireBoost: boolean): boolean {
-    return (
-      this.hasPhendranaMagmoorWestReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && ((settings.standableTerrain && settings.ghettoJumping) || this.has(PrimeItem.BOOST_BALL)) // climb Ruined Courtyard
-    ) || (
-      this.hasPhendranaMagmoorSouthReqs(settings) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.MORPH_BALL)
-      && (requireBoost && (this.has(PrimeItem.BOOST_BALL) || settings.dashing)) // prevent softlocking in observatory
-      && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // access frozen pike from south elevator
-    );
+  public hasQuarantineCaveAccess(settings: any): boolean {
+    return this.hasPhendranaReqsMagmoorSouth(settings)
+    || (this.hasPhendranaReqsMagmoorWest(settings) && this.canClimbRuinedCourtyard(settings) && this.canEnterQuarantineCaveFromRuinedCourtyard(settings));
   }
 
-  public hasPhendranaReqs(settings: boolean) {
-    return this.canAccessPhendranaMagmoorWest(settings) || this.canAccessPhendranaMagmoorSouth(settings);
+  public hasPhendranaPirateLabsAccess(settings) {
+    return (this.hasMidPhendranaAccess(settings) && this.canClimbObservatory(settings)) || this.hasFarPhendranaAccess(settings);
+  }
+
+  // Base requirements for climbing Ore Processing
+  public canClimbOreProcessing(settings) {
+    return settings.standableTerrain
+    || (this.canLayBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL));
+  }
+
+  // Base requirements for climbing from Elite Control to Ore Processing/Elite Research
+  public canClimbMinesSpiderShafts(settings) {
+    return (settings.standableTerrain && settings.spiderlessShafts && this.canLayBombs()) || this.has(PrimeItem.SPIDER_BALL);
+  }
+
+  // Base requirements to climb out top side of Ventilation Shaft
+  public canClimbVentShaft(settings) {
+    return (settings.halfPipeBombJumps || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))) || this.has(PrimeItem.BOOST_BALL);
+  }
+
+  public hasMinesReqsTallonSouth(settings): boolean {
+    return (settings.barsSkip && this.hasReflectingPoolReqs(settings) && this.has(PrimeItem.ICE_BEAM)) // bars skip
+    || this.hasCrashedFrigateReqs(settings);
+  }
+
+  public hasMinesReqsMagmoorSouth(settings): boolean {
+    return this.hasLateMagmoorItemReqs(settings) && this.canLayPowerBombs() && this.has(PrimeItem.ICE_BEAM)
+    && this.canClimbOreProcessing(settings)
+    && this.canClimbMinesSpiderShafts(settings);
+  }
+
+  public hasUpperMinesAccess(settings): boolean {
+    return this.hasMinesReqsTallonSouth(settings) || this.hasMinesReqsMagmoorSouth(settings);
+  }
+
+  public hasLowerMinesAccess(settings): boolean {
+    return this.hasUpperMinesAccess(settings) && this.canLayBombs()
+      && this.canLayPowerBombs() && this.has(PrimeItem.PLASMA_BEAM)
+      && this.canClimbVentShaft(settings) && this.canClimbMinesSpiderShafts(settings) && this.canClimbOreProcessing(settings) // climb out to/of upper mines
+      && (!settings.requireVisors || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
+      && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
+      && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.lJumping || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
   }
 }
