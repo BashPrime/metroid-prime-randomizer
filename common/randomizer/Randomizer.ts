@@ -15,6 +15,7 @@ export class Randomizer {
   private seed: number;
   protected world: World;
   protected rng: MersenneTwister;
+  private itemPool: Map<string, number>;
 
   constructor(config: any) {
     this.config = config;
@@ -42,9 +43,10 @@ export class Randomizer {
     }
   }
 
-  fillItems(): boolean {
+  private fillItems(): boolean {
     this.world = new World(this.config);
     this.rng = new MersenneTwister(this.seed);
+    this.itemPool = this.getInitialItemPool();
 
     const settings = this.config.settings;
     const itemFiller = new RandomAssumed(this.world, this.rng);
@@ -52,6 +54,9 @@ export class Randomizer {
     try {
       // First, fill items that are not being shuffled in the seed.
       this.fillUnshuffledItems(settings);
+
+      // Next, fill any rooms that are completely restricted to logic and artifacts with expansions
+      this.fillRestrictedRoomsWithJunk(settings);
 
       /*
       * Place all progression items. This includes the following cases:
@@ -80,7 +85,7 @@ export class Randomizer {
     }
   }
 
-  getSafeSha256Integer(str: string): number {
+  private getSafeSha256Integer(str: string): number {
     const safeHexChars = Number.MAX_SAFE_INTEGER.toString(16).length;
     const strHash = crypto.SHA256(str).toString();
 
@@ -100,6 +105,48 @@ export class Randomizer {
     return parseInt(strHash.substr(0, safeHexChars - 1), 16);
   }
 
+  private getInitialItemPool(): Map<string, number> {
+    const itemPool = new Map<string, number>();
+    itemPool.set(PrimeItem.MISSILE_LAUNCHER, 1);
+    itemPool.set(PrimeItem.MORPH_BALL, 1);
+    itemPool.set(PrimeItem.MORPH_BALL_BOMB, 1);
+    itemPool.set(PrimeItem.VARIA_SUIT, 1);
+    itemPool.set(PrimeItem.GRAVITY_SUIT, 1);
+    itemPool.set(PrimeItem.PHAZON_SUIT, 1);
+    itemPool.set(PrimeItem.SPACE_JUMP_BOOTS, 1);
+    itemPool.set(PrimeItem.WAVE_BEAM, 1);
+    itemPool.set(PrimeItem.ICE_BEAM, 1);
+    itemPool.set(PrimeItem.PLASMA_BEAM, 1);
+    itemPool.set(PrimeItem.CHARGE_BEAM, 1);
+    itemPool.set(PrimeItem.POWER_BOMB, 1);
+    itemPool.set(PrimeItem.THERMAL_VISOR, 1);
+    itemPool.set(PrimeItem.XRAY_VISOR, 1);
+    itemPool.set(PrimeItem.BOOST_BALL, 1);
+    itemPool.set(PrimeItem.SPIDER_BALL, 1);
+    itemPool.set(PrimeItem.GRAPPLE_BEAM, 1);
+    itemPool.set(PrimeItem.SUPER_MISSILE, 1);
+    itemPool.set(PrimeItem.WAVEBUSTER, 1);
+    itemPool.set(PrimeItem.ICE_SPREADER, 1);
+    itemPool.set(PrimeItem.FLAMETHROWER, 1);
+    itemPool.set(PrimeItem.MISSILE_EXPANSION, 49);
+    itemPool.set(PrimeItem.ENERGY_TANK, 14);
+    itemPool.set(PrimeItem.POWER_BOMB_EXPANSION, 4);
+    itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WILD, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_NATURE, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 1);
+    itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 1);
+
+    return itemPool;
+  }
+
   getWorld(): World {
     return this.world;
   }
@@ -108,7 +155,7 @@ export class Randomizer {
     return this.seed;
   }
 
-  createItemsFromMap(itemsMap: Map<string, number>): Item[] {
+  private createItemsFromMap(itemsMap: Map<string, number>): Item[] {
     const items: Item[] = [];
     itemsMap.forEach((value: number, key: string) => {
       for (let i = 0; i < value; i++) {
@@ -119,11 +166,9 @@ export class Randomizer {
     return items;
   }
 
-  fillProgressiveItems(itemFiller: RandomAssumed, settings: any): void {
+  private fillProgressiveItems(itemFiller: RandomAssumed, settings: any): void {
     const itemsMap: Map<string, number> = new Map<string, number>();
-    if (settings.shuffleMissileLauncher) {
-      itemsMap.set(PrimeItem.MISSILE_LAUNCHER, 1);
-    }
+      itemsMap.set(PrimeItem.MISSILE_LAUNCHER, this.itemPool.get(PrimeItem.MISSILE_LAUNCHER));
     /*
     * If dashing or standable terrain are unchecked,
     * add 35 more missiles to the item pool.
@@ -132,83 +177,61 @@ export class Randomizer {
     */
     if (!(settings.dashing && settings.standableTerrain)) {
       itemsMap.set(PrimeItem.MISSILE_EXPANSION, 7);
+      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 7);
     }
-    if (settings.shuffleMorph) {
-      itemsMap.set(PrimeItem.MORPH_BALL, 1);
-    }
-    if (settings.shuffleBombs) {
-      itemsMap.set(PrimeItem.MORPH_BALL_BOMB, 1);
-    }
-    itemsMap.set(PrimeItem.VARIA_SUIT, 1);
-    itemsMap.set(PrimeItem.GRAVITY_SUIT, 1);
-    itemsMap.set(PrimeItem.PHAZON_SUIT, 1);
-    if (settings.shuffleSpaceJump) {
-      itemsMap.set(PrimeItem.SPACE_JUMP_BOOTS, 1);
-    }
-    if (settings.shuffleBeams) {
-      itemsMap.set(PrimeItem.WAVE_BEAM, 1);
-      itemsMap.set(PrimeItem.ICE_BEAM, 1);
-      itemsMap.set(PrimeItem.PLASMA_BEAM, 1);
-    }
-    if (settings.shuffleCharge) {
-      itemsMap.set(PrimeItem.CHARGE_BEAM, 1);
-    }
-    if (settings.shufflePBs) {
-      itemsMap.set(PrimeItem.POWER_BOMB, 1);
-      itemsMap.set(PrimeItem.POWER_BOMB_EXPANSION, 4);
-    }
-    itemsMap.set(PrimeItem.THERMAL_VISOR, 1);
-    itemsMap.set(PrimeItem.XRAY_VISOR, 1);
-    itemsMap.set(PrimeItem.BOOST_BALL, 1);
-    itemsMap.set(PrimeItem.SPIDER_BALL, 1);
-    itemsMap.set(PrimeItem.GRAPPLE_BEAM, 1);
-    if (settings.shuffleSupers) {
-      itemsMap.set(PrimeItem.SUPER_MISSILE, 1);
-    }
+    itemsMap.set(PrimeItem.MORPH_BALL, this.itemPool.get(PrimeItem.MORPH_BALL));
+    itemsMap.set(PrimeItem.MORPH_BALL_BOMB, this.itemPool.get(PrimeItem.MORPH_BALL_BOMB));
+    itemsMap.set(PrimeItem.VARIA_SUIT, this.itemPool.get(PrimeItem.VARIA_SUIT));
+    itemsMap.set(PrimeItem.GRAVITY_SUIT, this.itemPool.get(PrimeItem.GRAVITY_SUIT));
+    itemsMap.set(PrimeItem.PHAZON_SUIT, this.itemPool.get(PrimeItem.PHAZON_SUIT));
+    itemsMap.set(PrimeItem.SPACE_JUMP_BOOTS, this.itemPool.get(PrimeItem.SPACE_JUMP_BOOTS));
+    itemsMap.set(PrimeItem.WAVE_BEAM, this.itemPool.get(PrimeItem.WAVE_BEAM));
+    itemsMap.set(PrimeItem.ICE_BEAM, this.itemPool.get(PrimeItem.ICE_BEAM));
+    itemsMap.set(PrimeItem.PLASMA_BEAM, this.itemPool.get(PrimeItem.PLASMA_BEAM));
+    itemsMap.set(PrimeItem.CHARGE_BEAM, this.itemPool.get(PrimeItem.CHARGE_BEAM));
+    itemsMap.set(PrimeItem.POWER_BOMB, this.itemPool.get(PrimeItem.POWER_BOMB));
+    itemsMap.set(PrimeItem.POWER_BOMB_EXPANSION, this.itemPool.get(PrimeItem.POWER_BOMB_EXPANSION));
+    itemsMap.set(PrimeItem.THERMAL_VISOR, this.itemPool.get(PrimeItem.THERMAL_VISOR));
+    itemsMap.set(PrimeItem.XRAY_VISOR, this.itemPool.get(PrimeItem.XRAY_VISOR));
+    itemsMap.set(PrimeItem.BOOST_BALL, this.itemPool.get(PrimeItem.BOOST_BALL));
+    itemsMap.set(PrimeItem.SPIDER_BALL, this.itemPool.get(PrimeItem.SPIDER_BALL));
+    itemsMap.set(PrimeItem.GRAPPLE_BEAM, this.itemPool.get(PrimeItem.GRAPPLE_BEAM));
+    itemsMap.set(PrimeItem.SUPER_MISSILE, this.itemPool.get(PrimeItem.SUPER_MISSILE));
 
     const tankCount = this.getEnergyTankFillCount(settings);
     if (tankCount > 0) {
       itemsMap.set(PrimeItem.ENERGY_TANK, tankCount);
+      this.itemPool.set(PrimeItem.ENERGY_TANK, this.itemPool.get(PrimeItem.ENERGY_TANK) - tankCount);
     }
 
     itemFiller.fill(this.createItemsFromMap(itemsMap));
   }
 
-  fillJunkItems(itemFiller: RandomAssumed, settings: any): void {
+  private fillJunkItems(itemFiller: RandomAssumed, settings: any): void {
     const itemsMap: Map<string, number> = new Map<string, number>();
 
-    itemsMap.set(PrimeItem.WAVEBUSTER, 1);
-    itemsMap.set(PrimeItem.ICE_SPREADER, 1);
-    itemsMap.set(PrimeItem.FLAMETHROWER, 1);
-
-    const expansions = !(settings.dashing && settings.standableTerrain) ? 7 : 0;
-    itemsMap.set(PrimeItem.MISSILE_EXPANSION, 49 - expansions);
-
-    const tankCount = this.getEnergyTankFillCount(settings);
-    if (tankCount < 14) {
-      itemsMap.set(PrimeItem.ENERGY_TANK, 14 - tankCount);
-    }
-
-    // Artifacts
-    if (settings.shuffleArtifacts) {
-      itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_ELDER, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_WILD, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_WARRIOR, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_CHOZO, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_NATURE, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_SUN, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_WORLD, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, 1);
-      itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, 1);
-    }
+    itemsMap.set(PrimeItem.WAVEBUSTER, this.itemPool.get(PrimeItem.WAVEBUSTER));
+    itemsMap.set(PrimeItem.ICE_SPREADER, this.itemPool.get(PrimeItem.ICE_SPREADER));
+    itemsMap.set(PrimeItem.FLAMETHROWER, this.itemPool.get(PrimeItem.FLAMETHROWER));
+    itemsMap.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION));
+    itemsMap.set(PrimeItem.ENERGY_TANK, this.itemPool.get(PrimeItem.ENERGY_TANK));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_TRUTH));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_STRENGTH));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_ELDER, this.itemPool.get(PrimeItem.ARTIFACT_OF_ELDER));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_WILD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WILD));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, this.itemPool.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_WARRIOR, this.itemPool.get(PrimeItem.ARTIFACT_OF_WARRIOR));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_CHOZO, this.itemPool.get(PrimeItem.ARTIFACT_OF_CHOZO));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_NATURE, this.itemPool.get(PrimeItem.ARTIFACT_OF_NATURE));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_SUN, this.itemPool.get(PrimeItem.ARTIFACT_OF_SUN));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_WORLD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WORLD));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, this.itemPool.get(PrimeItem.ARTIFACT_OF_SPIRIT));
+    itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, this.itemPool.get(PrimeItem.ARTIFACT_OF_NEWBORN));
 
     itemFiller.fill(this.createItemsFromMap(itemsMap), true);
   }
 
-  getEnergyTankFillCount(settings): number {
+  private getEnergyTankFillCount(settings): number {
     let tankCount = 0;
 
     if (settings.vmr || settings.earlyMagmoorNoSuit) {
@@ -229,7 +252,7 @@ export class Randomizer {
   }
 
 
-  fillUnshuffledItems(settings: any): void {
+  private fillUnshuffledItems(settings: any): void {
     const locations = this.world.getLocationsMap();
 
     // Chozo Artifacts
@@ -246,52 +269,73 @@ export class Randomizer {
       locations.get('Storage Cave').setItem(Item.get(PrimeItem.ARTIFACT_OF_SPIRIT));
       locations.get('Elite Research (Phazon Elite)').setItem(Item.get(PrimeItem.ARTIFACT_OF_WARRIOR));
       locations.get('Phazon Mining Tunnel').setItem(Item.get(PrimeItem.ARTIFACT_OF_NEWBORN));
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_WILD, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_NATURE, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
+      this.itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 0);
     }
 
     // Missile Launcher
     if (!settings.shuffleMissileLauncher) {
       locations.get('Hive Totem').setItem(Item.get(PrimeItem.MISSILE_LAUNCHER));
+      this.itemPool.set(PrimeItem.MISSILE_LAUNCHER, 0);
     }
 
     // Morph Ball
     if (!settings.shuffleMorph) {
       locations.get('Ruined Shrine (Beetle Battle)').setItem(Item.get(PrimeItem.MORPH_BALL));
+      this.itemPool.set(PrimeItem.MORPH_BALL, 0);
     }
 
     // Morph Ball Bombs
     if (!settings.shuffleBombs) {
       locations.get('Burn Dome (I. Drone)').setItem(Item.get(PrimeItem.MORPH_BALL_BOMB));
+      this.itemPool.set(PrimeItem.MORPH_BALL_BOMB, 0);
     }
 
     // Charge Beam
     if (!settings.shuffleCharge) {
       locations.get('Watery Hall (Scan Puzzle)').setItem(Item.get(PrimeItem.CHARGE_BEAM));
+      this.itemPool.set(PrimeItem.CHARGE_BEAM, 0);
     }
 
     // Space Jump Boots
     if (!settings.shuffleSpaceJump) {
       locations.get('Alcove').setItem(Item.get(PrimeItem.SPACE_JUMP_BOOTS));
+      this.itemPool.set(PrimeItem.SPACE_JUMP_BOOTS, 0);
+    }
+  }
+
+  private fillRestrictedRoomsWithJunk(settings: any): void {
+    const locations = this.world.getLocationsMap();
+
+    if (settings.noSupers) {
+      locations.get('Main Plaza (Tree)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Research Lab Hydra').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Biohazard Containment').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Metroid Quarantine B').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Crossway').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 5);
     }
 
-    // Super Missile
-    if (!settings.shuffleSupers) {
-      locations.get('Observatory').setItem(Item.get(PrimeItem.SUPER_MISSILE));
-    }
+    if (settings.noFrigate) {
+      locations.get('Cargo Freight Lift to Deck Gamma').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Hydro Access Tunnel').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 2);
 
-    // Wave, Ice, Plasma Beams
-    if (!settings.shuffleBeams) {
-      locations.get('Chapel of the Elders').setItem(Item.get(PrimeItem.WAVE_BEAM));
-      locations.get('Antechamber').setItem(Item.get(PrimeItem.ICE_BEAM));
-      locations.get('Plasma Processing').setItem(Item.get(PrimeItem.PLASMA_BEAM));
-    }
-
-    // Power Bombs/Expansions
-    if (!settings.shufflePBs) {
-      locations.get('Central Dynamo').setItem(Item.get(PrimeItem.POWER_BOMB));
-      locations.get('Magma Pool').setItem(Item.get(PrimeItem.POWER_BOMB_EXPANSION));
-      locations.get('Ice Ruins West').setItem(Item.get(PrimeItem.POWER_BOMB_EXPANSION));
-      locations.get('Security Cave').setItem(Item.get(PrimeItem.POWER_BOMB_EXPANSION));
-      locations.get('Fiery Shores (Warrior Shrine Tunnel)').setItem(Item.get(PrimeItem.POWER_BOMB_EXPANSION));
+      // Only set if item isn't already set
+      if (!locations.get('Biohazard Containment').hasItem()) {
+        locations.get('Biohazard Containment').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+        this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+      }
     }
   }
 }
