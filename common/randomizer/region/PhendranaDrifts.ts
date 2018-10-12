@@ -92,7 +92,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Quarantine Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasQuarantineCaveAccess(settings);
+      return items.hasQuarantineCaveAccess(settings) && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
     };
     this.locations.get('Quarantine Cave').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -103,6 +103,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get('Quarantine Monitor').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
       && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM))
+      && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR))
       && items.has(PrimeItem.SPIDER_BALL);
     };
     this.locations.get('Quarantine Monitor').canEscape = function (item: Item, items: ItemCollection): boolean {

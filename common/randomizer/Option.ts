@@ -11,11 +11,15 @@ export class Option {
     type: OptionType;
     bitWidth: number;
     shared: boolean;
+    minValue: number;
+    maxValue: number;
 
-    constructor (name: string, type: OptionType, bitWidth: number, shared: boolean) {
+    constructor (name: string, type: OptionType, bitWidth: number, shared: boolean, minValue?: number, maxValue?: number) {
         this.name = name;
         this.type = type;
         this.bitWidth = bitWidth;
         this.shared = shared;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
     }
 }

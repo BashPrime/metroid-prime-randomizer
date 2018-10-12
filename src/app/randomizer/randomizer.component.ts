@@ -140,7 +140,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       noVanillaBeams: [false],
       noEarlyPhazonSuit: [false],
       noPhendranaBombs: [false],
-      requireVisors: [false],
+      requireVisors: [true],
       noCrashedFrigate: [false],
       rootCaveSW: [false],
       ibbf: [false],
@@ -167,9 +167,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       hbj: [false],
       ubj: [false],
       vmr: [false],
-      vmrTanks: [5],
+      vmrTanks: [5, [Validators.min(3), Validators.max(14)]],
       earlyMagmoorNoSuit: [false],
-      earlyMagmoorNoSuitTanks: [5]
+      earlyMagmoorNoSuitTanks: [7, [Validators.min(7), Validators.max(14)]]
     });
   }
 

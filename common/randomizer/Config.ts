@@ -48,9 +48,9 @@ export class Config {
     new Option('hbj', OptionType.BOOLEAN, 1, true),
     new Option('ubj', OptionType.BOOLEAN, 1, true),
     new Option('vmr', OptionType.BOOLEAN, 1, true),
-    new Option('vmrTanks', OptionType.NUMBER, 4, true),
+    new Option('vmrTanks', OptionType.NUMBER, 4, true, 3, 14),
     new Option('earlyMagmoorNoSuit', OptionType.BOOLEAN, 1, true),
-    new Option('earlyMagmoorNoSuitTanks', OptionType.NUMBER, 4, true),
+    new Option('earlyMagmoorNoSuitTanks', OptionType.NUMBER, 4, true, 7, 14),
   ];
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
@@ -70,6 +70,11 @@ export class Config {
           break;
         }
         case OptionType.NUMBER: {
+          if (!settings[key] || settings[key] < configOption.minValue) {
+            settings[key] = configOption.minValue;
+          } else if (settings[key] > configOption.maxValue) {
+            settings[key] = configOption.maxValue;
+          }
           bitString += Utilities.toPaddedBitString(settings[key], configOption.bitWidth);
           break;
         }

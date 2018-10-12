@@ -6,7 +6,22 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
+              <input type="checkbox" formControlName="requireVisors"> Require visors for power conduits, invisible
+              platforms, Thardus
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
               <input type="checkbox" formControlName="noSupers"> Don't require Super Missiles
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noCrashedFrigate"> Nothing in Crashed Frigate
             </label>
           </div>
         </div>
@@ -38,20 +53,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="requireVisors"> Require visors for power conduits, invisible platforms, Thardus
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="noCrashedFrigate"> Nothing in Crashed Frigate
-            </label>
-          </div>
-        </div>
+
       </div>
       <p class="label">Out of Bounds</p>
       <div class="box">
@@ -86,7 +88,8 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="workstationToPlasmaProcessing"> Magmoor Workstation SW to Plasma Processing
+              <input type="checkbox" formControlName="workstationToPlasmaProcessing"> Magmoor Workstation SW to Plasma
+              Processing
             </label>
           </div>
         </div>
@@ -189,7 +192,8 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="spinnersNoBoost"> Life Grove/Elite Research spinners without Boost Ball
+              <input type="checkbox" formControlName="spinnersNoBoost"> Life Grove/Elite Research spinners without
+              Boost Ball
             </label>
           </div>
         </div>
@@ -203,7 +207,8 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="phazonMiningTunnelNoPhazonSuit"> Phazon Mining Tunnel without Phazon Suit
+              <input type="checkbox" formControlName="phazonMiningTunnelNoPhazonSuit"> Phazon Mining Tunnel without
+              Phazon Suit
             </label>
           </div>
         </div>
@@ -242,18 +247,23 @@
             </label>
           </div>
         </div>
-        <!-- <div class="field">
+        <div class="field">
+          <label>Number of Energy Tanks Required</label>
           <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="vmrTanks"> Minimum Energy Tanks for Suitless Magmoor Run
-            </label>
+            <input class="input" type="number" formControlName="vmrTanks" min="5" max="14">
           </div>
-        </div> -->
+        </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="earlyMagmoorNoSuit"> Early Magmoor items without a suit
             </label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Number of Energy Tanks Required</label>
+          <div class="control">
+            <input class="input" type="number" formControlName="earlyMagmoorNoSuitTanks" min="7" max="14">
           </div>
         </div>
       </div>
