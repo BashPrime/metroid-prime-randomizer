@@ -87,7 +87,6 @@ export class Patcher {
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
-        console.log(message);
         const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
         switch (messageObj.type) {
           case 'progress': {
