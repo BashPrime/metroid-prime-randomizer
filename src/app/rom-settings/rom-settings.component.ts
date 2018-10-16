@@ -12,6 +12,12 @@ import { ElectronService } from '../services/electron.service';
 export class RomSettingsComponent implements OnInit {
   @Input('group') romSettingsForm: FormGroup;
   submitted = false;
+  fileTypes = [
+    { name: 'Compressed ISO', value: 'ciso' },
+    { name: 'ISO', value: 'iso' },
+    { name: 'GCZ (Dolphin only)', value: 'gcz' }
+  ];
+
   constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }
 
   ngOnInit() {

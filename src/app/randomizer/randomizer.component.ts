@@ -96,39 +96,14 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     const fb = new FormBuilder();
     this.randomizerForm = fb.group({
       seed: [''],
-      rom: fb.group({
-        baseIso: ['', Validators.required],
-        outputFolder: [''],
-        createIso: [true]
-      }),
-      settings: this.getDefaultSettings()
-    });
-  }
-
-  runRandomizer() {
-    this.randomizerService.updateSubmittedFlag(true);
-
-    if (this.randomizerForm.valid) {
-      const config = new Config();
-      if (!this.randomizerForm.get('seed').value) {
-        this.getNewSeed();
-      }
-      const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
-      game['version'] = environment.version;
-      game['permalink'] = this.getPermalink();
-      game['settingsString'] = config.settingsToBase32Text(this.getSettingsFromForm());
-      this.patching = true;
-      this.electronService.ipcRenderer.send('randomizer', game);
-    }
-  }
-
-  getDefaultSettings() {
-    const fb = new FormBuilder();
-
-    return fb.group({
+      baseIso: ['', Validators.required],
+      outputFolder: [''],
+      generate: [true],
+      fileType: ['ciso'],
       spoiler: [false],
       skipFrigate: [true],
       skipHudPopups: [true],
+      obfuscateItems: [false],
       shuffleArtifacts: [true],
       shuffleMissileLauncher: [true],
       shuffleMorph: [true],
@@ -176,14 +151,77 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   resetSettings() {
     this.randomizerForm.patchValue({
       seed: '',
-      settings: this.getDefaultSettings().value
+      fileType: 'ciso',
+      spoiler: false,
+      skipFrigate: true,
+      skipHudPopups: true,
+      obfuscateItems: false,
+      shuffleArtifacts: true,
+      shuffleMissileLauncher: true,
+      shuffleMorph: true,
+      shuffleBombs: true,
+      shuffleCharge: true,
+      shuffleSpaceJump: true,
+      noSupers: false,
+      noBombsInBurnDome: false,
+      noVanillaBeams: false,
+      noEarlyPhazonSuit: false,
+      noPhendranaBombs: false,
+      requireVisors: true,
+      noCrashedFrigate: false,
+      rootCaveSW: false,
+      ibbf: false,
+      trainingChamberOOB: false,
+      waveSun: false,
+      workstationToPlasmaProcessing: false,
+      gthWallcrawl: false,
+      earlyNewborn: false,
+      oobNoBombs: false,
+      floatyJump: false,
+      dashing: false,
+      standableTerrain: false,
+      lJumping: false,
+      rJumping: false,
+      earlyWild: false,
+      infiniteSpeedEarlySun: false,
+      infiniteSpeedHote: false,
+      barsSkip: false,
+      spinnersNoBoost: false,
+      spiderlessShafts: false,
+      phazonMiningTunnelNoPhazonSuit: false,
+      halfPipeBombJumps: false,
+      dbj: false,
+      hbj: false,
+      ubj: false,
+      vmr: false,
+      vmrTanks: 5,
+      earlyMagmoorNoSuit: false,
+      earlyMagmoorNoSuitTanks: 7
     });
+  }
+
+
+  runRandomizer() {
+    this.randomizerService.updateSubmittedFlag(true);
+
+    if (this.randomizerForm.valid) {
+      const config = new Config();
+      if (!this.randomizerForm.get('seed').value) {
+        this.getNewSeed();
+      }
+      const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
+      game['version'] = environment.version;
+      game['permalink'] = this.getPermalink();
+      game['settingsString'] = config.settingsToBase32Text(this.randomizerForm.value);
+      this.patching = true;
+      this.electronService.ipcRenderer.send('randomizer', game);
+    }
   }
 
   getPermalink(): string {
     const config = new Config();
     const seed = this.randomizerForm.get('seed').value;
-    const settingsString = config.settingsToBase32Text(this.getSettingsFromForm());
+    const settingsString = config.settingsToBase32Text(this.randomizerForm.value);
     const fullString = seed + ',' + settingsString;
     if (seed && fullString)
       return btoa(fullString);
@@ -196,12 +234,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       const config = new Config();
       settingsToImport = atob(this.permalink).split(',');
       if (settingsToImport.length === 2) {
-        const newSeed = settingsToImport[0];
         let newSettings = config.base32TextToSettings(settingsToImport[1]);
-        this.randomizerForm.patchValue({
-          seed: newSeed,
-          settings: newSettings
-        });
+        newSettings['seed'] = settingsToImport[0];
+        this.randomizerForm.patchValue(newSettings);
       } else {
         this.electronService.dialog.showMessageBox({
           type: 'error',
@@ -225,20 +260,5 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   importSettingsFromFile() {
     this.electronService.ipcRenderer.send('settings-get');
-  }
-
-  getSettingsFromForm() {
-    const settings = {};
-    const formValue = this.randomizerForm.value;
-
-    for (let key of Object.keys(formValue)) {
-      if (typeof (formValue[key]) !== 'object') {
-        settings[key] = formValue[key];
-      } else {
-        Object.assign(settings, formValue[key]);
-      }
-    }
-
-    return settings;
   }
 }

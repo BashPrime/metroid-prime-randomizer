@@ -2,10 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
-
-import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
 import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
 
 @Component({
   selector: 'app-main-rules',

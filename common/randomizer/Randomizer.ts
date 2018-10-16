@@ -48,7 +48,7 @@ export class Randomizer {
     this.rng = new MersenneTwister(this.seed);
     this.itemPool = this.getInitialItemPool();
 
-    const settings = this.config.settings;
+    const settings = this.config;
     const itemFiller = new RandomAssumed(this.world, this.rng);
 
     try {

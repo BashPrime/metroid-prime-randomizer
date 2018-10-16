@@ -4,6 +4,7 @@ import * as path from 'path';
 
 import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
+import { Config } from '../randomizer/Config';
 const ProgressBar = require('electron-progressbar');
 
 export class Patcher {
@@ -51,13 +52,13 @@ export class Patcher {
     const outputFile = 'Prime_' + randomizerConfig.permalink;
 
     // If no folder is specified, use default output folder
-    if (!randomizerConfig.rom.outputFolder) {
-      randomizerConfig.rom.outputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
+    if (!randomizerConfig.outputFolder) {
+      randomizerConfig.outputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
 
       // Create default output folder if it doesn't exist
-      if (!existsSync(randomizerConfig.rom.outputFolder)) {
+      if (!existsSync(randomizerConfig.outputFolder)) {
         try {
-          mkdirSync(randomizerConfig.rom.outputFolder);
+          mkdirSync(randomizerConfig.outputFolder);
         } catch (err) {
           const dirError = new Error(err);
           event.sender.send('patch-error', dirError.toString());
@@ -65,24 +66,28 @@ export class Patcher {
       }
     }
 
-    if (randomizerConfig.settings.spoiler) {
+    if (randomizerConfig.spoiler) {
       progressBar.text = 'Creating spoiler log...';
-      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.rom.outputFolder, outputFile + '_spoiler.txt'));
+      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputFile + '_spoiler.txt'));
     }
 
-    if (randomizerConfig.rom.createIso) {
+    if (randomizerConfig.generate) {
       progressBar.text = 'Patching ROM...';
       const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {
-        input_iso: randomizerConfig.rom.baseIso,
-        output_iso: path.join(randomizerConfig.rom.outputFolder, outputFile + '.iso'),
+        input_iso: randomizerConfig.baseIso,
+        output_iso: path.join(randomizerConfig.outputFolder, outputFile + '.' + randomizerConfig.fileType),
+        iso_format: randomizerConfig.fileType,
         layout_string: layoutDescriptor,
-        skip_frigate: randomizerConfig.rom.skipFrigate,
-        skip_hudmenus: randomizerConfig.rom.skipHudPopups,
+        skip_frigate: randomizerConfig.skipFrigate,
+        skip_hudmenus: randomizerConfig.skipHudPopups,
+        obfuscate_items: randomizerConfig.obfuscateItems,
+        quiet: true,
         comment: 'prime-randomizer-web ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
+        console.log(message);
         const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
         switch (messageObj.type) {
           case 'progress': {
@@ -91,7 +96,7 @@ export class Patcher {
           }
           case 'success': {
             progressBar.setCompleted();
-            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.rom.outputFolder);
+            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
             break;
           }
           case 'error': {
@@ -106,7 +111,7 @@ export class Patcher {
         }
       });
     } else {
-      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.rom.outputFolder);
+      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
       progressBar.setCompleted();
     }
   }
@@ -118,10 +123,20 @@ export class Patcher {
 
   generateSpoilerLog(randomizer: Randomizer, game: any) {
     const spoiler: any = { info: {} };
+    const config = new Config();
+
     spoiler.info.version = game.version;
     spoiler.info.permalink = game.permalink;
     spoiler.info.seed = game.seed;
-    spoiler.info.settings = game.settings;
+    spoiler.info.settings = Object.keys(game)
+    .filter(key => {
+      const option = config.getOptionByName(key);
+      return option && option.shared;
+    })
+    .reduce((obj, key) => {
+      obj[key] = game[key];
+      return obj;
+    }, {});
     spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
 
     return JSON.stringify(spoiler, null, '\t');

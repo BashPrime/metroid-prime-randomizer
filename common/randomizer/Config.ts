@@ -5,10 +5,11 @@ export class Config {
   options = [
     // Rom Settings
     new Option('spoiler', OptionType.BOOLEAN, 1, true),
-    new Option('createIso', null, null, false),
-    // Main Rules
+    new Option('generate', null, null, false),
     new Option('skipFrigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', OptionType.BOOLEAN, 1, true),
+    new Option('obfuscateItems', OptionType.BOOLEAN, 1, true),
+    // Main Rules
     new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMissileLauncher', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMorph', OptionType.BOOLEAN, 1, true),
