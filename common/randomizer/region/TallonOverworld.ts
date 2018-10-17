@@ -77,7 +77,7 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Biohazard Containment').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasCrashedFrigateReqs(settings) && (!settings.noSupers && items.canFireSuperMissiles());
+      return items.hasCrashedFrigateReqs(settings) && items.canFireSuperMissiles();
     };
 
     this.locations.get('Hydro Access Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {

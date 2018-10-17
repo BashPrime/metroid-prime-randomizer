@@ -5,7 +5,7 @@ export class Config {
   options = [
     // Rom Settings
     new Option('spoiler', OptionType.BOOLEAN, 1, true),
-    new Option('generate', null, null, false),
+    new Option('generateRom', null, null, false),
     new Option('skipFrigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', OptionType.BOOLEAN, 1, true),
     new Option('obfuscateItems', OptionType.BOOLEAN, 1, true),
@@ -20,8 +20,10 @@ export class Config {
     new Option('noSupers', OptionType.BOOLEAN, 1, true),
     new Option('noBombsInBurnDome', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
-    new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
-    new Option('noPhendranaBombs', OptionType.BOOLEAN, 1, true),
+    new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true), // stub
+    new Option('noSpiderBallInQuarantineCave', OptionType.BOOLEAN, 1, true),
+    new Option('noGravitySuitInGravityChamber', OptionType.BOOLEAN, 1, true),
+    new Option('noReversePhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('requireVisors', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', OptionType.BOOLEAN, 1, true),
@@ -29,7 +31,7 @@ export class Config {
     new Option('trainingChamberOOB', OptionType.BOOLEAN, 1, true),
     new Option('waveSun', OptionType.BOOLEAN, 1, true),
     new Option('workstationToPlasmaProcessing', OptionType.BOOLEAN, 1, true),
-    new Option('gthWallcrawl', OptionType.BOOLEAN, 1, true),
+    new Option('gthWallcrawl', OptionType.BOOLEAN, 1, true), // stub
     new Option('earlyNewborn', OptionType.BOOLEAN, 1, true),
     new Option('oobNoBombs', OptionType.BOOLEAN, 1, true),
     new Option('floatyJump', OptionType.BOOLEAN, 1, true),
@@ -47,7 +49,7 @@ export class Config {
     new Option('halfPipeBombJumps', OptionType.BOOLEAN, 1, true),
     new Option('dbj', OptionType.BOOLEAN, 1, true),
     new Option('hbj', OptionType.BOOLEAN, 1, true),
-    new Option('ubj', OptionType.BOOLEAN, 1, true),
+    new Option('ubj', OptionType.BOOLEAN, 1, true), // stub
     new Option('vmr', OptionType.BOOLEAN, 1, true),
     new Option('vmrTanks', OptionType.NUMBER, 4, true, 3, 14),
     new Option('earlyMagmoorNoSuit', OptionType.BOOLEAN, 1, true),

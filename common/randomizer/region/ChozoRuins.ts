@@ -58,7 +58,8 @@ export class ChozoRuins extends Region {
 
     this.locations.get('Main Plaza (Grapple Ledge)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (
-        (settings.standableTerrain && items.has(PrimeItem.GRAPPLE_BEAM)) // Jump from Main Plaza tree and grapple
+        items.canFloatyJump(settings) // floaty jump
+        || (settings.standableTerrain && items.has(PrimeItem.GRAPPLE_BEAM)) // Jump from Main Plaza tree and grapple
         || (settings.standableTerrain && settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // dash from tree
         || (items.hasMissiles() && items.canLayBombs() && items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)
           && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.WAVE_BEAM)) // developer intended through Magma Pool and Training Chamber
@@ -66,8 +67,8 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Main Plaza (Tree)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (settings.trainingChamberOOB && items.canWallcrawl(settings) && settings.floatyJump) // oob + floaty jump
-      || ((!settings.noSupers && items.canFireSuperMissiles()) && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR))); // developer intended
+      return (settings.trainingChamberOOB && items.canFloatyJump(settings)) // oob + floaty jump
+      || (items.canFireSuperMissiles() && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR))); // developer intended
     };
 
     this.locations.get('Main Plaza (Locked Door)').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -78,6 +79,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Ruined Fountain').canFillItem = function (item: Item, items: ItemCollection): boolean {
+      items.has(PrimeItem.SPIDER_BALL)
       return (
         (items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
         || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
@@ -192,7 +194,7 @@ export class ChozoRuins extends Region {
     this.locations.get('Sunchamber (Ghosts)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombs() && (
         settings.earlyWild // Early Wild IBJ
-        || ((!settings.noSupers && items.canFireSuperMissiles()) && items.has(PrimeItem.SPIDER_BALL)) // developer intended Sun Tower climb
+        || (items.canFireSuperMissiles() && items.has(PrimeItem.SPIDER_BALL)) // developer intended Sun Tower climb
       );
     };
 
@@ -216,11 +218,13 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Dynamo (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (
+        items.canFloatyJump(settings) || items.has(PrimeItem.SPIDER_BALL)
+      );
     };
 
     this.locations.get('Burn Dome (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs();
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (!settings.noBombsInBurnDome || items.has(PrimeItem.MORPH_BALL_BOMB));
     };
     this.locations.get('Burn Dome (Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -240,7 +244,8 @@ export class ChozoRuins extends Region {
 
     this.locations.get('Furnace (Spider Tracks)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombs() && (
-        (settings.standableTerrain && settings.dbj && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SPIDER_BALL))) // DBJ to item
+        items.canFloatyJump(settings) // floaty jump
+        || (settings.standableTerrain && settings.dbj && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SPIDER_BALL))) // DBJ to item
         || (items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)) // developer intended
       );
     };
@@ -259,7 +264,7 @@ export class ChozoRuins extends Region {
     this.locations.get('Crossway').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasLateChozoReqs(settings) && (
         (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // L jump and ledge clip into tunnel
-        || (items.canLayBombs() && (!settings.noSupers && items.canFireSuperMissiles()) && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)) // developer intended
+        || (items.canLayBombs() && items.canFireSuperMissiles() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPIDER_BALL)) // developer intended
       )
     };
 

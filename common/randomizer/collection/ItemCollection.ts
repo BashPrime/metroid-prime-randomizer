@@ -171,7 +171,7 @@ export class ItemCollection extends Collection {
   }
 
   public canCrossMagmaPool(settings: any): boolean {
-    return (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS) && (this.hasEnergyTankCount(1) || this.hasAnySuit())) // E tank or suit for safety
+    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(1) || this.hasAnySuit())) // E tank or suit for safety
     || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
@@ -204,7 +204,7 @@ export class ItemCollection extends Collection {
   // "Back" Phendrana Requirements from Magmoor, near Phednrana's Edge/Quarantine Cave
   public hasPhendranaReqsMagmoorSouth(settings: any): boolean {
     return this.hasLateMagmoorItemReqs(settings) && this.has(PrimeItem.MORPH_BALL)
-    && (!settings.noPhendranaBombs || this.has(PrimeItem.MORPH_BALL));
+    && (!settings.noReversePhendranaBombs || this.has(PrimeItem.MORPH_BALL_BOMB));
   }
 
   // Phendrana sub-regions
@@ -232,7 +232,7 @@ export class ItemCollection extends Collection {
 
   // base requirements to enter Quarantine Cave from Ruined Courtyard
   public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
-    return this.canFireSuperMissiles() && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    return (!settings.noSupers || this.canFireSuperMissiles()) && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
@@ -241,8 +241,9 @@ export class ItemCollection extends Collection {
   }
 
   // base requirements to exit Quarantine Cave to Ruined Courtyard
+  // Require Super Missiles or bombs so you don't softlock in front Phendrana
   public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
-    return this.canFireSuperMissiles() && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL));
+    return ((!settings.noSupers || this.canFireSuperMissiles()) || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL));
   }
 
   // base requirements to exit the ice door at the top of the Magmoor South elevator room
@@ -317,5 +318,9 @@ export class ItemCollection extends Collection {
       && (!settings.requireVisors || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
       && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
       && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.lJumping || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
+  }
+
+  public canFloatyJump(settings): boolean {
+    return settings.floatyJump && this.canWallcrawl(settings);
   }
 }

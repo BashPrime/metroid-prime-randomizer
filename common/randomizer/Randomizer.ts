@@ -323,7 +323,9 @@ export class Randomizer {
       locations.get('Biohazard Containment').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
       locations.get('Metroid Quarantine B').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
       locations.get('Crossway').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 5);
+      locations.get('Sunchamber (Ghosts)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      locations.get('Phendrana Shorelines (Spider Track)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 7);
     }
 
     if (settings.noFrigate) {

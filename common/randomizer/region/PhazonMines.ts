@@ -71,7 +71,11 @@ export class PhazonMines extends Region {
 
     this.locations.get('Phazon Mining Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasLowerMinesAccess(settings)
-      && ((settings.phazonMiningTunnelNoPhazonSuit && items.hasEnergyTankCount(11) && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.PHAZON_SUIT));
+      && (settings.phazonMiningTunnelNoPhazonSuit && ( // non phazon suit requirements
+        (items.hasEnergyTankCount(11) && items.has(PrimeItem.BOOST_BALL)) // Early Newborn inbounds
+        || (settings.earlyNewborn && items.canWallcrawl(settings)) // Early Newborn wallcrawl
+      )
+      || items.has(PrimeItem.PHAZON_SUIT)); // or have Phazon Suit (developer intended)
     };
 
     this.locations.get('Fungal Hall B').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -87,7 +91,7 @@ export class PhazonMines extends Region {
     };
 
     this.locations.get('Metroid Quarantine B').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLowerMinesAccess(settings) && (!settings.noSupers && items.canFireSuperMissiles());
+      return items.hasLowerMinesAccess(settings) && items.canFireSuperMissiles();
     };
 
     this.locations.get('Elite Quarters').canFillItem = function (item: Item, items: ItemCollection): boolean {

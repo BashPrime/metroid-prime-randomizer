@@ -71,7 +71,7 @@ export class Patcher {
       this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputFile + '_spoiler.txt'));
     }
 
-    if (randomizerConfig.generate) {
+    if (randomizerConfig.generateRom) {
       progressBar.text = 'Patching ROM...';
       const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {

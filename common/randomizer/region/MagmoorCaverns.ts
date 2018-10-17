@@ -82,8 +82,11 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Plasma Processing').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateMagmoorItemReqs(settings) && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)
-      && items.has(PrimeItem.ICE_BEAM) && (!settings.noVanillaBeams || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
+      return items.hasLateMagmoorItemReqs(settings) && (
+        (settings.workstationToPlasmaProcessing && items.canWallcrawl(settings)) // workstation or burning trail
+        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.ICE_BEAM)) // inbounds
+      )
+      && (!settings.noVanillaBeams || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
       && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
       && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto to the bomb slot, spider track platforms
     };

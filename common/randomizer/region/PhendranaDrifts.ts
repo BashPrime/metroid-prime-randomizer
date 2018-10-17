@@ -44,7 +44,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Phendrana Shorelines (Spider Track)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFrontPhendranaAccess(settings) && (!settings.noSupers && items.canFireSuperMissiles()) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL);
+      return items.hasFrontPhendranaAccess(settings) && items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL);
     };
 
     this.locations.get('Chozo Ice Temple').canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -92,7 +92,9 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Quarantine Cave').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasQuarantineCaveAccess(settings) && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
+      return items.hasQuarantineCaveAccess(settings)
+      && (!settings.noSpiderBallInQuarantineCave || items.has(PrimeItem.SPIDER_BALL))
+      && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
     };
     this.locations.get('Quarantine Cave').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -114,7 +116,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get('Research Lab Hydra').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaPirateLabsAccess(settings)
-      && (!settings.noSupers && items.canFireSuperMissiles())
+      && items.canFireSuperMissiles()
       && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
     };
 
@@ -160,7 +162,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Gravity Chamber (Underwater)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings);
+      return items.hasFarPhendranaAccess(settings) && (!settings.noGravitySuitInGravityChamber || items.has(PrimeItem.GRAVITY_SUIT));
     };
     this.locations.get('Gravity Chamber (Underwater)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -169,7 +171,9 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Gravity Chamber (Grapple Ledge)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && (
+      return items.hasFarPhendranaAccess(settings)
+      && (!settings.noGravitySuitInGravityChamber || items.has(PrimeItem.GRAVITY_SUIT))
+      && (
         (settings.rJumping && settings.ghettoJumping)
         || (items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.PLASMA_BEAM))
       );
