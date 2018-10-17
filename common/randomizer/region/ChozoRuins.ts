@@ -224,7 +224,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Burn Dome (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (!settings.noBombsInBurnDome || items.has(PrimeItem.MORPH_BALL_BOMB));
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (!settings.noBombsInBurnDomeShrineTunnel || items.has(PrimeItem.MORPH_BALL_BOMB));
     };
     this.locations.get('Burn Dome (Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -234,7 +234,7 @@ export class ChozoRuins extends Region {
 
     this.locations.get('Burn Dome (I. Drone)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       // Require bombs if "No Bombs in Burn Dome" is checked
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (!settings.noBombsInBurnDome || items.has(PrimeItem.MORPH_BALL_BOMB));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (!settings.noBombsInBurnDomeShrineTunnel || items.has(PrimeItem.MORPH_BALL_BOMB));
     };
     this.locations.get('Burn Dome (I. Drone)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
