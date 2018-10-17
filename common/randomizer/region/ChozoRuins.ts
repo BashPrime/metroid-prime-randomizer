@@ -223,8 +223,13 @@ export class ChozoRuins extends Region {
       );
     };
 
+    // Require bombs in burn dome if the no bombs setting is checked, and bombs are shuffled.
+    // If bombs are not shuffled, they will be in burn dome, so we need to relax the bomb requirement.
     this.locations.get('Burn Dome (Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (!settings.noBombsInBurnDomeShrineTunnel || items.has(PrimeItem.MORPH_BALL_BOMB));
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (
+        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        || items.has(PrimeItem.MORPH_BALL_BOMB)
+      );
     };
     this.locations.get('Burn Dome (Tunnel)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -232,9 +237,13 @@ export class ChozoRuins extends Region {
       return items.canLayBombs();
     };
 
+    // Require bombs in burn dome if the no bombs setting is checked and bombs are shuffled.
+    // If bombs are not shuffled, they will be in burn dome, so we need to relax the bomb requirement.
     this.locations.get('Burn Dome (I. Drone)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      // Require bombs if "No Bombs in Burn Dome" is checked
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (!settings.noBombsInBurnDomeShrineTunnel || items.has(PrimeItem.MORPH_BALL_BOMB));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (
+        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        || items.has(PrimeItem.MORPH_BALL_BOMB)
+      );
     };
     this.locations.get('Burn Dome (I. Drone)').canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
