@@ -51,7 +51,7 @@ export class ChozoRuins extends Region {
     this.locations.get('Main Plaza (Half-Pipe)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (
         (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL)) // developer intended
-        || ((settings.ghettoJumps || settings.standableTerrain) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto or space jump off of the topmost standable portion of ramp
+        || ((settings.ghettoJumping || settings.standableTerrain) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto or space jump off of the topmost standable portion of ramp
         || (settings.halfPipeBombJumps && items.canLayBombs()) // hpbj to item
       );
     };
@@ -160,7 +160,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get('Tower Chamber').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canAccessTowerOfLight(settings) && (settings.ghettoJumps || items.has(PrimeItem.GRAVITY_SUIT)); // gravity or underwater ghetto
+      return items.canAccessTowerOfLight(settings) && (settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT)); // gravity or underwater ghetto
     };
 
     this.locations.get('Ruined Nursery').canFillItem = function (item: Item, items: ItemCollection): boolean {

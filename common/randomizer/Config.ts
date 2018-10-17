@@ -39,6 +39,7 @@ export class Config {
     new Option('standableTerrain', OptionType.BOOLEAN, 1, true),
     new Option('lJumping', OptionType.BOOLEAN, 1, true),
     new Option('rJumping', OptionType.BOOLEAN, 1, true),
+    new Option('ghettoJumping', OptionType.BOOLEAN, 1, true),
     new Option('earlyWild', OptionType.BOOLEAN, 1, true),
     new Option('infiniteSpeedEarlySun', OptionType.BOOLEAN, 1, true),
     new Option('infiniteSpeedHote', OptionType.BOOLEAN, 1, true),
