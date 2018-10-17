@@ -168,7 +168,7 @@ export class Randomizer {
 
   private fillProgressiveItems(itemFiller: RandomAssumed, settings: any): void {
     const itemsMap: Map<string, number> = new Map<string, number>();
-      itemsMap.set(PrimeItem.MISSILE_LAUNCHER, this.itemPool.get(PrimeItem.MISSILE_LAUNCHER));
+    itemsMap.set(PrimeItem.MISSILE_LAUNCHER, this.itemPool.get(PrimeItem.MISSILE_LAUNCHER));
     /*
     * If dashing or standable terrain are unchecked,
     * add 35 more missiles to the item pool.
@@ -318,25 +318,38 @@ export class Randomizer {
     const locations = this.world.getLocationsMap();
 
     if (settings.noSupers) {
-      locations.get('Main Plaza (Tree)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Research Lab Hydra').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Biohazard Containment').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Metroid Quarantine B').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Crossway').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Sunchamber (Ghosts)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Phendrana Shorelines (Spider Track)').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 7);
+      const noSupersLocations = [
+        'Main Plaza (Tree)',
+        'Research Lab Hydra',
+        'Biohazard Containment',
+        'Metroid Quarantine B',
+        'Crossway',
+        'Sunchamber (Ghosts)',
+        'Phendrana Shorelines (Spider Track)'
+      ];
+
+      for (let key of noSupersLocations) {
+        const location = locations.get(key);
+        if (!location.hasItem()) {
+          location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+          this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+        }
+      }
     }
 
-    if (settings.noFrigate) {
-      locations.get('Cargo Freight Lift to Deck Gamma').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      locations.get('Hydro Access Tunnel').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-      this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 2);
+    if (settings.noCrashedFrigate) {
+      const noFrigateLocations = [
+        'Cargo Freight Lift to Deck Gamma',
+        'Biohazard Containment',
+        'Hydro Access Tunnel'
+      ];
 
-      // Only set if item isn't already set
-      if (!locations.get('Biohazard Containment').hasItem()) {
-        locations.get('Biohazard Containment').setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
-        this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+      for (let key of noFrigateLocations) {
+        const location = locations.get(key);
+        if (!location.hasItem()) {
+          location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+          this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+        }
       }
     }
   }
