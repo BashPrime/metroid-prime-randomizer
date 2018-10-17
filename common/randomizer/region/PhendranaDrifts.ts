@@ -67,7 +67,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get('Chapel of the Elders').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFrontPhendranaAccess(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.hasFrontPhendranaAccess(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (!settings.noVanillaBeams || items.has(PrimeItem.WAVE_BEAM)); // no vanilla beams handling
     };
     this.locations.get('Chapel of the Elders').canEscape = function (item: Item, items: ItemCollection): boolean {

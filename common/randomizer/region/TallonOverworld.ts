@@ -81,8 +81,8 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get('Hydro Access Tunnel').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasCrashedFrigateReqs(settings)
-      || (settings.barsSkip && items.hasReflectingPoolReqs(settings) && items.has(PrimeItem.GRAVITY_SUIT)
+      return (items.hasCrashedFrigateReqs(settings) && items.canLayBombs())
+      || (settings.barsSkip && items.canLayBombs() && items.hasReflectingPoolReqs(settings) && items.has(PrimeItem.GRAVITY_SUIT)
         && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)); // bars skip
     };
 
@@ -90,7 +90,7 @@ export class TallonOverworld extends Region {
       return (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (
         items.hasReflectingPoolReqs(settings)
-        || (items.hasCrashedFrigateReqs(settings) && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
       );
     };
 
@@ -100,7 +100,7 @@ export class TallonOverworld extends Region {
       && ((settings.barsSkip && settings.halfPipeBombJumps) || items.has(PrimeItem.BOOST_BALL))
       && (
         items.hasReflectingPoolReqs(settings)
-        || (items.hasCrashedFrigateReqs(settings) && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
       );
     };
 
@@ -110,7 +110,7 @@ export class TallonOverworld extends Region {
       && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
       && (
         items.hasReflectingPoolReqs(settings)
-        || (items.hasCrashedFrigateReqs(settings) && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
       );
     };
 
@@ -120,7 +120,7 @@ export class TallonOverworld extends Region {
       && ((settings.halfPipeBombJumps && settings.spinnerManip) || items.has(PrimeItem.BOOST_BALL))
       && (
         items.hasReflectingPoolReqs(settings)
-        || (items.hasCrashedFrigateReqs(settings) && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
       );
     };
   }

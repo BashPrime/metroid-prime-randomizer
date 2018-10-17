@@ -123,7 +123,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasCrashedFrigateReqs(settings: any): boolean {
-    return this.hasMissiles() && this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
     && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireVisors) // Thermal Visor for power conduits
   }
@@ -298,7 +298,7 @@ export class ItemCollection extends Collection {
 
   public hasMinesReqsTallonSouth(settings): boolean {
     return (settings.barsSkip && this.hasReflectingPoolReqs(settings) && this.has(PrimeItem.ICE_BEAM)) // bars skip
-    || this.hasCrashedFrigateReqs(settings);
+    || (this.hasCrashedFrigateReqs(settings) && this.canLayBombs());
   }
 
   public hasMinesReqsMagmoorSouth(settings): boolean {
