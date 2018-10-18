@@ -46,6 +46,7 @@ export class Config {
     new Option('barsSkip', OptionType.BOOLEAN, 1, true),
     new Option('spinnersNoBoost', OptionType.BOOLEAN, 1, true),
     new Option('spiderlessShafts', OptionType.BOOLEAN, 1, true),
+    new Option('infiniteBoostEliteResearch', OptionType.BOOLEAN, 1, true),
     new Option('phazonMiningTunnelNoPhazonSuit', OptionType.BOOLEAN, 1, true),
     new Option('halfPipeBombJumps', OptionType.BOOLEAN, 1, true),
     new Option('dbj', OptionType.BOOLEAN, 1, true),

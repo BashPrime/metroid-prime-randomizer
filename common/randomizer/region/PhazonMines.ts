@@ -32,26 +32,38 @@ export class PhazonMines extends Region {
   public init(settings: any): void {
     this.locations.get('Main Quarry').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasUpperMinesAccess(settings)
+      && (items.hasMinesReqsMagmoorSouth(settings) ? items.canLayBombs() : true) // require bombs if coming from Magmoor
       && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR))
       && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL));
     };
 
     this.locations.get('Security Access A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs();
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs() && (
+        (settings.standableTerrain && settings.ghettoJumping) ? ((settings.infiniteBoostEliteResearch && items.has(PrimeItem.BOOST_BALL)) || items.canLayBombs()) : true
+      );
     };
 
     this.locations.get('Storage Depot A').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM);
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM) && (
+        (settings.standableTerrain && settings.ghettoJumping) ? ((settings.infiniteBoostEliteResearch && items.has(PrimeItem.BOOST_BALL)) || items.canLayBombs()) : true
+      );
     };
 
-    // Note that with the upper mines requirements, you are able to reach Elite Research without needing boost ball
+    // Note that with the upper mines requirements, you are able to reach Elite Research without needing boost ball,
+    // at least on glitchless difficulties. You will need it if bombs are placed here, in Mine Security Station,
+    // or Security Access A.
     this.locations.get('Elite Research (Phazon Elite)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs();
+      return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs() && (
+        (settings.standableTerrain && settings.ghettoJumping) ? ((settings.infiniteBoostEliteResearch && items.has(PrimeItem.BOOST_BALL)) || items.canLayBombs()) : true
+      );
     };
    
     this.locations.get('Elite Research (Laser)').canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasUpperMinesAccess(settings)
       && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // visor requirement
+      && (
+        (settings.standableTerrain && settings.ghettoJumping) ? ((settings.infiniteBoostEliteResearch && items.has(PrimeItem.BOOST_BALL)) || items.canLayBombs()) : true
+      ) // allow bombs here with given glitches if you have boost ball
       && (settings.spinnersNoBoost || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL))); // spinner manip without boost
     };
 

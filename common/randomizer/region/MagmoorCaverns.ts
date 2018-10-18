@@ -59,8 +59,10 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get('Fiery Shores (Warrior Shrine Tunnel)').canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasEarlyMagmoorItemReqs(settings) && items.canLayPowerBombs()
-      && (settings.noBombsInBurnDomeShrineTunnel || items.canLayBombs()) // handle morph ball bombs in this location
+      return items.hasEarlyMagmoorItemReqs(settings) && items.canLayPowerBombs() && (
+        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        || items.has(PrimeItem.MORPH_BALL_BOMB)
+      ) // handle morph ball bombs in this location
       && ((settings.dbj && items.canLayBombs()) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
       && (
         settings.dashing // dash to the door off a puffer/pirate
