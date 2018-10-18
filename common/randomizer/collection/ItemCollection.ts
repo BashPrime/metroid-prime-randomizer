@@ -282,7 +282,7 @@ export class ItemCollection extends Collection {
 
   // Base requirements for climbing Ore Processing
   public canClimbOreProcessing(settings) {
-    return settings.standableTerrain
+    return (settings.standableTerrain && settings.ghettoJumping)
     || (this.canLayBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL));
   }
 
