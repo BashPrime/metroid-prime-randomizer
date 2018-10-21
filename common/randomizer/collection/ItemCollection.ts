@@ -221,8 +221,9 @@ export class ItemCollection extends Collection {
 
   // The base requirements for getting into courtyard and climbing it, ignoring requirements to enter Phendrana
   public canClimbRuinedCourtyard(settings: any): boolean {
-    return this.canLayBombs() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
-    && ((settings.standableTerrain) && settings.ghettoJumping || ((this.canLayBombs() && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.SPIDER_BALL))) // actually climbing the room
+    return this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS) && (
+      (settings.standableTerrain && settings.ghettoJumping) || (this.canLayBombs() && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.SPIDER_BALL)
+    ); // actually climbing the room
   }
 
   // base requirements for Observatory room, ignoring requirements to enter phendrana/labs
