@@ -9,7 +9,8 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install --global --production windows-build-tools
+  - npm install -g node-gyp
+  - npm config set msvs_version 2017
   - npm install
 
 # Post-install test scripts.
