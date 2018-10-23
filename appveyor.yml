@@ -10,8 +10,10 @@ install:
   - ps: Install-Product node $env:nodejs_version
   # install modules
   - npm install -g node-gyp
-  - npm install --global --production windows-build-tools
-  - npm install
+  - npm config set python C:\Python27
+  - npm config set msvs_version 2017
+  - node-gyp rebuild --verbose
+  # - npm install
 
 # Post-install test scripts.
 test_script:
