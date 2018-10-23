@@ -8,6 +8,8 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+  # Use Visual C++ toolset
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
   # install modules
   - npm install -g node-gyp
   - npm config set python C:\Python27
