@@ -88,6 +88,37 @@ export class World {
     return myItems;
   }
 
+  public getWalkthrough(): object[] {
+    const walkthrough = [];
+    const locations = this.getLocations();
+    let myItems = new ItemCollection();
+    let myLocations = new LocationCollection();
+    let newLocations = new LocationCollection();
+
+    do {
+      const searchLocations = new LocationCollection(locations.filter(location => {
+        return location.canFillItem(undefined, myItems) && location.canEscape(location.getItem(), myItems);
+      }));
+
+      myItems = searchLocations.getItems();
+
+      const oldLocations = myLocations.diff(searchLocations);
+      newLocations = searchLocations.diff(myLocations);
+      myLocations = searchLocations.merge(oldLocations);
+
+      const newLocationsObj = {};
+      for (const location of newLocations.toArray()) {
+        newLocationsObj[location.getName()] = location.getItem().getName();
+      }
+      
+      if (newLocations.size() > 0) {
+        walkthrough.push(newLocationsObj);
+      }
+    } while (newLocations.size() > 0);
+
+    return walkthrough;
+  }
+
   public generateLayout(): string {
     const itemLayout: Array<number> = [];
     const itemLayoutMap: Map<string, number> = new Map<string, number>();
