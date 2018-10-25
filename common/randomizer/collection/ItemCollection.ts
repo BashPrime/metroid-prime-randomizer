@@ -157,7 +157,7 @@ export class ItemCollection extends Collection {
     // Late Chozo reqs
     return this.hasLateChozoReqs(settings)
     && (this.has(PrimeItem.BOOST_BALL) || settings.ghettoJumping)
-    && (this.has(PrimeItem.WAVE_BEAM) || settings.hbj)
+    && (this.has(PrimeItem.WAVE_BEAM) || settings.hbjPastHote)
   }
 
   public canClimbFrigateCrashSite(settings: any) {

@@ -20,18 +20,17 @@ export class Config {
     new Option('noSupers', OptionType.BOOLEAN, 1, true),
     new Option('noBombsInBurnDomeShrineTunnel', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
-    new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true), // stub
+    new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
     new Option('noSpiderBallInQuarantineCave', OptionType.BOOLEAN, 1, true),
     new Option('noGravitySuitInGravityChamber', OptionType.BOOLEAN, 1, true),
-    new Option('noReversePhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('requireVisors', OptionType.BOOLEAN, 1, true),
+    new Option('noReversePhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', OptionType.BOOLEAN, 1, true),
     new Option('ibbf', OptionType.BOOLEAN, 1, true),
     new Option('trainingChamberOOB', OptionType.BOOLEAN, 1, true),
     new Option('waveSun', OptionType.BOOLEAN, 1, true),
     new Option('workstationToPlasmaProcessing', OptionType.BOOLEAN, 1, true),
-    new Option('gthWallcrawl', OptionType.BOOLEAN, 1, true), // stub
     new Option('earlyNewborn', OptionType.BOOLEAN, 1, true),
     new Option('oobNoBombs', OptionType.BOOLEAN, 1, true),
     new Option('floatyJump', OptionType.BOOLEAN, 1, true),
@@ -50,8 +49,7 @@ export class Config {
     new Option('phazonMiningTunnelNoPhazonSuit', OptionType.BOOLEAN, 1, true),
     new Option('halfPipeBombJumps', OptionType.BOOLEAN, 1, true),
     new Option('dbj', OptionType.BOOLEAN, 1, true),
-    new Option('hbj', OptionType.BOOLEAN, 1, true),
-    new Option('ubj', OptionType.BOOLEAN, 1, true), // stub
+    new Option('hbjPastHote', OptionType.BOOLEAN, 1, true),
     new Option('vmr', OptionType.BOOLEAN, 1, true),
     new Option('vmrTanks', OptionType.NUMBER, 4, true, 3, 14),
     new Option('earlyMagmoorNoSuit', OptionType.BOOLEAN, 1, true),
@@ -151,6 +149,4 @@ export class Config {
   getOptionByName(name: string) {
     return this.options.find(item => item.name === name);
   }
-
-
 }

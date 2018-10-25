@@ -56,7 +56,10 @@ export class Randomizer {
       this.fillUnshuffledItems(settings);
 
       // Next, fill any rooms that are completely restricted to logic and artifacts with expansions
-      this.fillRestrictedRoomsWithJunk(settings);
+      this.fillRestrictedRooms(settings);
+
+      // Place Phazon Suit in a "lategame"/high item tier location, if setting is checked
+      this.placeNoEarlyPhazonSuit(itemFiller, settings);
 
       /*
       * Place all progression items. This includes the following cases:
@@ -314,7 +317,7 @@ export class Randomizer {
     }
   }
 
-  private fillRestrictedRoomsWithJunk(settings: any): void {
+  private fillRestrictedRooms(settings: any): void {
     const locations = this.world.getLocationsMap();
 
     if (settings.noSupers) {
@@ -351,6 +354,84 @@ export class Randomizer {
           this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
         }
       }
+    }
+  }
+
+  private placeNoEarlyPhazonSuit(itemFiller: RandomAssumed, settings: any): void {
+    const locations = this.world.getLocationsMap();
+
+    if (settings.noEarlyPhazonSuit) {
+      const phazonLocations = [
+        // Tallon Overworld
+        'Arbor Chamber',
+        'Life Grove Tunnel',
+        'Life Grove (Start)',
+        'Life Grove (Underwater Spinner)',
+        'Great Tree Chamber',
+        'Cargo Freight Lift to Deck Gamma',
+        'Biohazard Containment',
+        'Hydro Access Tunnel',
+        // Chozo Ruins
+        'Furnace (Spider Tracks)',
+        'Dynamo (Spider Track)',
+        'Training Chamber',
+        'Hall of the Elders',
+        'Elder Chamber',
+        'Antechamber',
+        // Magmoor Caverns
+        'Plasma Processing',
+        // Phendrana Drifts
+        'Phendrana Shorlines (Behind Ice)',
+        'Phendrana Shorelines (Spider Track)',
+        'Chozo Ice Temple',
+        'Ice Ruins West',
+        'Ice Ruins East (Behind Ice)',
+        'Ice Ruins East (Spider Track)',
+        'Quarantine Cave',
+        'Quarantine Monitor',
+        'Observatory',
+        'Transport Access',
+        'Control Tower',
+        'Reserach Core',
+        'Research Lab Hydra',
+        'Research Lab Aether (Tank)',
+        'Research Lab Aether (Morph Track)',
+        'Gravity Chamber (Underwater)',
+        'Gravity Chamber (Grapple Ledge)',
+        'Frost Cave',
+        'Storage Cave',
+        'Security Cave',
+        // Phazon Mines
+        'Main Quarry',
+        'Security Access A',
+        'Storage Depot B',
+        'Storage Depot A',
+        'Elite Research (Phazon Elite)',
+        'Elite Research (Laser)',
+        'Elite Control Access',
+        'Ventilation Shaft',
+        'Phazon Processing Center',
+        'Processing Center Access',
+        'Elite Quarters',
+        'Central Dynamo',
+        'Metroid Quarantine B',
+        'Metroid Quarantine A',
+        'Fungal Hall B',
+        'Fungal Hall Access'
+      ];
+  
+      if (settings.phazonMiningTunnelNoPhazonSuit) {
+        phazonLocations.push('Phazon Mining Tunnel');
+      }
+  
+      const availableLocations = phazonLocations.filter(item => {
+        return !locations.get(item).hasItem();
+      });
+  
+      const locationToFill = itemFiller.shuffleInPlace(availableLocations)[0];
+  
+      locations.get(locationToFill).setItem(Item.get(PrimeItem.PHAZON_SUIT));
+      this.itemPool.set(PrimeItem.PHAZON_SUIT, 0);
     }
   }
 }
