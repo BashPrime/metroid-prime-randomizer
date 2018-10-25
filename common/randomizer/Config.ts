@@ -58,10 +58,7 @@ export class Config {
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
   settingsToBase32Text(settings): string {
-    const settingKeys = Object.keys(settings).filter(key => {
-      const option = this.getOptionByName(key);
-      return option && option.shared;
-    });
+    const settingKeys = this.options.filter(option => option.shared).map(option => option.name);
     let bitString = '';
 
     for (const key of settingKeys) {
