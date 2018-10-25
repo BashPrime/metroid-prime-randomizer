@@ -238,13 +238,15 @@ export class ItemCollection extends Collection {
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
   public canExitQuarantineCaveToMagmoorSouth(settings: any): boolean {
-    return this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM);
+    return (this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM))
+    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to Ruined Courtyard
   // Require Super Missiles or bombs so you don't softlock in front Phendrana
   public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
-    return (this.canFireSuperMissiles() || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL));
+    return (this.canFireSuperMissiles() || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL))
+    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit the ice door at the top of the Magmoor South elevator room
