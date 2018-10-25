@@ -381,7 +381,7 @@ export class Randomizer {
         // Magmoor Caverns
         'Plasma Processing',
         // Phendrana Drifts
-        'Phendrana Shorlines (Behind Ice)',
+        'Phendrana Shorelines (Behind Ice)',
         'Phendrana Shorelines (Spider Track)',
         'Chozo Ice Temple',
         'Ice Ruins West',
@@ -392,7 +392,7 @@ export class Randomizer {
         'Observatory',
         'Transport Access',
         'Control Tower',
-        'Reserach Core',
+        'Research Core',
         'Research Lab Hydra',
         'Research Lab Aether (Tank)',
         'Research Lab Aether (Morph Track)',
