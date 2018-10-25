@@ -6,9 +6,9 @@ This application is an item randomizer for the video game Metroid Prime, powered
 
 ## Install
 
-To build from source, you will need to install [Node.js](https://nodejs.org) to install the application and its dependencies using `npm`.
+To build from source, you will need to install the 64-bit version of [Node.js](https://nodejs.org) to install the application and its dependencies using `npm`. 32-bit builds of the randomizer are not supported currently.
 
-First, install `node-gyp` globally on your system. [Follow the instructions](https://github.com/nodejs/node-gyp#installation) to install on your given operating system.
+First, install `node-gyp` globally on your system. [Follow the instructions](https://github.com/nodejs/node-gyp#installation) to install it on your given operating system.
 
 Run `npm install` to install the project dependencies.
 
