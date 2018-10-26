@@ -50,21 +50,17 @@ export class ChozoRuins extends Region {
 
   public init(settings: any): void {
     this.locations.get(PrimeLocation.MAIN_PLAZA_HALF_PIPE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (
-        (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL)) // developer intended
-        || ((settings.ghettoJumping || settings.standableTerrain) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto or space jump off of the topmost standable portion of ramp
-        || (settings.halfPipeBombJumps && items.canLayBombs()) // hpbj to item
-      );
+      return (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL)) // developer intended
+      || ((settings.ghettoJumping || settings.standableTerrain) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto or space jump off of the topmost standable portion of ramp
+      || (settings.halfPipeBombJumps && items.canLayBombs()); // hpbj to item
     };
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (
-        items.canFloatyJump(settings) // floaty jump
-        || (settings.standableTerrain && items.has(PrimeItem.GRAPPLE_BEAM)) // Jump from Main Plaza tree and grapple
-        || (settings.standableTerrain && settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // dash from tree
-        || (items.hasMissiles() && items.canLayBombs() && items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)
-          && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.WAVE_BEAM)) // developer intended through Magma Pool and Training Chamber
-      );
+      return items.canFloatyJump(settings) // floaty jump
+      || (settings.standableTerrain && items.has(PrimeItem.GRAPPLE_BEAM)) // Jump from Main Plaza tree and grapple
+      || (settings.standableTerrain && settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // dash from tree
+      || (items.hasMissiles() && items.canLayBombs() && items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)
+        && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.WAVE_BEAM)); // developer intended through Magma Pool and Training Chamber
     };
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_TREE).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -73,19 +69,14 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_LOCKED_DOOR).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (
-        (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)) // developer intended
-        || (settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS))
-      );
+      return (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)) // developer intended
+      || (settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get(PrimeLocation.RUINED_FOUNTAIN).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      items.has(PrimeItem.SPIDER_BALL)
-      return (
-        (items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
-        || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
-          && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)) // abuse collision to get to item without defeating Flaahgra
-      )
+      return (items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
+      || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
+        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)); // abuse collision to get to item without defeating Flaahgra
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -157,6 +148,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.TOWER_OF_LIGHT).canFillItem = function (item: Item, items: ItemCollection): boolean {
+      // 36 missiles/8 missile expansions are needed in a glitchless setting.
       return items.canAccessTowerOfLight(settings) && ((settings.dashing && settings.standableTerrain) || items.hasMissileCount(40 / 5));
     };
 
@@ -181,7 +173,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.GATHERING_HALL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (settings.dbj || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get(PrimeLocation.HIVE_TOTEM).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -265,8 +257,8 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.HALL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && (
-        (settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
+        (settings.standableTerrain && settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
         || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM)) // developer intended
       );
     };
@@ -279,7 +271,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.ELDER_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && (
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
         (settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
         || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)) // developer intended
       );

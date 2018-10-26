@@ -35,7 +35,7 @@ export class TallonOverworld extends Region {
 
     this.locations.get(PrimeLocation.ALCOVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return settings.dashing // Space Jump first scan dash
-        || (settings.dbj && items.canLayBombs()) // DBJ off the ship to the ledge
+        || (settings.standableTerrain && settings.dbj && items.canLayBombs()) // DBJ off the ship to the ledge
         || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPACE_JUMP_BOOTS); // glitchless
     };
 

@@ -35,7 +35,7 @@ export class PhazonMines extends Region {
       return items.hasUpperMinesAccess(settings)
         && (items.hasMinesReqsMagmoorSouth(settings) ? items.canLayBombs() : true) // require bombs if coming from Magmoor
         && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR))
-        && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL));
+        && ((settings.standableTerrain && settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto and l jump to the crane
     };
 
     this.locations.get(PrimeLocation.SECURITY_ACCESS_A).canFillItem = function (item: Item, items: ItemCollection): boolean {
