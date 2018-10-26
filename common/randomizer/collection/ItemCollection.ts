@@ -274,12 +274,11 @@ export class ItemCollection extends Collection {
   }
 
   public hasFarPhendranaAccess(settings: any): boolean {
-    return this.has(PrimeItem.ICE_BEAM) && (
-      this.hasMidPhendranaAccess(settings)
-      && (
-        this.canClimbObservatory(settings)
-        || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
-          && this.canExitMagmoorSouthToFarPhendrana(settings)))
+    return this.has(PrimeItem.ICE_BEAM) && this.hasMidPhendranaAccess(settings)
+    && (
+      this.canClimbObservatory(settings)
+      || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
+        && this.canExitMagmoorSouthToFarPhendrana(settings))
     );
   }
 
