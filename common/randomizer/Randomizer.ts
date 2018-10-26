@@ -37,7 +37,7 @@ export class Randomizer {
       *
       * For reference, Number.MAX_SAFE_INTEGER as a hex string is '1fffffffffffff' (14 characters long)
       */
-      const valueToHash = this.seed ? this.seed.toString(16) : (this.config.seed + this.config.settingsString);
+      const valueToHash = this.seed ? this.seed.toString(16) : (this.config.seed.toString() + this.config.settingsString);
       this.seed = this.getSafeSha256Integer(valueToHash);
 
       randomizerSuccess = this.fillItems();
