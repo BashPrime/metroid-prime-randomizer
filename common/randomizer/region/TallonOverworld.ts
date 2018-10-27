@@ -96,7 +96,7 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
         && ((settings.barsSkip && settings.halfPipeBombJumps) || items.has(PrimeItem.BOOST_BALL))
         && (
@@ -106,7 +106,7 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_START).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
         && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
         && (
@@ -116,7 +116,7 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
         && ((settings.halfPipeBombJumps && settings.spinnerManip) || items.has(PrimeItem.BOOST_BALL))
         && (
