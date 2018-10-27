@@ -61,7 +61,7 @@ export class MagmoorCaverns extends Region {
 
     this.locations.get(PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasEarlyMagmoorItemReqs(settings) && items.canLayPowerBombs() && (
-        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        !(settings.noBombsPointOfNoReturnTunnels && settings.shuffleBombs)
         || items.has(PrimeItem.MORPH_BALL_BOMB)
       ) // handle morph ball bombs in this location
         && ((settings.dbj && items.canLayBombs()) || items.has(PrimeItem.SPACE_JUMP_BOOTS))

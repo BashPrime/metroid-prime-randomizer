@@ -220,7 +220,7 @@ export class ChozoRuins extends Region {
     // If bombs are not shuffled, they will be in burn dome, so we need to relax the bomb requirement.
     this.locations.get(PrimeLocation.BURN_DOME_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (
-        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        !(settings.noBombsPointOfNoReturnTunnels && settings.shuffleBombs)
         || items.has(PrimeItem.MORPH_BALL_BOMB)
       );
     };
@@ -234,7 +234,7 @@ export class ChozoRuins extends Region {
     // If bombs are not shuffled, they will be in burn dome, so we need to relax the bomb requirement.
     this.locations.get(PrimeLocation.BURN_DOME_I_DRONE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (
-        !(settings.noBombsInBurnDomeShrineTunnel && settings.shuffleBombs)
+        !(settings.noBombsPointOfNoReturnTunnels && settings.shuffleBombs)
         || items.has(PrimeItem.MORPH_BALL_BOMB)
       );
     };

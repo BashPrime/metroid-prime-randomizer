@@ -126,7 +126,11 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get(PrimeLocation.CONTROL_TOWER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasPhendranaPirateLabsAccess(settings) && (settings.standableTerrain || items.has(PrimeItem.PLASMA_BEAM));
+      return items.hasPhendranaPirateLabsAccess(settings) && (settings.standableTerrain || items.has(PrimeItem.PLASMA_BEAM))
+      && (
+        !(settings.noBombsPointOfNoReturnTunnels && settings.shuffleBombs)
+        || items.has(PrimeItem.MORPH_BALL_BOMB)
+      );
     };
 
     this.locations.get(PrimeLocation.RESEARCH_LAB_AETHER_TANK).canFillItem = function (item: Item, items: ItemCollection): boolean {
