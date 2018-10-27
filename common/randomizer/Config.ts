@@ -18,7 +18,7 @@ export class Config {
     new Option('shuffleSpaceJump', OptionType.BOOLEAN, 1, true),
     // Item Logic
     new Option('noSupers', OptionType.BOOLEAN, 1, true),
-    new Option('noBombsInBurnDomeShrineTunnel', OptionType.BOOLEAN, 1, true),
+    new Option('noBombsPointOfNoReturnTunnels', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
     new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
     new Option('noSpiderBallInQuarantineCave', OptionType.BOOLEAN, 1, true),

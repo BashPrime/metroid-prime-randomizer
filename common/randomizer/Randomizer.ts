@@ -6,6 +6,7 @@ import { RandomAssumed } from './filler/RandomAssumed';
 import { RandomizerMode } from './enums/RandomizerMode';
 import { RandomizerLogic } from './enums/RandomizerLogic';
 import { PrimeItem } from './enums/PrimeItem';
+import { PrimeLocation } from './enums/PrimeLocation';
 import { RandomizerArtifacts } from './enums/RandomizerArtifacts';
 import { Utilities } from '../Utilities';
 import * as crypto from 'crypto-js';
@@ -36,7 +37,7 @@ export class Randomizer {
       *
       * For reference, Number.MAX_SAFE_INTEGER as a hex string is '1fffffffffffff' (14 characters long)
       */
-      const valueToHash = this.seed ? this.seed.toString(16) : (this.config.seed + this.config.settingsString);
+      const valueToHash = this.seed ? this.seed.toString(16) : (this.config.seed.toString() + this.config.settingsString);
       this.seed = this.getSafeSha256Integer(valueToHash);
 
       randomizerSuccess = this.fillItems();
@@ -83,7 +84,7 @@ export class Randomizer {
 
       return true;
     } catch (err) {
-      console.log("Error when filling items: " + err);
+      console.log('Error when filling items: ' + err);
       return false;
     }
   }
@@ -260,18 +261,18 @@ export class Randomizer {
 
     // Chozo Artifacts
     if (!settings.shuffleArtifacts) {
-      locations.get('Artifact Temple').setItem(Item.get(PrimeItem.ARTIFACT_OF_TRUTH));
-      locations.get('Life Grove (Underwater Spinner)').setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
-      locations.get('Tower Chamber').setItem(Item.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
-      locations.get('Sunchamber (Ghosts)').setItem(Item.get(PrimeItem.ARTIFACT_OF_WILD));
-      locations.get('Elder Chamber').setItem(Item.get(PrimeItem.ARTIFACT_OF_WORLD));
-      locations.get('Lava Lake').setItem(Item.get(PrimeItem.ARTIFACT_OF_NATURE));
-      locations.get('Warrior Shrine').setItem(Item.get(PrimeItem.ARTIFACT_OF_STRENGTH));
-      locations.get('Control Tower').setItem(Item.get(PrimeItem.ARTIFACT_OF_ELDER));
-      locations.get('Chozo Ice Temple').setItem(Item.get(PrimeItem.ARTIFACT_OF_SUN));
-      locations.get('Storage Cave').setItem(Item.get(PrimeItem.ARTIFACT_OF_SPIRIT));
-      locations.get('Elite Research (Phazon Elite)').setItem(Item.get(PrimeItem.ARTIFACT_OF_WARRIOR));
-      locations.get('Phazon Mining Tunnel').setItem(Item.get(PrimeItem.ARTIFACT_OF_NEWBORN));
+      locations.get(PrimeLocation.ARTIFACT_TEMPLE).setItem(Item.get(PrimeItem.ARTIFACT_OF_TRUTH));
+      locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
+      locations.get(PrimeLocation.TOWER_CHAMBER).setItem(Item.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
+      locations.get(PrimeLocation.SUNCHAMBER_GHOSTS).setItem(Item.get(PrimeItem.ARTIFACT_OF_WILD));
+      locations.get(PrimeLocation.ELDER_CHAMBER).setItem(Item.get(PrimeItem.ARTIFACT_OF_WORLD));
+      locations.get(PrimeLocation.LAVA_LAKE).setItem(Item.get(PrimeItem.ARTIFACT_OF_NATURE));
+      locations.get(PrimeLocation.WARRIOR_SHRINE).setItem(Item.get(PrimeItem.ARTIFACT_OF_STRENGTH));
+      locations.get(PrimeLocation.CONTROL_TOWER).setItem(Item.get(PrimeItem.ARTIFACT_OF_ELDER));
+      locations.get(PrimeLocation.CHOZO_ICE_TEMPLE).setItem(Item.get(PrimeItem.ARTIFACT_OF_SUN));
+      locations.get(PrimeLocation.STORAGE_CAVE).setItem(Item.get(PrimeItem.ARTIFACT_OF_SPIRIT));
+      locations.get(PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE).setItem(Item.get(PrimeItem.ARTIFACT_OF_WARRIOR));
+      locations.get(PrimeLocation.PHAZON_MINING_TUNNEL).setItem(Item.get(PrimeItem.ARTIFACT_OF_NEWBORN));
       this.itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 0);
       this.itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 0);
       this.itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 0);
@@ -288,31 +289,31 @@ export class Randomizer {
 
     // Missile Launcher
     if (!settings.shuffleMissileLauncher) {
-      locations.get('Hive Totem').setItem(Item.get(PrimeItem.MISSILE_LAUNCHER));
+      locations.get(PrimeLocation.HIVE_TOTEM).setItem(Item.get(PrimeItem.MISSILE_LAUNCHER));
       this.itemPool.set(PrimeItem.MISSILE_LAUNCHER, 0);
     }
 
     // Morph Ball
     if (!settings.shuffleMorph) {
-      locations.get('Ruined Shrine (Beetle Battle)').setItem(Item.get(PrimeItem.MORPH_BALL));
+      locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).setItem(Item.get(PrimeItem.MORPH_BALL));
       this.itemPool.set(PrimeItem.MORPH_BALL, 0);
     }
 
     // Morph Ball Bombs
     if (!settings.shuffleBombs) {
-      locations.get('Burn Dome (I. Drone)').setItem(Item.get(PrimeItem.MORPH_BALL_BOMB));
+      locations.get(PrimeLocation.BURN_DOME_I_DRONE).setItem(Item.get(PrimeItem.MORPH_BALL_BOMB));
       this.itemPool.set(PrimeItem.MORPH_BALL_BOMB, 0);
     }
 
     // Charge Beam
     if (!settings.shuffleCharge) {
-      locations.get('Watery Hall (Scan Puzzle)').setItem(Item.get(PrimeItem.CHARGE_BEAM));
+      locations.get(PrimeLocation.WATERY_HALL_SCAN_PUZZLE).setItem(Item.get(PrimeItem.CHARGE_BEAM));
       this.itemPool.set(PrimeItem.CHARGE_BEAM, 0);
     }
 
     // Space Jump Boots
     if (!settings.shuffleSpaceJump) {
-      locations.get('Alcove').setItem(Item.get(PrimeItem.SPACE_JUMP_BOOTS));
+      locations.get(PrimeLocation.ALCOVE).setItem(Item.get(PrimeItem.SPACE_JUMP_BOOTS));
       this.itemPool.set(PrimeItem.SPACE_JUMP_BOOTS, 0);
     }
   }
@@ -322,13 +323,13 @@ export class Randomizer {
 
     if (settings.noSupers) {
       const noSupersLocations = [
-        'Main Plaza (Tree)',
-        'Research Lab Hydra',
-        'Biohazard Containment',
-        'Metroid Quarantine B',
-        'Crossway',
-        'Sunchamber (Ghosts)',
-        'Phendrana Shorelines (Spider Track)'
+        PrimeLocation.MAIN_PLAZA_TREE,
+        PrimeLocation.RESEARCH_LAB_HYDRA,
+        PrimeLocation.BIOHAZARD_CONTAINMENT,
+        PrimeLocation.METROID_QUARANTINE_B,
+        PrimeLocation.CROSSWAY,
+        PrimeLocation.SUNCHAMBER_GHOSTS,
+        PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK
       ];
 
       for (let key of noSupersLocations) {
@@ -342,9 +343,9 @@ export class Randomizer {
 
     if (settings.noCrashedFrigate) {
       const noFrigateLocations = [
-        'Cargo Freight Lift to Deck Gamma',
-        'Biohazard Containment',
-        'Hydro Access Tunnel'
+        PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA,
+        PrimeLocation.BIOHAZARD_CONTAINMENT,
+        PrimeLocation.HYDRO_ACCESS_TUNNEL
       ];
 
       for (let key of noFrigateLocations) {
@@ -363,65 +364,65 @@ export class Randomizer {
     if (settings.noEarlyPhazonSuit) {
       const phazonLocations = [
         // Tallon Overworld
-        'Arbor Chamber',
-        'Life Grove Tunnel',
-        'Life Grove (Start)',
-        'Life Grove (Underwater Spinner)',
-        'Great Tree Chamber',
-        'Cargo Freight Lift to Deck Gamma',
-        'Biohazard Containment',
-        'Hydro Access Tunnel',
+        PrimeLocation.ARBOR_CHAMBER,
+        PrimeLocation.LIFE_GROVE_TUNNEL,
+        PrimeLocation.LIFE_GROVE_START,
+        PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER,
+        PrimeLocation.GREAT_TREE_CHAMBER,
+        PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA,
+        PrimeLocation.BIOHAZARD_CONTAINMENT,
+        PrimeLocation.HYDRO_ACCESS_TUNNEL,
         // Chozo Ruins
-        'Furnace (Spider Tracks)',
-        'Dynamo (Spider Track)',
-        'Training Chamber',
-        'Hall of the Elders',
-        'Elder Chamber',
-        'Antechamber',
+        PrimeLocation.FURNACE_SPIDER_TRACKS,
+        PrimeLocation.DYNAMO_SPIDER_TRACK,
+        PrimeLocation.TRAINING_CHAMBER,
+        PrimeLocation.HALL_OF_THE_ELDERS,
+        PrimeLocation.ELDER_CHAMBER,
+        PrimeLocation.ANTECHAMBER,
         // Magmoor Caverns
-        'Plasma Processing',
+        PrimeLocation.PLASMA_PROCESSING,
         // Phendrana Drifts
-        'Phendrana Shorelines (Behind Ice)',
-        'Phendrana Shorelines (Spider Track)',
-        'Chozo Ice Temple',
-        'Ice Ruins West',
-        'Ice Ruins East (Behind Ice)',
-        'Ice Ruins East (Spider Track)',
-        'Quarantine Cave',
-        'Quarantine Monitor',
-        'Observatory',
-        'Transport Access',
-        'Control Tower',
-        'Research Core',
-        'Research Lab Hydra',
-        'Research Lab Aether (Tank)',
-        'Research Lab Aether (Morph Track)',
-        'Gravity Chamber (Underwater)',
-        'Gravity Chamber (Grapple Ledge)',
-        'Frost Cave',
-        'Storage Cave',
-        'Security Cave',
+        PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE,
+        PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK,
+        PrimeLocation.CHOZO_ICE_TEMPLE,
+        PrimeLocation.ICE_RUINS_WEST,
+        PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE,
+        PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK,
+        PrimeLocation.QUARANTINE_CAVE,
+        PrimeLocation.QUARANTINE_MONITOR,
+        PrimeLocation.OBSERVATORY,
+        PrimeLocation.TRANSPORT_ACCESS,
+        PrimeLocation.CONTROL_TOWER,
+        PrimeLocation.RESEARCH_CORE,
+        PrimeLocation.RESEARCH_LAB_HYDRA,
+        PrimeLocation.RESEARCH_LAB_AETHER_TANK,
+        PrimeLocation.RESEARCH_LAB_AETHER_MORPH_TRACK,
+        PrimeLocation.GRAVITY_CHAMBER_UNDERWATER,
+        PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE,
+        PrimeLocation.FROST_CAVE,
+        PrimeLocation.STORAGE_CAVE,
+        PrimeLocation.SECURITY_CAVE,
         // Phazon Mines
-        'Main Quarry',
-        'Security Access A',
-        'Storage Depot B',
-        'Storage Depot A',
-        'Elite Research (Phazon Elite)',
-        'Elite Research (Laser)',
-        'Elite Control Access',
-        'Ventilation Shaft',
-        'Phazon Processing Center',
-        'Processing Center Access',
-        'Elite Quarters',
-        'Central Dynamo',
-        'Metroid Quarantine B',
-        'Metroid Quarantine A',
-        'Fungal Hall B',
-        'Fungal Hall Access'
+        PrimeLocation.MAIN_QUARRY,
+        PrimeLocation.SECURITY_ACCESS_A,
+        PrimeLocation.STORAGE_DEPOT_B,
+        PrimeLocation.STORAGE_DEPOT_A,
+        PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE,
+        PrimeLocation.ELITE_RESEARCH_LASER,
+        PrimeLocation.ELITE_CONTROL_ACCESS,
+        PrimeLocation.VENTILATION_SHAFT,
+        PrimeLocation.PHAZON_PROCESSING_CENTER,
+        PrimeLocation.PROCESSING_CENTER_ACCESS,
+        PrimeLocation.ELITE_QUARTERS,
+        PrimeLocation.CENTRAL_DYNAMO,
+        PrimeLocation.METROID_QUARANTINE_B,
+        PrimeLocation.METROID_QUARANTINE_A,
+        PrimeLocation.FUNGAL_HALL_B,
+        PrimeLocation.FUNGAL_HALL_ACCESS
       ];
   
       if (settings.phazonMiningTunnelNoPhazonSuit) {
-        phazonLocations.push('Phazon Mining Tunnel');
+        phazonLocations.push(PrimeLocation.PHAZON_MINING_TUNNEL);
       }
   
       const availableLocations = phazonLocations.filter(item => {

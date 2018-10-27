@@ -134,17 +134,23 @@ export class ItemCollection extends Collection {
       return this.hasMissiles() && this.canWallcrawl(settings);
     }
 
-    // Inbounds
-    return (this.canClimbFrigateCrashSite(settings) && this.canLayBombs()) || ( // FCS climb to reflecting pool
-      this.hasMissiles() && this.canLayBombs()
-      && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
-      && (
-        (this.has(PrimeItem.WAVE_BEAM)
-          && (this.has(PrimeItem.BOOST_BALL) || ((settings.lJumping || settings.rJumping || settings.ghettoJumping)
-            && this.has(PrimeItem.SPACE_JUMP_BOOTS)) || settings.halfPipeBombJumps)) // Furnace to Crossway
-        || (this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // Furnace to Hall of the Elders
-      )
-      && ((this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.BOOST_BALL)) || this.has(PrimeItem.ICE_BEAM)) // access crossway or hote
+    // Climb Frigate Crash Site
+    if (this.canClimbFrigateCrashSite(settings) && this.canLayBombs()) {
+      return true;
+    }
+
+    // Otherwise do inbounds check
+    return this.hasMissiles() && this.canLayBombs()
+    && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
+    && (
+      (
+        this.has(PrimeItem.WAVE_BEAM) && (
+          settings.halfPipeBombJumps
+          || ((settings.lJumping || settings.rJumping || settings.ghettoJumping) && this.has(PrimeItem.SPACE_JUMP_BOOTS))
+          || this.has(PrimeItem.BOOST_BALL)
+        )
+      ) // Furnace to Crossway
+      || (this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // Furnace to Hall of the Elders
     );
   }
 
@@ -155,9 +161,9 @@ export class ItemCollection extends Collection {
     }
 
     // Late Chozo reqs
-    return this.hasLateChozoReqs(settings)
-    && (this.has(PrimeItem.BOOST_BALL) || settings.ghettoJumping)
-    && (this.has(PrimeItem.WAVE_BEAM) || settings.hbjPastHote)
+    return this.hasLateChozoReqs(settings) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
+    && (this.has(PrimeItem.BOOST_BALL) || (settings.standableTerrain && settings.ghettoJumping)) // ghetto jump off stone toad
+    && (this.has(PrimeItem.WAVE_BEAM) || settings.hbjPastHote) // Wave Beam or HBJ out of HotE back door
   }
 
   public canClimbFrigateCrashSite(settings: any) {
@@ -171,7 +177,7 @@ export class ItemCollection extends Collection {
   }
 
   public canCrossMagmaPool(settings: any): boolean {
-    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(1) || this.hasAnySuit())) // E tank or suit for safety
+    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasAnySuit())) // E tank or suit for safety
     || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
@@ -190,7 +196,10 @@ export class ItemCollection extends Collection {
     return this.hasMissiles() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && (
       (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
-      || (settings.dashing || settings.lJumping || settings.rJumping || settings.dbj) // cross Twin Fires Tunnel without morph or spider
+      || (
+        (settings.standableTerrain && (settings.dashing || settings.rJumping))
+        || settings.dbj
+      ) // cross Twin Fires Tunnel without morph or spider
     )
     && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
   }
@@ -265,12 +274,11 @@ export class ItemCollection extends Collection {
   }
 
   public hasFarPhendranaAccess(settings: any): boolean {
-    return this.has(PrimeItem.ICE_BEAM) && (
-      this.hasMidPhendranaAccess(settings)
-      && (
-        this.canClimbObservatory(settings)
-        || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
-          && this.canExitMagmoorSouthToFarPhendrana(settings)))
+    return this.has(PrimeItem.ICE_BEAM) && this.hasMidPhendranaAccess(settings)
+    && (
+      this.canClimbObservatory(settings)
+      || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
+        && this.canExitMagmoorSouthToFarPhendrana(settings))
     );
   }
 
@@ -285,8 +293,8 @@ export class ItemCollection extends Collection {
 
   // Base requirements for climbing Ore Processing
   public canClimbOreProcessing(settings) {
-    return (settings.standableTerrain && settings.ghettoJumping)
-    || (this.canLayBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL));
+    return (settings.standableTerrain && settings.ghettoJumping) // climb spiderless
+    || (this.canLayBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL)); // developer intended
   }
 
   // Base requirements for climbing from Elite Control to Ore Processing/Elite Research
@@ -301,7 +309,7 @@ export class ItemCollection extends Collection {
 
   public hasMinesReqsTallonSouth(settings): boolean {
     return (settings.barsSkip && this.hasReflectingPoolReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM)) // bars skip
-    || (this.hasCrashedFrigateReqs(settings) && this.canLayBombs());
+    || (this.hasCrashedFrigateReqs(settings) && this.canLayBombs()); // developer intended
   }
 
   public hasMinesReqsMagmoorSouth(settings): boolean {
@@ -319,8 +327,8 @@ export class ItemCollection extends Collection {
       && this.canLayPowerBombs() && this.has(PrimeItem.PLASMA_BEAM)
       && this.canClimbVentShaft(settings) && this.canClimbMinesSpiderShafts(settings) && this.canClimbOreProcessing(settings) // climb out to/of upper mines
       && (!settings.requireVisors || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
-      && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
-      && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.lJumping || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
+      && ((settings.standableTerrain && settings.ghettoJumping && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
+      && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
   }
 
   public canFloatyJump(settings): boolean {

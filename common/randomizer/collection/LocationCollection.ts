@@ -13,6 +13,18 @@ export class LocationCollection extends Collection {
     return this.items[index];
   }
 
+  public has(key: string): boolean {
+    return this.items.find(item => item.getName() === key) ? true : false;
+  }
+
+  diff(otherItems: LocationCollection): LocationCollection {
+    return new LocationCollection(this.items.filter(item => !otherItems.has(item.getName())));
+  }
+
+  merge(otherItems: LocationCollection): LocationCollection {
+    return new LocationCollection(this.items.concat(otherItems.toArray()));
+  }
+
   getEmptyLocations(): LocationCollection {
     return new LocationCollection(this.items.filter(location => !location.hasItem()));
   }

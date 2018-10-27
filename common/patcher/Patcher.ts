@@ -137,6 +137,7 @@ export class Patcher {
       return obj;
     }, {});
     spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
+    spoiler.walkthrough = randomizer.getWorld().getWalkthrough();
 
     return JSON.stringify(spoiler, null, '\t');
   }
