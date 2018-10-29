@@ -57,15 +57,17 @@ export class ChozoRuins extends Region {
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.canFloatyJump(settings) // floaty jump
-      || (settings.standableTerrain && items.has(PrimeItem.GRAPPLE_BEAM)) // Jump from Main Plaza tree and grapple
-      || (settings.standableTerrain && settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // dash from tree
+      || (settings.standableTerrain && (
+        items.has(PrimeItem.GRAPPLE_BEAM) || (settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // grapple or dash from the tree
+      ))
+      || (settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // L jump to the ledge
       || (items.hasMissiles() && items.canLayBombs() && items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)
         && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.WAVE_BEAM)); // developer intended through Magma Pool and Training Chamber
     };
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_TREE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (settings.trainingChamberOOB && items.canFloatyJump(settings)) // oob + floaty jump
-      || (items.canFireSuperMissiles() && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR))); // developer intended
+      || items.canFireSuperMissiles(); // developer intended
     };
 
     this.locations.get(PrimeLocation.MAIN_PLAZA_LOCKED_DOOR).canFillItem = function (item: Item, items: ItemCollection): boolean {
