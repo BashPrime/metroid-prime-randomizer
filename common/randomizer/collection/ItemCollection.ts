@@ -140,7 +140,7 @@ export class ItemCollection extends Collection {
     }
 
     // Otherwise do inbounds check
-    return this.hasMissiles() && this.canLayBombs()
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
     && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
     && (
       (
@@ -184,7 +184,7 @@ export class ItemCollection extends Collection {
 
   public canAccessTowerOfLight(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM) && (
-      (settings.dashing && settings.standableTerrain) // dash to the door
+      settings.standableTerrain // jump to the door
       || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
     );
   }

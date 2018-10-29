@@ -146,7 +146,8 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.MAGMA_POOL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canCrossMagmaPool(settings) && items.canLayPowerBombs();
+      return (settings.infiniteSpeedMagmaPool && items.canDoInfiniteSpeed()) // Magma Pool IS
+      || (items.canCrossMagmaPool(settings) && items.canLayPowerBombs()) // Developer intended
     };
 
     this.locations.get(PrimeLocation.TOWER_OF_LIGHT).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -167,7 +168,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.RUINED_GALLERY_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canLayBombs();
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get(PrimeLocation.TRANSPORT_ACCESS_NORTH).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -178,7 +179,6 @@ export class ChozoRuins extends Region {
       return items.hasMissiles() && (
         (settings.dbj && settings.canLayBombs()) // dbj to the item
         || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.canLayBombsOrPowerBombs()) // developer intended
-
       );
     };
 
@@ -259,7 +259,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.FURNACE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombs();
+      return items.hasMissiles() && (items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL)));
     };
 
     this.locations.get(PrimeLocation.HALL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {

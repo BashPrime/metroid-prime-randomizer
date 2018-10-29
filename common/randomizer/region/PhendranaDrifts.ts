@@ -51,7 +51,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.CHOZO_ICE_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFrontPhendranaAccess(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
         items.has(PrimeItem.PLASMA_BEAM) // developer intended
-        || (settings.infiniteSpeedEarlySun && (settings.waveSun || items.has(PrimeItem.WAVE_BEAM))) // Early Sun IS
+        || (settings.infiniteSpeedEarlySun && items.canDoInfiniteSpeed() && (settings.waveSun || items.has(PrimeItem.WAVE_BEAM))) // Early Sun IS
       );
     };
 
