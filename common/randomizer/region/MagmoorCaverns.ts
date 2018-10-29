@@ -86,9 +86,9 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get(PrimeLocation.PLASMA_PROCESSING).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateMagmoorItemReqs(settings) && (
+      return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.ICE_BEAM) && (
         (settings.workstationToPlasmaProcessing && items.canWallcrawl(settings)) // workstation or burning trail
-        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.ICE_BEAM)) // inbounds
+        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) // inbounds
       )
         && (!settings.noVanillaBeams || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
         && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
@@ -101,8 +101,8 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get(PrimeLocation.MAGMOOR_WORKSTATION).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
+      return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
+        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // power conduits
     };
   }
 }
