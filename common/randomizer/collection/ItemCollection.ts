@@ -207,7 +207,7 @@ export class ItemCollection extends Collection {
 
   // "Front" Phendrana Requirements from Magmoor, near Shorelines
   public hasPhendranaReqsMagmoorWest(settings: any): boolean {
-    return this.hasMissiles() && this.canLayBombs()
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
     && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
   }
 
@@ -277,9 +277,9 @@ export class ItemCollection extends Collection {
   public hasFarPhendranaAccess(settings: any): boolean {
     return this.has(PrimeItem.ICE_BEAM) && this.hasMidPhendranaAccess(settings)
     && (
-      this.canClimbObservatory(settings)
+      this.canClimbObservatory(settings) // front to back pirate labs
       || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
-        && this.canExitMagmoorSouthToFarPhendrana(settings))
+        && this.canExitMagmoorSouthToFarPhendrana(settings)) // through quarantine cave
     );
   }
 
