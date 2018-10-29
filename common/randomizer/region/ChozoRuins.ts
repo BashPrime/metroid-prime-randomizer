@@ -233,7 +233,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.BURN_DOME_TUNNEL).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.canLayBombs();
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL));
     };
 
     // Require bombs in burn dome if the no bombs setting is checked and bombs are shuffled.
@@ -247,7 +247,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.BURN_DOME_I_DRONE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.canLayBombs();
+      return items.canLayBombs() || (items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get(PrimeLocation.FURNACE_SPIDER_TRACKS).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -260,6 +260,11 @@ export class ChozoRuins extends Region {
 
     this.locations.get(PrimeLocation.FURNACE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && (items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL)));
+    };
+    this.locations.get(PrimeLocation.FURNACE_TUNNEL).canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item)
+        items = new ItemCollection([...items.toArray(), item]);
+      return settings.bypassBombsWithBoost ? items.canLayBombs() : true;
     };
 
     this.locations.get(PrimeLocation.HALL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
