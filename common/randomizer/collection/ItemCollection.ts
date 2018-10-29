@@ -178,6 +178,7 @@ export class ItemCollection extends Collection {
 
   public canCrossMagmaPool(settings: any): boolean {
     return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasAnySuit())) // E tank or suit for safety
+    || (settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris with gravity suit + space jump
     || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
@@ -198,7 +199,7 @@ export class ItemCollection extends Collection {
       (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
       || (
         (settings.standableTerrain && (settings.dashing || settings.rJumping))
-        || settings.dbj
+        || (settings.dbj && this.canLayBombs())
       ) // cross Twin Fires Tunnel without morph or spider
     )
     && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
@@ -304,7 +305,7 @@ export class ItemCollection extends Collection {
 
   // Base requirements to climb out top side of Ventilation Shaft
   public canClimbVentShaft(settings) {
-    return (settings.halfPipeBombJumps || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))) || this.has(PrimeItem.BOOST_BALL);
+    return ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))) || this.has(PrimeItem.BOOST_BALL);
   }
 
   public hasMinesReqsTallonSouth(settings): boolean {

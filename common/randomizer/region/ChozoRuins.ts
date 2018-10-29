@@ -92,7 +92,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.RUINED_SHRINE_HALF_PIPE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (
         items.has(PrimeItem.BOOST_BALL) // developer intended
-        || (settings.standableTerrain && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // space jump from branch
+        || ((settings.standableTerrain || settings.ghettoJumping) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // space jump from branch or ghetto from half pipe
         || (settings.halfPipeBombJumps && items.has(PrimeItem.MORPH_BALL_BOMB)) // half pipe bomb jump
       );
     };
@@ -173,7 +173,11 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.GATHERING_HALL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.canLayBombsOrPowerBombs() && (settings.dbj || items.has(PrimeItem.SPACE_JUMP_BOOTS));
+      return items.hasMissiles() && (
+        (settings.dbj && settings.canLayBombs()) // dbj to the item
+        || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.canLayBombsOrPowerBombs()) // developer intended
+
+      );
     };
 
     this.locations.get(PrimeLocation.HIVE_TOTEM).canFillItem = function (item: Item, items: ItemCollection): boolean {
