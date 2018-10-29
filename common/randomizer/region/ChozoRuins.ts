@@ -177,7 +177,7 @@ export class ChozoRuins extends Region {
 
     this.locations.get(PrimeLocation.GATHERING_HALL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && (
-        (settings.dbj && settings.canLayBombs()) // dbj to the item
+        (settings.dbj && items.canLayBombs()) // dbj to the item
         || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.canLayBombsOrPowerBombs()) // developer intended
       );
     };
