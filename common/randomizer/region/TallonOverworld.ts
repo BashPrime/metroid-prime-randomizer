@@ -46,14 +46,14 @@ export class TallonOverworld extends Region {
     this.locations.get(PrimeLocation.ROOT_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         && (items.has(PrimeItem.GRAPPLE_BEAM) || settings.dashing) // allow dashing to skip grapple beam
-        && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check
+        && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check, invisible platforms
     };
 
     this.locations.get(PrimeLocation.ARBOR_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         && (items.has(PrimeItem.PLASMA_BEAM) || settings.rootCaveSW) // plasma or wallcrawl from root cave
         && (items.has(PrimeItem.GRAPPLE_BEAM) || settings.dashing) // allow dashing to skip grapple beam
-        && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check
+        && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check, invisible platforms
     };
 
     this.locations.get(PrimeLocation.TRANSPORT_TUNNEL_B).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -69,8 +69,8 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.OVERGROWN_CAVERN).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasReflectingPoolReqs(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // Through late chozo
-        || items.canClimbFrigateCrashSite(settings) && items.has(PrimeItem.MORPH_BALL_BOMB) // FCS Climb
+      return items.canClimbFrigateCrashSite(settings) // FCS Climb
+      || (items.hasReflectingPoolReqs(settings) && items.canLayBombs()); // Through late chozo
     };
 
     this.locations.get(PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -88,7 +88,8 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.GREAT_TREE_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // invisible platform
         && (
           items.hasReflectingPoolReqs(settings)
           || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
@@ -97,32 +98,32 @@ export class TallonOverworld extends Region {
 
     this.locations.get(PrimeLocation.LIFE_GROVE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-        && ((settings.barsSkip && settings.halfPipeBombJumps) || items.has(PrimeItem.BOOST_BALL))
-        && (
-          items.hasReflectingPoolReqs(settings)
-          || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
-        );
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_START).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-        && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
-        && (
-          items.hasReflectingPoolReqs(settings)
-          || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
-        );
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-        && ((settings.halfPipeBombJumps && settings.spinnerManip) || items.has(PrimeItem.BOOST_BALL))
-        && (
-          items.hasReflectingPoolReqs(settings)
-          || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
-        );
+      && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
+      && ((settings.halfPipeBombJumps && settings.spinnersNoBoost) || items.has(PrimeItem.BOOST_BALL))
+      && (
+        items.hasReflectingPoolReqs(settings)
+        || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
+      );
     };
   }
 }

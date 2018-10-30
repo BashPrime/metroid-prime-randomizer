@@ -51,7 +51,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.CHOZO_ICE_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFrontPhendranaAccess(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
         items.has(PrimeItem.PLASMA_BEAM) // developer intended
-        || (settings.infiniteSpeedEarlySun && (settings.waveSun || items.has(PrimeItem.WAVE_BEAM))) // Early Sun IS
+        || (settings.infiniteSpeedEarlySun && items.canDoInfiniteSpeed() && ((settings.waveSun && items.canWallcrawl(settings)) || items.has(PrimeItem.WAVE_BEAM))) // Early Sun IS
       );
     };
 
@@ -74,7 +74,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.CHAPEL_OF_THE_ELDERS).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.has(PrimeItem.WAVE_BEAM) && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.canLayBombs());
+      return items.has(PrimeItem.WAVE_BEAM) && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.infiniteSpeedEarlySun && items.canLayBombs()));
     };
 
     this.locations.get(PrimeLocation.RUINED_COURTYARD).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -95,7 +95,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
         && (!settings.noSpiderBallInQuarantineCave || items.has(PrimeItem.SPIDER_BALL))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR));
+        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
     };
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -106,7 +106,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.QUARANTINE_MONITOR).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
         && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR))
+        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)) // for Thardus
         && items.has(PrimeItem.SPIDER_BALL);
     };
     this.locations.get(PrimeLocation.QUARANTINE_MONITOR).canEscape = function (item: Item, items: ItemCollection): boolean {
@@ -117,8 +117,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.RESEARCH_LAB_HYDRA).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasPhendranaPirateLabsAccess(settings)
-        && items.canFireSuperMissiles()
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
+        && items.canFireSuperMissiles();
     };
 
     this.locations.get(PrimeLocation.OBSERVATORY).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -155,19 +154,22 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.STORAGE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFarPhendranaAccess(settings) && items.canLayPowerBombs()
-        && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM)) // traversing frost cave
+        && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM) || settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT)) // traversing frost or hunter cave
         && ((settings.lJumping && settings.standableTerrain) || items.has(PrimeItem.GRAPPLE_BEAM))
         && items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get(PrimeLocation.SECURITY_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && items.canLayPowerBombs()
+      return items.hasFarPhendranaAccess(settings)
+        && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM) || settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT)) // traversing frost or hunter cave
         && ((settings.lJumping && settings.standableTerrain) || items.has(PrimeItem.GRAPPLE_BEAM))
         && items.has(PrimeItem.PLASMA_BEAM);
     };
 
     this.locations.get(PrimeLocation.GRAVITY_CHAMBER_UNDERWATER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && (!settings.noGravitySuitInGravityChamber || items.has(PrimeItem.GRAVITY_SUIT));
+      return items.hasFarPhendranaAccess(settings)
+      && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM) || settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT)) // traversing frost or hunter cave
+      && (!settings.noGravitySuitInGravityChamber || items.has(PrimeItem.GRAVITY_SUIT));
     };
     this.locations.get(PrimeLocation.GRAVITY_CHAMBER_UNDERWATER).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -177,6 +179,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFarPhendranaAccess(settings)
+        && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM) || settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT)) // traversing frost or hunter cave
         && (!settings.noGravitySuitInGravityChamber || items.has(PrimeItem.GRAVITY_SUIT))
         && (
           (settings.rJumping && settings.ghettoJumping)

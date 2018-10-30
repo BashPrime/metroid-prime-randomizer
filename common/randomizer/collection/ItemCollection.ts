@@ -140,7 +140,7 @@ export class ItemCollection extends Collection {
     }
 
     // Otherwise do inbounds check
-    return this.hasMissiles() && this.canLayBombs()
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
     && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
     && (
       (
@@ -184,7 +184,7 @@ export class ItemCollection extends Collection {
 
   public canAccessTowerOfLight(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM) && (
-      (settings.dashing && settings.standableTerrain) // dash to the door
+      settings.standableTerrain // jump to the door
       || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
     );
   }
@@ -207,7 +207,7 @@ export class ItemCollection extends Collection {
 
   // "Front" Phendrana Requirements from Magmoor, near Shorelines
   public hasPhendranaReqsMagmoorWest(settings: any): boolean {
-    return this.hasMissiles() && this.canLayBombs()
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
     && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
   }
 
@@ -277,9 +277,9 @@ export class ItemCollection extends Collection {
   public hasFarPhendranaAccess(settings: any): boolean {
     return this.has(PrimeItem.ICE_BEAM) && this.hasMidPhendranaAccess(settings)
     && (
-      this.canClimbObservatory(settings)
+      this.canClimbObservatory(settings) // front to back pirate labs
       || (this.canEnterQuarantineCaveFromRuinedCourtyard(settings) && this.canExitQuarantineCaveToMagmoorSouth(settings)
-        && this.canExitMagmoorSouthToFarPhendrana(settings))
+        && this.canExitMagmoorSouthToFarPhendrana(settings)) // through quarantine cave
     );
   }
 
