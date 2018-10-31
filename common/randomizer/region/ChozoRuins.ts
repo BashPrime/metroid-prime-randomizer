@@ -247,7 +247,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.BURN_DOME_I_DRONE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.canLayBombs() || (items.has(PrimeItem.BOOST_BALL));
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get(PrimeLocation.FURNACE_SPIDER_TRACKS).canFillItem = function (item: Item, items: ItemCollection): boolean {
