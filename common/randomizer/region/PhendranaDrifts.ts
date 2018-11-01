@@ -80,7 +80,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.RUINED_COURTYARD).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMidPhendranaAccess(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
-        && ((settings.standableTerrain && settings.lJumping) || ((items.canLayBombs && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPIDER_BALL)));
+        && ((settings.standableTerrain && settings.lJumping) || ((items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPIDER_BALL)));
     };
 
     this.locations.get(PrimeLocation.PHENDRANA_CANYON).canFillItem = function (item: Item, items: ItemCollection): boolean {
