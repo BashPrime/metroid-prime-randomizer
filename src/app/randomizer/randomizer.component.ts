@@ -24,7 +24,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   ];
   selectedTab = 0;
   patching = false;
-  patchUpdate: string;
   randomizerForm: FormGroup;
   settings = {};
   permalink = '';
@@ -58,7 +57,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
     // Handle successful file patch
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
-      this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
@@ -77,14 +75,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         title: 'Error',
         message: arg
       });
-    });
-
-    // Patch update, send to view
-    this.electronService.ipcRenderer.on('patch-progress', (event, arg) => {
-      if (this.patching) {
-        this.patchUpdate = arg.percent + ': ' + arg.msg;
-        this.changeDetectorRef.detectChanges();
-      }
     });
   }
 
