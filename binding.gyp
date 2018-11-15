@@ -15,6 +15,9 @@
             "-lws2_32.lib",
             "-luserenv.lib",
             "-lmsvcrt.lib"
+          ],
+          "defines": [
+            "_HAS_EXCEPTIONS=1"
           ]
         }],
         ["OS=='mac'", {
