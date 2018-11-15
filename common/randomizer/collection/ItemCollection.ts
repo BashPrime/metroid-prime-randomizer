@@ -184,8 +184,8 @@ export class ItemCollection extends Collection {
 
   public canAccessTowerOfLight(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM) && (
-      settings.standableTerrain // jump to the door
-      || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
+      ((settings.standableTerrain || settings.ghettoJumping) && (settings.dashing || settings.lJumping)) // jump or dash to the door from the branch or by ghetto jumping
+      || (this.has(PrimeItem.MORPH_BALL) && (settings.ghettoJumping || this.has(PrimeItem.BOOST_BALL)) && this.has(PrimeItem.SPIDER_BALL)) // developer intended, can bypass boost ball with a ghetto jump to spider track
     );
   }
 
