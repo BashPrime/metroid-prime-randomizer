@@ -268,9 +268,10 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.HALL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
+      // Ice Beam is needed for both IS and developer intended method
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && (
         (settings.standableTerrain && settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
-        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM)) // developer intended
+        || (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) // developer intended
       );
     };
 
@@ -282,9 +283,9 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.ELDER_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
-        (settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
-        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)) // developer intended
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && (
+        (settings.standableTerrain && settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
+        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.PLASMA_BEAM)) // developer intended
       );
     };
 
