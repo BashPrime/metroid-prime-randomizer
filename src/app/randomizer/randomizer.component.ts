@@ -243,7 +243,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         this.electronService.dialog.showMessageBox({
           type: 'error',
           title: 'Error',
-          message: 'This permalink is invalid.'
+          message: 'This permalink is invalid.',
+          buttons: ['OK']
         });
       }
     } catch {
@@ -251,7 +252,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: 'This permalink is invalid.'
+        message: 'This permalink is invalid.',
+        buttons: ['OK']
       });
     }
   }
