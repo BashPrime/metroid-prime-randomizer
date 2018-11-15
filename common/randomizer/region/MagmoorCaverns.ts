@@ -25,8 +25,8 @@ export class MagmoorCaverns extends Region {
 
   public init(settings: any): void {
     this.locations.get(PrimeLocation.LAVA_LAKE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
-        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (settings.damageBoostPoisonOrLava || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      && (items.hasAnySuit() || (settings.earlyMagmoorNoSuit && items.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)));
     };
 
     this.locations.get(PrimeLocation.TRICLOPS_PIT).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -53,9 +53,11 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get(PrimeLocation.FIERY_SHORES_MORPH_TRACK).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasEarlyMagmoorItemReqs(settings) && (
+      return items.hasMissiles() && (items.hasAnySuit() || (settings.earlyMagmoorNoSuit && items.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)))
+      && (settings.damageBoostPoisonOrLava || items.has(PrimeItem.MORPH_BALL)) // go through morph ball track or lava damage boost from Tallon elevator
+      && (
         (settings.standableTerrain && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump on the morph ball tunnel to reach the item
-        || items.canLayBombs() // morph and bomb through the tunnel, developer intended
+        || items.canLayBombs() // morph and bomb through the track, developer intended
       );
     };
 

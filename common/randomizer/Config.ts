@@ -36,6 +36,7 @@ export class Config {
     new Option('floatyJump', OptionType.BOOLEAN, 1, true),
     new Option('dashing', OptionType.BOOLEAN, 1, true),
     new Option('standableTerrain', OptionType.BOOLEAN, 1, true),
+    new Option('damageBoostPoisonOrLava', OptionType.BOOLEAN, 1, true),
     new Option('lJumping', OptionType.BOOLEAN, 1, true),
     new Option('rJumping', OptionType.BOOLEAN, 1, true),
     new Option('ghettoJumping', OptionType.BOOLEAN, 1, true),
