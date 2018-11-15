@@ -4,6 +4,7 @@ import { Item } from '../Item';
 import { ItemCollection } from '../collection/ItemCollection';
 import { PrimeItem } from '../enums/PrimeItem';
 import { PrimeLocation } from '../enums/PrimeLocation';
+import { settings } from 'cluster';
 
 export class ChozoRuins extends Region {
   constructor() {
@@ -88,7 +89,7 @@ export class ChozoRuins extends Region {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
 
-      return (settings.standableTerrain && settings.dashing) || items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+      return (settings.standableTerrain && settings.dashing) || items.has(PrimeItem.MORPH_BALL) || (!settings.obfuscateItems || items.has(PrimeItem.SPACE_JUMP_BOOTS));
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_HALF_PIPE).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -292,7 +293,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.ANTECHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasReflectingPoolReqs(settings) && items.hasMissiles() && (!settings.noVanillaBeams || items.has(PrimeItem.ICE_BEAM));
+      return items.hasReflectingPoolReqs(settings) && items.hasMissiles() && (!(settings.noVanillaBeams && settings.obfuscateItems) || items.has(PrimeItem.ICE_BEAM));
     };
     this.locations.get(PrimeLocation.ANTECHAMBER).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
