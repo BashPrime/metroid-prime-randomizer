@@ -1,3 +1,6 @@
+import { MersenneTwister } from '../MersenneTwister';
+import { Utilities } from '../../Utilities';
+
 export class Collection {
   protected items: Array<any>;
 
@@ -38,5 +41,16 @@ export class Collection {
 
   public toArray(): Array<any> {
     return this.items;
+  }
+
+  public randomArray(size: number = 1, rng: MersenneTwister) {
+    const oldItems = this.toArray();
+    let newItems = [];
+
+    while (size-- > 0 && oldItems.length > 0) {
+      newItems = newItems.concat(oldItems.splice(Utilities.getRandomInt(0, oldItems.length - 1, rng), 1));
+    }
+
+    return newItems;
   }
 }

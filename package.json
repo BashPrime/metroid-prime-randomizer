@@ -44,7 +44,9 @@
     "bulma": "^0.7.1",
     "crypto-js": "^3.1.9-1",
     "electron-progressbar": "^1.1.0",
-    "ngx-clipboard": "^11.1.1"
+    "ngx-clipboard": "^11.1.1",
+    "node-addon-api": "1.5.0",
+    "napi-thread-safe-callback": "^0.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",

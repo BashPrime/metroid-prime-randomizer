@@ -35,13 +35,9 @@ export class Patcher {
     // Open indeterminate progress bar
     const progressBar = new ProgressBar({
       title: 'Generating Seed',
-      text: 'Getting Ready...'
+      text: 'Getting Ready...',
+      indeterminate: false
     });
-
-    progressBar
-      .on('completed', () => {
-        progressBar.text = 'Completed!';
-      });
 
     progressBar.text = 'Placing items...';
 
@@ -90,11 +86,12 @@ export class Patcher {
         const messageObj: { type: string, percent: number, msg: string } = JSON.parse(message);
         switch (messageObj.type) {
           case 'progress': {
-            event.sender.send('patch-progress', messageObj);
+            // event.sender.send('patch-progress', messageObj);
+            progressBar.value = messageObj.percent;
+            progressBar.detail = messageObj.msg;
             break;
           }
           case 'success': {
-            progressBar.setCompleted();
             event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
             break;
           }
@@ -110,8 +107,8 @@ export class Patcher {
         }
       });
     } else {
+      progressBar.close();
       event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
-      progressBar.setCompleted();
     }
   }
 
