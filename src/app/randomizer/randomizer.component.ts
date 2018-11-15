@@ -62,7 +62,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'info',
         title: 'Success',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
     });
 
@@ -73,7 +74,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
     });
   }
