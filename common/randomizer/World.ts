@@ -48,6 +48,10 @@ export class World {
     return this.regions;
   }
 
+  public getRegion(name: string): Region {
+    return this.regions.find(region => region.getName() === name);
+  }
+
   public getLocations(): Array<Location> {
     return this.locations;
   }
@@ -110,7 +114,7 @@ export class World {
       for (const location of newLocations.toArray()) {
         newLocationsObj[location.getName()] = location.getItem().getName();
       }
-      
+
       if (newLocations.size() > 0) {
         walkthrough.push(newLocationsObj);
       }

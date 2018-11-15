@@ -1,5 +1,6 @@
 import { World } from './World';
 import { Item } from './Item';
+import { Location } from './Location';
 import { MersenneTwister } from './MersenneTwister';
 import { Filler } from './Filler';
 import { RandomAssumed } from './filler/RandomAssumed';
@@ -10,6 +11,7 @@ import { PrimeLocation } from './enums/PrimeLocation';
 import { RandomizerArtifacts } from './enums/RandomizerArtifacts';
 import { Utilities } from '../Utilities';
 import * as crypto from 'crypto-js';
+import { LocationCollection } from './collection/LocationCollection';
 
 export class Randomizer {
   private config: any;
@@ -53,11 +55,14 @@ export class Randomizer {
     const itemFiller = new RandomAssumed(this.world, this.rng);
 
     try {
-      // First, fill items that are not being shuffled in the seed.
+      // Fill items that are not being shuffled in the seed.
       this.fillUnshuffledItems(settings);
 
-      // Next, fill any rooms that are completely restricted to logic and artifacts with expansions
+      // Fill any rooms that are completely restricted to logic and artifacts with expansions
       this.fillRestrictedRooms(settings);
+
+      // Prefill a random number of Chozo Ruins locations with junk to reduce item bias
+      this.fillChozoWithJunk();
 
       // Place Phazon Suit in a "lategame"/high item tier location, if setting is checked
       this.placeNoEarlyPhazonSuit(itemFiller, settings);
@@ -168,6 +173,22 @@ export class Randomizer {
     });
 
     return items;
+  }
+
+  private fillChozoWithJunk(): void {
+    // Fill up to 3/4 of available Chozo Ruins locations with junk items to reduce bias
+    const chozoRuinsLocations = this.world.getRegion('Chozo Ruins').getLocationsArray().filter(location => {
+      // Hive Totem needs to be open for most logics so don't include it in locations list
+      return location.getName() !== PrimeLocation.HIVE_TOTEM && !location.hasItem();
+    });
+    const maxJunkRooms = Math.floor(chozoRuinsLocations.length * 0.75);
+    const junkChozoLocations = new LocationCollection(chozoRuinsLocations).randomArray(Utilities.getRandomInt(0, maxJunkRooms, this.rng), this.rng) as Location[];
+
+    for (const location of junkChozoLocations) {
+      location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+    }
+
+    this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - junkChozoLocations.length);
   }
 
   private fillProgressiveItems(itemFiller: RandomAssumed, settings: any): void {
@@ -420,17 +441,17 @@ export class Randomizer {
         PrimeLocation.FUNGAL_HALL_B,
         PrimeLocation.FUNGAL_HALL_ACCESS
       ];
-  
+
       if (settings.phazonMiningTunnelNoPhazonSuit) {
         phazonLocations.push(PrimeLocation.PHAZON_MINING_TUNNEL);
       }
-  
+
       const availableLocations = phazonLocations.filter(item => {
         return !locations.get(item).hasItem();
       });
-  
+
       const locationToFill = itemFiller.shuffleInPlace(availableLocations)[0];
-  
+
       locations.get(locationToFill).setItem(Item.get(PrimeItem.PHAZON_SUIT));
       this.itemPool.set(PrimeItem.PHAZON_SUIT, 0);
     }
