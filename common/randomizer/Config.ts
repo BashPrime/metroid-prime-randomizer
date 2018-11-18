@@ -26,6 +26,7 @@ export class Config {
     new Option('requireVisors', OptionType.BOOLEAN, 1, true),
     new Option('noReversePhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', OptionType.BOOLEAN, 1, true),
+    new Option('noBoostBallLowerMinesGlitched', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', OptionType.BOOLEAN, 1, true),
     new Option('ibbf', OptionType.BOOLEAN, 1, true),
     new Option('trainingChamberOOB', OptionType.BOOLEAN, 1, true),

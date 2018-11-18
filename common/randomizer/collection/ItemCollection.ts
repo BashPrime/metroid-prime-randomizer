@@ -308,7 +308,10 @@ export class ItemCollection extends Collection {
 
   // Base requirements to climb out top side of Ventilation Shaft
   public canClimbVentShaft(settings) {
-    return ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))) || this.has(PrimeItem.BOOST_BALL);
+    return this.has(PrimeItem.BOOST_BALL) || (
+      !settings.noBoostBallLowerMinesGlitched
+      && ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS)))
+    );
   }
 
   public hasMinesReqsTallonSouth(settings): boolean {
