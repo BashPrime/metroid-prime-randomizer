@@ -256,7 +256,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         });
       }
     } catch {
-      console.error(new TypeError('Base64 invalid').toString());
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',

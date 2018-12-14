@@ -89,7 +89,6 @@ export class Randomizer {
 
       return true;
     } catch (err) {
-      console.log('Error when filling items: ' + err);
       return false;
     }
   }
