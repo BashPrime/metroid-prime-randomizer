@@ -284,7 +284,11 @@
         <div class="field">
           <label>Number of Energy Tanks Required</label>
           <div class="control">
-            <input class="input" type="number" formControlName="vmrTanks" min="5" max="14">
+            <div class="select">
+              <select formControlName="vmrTanks">
+                <option *ngFor="let tank of vmrEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="field">
@@ -297,7 +301,11 @@
         <div class="field">
           <label>Number of Energy Tanks Required</label>
           <div class="control">
-            <input class="input" type="number" formControlName="earlyMagmoorNoSuitTanks" min="7" max="14">
+            <div class="select">
+              <select formControlName="earlyMagmoorNoSuitTanks">
+                <option *ngFor="let tank of earlyMagmoorEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
