@@ -51,7 +51,7 @@ export class TallonOverworld extends Region {
 
     this.locations.get(PrimeLocation.ARBOR_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (items.has(PrimeItem.PLASMA_BEAM) || settings.rootCaveSW) // plasma or wallcrawl from root cave
+        && (items.has(PrimeItem.PLASMA_BEAM) || (settings.rootCaveSW && items.canWallcrawl(settings))) // plasma or wallcrawl from root cave
         && (items.has(PrimeItem.GRAPPLE_BEAM) || settings.dashing) // allow dashing to skip grapple beam
         && (items.has(PrimeItem.XRAY_VISOR) || !settings.requireVisors); // Require Visors check, invisible platforms
     };
