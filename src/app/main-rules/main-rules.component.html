@@ -7,13 +7,13 @@
           <label>Goal</label>
           <div class="control">
             <div class="select">
-              <select>
+              <select formControlName="goal">
                 <option *ngFor="let goal of goals" value="{{ goal.value }}">{{ goal.name }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="field">
+        <div class="field" *ngIf="settingsForm.get('goal').value === defaultGoal">
           <label>Number of Artifacts</label>
           <div class="control">
             <div class="select">

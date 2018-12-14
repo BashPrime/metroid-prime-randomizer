@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
+import { Goal } from '../../../common/randomizer/enums/goal';
 import { Config } from '../../../common/randomizer/Config';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
@@ -94,6 +95,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       skipFrigate: [true],
       skipHudPopups: [true],
       obfuscateItems: [false],
+      goal: [Goal.ARTIFACTS],
       shuffleArtifacts: [true],
       shuffleMissileLauncher: [true],
       shuffleMorph: [true],
@@ -152,6 +154,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       skipFrigate: true,
       skipHudPopups: true,
       obfuscateItems: false,
+      goal: Goal.ARTIFACTS,
       shuffleArtifacts: true,
       shuffleMissileLauncher: true,
       shuffleMorph: true,
@@ -258,7 +261,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   }
 
   getNewSeed() {
-    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, 999999999) });
+    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, Number.MAX_SAFE_INTEGER) });
   }
 
   importSettingsFromFile() {
