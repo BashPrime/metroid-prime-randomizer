@@ -28,7 +28,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   settings = {};
   permalink = '';
   private settingsString = '';
+  submitted = false;
   valueSub: any;
+  maxSafeInteger = Number.MAX_SAFE_INTEGER;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -41,6 +43,10 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.importSettingsFromFile();
+
+    this.randomizerService.getSubmittedFlag().subscribe(submitted => {
+      this.submitted = submitted;
+    });
 
     this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
       this.permalink = this.getPermalink();
@@ -87,7 +93,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   createForm() {
     const fb = new FormBuilder();
     this.randomizerForm = fb.group({
-      seed: [''],
+      seed: [null, [Validators.min(1), Validators.max(this.maxSafeInteger)]],
       baseIso: ['', Validators.required],
       outputFolder: [''],
       generateRom: [true],
@@ -148,7 +154,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   resetSettings() {
     this.randomizerForm.patchValue({
-      seed: '',
+      seed: null,
       fileType: 'ciso',
       spoiler: true,
       skipFrigate: true,
