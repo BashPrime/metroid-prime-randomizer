@@ -70,7 +70,7 @@ export class TallonOverworld extends Region {
 
     this.locations.get(PrimeLocation.OVERGROWN_CAVERN).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.canClimbFrigateCrashSite(settings) // FCS Climb
-      || (items.hasReflectingPoolReqs(settings) && items.canLayBombs()); // Through late chozo
+      || (items.hasReflectingPoolReqs(settings) && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)); // Through late chozo
     };
 
     this.locations.get(PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA).canFillItem = function (item: Item, items: ItemCollection): boolean {
