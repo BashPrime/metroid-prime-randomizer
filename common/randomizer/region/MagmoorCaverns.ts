@@ -91,11 +91,11 @@ export class MagmoorCaverns extends Region {
       // workstation or burning trail wallcrawl
       if (settings.workstationToPlasmaProcessing) {
         return items.hasLateMagmoorItemReqs(settings) && items.canWallcrawl(settings)
-        && (items.has(PrimeItem.ICE_BEAM) || (!(settings.noVanillaBeams && settings.obfuscateItems) || items.has(PrimeItem.PLASMA_BEAM)));
+        && (items.has(PrimeItem.ICE_BEAM) || (!(settings.noVanillaBeams || settings.obfuscateItems) || items.has(PrimeItem.PLASMA_BEAM)));
       }
 
       return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)
-      && (!(settings.noVanillaBeams && settings.obfuscateItems) || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
+      && (!(settings.noVanillaBeams || settings.obfuscateItems) || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
       && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
       && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto to the bomb slot, spider track platforms
     };
