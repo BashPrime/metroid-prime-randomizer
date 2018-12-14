@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { RandomizerService } from '../services/randomizer.service';
-import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
+import { Utilities } from '../../../common/Utilities';
 
 @Component({
   selector: 'app-main-rules',
@@ -11,12 +10,13 @@ import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogi
 })
 export class MainRulesComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
-  dropdowns: any = {};
-  defaultLogic = RandomizerLogic.NO_GLITCHES;
+  goals = [
+    { name: 'Artifact Collection', value: 'artifacts' },
+    { name: 'All Bosses', value: 'all-bosses' }
+  ];
+  artifactCount = Utilities.numberRange(0, 12);
 
-  constructor(private randomizerService: RandomizerService) {
-    this.dropdowns = this.randomizerService.getSettings();
-  }
+  constructor() {}
 
   ngOnInit() {}
 

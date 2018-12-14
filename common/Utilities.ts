@@ -36,4 +36,8 @@ export class Utilities {
         return path.join(app.getAppPath(), '../../');
       }
     }
+
+    static numberRange(start: number, end: number) {
+      return Array.from({ length: end - start + 1 }, (x, i) => start + i);
+    }
 }

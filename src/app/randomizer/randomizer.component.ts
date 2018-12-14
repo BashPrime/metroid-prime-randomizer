@@ -3,11 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
-import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
 import { Config } from '../../../common/randomizer/Config';
-import { OptionType } from '../../../common/randomizer/Option';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
@@ -25,9 +21,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   selectedTab = 0;
   patching = false;
   randomizerForm: FormGroup;
-  settings = {};
   permalink = '';
-  private settingsString = '';
   submitted = false;
   valueSub: any;
   maxSafeInteger = Number.MAX_SAFE_INTEGER;
@@ -36,9 +30,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
     public electronService: ElectronService
-  ) {
-    this.settings = this.randomizerService.getSettings();
-  }
+  ) {}
 
   ngOnInit() {
     this.createForm();

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { Utilities } from '../../../common/Utilities';
+
 @Component({
   selector: 'app-item-logic',
   templateUrl: './item-logic.component.html',
@@ -8,16 +10,11 @@ import { FormGroup } from '@angular/forms';
 })
 export class ItemLogicComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
-  vmrEtanks = this.numberRange(3, 14);
-  earlyMagmoorEtanks = this.numberRange(7, 14);
+  vmrEtanks = Utilities.numberRange(3, 14);
+  earlyMagmoorEtanks = Utilities.numberRange(7, 14);
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  private numberRange(start: number, end: number) {
-    return Array.from({ length: end - start + 1 }, (x, i) => start + i);
-  }
-
 }

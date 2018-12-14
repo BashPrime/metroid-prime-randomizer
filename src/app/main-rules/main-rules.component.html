@@ -1,6 +1,31 @@
 <form [formGroup]="settingsForm">
   <div class="columns">
     <div class="column">
+      <p class="label">Goal</p>
+      <div class="box">
+        <div class="field">
+          <label>Goal</label>
+          <div class="control">
+            <div class="select">
+              <select>
+                <option *ngFor="let goal of goals" value="{{ goal.value }}">{{ goal.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Number of Artifacts</label>
+          <div class="control">
+            <div class="select">
+              <select>
+                <option *ngFor="let number of artifactCount" [ngValue]="number">{{ number }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
       <p class="label">Shuffle</p>
       <div class="box">
         <div class="field">
