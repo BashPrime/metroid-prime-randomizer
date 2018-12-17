@@ -3,7 +3,8 @@ import { Type } from "@angular/compiler/src/core";
 export enum OptionType {
     NUMBER,
     STRING,
-    BOOLEAN
+    BOOLEAN,
+    DROPDOWN
 }
 
 export class Option {

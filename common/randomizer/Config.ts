@@ -10,6 +10,9 @@ export class Config {
     new Option('skipHudPopups', OptionType.BOOLEAN, 1, true),
     new Option('obfuscateItems', OptionType.BOOLEAN, 1, true),
     // Main Rules
+    new Option('goal', OptionType.DROPDOWN, 1, true),
+    new Option('goalArtifacts', OptionType.NUMBER, 4, true),
+    new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMissileLauncher', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMorph', OptionType.BOOLEAN, 1, true),
@@ -59,6 +62,12 @@ export class Config {
     new Option('earlyMagmoorNoSuit', OptionType.BOOLEAN, 1, true),
     new Option('earlyMagmoorNoSuitTanks', OptionType.NUMBER, 4, true, 7, 14),
   ];
+  private optionDropdowns = {
+    goal: [
+      { name: 'Artifact Collection', value: 'artifacts' },
+      { name: 'All Bosses', value: 'all-bosses' }
+    ]
+  };
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
   settingsToBase32Text(settings): string {
@@ -80,6 +89,11 @@ export class Config {
             settings[key] = configOption.maxValue;
           }
           bitString += Utilities.toPaddedBitString(settings[key], configOption.bitWidth);
+          break;
+        }
+        case OptionType.DROPDOWN: {
+          const optionIndex = this.getDropdownValueIndex(configOption.name, settings[key]);
+          bitString += Utilities.toPaddedBitString(optionIndex, configOption.bitWidth);
           break;
         }
       }
@@ -127,6 +141,9 @@ export class Config {
           settings[option.name] = parseInt(currentBits, 2);
           break;
         }
+        case OptionType.DROPDOWN: {
+          settings[option.name] = this.optionDropdowns[option.name][parseInt(currentBits, 2)].value;
+        }
       }
       index += bitWidth;
     }
@@ -149,5 +166,13 @@ export class Config {
 
   getOptionByName(name: string) {
     return this.options.find(item => item.name === name);
+  }
+
+  getDropdownsForField(key: string) {
+    return this.optionDropdowns[key];
+  }
+
+  getDropdownValueIndex(key: string, value: string) {
+    return this.optionDropdowns[key].map(dropdown => dropdown.value).indexOf(value);
   }
 }

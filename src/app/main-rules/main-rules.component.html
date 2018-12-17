@@ -17,7 +17,7 @@
           <label>Number of Artifacts</label>
           <div class="control">
             <div class="select">
-              <select>
+              <select formControlName="goalArtifacts">
                 <option *ngFor="let number of artifactCount" [ngValue]="number">{{ number }}</option>
               </select>
             </div>
