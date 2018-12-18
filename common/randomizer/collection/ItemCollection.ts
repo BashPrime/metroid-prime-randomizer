@@ -178,7 +178,7 @@ export class ItemCollection extends Collection {
 
   public canCrossMagmaPool(settings: any): boolean {
     return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasAnySuit())) // E tank or suit for safety
-    || (settings.damageBoostPoisonOrLava && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
+    || (settings.damageBoostLiquids && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
     || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
@@ -191,7 +191,7 @@ export class ItemCollection extends Collection {
 
   public hasEarlyMagmoorItemReqs(settings: any): boolean {
     return this.hasMissiles() && (this.hasAnySuit() || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks))) && (
-      settings.damageBoostPoisonOrLava // damage boost through lava from Tallon elevator
+      settings.damageBoostLiquids // damage boost through lava from Tallon elevator
       || (this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || this.has(PrimeItem.GRAPPLE_BEAM))) // developer intended through Lava Lake/Fiery Shores
     );
   }
@@ -202,7 +202,7 @@ export class ItemCollection extends Collection {
       (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
       || (
         (settings.standableTerrain && (settings.dashing || settings.rJumping)) // dash or r jump across terrain
-        || (settings.damageBoostPoisonOrLava && ((settings.dbj && this.canLayBombs()) || this.has(PrimeItem.GRAVITY_SUIT))) // damage boost through lava with a DBJ or jump out with gravity
+        || (settings.damageBoostLiquids && ((settings.dbj && this.canLayBombs()) || this.has(PrimeItem.GRAVITY_SUIT))) // damage boost through lava with a DBJ or jump out with gravity
       ) // cross Twin Fires Tunnel without morph or spider
     )
     && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings

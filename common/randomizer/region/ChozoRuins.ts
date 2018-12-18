@@ -208,7 +208,7 @@ export class ChozoRuins extends Region {
 
     this.locations.get(PrimeLocation.WATERY_HALL_UNDERWATER).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-      && (settings.damageBoostPoisonOrLava || items.has(PrimeItem.MORPH_BALL_BOMB)) // either damage boost or require flaahgra
+      && (settings.damageBoostLiquids || items.has(PrimeItem.MORPH_BALL_BOMB)) // either damage boost or require flaahgra
       && (
         settings.ghettoJumping // ghetto jump off side wall underwater
         || items.has(PrimeItem.GRAVITY_SUIT) // developer intended
