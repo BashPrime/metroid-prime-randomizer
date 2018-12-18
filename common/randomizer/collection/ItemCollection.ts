@@ -125,7 +125,7 @@ export class ItemCollection extends Collection {
   public hasCrashedFrigateReqs(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
-    && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireVisors) // Thermal Visor for power conduits
+    && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireThermal) // Thermal Visor for power conduits
   }
 
   public hasLateChozoReqs(settings: any): boolean {
@@ -246,20 +246,20 @@ export class ItemCollection extends Collection {
 
   // base requirements to enter Quarantine Cave from Ruined Courtyard
   public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
-    return this.canFireSuperMissiles() && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    return this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
   public canExitQuarantineCaveToMagmoorSouth(settings: any): boolean {
     return (this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM))
-    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to Ruined Courtyard
   // Require Super Missiles or bombs so you don't softlock in front Phendrana
   public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
     return (this.canFireSuperMissiles() || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL))
-    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit the ice door at the top of the Magmoor South elevator room
@@ -333,7 +333,7 @@ export class ItemCollection extends Collection {
     return this.hasUpperMinesAccess(settings) && this.canLayBombs()
       && this.canLayPowerBombs() && this.has(PrimeItem.PLASMA_BEAM)
       && this.canClimbVentShaft(settings) && this.canClimbMinesSpiderShafts(settings) && this.canClimbOreProcessing(settings) // climb out to/of upper mines
-      && (!settings.requireVisors || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
+      && (!settings.requireXRay || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
       && ((settings.standableTerrain && settings.ghettoJumping && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
       && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
   }

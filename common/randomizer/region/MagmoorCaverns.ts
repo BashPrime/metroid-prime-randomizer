@@ -31,7 +31,7 @@ export class MagmoorCaverns extends Region {
 
     this.locations.get(PrimeLocation.TRICLOPS_PIT).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
+        && (!settings.requireXRay || items.has(PrimeItem.XRAY_VISOR));
     };
 
     this.locations.get(PrimeLocation.STORAGE_CAVERN).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -107,7 +107,7 @@ export class MagmoorCaverns extends Region {
 
     this.locations.get(PrimeLocation.MAGMOOR_WORKSTATION).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // power conduits
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // power conduits
     };
   }
 }

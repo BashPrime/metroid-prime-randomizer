@@ -96,7 +96,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
         && (!settings.noSpiderBallInQuarantineCave || items.has(PrimeItem.SPIDER_BALL))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
     };
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -107,7 +107,7 @@ export class PhendranaDrifts extends Region {
     this.locations.get(PrimeLocation.QUARANTINE_MONITOR).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings) && items.has(PrimeItem.SPIDER_BALL)
         && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // for Thardus
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // for Thardus
     };
 
     this.locations.get(PrimeLocation.RESEARCH_LAB_HYDRA).canFillItem = function (item: Item, items: ItemCollection): boolean {

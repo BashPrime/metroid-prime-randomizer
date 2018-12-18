@@ -34,7 +34,7 @@ export class PhazonMines extends Region {
     this.locations.get(PrimeLocation.MAIN_QUARRY).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasUpperMinesAccess(settings)
         && (items.hasMinesReqsMagmoorSouth(settings) ? items.canLayBombs() : true) // require bombs if coming from Magmoor
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)) // power conduits
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)) // power conduits
         && ((settings.standableTerrain && settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto and l jump to the crane
     };
 
@@ -61,7 +61,7 @@ export class PhazonMines extends Region {
 
     this.locations.get(PrimeLocation.ELITE_RESEARCH_LASER).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasUpperMinesAccess(settings) && items.has(PrimeItem.BOOST_BALL) && items.canLayBombs() // spinner manip is trash so I'm not implementing it here
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)); // visor requirement
+        && (!settings.requireXRay || items.has(PrimeItem.XRAY_VISOR)); // visor requirement
     };
 
     this.locations.get(PrimeLocation.STORAGE_DEPOT_B).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -74,7 +74,7 @@ export class PhazonMines extends Region {
       return items.hasUpperMinesAccess(settings) && items.canLayBombs() && items.canLayPowerBombs()
         && items.has(PrimeItem.PLASMA_BEAM)
         && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings)
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
+        && (!settings.requireXRay || items.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
         && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || items.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
     };
 
@@ -89,13 +89,13 @@ export class PhazonMines extends Region {
 
     this.locations.get(PrimeLocation.FUNGAL_HALL_B).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasLowerMinesAccess(settings)
-        && (!settings.requireVisors || (items.has(PrimeItem.THERMAL_VISOR) || items.has(PrimeItem.XRAY_VISOR))); // visor requirement
+        && ((!settings.requireThermal && !settings.requireXRay) || (items.has(PrimeItem.THERMAL_VISOR) || items.has(PrimeItem.XRAY_VISOR))); // visor requirement
     };
 
     this.locations.get(PrimeLocation.METROID_QUARANTINE_A).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasUpperMinesAccess(settings) && items.canLayPowerBombs()
         && items.canClimbVentShaft(settings) && items.canClimbMinesSpiderShafts(settings) && items.canClimbOreProcessing(settings)
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR)) // invisible platforms
+        && (!settings.requireXRay || items.has(PrimeItem.XRAY_VISOR)) // invisible platforms
         && ((settings.ghettoJumping && settings.standableTerrain && settings.dashing) || items.has(PrimeItem.SPIDER_BALL));
     };
 
