@@ -12,6 +12,8 @@ import { RandomizerArtifacts } from './enums/RandomizerArtifacts';
 import { Utilities } from '../Utilities';
 import * as crypto from 'crypto-js';
 import { LocationCollection } from './collection/LocationCollection';
+import { ItemCollection } from './collection/ItemCollection';
+import { Goal } from './enums/goal';
 
 export class Randomizer {
   private config: any;
@@ -47,14 +49,18 @@ export class Randomizer {
   }
 
   private fillItems(): boolean {
+    const settings = this.config;
     this.world = new World(this.config);
     this.rng = new MersenneTwister(this.seed);
-    this.itemPool = this.getInitialItemPool();
-
-    const settings = this.config;
+    this.itemPool = this.getInitialItemPool(settings);
     const itemFiller = new RandomAssumed(this.world, this.rng);
 
     try {
+      // If the goal is All Bosses, fill the boss rooms with artifacts.
+      if (settings.goal === Goal.ALL_BOSSES) {
+        this.fillBossRoomsWithArtifacts();
+      }
+
       // Fill items that are not being shuffled in the seed.
       this.fillUnshuffledItems(settings);
 
@@ -113,7 +119,9 @@ export class Randomizer {
     return parseInt(strHash.substr(0, safeHexChars - 1), 16);
   }
 
-  private getInitialItemPool(): Map<string, number> {
+  private getInitialItemPool(settings: any): Map<string, number> {
+    const emptyArtifactSlots = settings.goal === Goal.ALL_BOSSES ? 9 : 12 - settings.goalArtifacts;
+
     const itemPool = new Map<string, number>();
     itemPool.set(PrimeItem.MISSILE_LAUNCHER, 1);
     itemPool.set(PrimeItem.MORPH_BALL, 1);
@@ -136,21 +144,41 @@ export class Randomizer {
     itemPool.set(PrimeItem.WAVEBUSTER, 1);
     itemPool.set(PrimeItem.ICE_SPREADER, 1);
     itemPool.set(PrimeItem.FLAMETHROWER, 1);
-    itemPool.set(PrimeItem.MISSILE_EXPANSION, 49);
+
+    // Add more missile expansions the less artifacts that are in the seed
+    itemPool.set(PrimeItem.MISSILE_EXPANSION, 49 + emptyArtifactSlots);
+
     itemPool.set(PrimeItem.ENERGY_TANK, 14);
     itemPool.set(PrimeItem.POWER_BOMB_EXPANSION, 4);
-    itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_WILD, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_NATURE, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 1);
-    itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 1);
+
+    // Initially set artifacts pool, all set to 0
+    itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WILD, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_NATURE,0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 0);
+
+    // If the goal isn't All Bosses, 
+    if (settings.goal !== Goal.ALL_BOSSES) {
+      let artifacts: string[];
+
+      if (settings.goalArtifacts === 12) {
+        artifacts = this.getArtifactsAsCollection().toArray().map(artifact => artifact.getName());
+      } else {
+        artifacts = this.getArtifactsAsCollection().randomArray(settings.goalArtifacts, this.rng).map(artifact => artifact.getName());
+      }
+
+      for (const artifact of artifacts) {
+        itemPool.set(artifact, 1);
+      }
+    }
 
     return itemPool;
   }
@@ -280,31 +308,26 @@ export class Randomizer {
     const locations = this.world.getLocationsMap();
 
     // Chozo Artifacts
-    if (!settings.shuffleArtifacts) {
-      locations.get(PrimeLocation.ARTIFACT_TEMPLE).setItem(Item.get(PrimeItem.ARTIFACT_OF_TRUTH));
-      locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).setItem(Item.get(PrimeItem.ARTIFACT_OF_CHOZO));
-      locations.get(PrimeLocation.TOWER_CHAMBER).setItem(Item.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
-      locations.get(PrimeLocation.SUNCHAMBER_GHOSTS).setItem(Item.get(PrimeItem.ARTIFACT_OF_WILD));
-      locations.get(PrimeLocation.ELDER_CHAMBER).setItem(Item.get(PrimeItem.ARTIFACT_OF_WORLD));
-      locations.get(PrimeLocation.LAVA_LAKE).setItem(Item.get(PrimeItem.ARTIFACT_OF_NATURE));
-      locations.get(PrimeLocation.WARRIOR_SHRINE).setItem(Item.get(PrimeItem.ARTIFACT_OF_STRENGTH));
-      locations.get(PrimeLocation.CONTROL_TOWER).setItem(Item.get(PrimeItem.ARTIFACT_OF_ELDER));
-      locations.get(PrimeLocation.CHOZO_ICE_TEMPLE).setItem(Item.get(PrimeItem.ARTIFACT_OF_SUN));
-      locations.get(PrimeLocation.STORAGE_CAVE).setItem(Item.get(PrimeItem.ARTIFACT_OF_SPIRIT));
-      locations.get(PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE).setItem(Item.get(PrimeItem.ARTIFACT_OF_WARRIOR));
-      locations.get(PrimeLocation.PHAZON_MINING_TUNNEL).setItem(Item.get(PrimeItem.ARTIFACT_OF_NEWBORN));
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_TRUTH, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_STRENGTH, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_ELDER, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_WILD, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_NATURE, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
-      this.itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 0);
+    if (!settings.shuffleArtifacts && settings.goal !== Goal.ALL_BOSSES) {
+      const artifactLocations: { location: string, artifact: string }[] = [
+        { location: PrimeLocation.ARTIFACT_TEMPLE, artifact: PrimeItem.ARTIFACT_OF_TRUTH },
+        { location: PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER, artifact: PrimeItem.ARTIFACT_OF_CHOZO },
+        { location: PrimeLocation.TOWER_CHAMBER, artifact: PrimeItem.ARTIFACT_OF_LIFEGIVER },
+        { location: PrimeLocation.SUNCHAMBER_GHOSTS, artifact: PrimeItem.ARTIFACT_OF_WILD },
+        { location: PrimeLocation.ELDER_CHAMBER, artifact: PrimeItem.ARTIFACT_OF_WORLD },
+        { location: PrimeLocation.LAVA_LAKE, artifact: PrimeItem.ARTIFACT_OF_NATURE },
+        { location: PrimeLocation.WARRIOR_SHRINE, artifact: PrimeItem.ARTIFACT_OF_STRENGTH },
+        { location: PrimeLocation.CONTROL_TOWER, artifact: PrimeItem.ARTIFACT_OF_ELDER },
+        { location: PrimeLocation.CHOZO_ICE_TEMPLE, artifact: PrimeItem.ARTIFACT_OF_SUN },
+        { location: PrimeLocation.STORAGE_CAVE, artifact: PrimeItem.ARTIFACT_OF_SPIRIT },
+        { location: PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE, artifact: PrimeItem.ARTIFACT_OF_WARRIOR },
+        { location: PrimeLocation.PHAZON_MINING_TUNNEL, artifact: PrimeItem.ARTIFACT_OF_NEWBORN }
+      ].filter(artifactLocation => this.itemPool.get(artifactLocation.artifact) > 0);
+
+      for(const artifactLocation of artifactLocations) {
+        locations.get(artifactLocation.location).setItem(Item.get(artifactLocation.artifact));
+        this.itemPool.set(artifactLocation.artifact, 0);
+      }
     }
 
     // Missile Launcher
@@ -375,6 +398,20 @@ export class Randomizer {
           this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
         }
       }
+    }
+  }
+
+  private fillBossRoomsWithArtifacts(): void {
+    const locations = this.world.getLocationsMap();
+    const bossLocations = [
+      PrimeLocation.SUNCHAMBER_FLAAHGRA,
+      PrimeLocation.QUARANTINE_CAVE,
+      PrimeLocation.ELITE_QUARTERS
+    ];
+    const artifacts = this.getArtifactsAsCollection().randomArray(bossLocations.length, this.rng).map(artifact => artifact.getName());
+
+    for (let i = 0; i < bossLocations.length; i++) {
+      locations.get(bossLocations[i]).setItem(Item.get(artifacts[i]));
     }
   }
 
@@ -454,5 +491,22 @@ export class Randomizer {
       locations.get(locationToFill).setItem(Item.get(PrimeItem.PHAZON_SUIT));
       this.itemPool.set(PrimeItem.PHAZON_SUIT, 0);
     }
+  }
+
+  private getArtifactsAsCollection() {
+    return new ItemCollection([
+      Item.get(PrimeItem.ARTIFACT_OF_TRUTH),
+      Item.get(PrimeItem.ARTIFACT_OF_STRENGTH),
+      Item.get(PrimeItem.ARTIFACT_OF_ELDER),
+      Item.get(PrimeItem.ARTIFACT_OF_WILD),
+      Item.get(PrimeItem.ARTIFACT_OF_LIFEGIVER),
+      Item.get(PrimeItem.ARTIFACT_OF_WARRIOR),
+      Item.get(PrimeItem.ARTIFACT_OF_CHOZO),
+      Item.get(PrimeItem.ARTIFACT_OF_NATURE),
+      Item.get(PrimeItem.ARTIFACT_OF_SUN),
+      Item.get(PrimeItem.ARTIFACT_OF_WORLD),
+      Item.get(PrimeItem.ARTIFACT_OF_SPIRIT),
+      Item.get(PrimeItem.ARTIFACT_OF_NEWBORN)
+    ]);
   }
 }

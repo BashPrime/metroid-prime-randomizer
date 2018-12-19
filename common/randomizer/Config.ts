@@ -1,5 +1,6 @@
 import { Option, OptionType } from './Option';
 import { Utilities } from '../Utilities';
+import { Goal } from './enums/goal';
 
 export class Config {
   options = [
@@ -65,8 +66,8 @@ export class Config {
   ];
   private optionDropdowns = {
     goal: [
-      { name: 'Artifact Collection', value: 'artifacts' },
-      { name: 'All Bosses', value: 'all-bosses' }
+      { name: 'Artifact Collection', value: Goal.ARTIFACTS },
+      { name: 'All Bosses', value: Goal.ALL_BOSSES }
     ]
   };
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
