@@ -40,7 +40,7 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.ARTIFACT_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles();
+      return settings.goalArtifacts > 0 && items.hasMissiles();
     };
 
     this.locations.get(PrimeLocation.ROOT_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
