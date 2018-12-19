@@ -120,7 +120,8 @@ export class Randomizer {
   }
 
   private getInitialItemPool(settings: any): Map<string, number> {
-    const emptyArtifactSlots = settings.goal === Goal.ALL_BOSSES ? 9 : 12 - settings.goalArtifacts;
+    const numberOfArtifacts = settings.goal === Goal.ALL_BOSSES ? 3 : settings.goalArtifacts;
+    const emptyArtifactSlots = 12 - numberOfArtifacts;
 
     const itemPool = new Map<string, number>();
     itemPool.set(PrimeItem.MISSILE_LAUNCHER, 1);
@@ -364,6 +365,7 @@ export class Randomizer {
   private fillRestrictedRooms(settings: any): void {
     const locations = this.world.getLocationsMap();
 
+    // Don't require Super Missiles
     if (settings.noSupers) {
       const noSupersLocations = [
         PrimeLocation.MAIN_PLAZA_TREE,
@@ -384,6 +386,7 @@ export class Randomizer {
       }
     }
 
+    // No progression items in Crashed Frigate
     if (settings.noCrashedFrigate) {
       const noFrigateLocations = [
         PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA,
@@ -392,6 +395,54 @@ export class Randomizer {
       ];
 
       for (let key of noFrigateLocations) {
+        const location = locations.get(key);
+        if (!location.hasItem()) {
+          location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+          this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+        }
+      }
+    }
+
+    // Don't require Flaahgra
+    if (settings.dontRequireFlaahgra) {
+      const flaahgraLocations = [
+        PrimeLocation.SUNCHAMBER_FLAAHGRA,
+        PrimeLocation.SUNCHAMBER_GHOSTS
+      ];
+
+      for (let key of flaahgraLocations) {
+        const location = locations.get(key);
+        if (!location.hasItem()) {
+          location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+          this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+        }
+      }
+    }
+
+    // Don't require Thardus
+    if (settings.dontRequireThardus) {
+      const thardusLocations = [
+        PrimeLocation.QUARANTINE_CAVE,
+        PrimeLocation.QUARANTINE_MONITOR
+      ];
+
+      for (let key of thardusLocations) {
+        const location = locations.get(key);
+        if (!location.hasItem()) {
+          location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));
+          this.itemPool.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION) - 1);
+        }
+      }
+    }
+
+    // Don't require Omega Pirate
+    if (settings.dontRequireOmegaPirate) {
+      const omegaPirateLocations = [
+        PrimeLocation.ELITE_QUARTERS,
+        PrimeLocation.PROCESSING_CENTER_ACCESS
+      ];
+
+      for (let key of omegaPirateLocations) {
         const location = locations.get(key);
         if (!location.hasItem()) {
           location.setItem(Item.get(PrimeItem.MISSILE_EXPANSION));

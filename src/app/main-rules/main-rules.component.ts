@@ -14,7 +14,7 @@ export class MainRulesComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
   goals: any[];
   artifactCount = Utilities.numberRange(0, 12);
-  defaultGoal = Goal.ARTIFACTS;
+  goalArtifacts = Goal.ARTIFACTS;
 
   constructor() {
     const config = new Config();

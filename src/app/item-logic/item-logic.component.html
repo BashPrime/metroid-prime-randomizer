@@ -37,7 +37,7 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No early Phazon Suit
+              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No Phazon Suit in early item locations
             </label>
           </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noCrashedFrigate"> Nothing in Crashed Frigate
+              <input type="checkbox" formControlName="noCrashedFrigate"> No progression items in Crashed Frigate
             </label>
           </div>
         </div>
@@ -59,13 +59,6 @@
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noVanillaBeams"> No beams in vanilla beam rooms
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="noSpiderBallInQuarantineCave"> No Spider Ball in Quarantine Cave
             </label>
           </div>
         </div>
@@ -83,6 +76,32 @@
               <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
               (Glitched Seeds)
             </label>
+          </div>
+        </div>
+        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <p class="label has-text-weight-semibold">Don't Require Bosses</p>
+        </div>
+        <div class="box" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireFlaahgra"> Flaahgra
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireThardus"> Thardus
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireOmegaPirate"> Omega Pirate
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -295,7 +314,7 @@
           </div>
         </div>
         <div class="field">
-          <label>Number of Energy Tanks Required</label>
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
             <div class="select">
               <select formControlName="vmrTanks">
@@ -312,7 +331,7 @@
           </div>
         </div>
         <div class="field">
-          <label>Number of Energy Tanks Required</label>
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
             <div class="select">
               <select formControlName="earlyMagmoorNoSuitTanks">

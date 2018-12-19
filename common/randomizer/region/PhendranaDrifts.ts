@@ -95,7 +95,6 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
-        && (!settings.noSpiderBallInQuarantineCave || items.has(PrimeItem.SPIDER_BALL))
         && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
     };
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canEscape = function (item: Item, items: ItemCollection): boolean {
