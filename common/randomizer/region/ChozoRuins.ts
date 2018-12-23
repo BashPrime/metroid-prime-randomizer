@@ -83,13 +83,15 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles();
+      return items.hasMissiles() && (
+        !settings.obfuscateItems || (items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      );
     };
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
 
-      return (settings.standableTerrain && settings.dashing) || items.has(PrimeItem.MORPH_BALL) || (!settings.obfuscateItems || items.has(PrimeItem.SPACE_JUMP_BOOTS));
+      return (settings.standableTerrain && settings.dashing) || items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_HALF_PIPE).canFillItem = function (item: Item, items: ItemCollection): boolean {
