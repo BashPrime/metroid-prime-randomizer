@@ -339,6 +339,6 @@ export class ItemCollection extends Collection {
   }
 
   public canFloatyJump(settings): boolean {
-    return settings.floatyJump && this.canWallcrawl(settings);
+    return settings.floatyJump && this.canWallcrawl(settings) && !this.has(PrimeItem.GRAVITY_SUIT);
   }
 }
