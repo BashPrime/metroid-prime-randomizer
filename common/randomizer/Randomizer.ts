@@ -410,6 +410,16 @@ export class Randomizer {
         PrimeLocation.SUNCHAMBER_GHOSTS
       ];
 
+      // Add Ruined Fountain to locations if standable terrain and l jumping are turned off.
+      if (!(settings.standableTerrain && settings.lJumping)) {
+        flaahgraLocations.push(PrimeLocation.RUINED_FOUNTAIN);
+      }
+
+      // Add Watery Hall Underwater if damage boost is turned off.
+      if (!settings.damageBoostLiquids) {
+        flaahgraLocations.push(PrimeLocation.WATERY_HALL_UNDERWATER);
+      }
+
       for (let key of flaahgraLocations) {
         const location = locations.get(key);
         if (!location.hasItem()) {
