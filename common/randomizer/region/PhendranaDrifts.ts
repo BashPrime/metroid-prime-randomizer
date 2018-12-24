@@ -69,7 +69,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.CHAPEL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFrontPhendranaAccess(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (!(settings.noVanillaBeams || settings.obfuscateItems) || items.has(PrimeItem.WAVE_BEAM)) // no vanilla beams handling
+        && (!(settings.noVanillaBeams || settings.hideItemIcons) || items.has(PrimeItem.WAVE_BEAM)) // no vanilla beams handling
         && (!(settings.infiniteSpeedEarlySun && settings.waveSun) || items.has(PrimeItem.BOOST_BALL)); // wave/sun IS needs boost ball
     };
     this.locations.get(PrimeLocation.CHAPEL_OF_THE_ELDERS).canEscape = function (item: Item, items: ItemCollection): boolean {
@@ -143,7 +143,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get(PrimeLocation.FROST_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && ((settings.ghettoJumping || !settings.obfuscateItems) || items.has(PrimeItem.GRAVITY_SUIT)) && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM));
+      return items.hasFarPhendranaAccess(settings) && ((settings.ghettoJumping || !settings.hideItemIcons) || items.has(PrimeItem.GRAVITY_SUIT)) && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM));
     };
 
     this.locations.get(PrimeLocation.STORAGE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {

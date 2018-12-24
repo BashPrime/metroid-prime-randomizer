@@ -9,7 +9,7 @@ export class Config {
     new Option('generateRom', null, null, false),
     new Option('skipFrigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', OptionType.BOOLEAN, 1, true),
-    new Option('obfuscateItems', OptionType.BOOLEAN, 1, true),
+    new Option('hideItemIcons', OptionType.BOOLEAN, 1, true),
     // Main Rules
     new Option('goal', OptionType.DROPDOWN, 1, true),
     new Option('goalArtifacts', OptionType.NUMBER, 4, true, 0, 12),
