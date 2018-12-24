@@ -3,11 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
-import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { Goal } from '../../../common/randomizer/enums/goal';
 import { Config } from '../../../common/randomizer/Config';
-import { OptionType } from '../../../common/randomizer/Option';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
@@ -25,22 +22,24 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   selectedTab = 0;
   patching = false;
   randomizerForm: FormGroup;
-  settings = {};
   permalink = '';
-  private settingsString = '';
+  submitted = false;
   valueSub: any;
+  maxSafeInteger = Number.MAX_SAFE_INTEGER;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
     public electronService: ElectronService
-  ) {
-    this.settings = this.randomizerService.getSettings();
-  }
+  ) {}
 
   ngOnInit() {
     this.createForm();
     this.importSettingsFromFile();
+
+    this.randomizerService.getSubmittedFlag().subscribe(submitted => {
+      this.submitted = submitted;
+    });
 
     this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
       this.permalink = this.getPermalink();
@@ -62,7 +61,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'info',
         title: 'Success',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
     });
 
@@ -73,7 +73,8 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
     });
   }
@@ -85,7 +86,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   createForm() {
     const fb = new FormBuilder();
     this.randomizerForm = fb.group({
-      seed: [''],
+      seed: [null, [Validators.min(1), Validators.max(this.maxSafeInteger)]],
       baseIso: ['', Validators.required],
       outputFolder: [''],
       generateRom: [true],
@@ -93,7 +94,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       spoiler: [true],
       skipFrigate: [true],
       skipHudPopups: [true],
-      obfuscateItems: [false],
+      hideItemIcons: [false],
+      goal: [Goal.ARTIFACTS],
+      goalArtifacts: [12, [Validators.min(0), Validators.max(12)]],
       shuffleArtifacts: [true],
       shuffleMissileLauncher: [true],
       shuffleMorph: [true],
@@ -103,12 +106,16 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       noSupers: [false],
       noBombsPointOfNoReturnTunnels: [false],
       noVanillaBeams: [false],
-      noSpiderBallInQuarantineCave: [false],
       noGravitySuitInGravityChamber: [false],
       noEarlyPhazonSuit: [false],
       noReversePhendranaBombs: [true],
-      requireVisors: [true],
+      requireThermal: [true],
+      requireXRay: [true],
       noCrashedFrigate: [false],
+      noBoostBallLowerMinesGlitched: [false],
+      dontRequireFlaahgra: [false],
+      dontRequireThardus: [false],
+      dontRequireOmegaPirate: [false],
       rootCaveSW: [false],
       ibbf: [false],
       trainingChamberOOB: [false],
@@ -117,6 +124,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       earlyNewborn: [false],
       oobNoBombs: [false],
       floatyJump: [false],
+      damageBoostLiquids: [false],
       dashing: [false],
       standableTerrain: [false],
       lJumping: [false],
@@ -144,12 +152,14 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   resetSettings() {
     this.randomizerForm.patchValue({
-      seed: '',
+      seed: null,
       fileType: 'ciso',
       spoiler: true,
       skipFrigate: true,
       skipHudPopups: true,
-      obfuscateItems: false,
+      hideItemIcons: false,
+      goal: Goal.ARTIFACTS,
+      goalArtifacts: 12,
       shuffleArtifacts: true,
       shuffleMissileLauncher: true,
       shuffleMorph: true,
@@ -159,12 +169,16 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       noSupers: false,
       noBombsPointOfNoReturnTunnels: false,
       noVanillaBeams: false,
-      noSpiderBallInQuarantineCave: false,
       noGravitySuitInGravityChamber: false,
       noEarlyPhazonSuit: false,
       noReversePhendranaBombs: true,
-      requireVisors: true,
+      requireThermal: true,
+      requireXRay: true,
       noCrashedFrigate: false,
+      noBoostBallLowerMinesGlitched: false,
+      dontRequireFlaahgra: false,
+      dontRequireThardus: false,
+      dontRequireOmegaPirate: false,
       rootCaveSW: false,
       ibbf: false,
       trainingChamberOOB: false,
@@ -173,6 +187,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       earlyNewborn: false,
       oobNoBombs: false,
       floatyJump: false,
+      damageBoostLiquids: false,
       dashing: false,
       standableTerrain: false,
       lJumping: false,
@@ -239,21 +254,22 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         this.electronService.dialog.showMessageBox({
           type: 'error',
           title: 'Error',
-          message: 'This permalink is invalid.'
+          message: 'This permalink is invalid.',
+          buttons: ['OK']
         });
       }
     } catch {
-      console.error(new TypeError('Base64 invalid').toString());
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: 'This permalink is invalid.'
+        message: 'This permalink is invalid.',
+        buttons: ['OK']
       });
     }
   }
 
   getNewSeed() {
-    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, 999999999) });
+    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, Number.MAX_SAFE_INTEGER) });
   }
 
   importSettingsFromFile() {

@@ -6,29 +6,38 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="requireVisors"> Require visors for power conduits, invisible
-              platforms, Thardus
+              <input type="checkbox" formControlName="requireThermal"> Require Thermal Visor for power conduits,
+              Thardus
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noReversePhendranaBombs"> Require Bombs for reverse Phendrana Drifts
+              <input type="checkbox" formControlName="requireXRay"> Require X-Ray Visor for invisible platforms
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noBombsPointOfNoReturnTunnels"> No Bombs in "Point of No Return" Morph Ball tunnels
+              <input type="checkbox" formControlName="noReversePhendranaBombs"> Require Bombs for reverse Phendrana
+              Drifts
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No early Phazon Suit
+              <input type="checkbox" formControlName="noBombsPointOfNoReturnTunnels"> No Bombs in "Point of No Return"
+              Morph Ball tunnels
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No Phazon Suit in early item locations
             </label>
           </div>
         </div>
@@ -42,7 +51,7 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noCrashedFrigate"> Nothing in Crashed Frigate
+              <input type="checkbox" formControlName="noCrashedFrigate"> No progression items in Crashed Frigate
             </label>
           </div>
         </div>
@@ -56,15 +65,43 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noSpiderBallInQuarantineCave"> No Spider Ball in Quarantine Cave
+              <input type="checkbox" formControlName="noGravitySuitInGravityChamber"> No Gravity Suit in Gravity
+              Chamber
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="noGravitySuitInGravityChamber"> No Gravity Suit in Gravity Chamber
+              <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
+              (Glitched Seeds)
             </label>
+          </div>
+        </div>
+        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <p class="label has-text-weight-semibold">Don't Require Bosses</p>
+        </div>
+        <div class="box" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireFlaahgra"> Flaahgra
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireThardus"> Thardus
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireOmegaPirate"> Omega Pirate
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -132,6 +169,13 @@
     <div class="column">
       <p class="label">Expected Tricks</p>
       <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="damageBoostLiquids"> Damage Boost through Hazardous Liquids
+            </label>
+          </div>
+        </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
@@ -220,7 +264,8 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="infiniteBoostEliteResearch"> Infinite Boost Wall Clip into Elite Research (Mines)
+              <input type="checkbox" formControlName="infiniteBoostEliteResearch"> Infinite Boost Wall Clip into Elite
+              Research (Mines)
             </label>
           </div>
         </div>
@@ -256,7 +301,8 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="bypassBombsWithBoost"> Allow Boost Ball for morph tunnels that need bombs
+              <input type="checkbox" formControlName="bypassBombsWithBoost"> Allow Boost Ball for morph tunnels that
+              need bombs
             </label>
           </div>
         </div>
@@ -268,9 +314,13 @@
           </div>
         </div>
         <div class="field">
-          <label>Number of Energy Tanks Required</label>
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
-            <input class="input" type="number" formControlName="vmrTanks" min="5" max="14">
+            <div class="select">
+              <select formControlName="vmrTanks">
+                <option *ngFor="let tank of vmrEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="field">
@@ -281,9 +331,13 @@
           </div>
         </div>
         <div class="field">
-          <label>Number of Energy Tanks Required</label>
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
-            <input class="input" type="number" formControlName="earlyMagmoorNoSuitTanks" min="7" max="14">
+            <div class="select">
+              <select formControlName="earlyMagmoorNoSuitTanks">
+                <option *ngFor="let tank of earlyMagmoorEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

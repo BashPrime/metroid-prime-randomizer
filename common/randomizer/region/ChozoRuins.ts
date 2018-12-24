@@ -4,6 +4,7 @@ import { Item } from '../Item';
 import { ItemCollection } from '../collection/ItemCollection';
 import { PrimeItem } from '../enums/PrimeItem';
 import { PrimeLocation } from '../enums/PrimeLocation';
+import { settings } from 'cluster';
 
 export class ChozoRuins extends Region {
   constructor() {
@@ -76,13 +77,17 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.RUINED_FOUNTAIN).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
-      || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
-        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)); // abuse collision to get to item without defeating Flaahgra
+      return items.hasMissiles() && ( // need missiles to access room
+        (items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
+        || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)) // abuse collision to get to item without defeating Flaahgra
+      );
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles();
+      return items.hasMissiles() && (
+        !settings.hideItemIcons || (items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      );
     };
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -168,7 +173,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.RUINED_GALLERY_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL));
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get(PrimeLocation.TRANSPORT_ACCESS_NORTH).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -206,8 +211,10 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.WATERY_HALL_UNDERWATER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
-        settings.ghettoJumping // ghetto jump off side underwater
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      && (settings.damageBoostLiquids || items.has(PrimeItem.MORPH_BALL_BOMB)) // either damage boost or require flaahgra
+      && (
+        settings.ghettoJumping // ghetto jump off side wall underwater
         || items.has(PrimeItem.GRAVITY_SUIT) // developer intended
       );
     };
@@ -233,7 +240,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.BURN_DOME_TUNNEL).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL));
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL));
     };
 
     // Require bombs in burn dome if the no bombs setting is checked and bombs are shuffled.
@@ -247,7 +254,7 @@ export class ChozoRuins extends Region {
     this.locations.get(PrimeLocation.BURN_DOME_I_DRONE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.canLayBombs() || (items.has(PrimeItem.BOOST_BALL));
+      return items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL));
     };
 
     this.locations.get(PrimeLocation.FURNACE_SPIDER_TRACKS).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -259,7 +266,7 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.FURNACE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMissiles() && (items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.BOOST_BALL)));
+      return items.hasMissiles() && (items.canLayBombs() || (settings.bypassBombsWithBoost && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL)));
     };
     this.locations.get(PrimeLocation.FURNACE_TUNNEL).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -268,9 +275,10 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.HALL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
+      // Ice Beam is needed for both IS and developer intended method
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && (
         (settings.standableTerrain && settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
-        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM)) // developer intended
+        || (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) // developer intended
       );
     };
 
@@ -282,14 +290,14 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.ELDER_CHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (
-        (settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
-        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)) // developer intended
+      return items.hasLateChozoReqs(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && (
+        (settings.standableTerrain && settings.infiniteSpeedHote && items.has(PrimeItem.BOOST_BALL)) // secretize Hote and get infinite speed
+        || ((settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL)) && items.has(PrimeItem.PLASMA_BEAM)) // developer intended
       );
     };
 
     this.locations.get(PrimeLocation.ANTECHAMBER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasReflectingPoolReqs(settings) && items.hasMissiles() && (!settings.noVanillaBeams || items.has(PrimeItem.ICE_BEAM));
+      return items.hasReflectingPoolReqs(settings) && items.hasMissiles() && (!(settings.noVanillaBeams || settings.hideItemIcons) || items.has(PrimeItem.ICE_BEAM));
     };
     this.locations.get(PrimeLocation.ANTECHAMBER).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)

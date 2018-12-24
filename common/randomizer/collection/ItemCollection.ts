@@ -125,7 +125,7 @@ export class ItemCollection extends Collection {
   public hasCrashedFrigateReqs(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM) && this.has(PrimeItem.GRAVITY_SUIT)
-    && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireVisors) // Thermal Visor for power conduits
+    && (this.has(PrimeItem.THERMAL_VISOR) || !settings.requireThermal) // Thermal Visor for power conduits
   }
 
   public hasLateChozoReqs(settings: any): boolean {
@@ -140,7 +140,7 @@ export class ItemCollection extends Collection {
     }
 
     // Otherwise do inbounds check
-    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL)))
     && (this.has(PrimeItem.SPIDER_BALL) || settings.standableTerrain) // standable collision on furnace spider track
     && (
       (
@@ -178,19 +178,22 @@ export class ItemCollection extends Collection {
 
   public canCrossMagmaPool(settings: any): boolean {
     return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasAnySuit())) // E tank or suit for safety
-    || (settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris with gravity suit + space jump
+    || (settings.damageBoostLiquids && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
     || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
   public canAccessTowerOfLight(settings: any): boolean {
     return this.hasMissiles() && this.has(PrimeItem.SPACE_JUMP_BOOTS) && this.has(PrimeItem.WAVE_BEAM) && (
-      settings.standableTerrain // jump to the door
-      || (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended
+      ((settings.standableTerrain || settings.ghettoJumping) && (settings.dashing || settings.lJumping)) // jump or dash to the door from the branch or by ghetto jumping
+      || (this.has(PrimeItem.MORPH_BALL) && (settings.ghettoJumping || this.has(PrimeItem.BOOST_BALL)) && this.has(PrimeItem.SPIDER_BALL)) // developer intended, can bypass boost ball with a ghetto jump to spider track
     );
   }
 
   public hasEarlyMagmoorItemReqs(settings: any): boolean {
-    return this.hasMissiles() && (this.hasAnySuit() || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)));
+    return this.hasMissiles() && (this.hasAnySuit() || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks))) && (
+      settings.damageBoostLiquids // damage boost through lava from Tallon elevator
+      || (this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || this.has(PrimeItem.GRAPPLE_BEAM))) // developer intended through Lava Lake/Fiery Shores
+    );
   }
 
   public hasLateMagmoorItemReqs(settings: any): boolean {
@@ -198,8 +201,8 @@ export class ItemCollection extends Collection {
     && (
       (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
       || (
-        (settings.standableTerrain && (settings.dashing || settings.rJumping))
-        || (settings.dbj && this.canLayBombs())
+        (settings.standableTerrain && (settings.dashing || settings.rJumping)) // dash or r jump across terrain
+        || (settings.damageBoostLiquids && ((settings.dbj && this.canLayBombs()) || this.has(PrimeItem.GRAVITY_SUIT))) // damage boost through lava with a DBJ or jump out with gravity
       ) // cross Twin Fires Tunnel without morph or spider
     )
     && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
@@ -207,7 +210,7 @@ export class ItemCollection extends Collection {
 
   // "Front" Phendrana Requirements from Magmoor, near Shorelines
   public hasPhendranaReqsMagmoorWest(settings: any): boolean {
-    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.BOOST_BALL)))
+    return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL)))
     && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
   }
 
@@ -243,20 +246,20 @@ export class ItemCollection extends Collection {
 
   // base requirements to enter Quarantine Cave from Ruined Courtyard
   public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
-    return this.canFireSuperMissiles() && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    return this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
   public canExitQuarantineCaveToMagmoorSouth(settings: any): boolean {
     return (this.has(PrimeItem.SPIDER_BALL) || this.has(PrimeItem.GRAPPLE_BEAM))
-    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to Ruined Courtyard
   // Require Super Missiles or bombs so you don't softlock in front Phendrana
   public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
     return (this.canFireSuperMissiles() || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL))
-    && (!settings.requireVisors || this.has(PrimeItem.THERMAL_VISOR));
+    && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit the ice door at the top of the Magmoor South elevator room
@@ -305,7 +308,10 @@ export class ItemCollection extends Collection {
 
   // Base requirements to climb out top side of Ventilation Shaft
   public canClimbVentShaft(settings) {
-    return ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))) || this.has(PrimeItem.BOOST_BALL);
+    return this.has(PrimeItem.BOOST_BALL) || (
+      !settings.noBoostBallLowerMinesGlitched
+      && ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS)))
+    );
   }
 
   public hasMinesReqsTallonSouth(settings): boolean {
@@ -327,12 +333,12 @@ export class ItemCollection extends Collection {
     return this.hasUpperMinesAccess(settings) && this.canLayBombs()
       && this.canLayPowerBombs() && this.has(PrimeItem.PLASMA_BEAM)
       && this.canClimbVentShaft(settings) && this.canClimbMinesSpiderShafts(settings) && this.canClimbOreProcessing(settings) // climb out to/of upper mines
-      && (!settings.requireVisors || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
+      && (!settings.requireXRay || this.has(PrimeItem.XRAY_VISOR)) // Metroid Quarantine A platforms
       && ((settings.standableTerrain && settings.ghettoJumping && settings.dashing) || this.has(PrimeItem.SPIDER_BALL)) // Exiting MQA
       && ((settings.standableTerrain && settings.ghettoJumping && (settings.dashing || settings.rJumping)) || this.has(PrimeItem.GRAPPLE_BEAM)); // Fungal Halls, MQB grapple
   }
 
   public canFloatyJump(settings): boolean {
-    return settings.floatyJump && this.canWallcrawl(settings);
+    return settings.floatyJump && this.canWallcrawl(settings) && !this.has(PrimeItem.GRAVITY_SUIT);
   }
 }

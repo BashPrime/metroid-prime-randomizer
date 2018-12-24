@@ -1,5 +1,6 @@
 import { Option, OptionType } from './Option';
 import { Utilities } from '../Utilities';
+import { Goal } from './enums/goal';
 
 export class Config {
   options = [
@@ -8,8 +9,11 @@ export class Config {
     new Option('generateRom', null, null, false),
     new Option('skipFrigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', OptionType.BOOLEAN, 1, true),
-    new Option('obfuscateItems', OptionType.BOOLEAN, 1, true),
+    new Option('hideItemIcons', OptionType.BOOLEAN, 1, true),
     // Main Rules
+    new Option('goal', OptionType.DROPDOWN, 1, true),
+    new Option('goalArtifacts', OptionType.NUMBER, 4, true, 0, 12),
+    new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMissileLauncher', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMorph', OptionType.BOOLEAN, 1, true),
@@ -21,11 +25,15 @@ export class Config {
     new Option('noBombsPointOfNoReturnTunnels', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', OptionType.BOOLEAN, 1, true),
     new Option('noEarlyPhazonSuit', OptionType.BOOLEAN, 1, true),
-    new Option('noSpiderBallInQuarantineCave', OptionType.BOOLEAN, 1, true),
     new Option('noGravitySuitInGravityChamber', OptionType.BOOLEAN, 1, true),
-    new Option('requireVisors', OptionType.BOOLEAN, 1, true),
+    new Option('requireThermal', OptionType.BOOLEAN, 1, true),
+    new Option('requireXRay', OptionType.BOOLEAN, 1, true),
     new Option('noReversePhendranaBombs', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', OptionType.BOOLEAN, 1, true),
+    new Option('noBoostBallLowerMinesGlitched', OptionType.BOOLEAN, 1, true),
+    new Option('dontRequireFlaahgra', OptionType.BOOLEAN, 1, true),
+    new Option('dontRequireThardus', OptionType.BOOLEAN, 1, true),
+    new Option('dontRequireOmegaPirate', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', OptionType.BOOLEAN, 1, true),
     new Option('ibbf', OptionType.BOOLEAN, 1, true),
     new Option('trainingChamberOOB', OptionType.BOOLEAN, 1, true),
@@ -36,6 +44,7 @@ export class Config {
     new Option('floatyJump', OptionType.BOOLEAN, 1, true),
     new Option('dashing', OptionType.BOOLEAN, 1, true),
     new Option('standableTerrain', OptionType.BOOLEAN, 1, true),
+    new Option('damageBoostLiquids', OptionType.BOOLEAN, 1, true),
     new Option('lJumping', OptionType.BOOLEAN, 1, true),
     new Option('rJumping', OptionType.BOOLEAN, 1, true),
     new Option('ghettoJumping', OptionType.BOOLEAN, 1, true),
@@ -55,8 +64,14 @@ export class Config {
     new Option('vmr', OptionType.BOOLEAN, 1, true),
     new Option('vmrTanks', OptionType.NUMBER, 4, true, 3, 14),
     new Option('earlyMagmoorNoSuit', OptionType.BOOLEAN, 1, true),
-    new Option('earlyMagmoorNoSuitTanks', OptionType.NUMBER, 4, true, 7, 14),
+    new Option('earlyMagmoorNoSuitTanks', OptionType.NUMBER, 4, true, 7, 14)
   ];
+  private optionDropdowns = {
+    goal: [
+      { name: 'Artifact Collection', value: Goal.ARTIFACTS },
+      { name: 'All Bosses', value: Goal.ALL_BOSSES }
+    ]
+  };
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
   settingsToBase32Text(settings): string {
@@ -78,6 +93,11 @@ export class Config {
             settings[key] = configOption.maxValue;
           }
           bitString += Utilities.toPaddedBitString(settings[key], configOption.bitWidth);
+          break;
+        }
+        case OptionType.DROPDOWN: {
+          const optionIndex = this.getDropdownValueIndex(configOption.name, settings[key]);
+          bitString += Utilities.toPaddedBitString(optionIndex, configOption.bitWidth);
           break;
         }
       }
@@ -125,6 +145,9 @@ export class Config {
           settings[option.name] = parseInt(currentBits, 2);
           break;
         }
+        case OptionType.DROPDOWN: {
+          settings[option.name] = this.optionDropdowns[option.name][parseInt(currentBits, 2)].value;
+        }
       }
       index += bitWidth;
     }
@@ -147,5 +170,13 @@ export class Config {
 
   getOptionByName(name: string) {
     return this.options.find(item => item.name === name);
+  }
+
+  getDropdownsForField(key: string) {
+    return this.optionDropdowns[key];
+  }
+
+  getDropdownValueIndex(key: string, value: string) {
+    return this.optionDropdowns[key].map(dropdown => dropdown.value).indexOf(value);
   }
 }

@@ -1,9 +1,34 @@
 <form [formGroup]="settingsForm">
   <div class="columns">
     <div class="column">
-      <p class="label">Shuffle</p>
+      <p class="label">Goal</p>
       <div class="box">
         <div class="field">
+          <p class="label has-text-weight-semibold">Goal</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="goal">
+                <option *ngFor="let goal of goals" value="{{ goal.value }}">{{ goal.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <p class="label has-text-weight-semibold">Number of Artifacts</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="goalArtifacts">
+                <option *ngFor="let number of artifactCount" [ngValue]="number">{{ number }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Shuffle</p>
+      <div class="box">
+        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="shuffleArtifacts"> Shuffle Chozo Artifacts

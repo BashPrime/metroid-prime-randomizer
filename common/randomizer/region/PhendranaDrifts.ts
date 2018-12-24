@@ -69,17 +69,18 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.CHAPEL_OF_THE_ELDERS).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasFrontPhendranaAccess(settings) && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (!settings.noVanillaBeams || items.has(PrimeItem.WAVE_BEAM)); // no vanilla beams handling
+        && (!(settings.noVanillaBeams || settings.hideItemIcons) || items.has(PrimeItem.WAVE_BEAM)) // no vanilla beams handling
+        && (!(settings.infiniteSpeedEarlySun && settings.waveSun) || items.has(PrimeItem.BOOST_BALL)); // wave/sun IS needs boost ball
     };
     this.locations.get(PrimeLocation.CHAPEL_OF_THE_ELDERS).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
         items = new ItemCollection([...items.toArray(), item]);
-      return items.has(PrimeItem.WAVE_BEAM) && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.infiniteSpeedEarlySun && items.canLayBombs()));
+      return items.has(PrimeItem.WAVE_BEAM);
     };
 
     this.locations.get(PrimeLocation.RUINED_COURTYARD).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMidPhendranaAccess(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
-        && ((settings.standableTerrain && settings.lJumping) || ((items.canLayBombs && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPIDER_BALL)));
+        && ((settings.standableTerrain && settings.lJumping) || ((items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPIDER_BALL)));
     };
 
     this.locations.get(PrimeLocation.PHENDRANA_CANYON).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -94,8 +95,7 @@ export class PhendranaDrifts extends Region {
 
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasQuarantineCaveAccess(settings)
-        && (!settings.noSpiderBallInQuarantineCave || items.has(PrimeItem.SPIDER_BALL))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // to see Thardus's weak points
     };
     this.locations.get(PrimeLocation.QUARANTINE_CAVE).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -104,15 +104,9 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get(PrimeLocation.QUARANTINE_MONITOR).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasQuarantineCaveAccess(settings)
+      return items.hasQuarantineCaveAccess(settings) && items.has(PrimeItem.SPIDER_BALL)
         && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM))
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)) // for Thardus
-        && items.has(PrimeItem.SPIDER_BALL);
-    };
-    this.locations.get(PrimeLocation.QUARANTINE_MONITOR).canEscape = function (item: Item, items: ItemCollection): boolean {
-      if (item)
-        items = new ItemCollection([...items.toArray(), item]);
-      return items.has(PrimeItem.SPIDER_BALL) || items.has(PrimeItem.GRAPPLE_BEAM);
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // for Thardus
     };
 
     this.locations.get(PrimeLocation.RESEARCH_LAB_HYDRA).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -149,7 +143,7 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get(PrimeLocation.FROST_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM));
+      return items.hasFarPhendranaAccess(settings) && ((settings.ghettoJumping || !settings.hideItemIcons) || items.has(PrimeItem.GRAVITY_SUIT)) && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM));
     };
 
     this.locations.get(PrimeLocation.STORAGE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {

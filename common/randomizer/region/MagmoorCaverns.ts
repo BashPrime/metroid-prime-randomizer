@@ -25,13 +25,13 @@ export class MagmoorCaverns extends Region {
 
   public init(settings: any): void {
     this.locations.get(PrimeLocation.LAVA_LAKE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
-        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
+      return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (settings.damageBoostLiquids || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+      && (items.hasAnySuit() || (settings.earlyMagmoorNoSuit && items.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)));
     };
 
     this.locations.get(PrimeLocation.TRICLOPS_PIT).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasEarlyMagmoorItemReqs(settings) && items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        && (!settings.requireVisors || items.has(PrimeItem.XRAY_VISOR));
+        && (!settings.requireXRay || items.has(PrimeItem.XRAY_VISOR));
     };
 
     this.locations.get(PrimeLocation.STORAGE_CAVERN).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -53,9 +53,11 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get(PrimeLocation.FIERY_SHORES_MORPH_TRACK).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasEarlyMagmoorItemReqs(settings) && (
+      return items.hasMissiles() && (items.hasAnySuit() || (settings.earlyMagmoorNoSuit && items.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks)))
+      && (settings.damageBoostLiquids || items.has(PrimeItem.MORPH_BALL)) // go through morph ball track or lava damage boost from Tallon elevator
+      && (
         (settings.standableTerrain && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump on the morph ball tunnel to reach the item
-        || items.canLayBombs() // morph and bomb through the tunnel, developer intended
+        || items.canLayBombs() // morph and bomb through the track, developer intended
       );
     };
 
@@ -86,13 +88,16 @@ export class MagmoorCaverns extends Region {
     };
 
     this.locations.get(PrimeLocation.PLASMA_PROCESSING).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.ICE_BEAM) && (
-        (settings.workstationToPlasmaProcessing && items.canWallcrawl(settings)) // workstation or burning trail
-        || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) // inbounds
-      )
-        && (!settings.noVanillaBeams || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
-        && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
-        && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto to the bomb slot, spider track platforms
+      // workstation or burning trail wallcrawl
+      if (settings.workstationToPlasmaProcessing) {
+        return items.hasLateMagmoorItemReqs(settings) && items.canWallcrawl(settings)
+        && (items.has(PrimeItem.ICE_BEAM) || (!(settings.noVanillaBeams || settings.hideItemIcons) || items.has(PrimeItem.PLASMA_BEAM)));
+      }
+
+      return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)
+      && (!(settings.noVanillaBeams || settings.hideItemIcons) || items.has(PrimeItem.PLASMA_BEAM)) // require plasma if no vanilla beams is checked
+      && (((settings.lJumping || settings.rJumping) && settings.ghettoJumping) || items.has(PrimeItem.GRAPPLE_BEAM)) // skip grapple beam to the spinners
+      && ((settings.ghettoJumping && settings.lJumping) || items.has(PrimeItem.SPIDER_BALL)); // ghetto to the bomb slot, spider track platforms
     };
     this.locations.get(PrimeLocation.PLASMA_PROCESSING).canEscape = function (item: Item, items: ItemCollection): boolean {
       if (item)
@@ -102,7 +107,7 @@ export class MagmoorCaverns extends Region {
 
     this.locations.get(PrimeLocation.MAGMOOR_WORKSTATION).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasLateMagmoorItemReqs(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM)
-        && (!settings.requireVisors || items.has(PrimeItem.THERMAL_VISOR)); // power conduits
+        && (!settings.requireThermal || items.has(PrimeItem.THERMAL_VISOR)); // power conduits
     };
   }
 }
