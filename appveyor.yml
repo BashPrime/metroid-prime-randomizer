@@ -1,0 +1,31 @@
+version: "{build}"
+
+image: Visual Studio 2017
+
+# Test against the latest version of this Node.js version
+environment:
+  nodejs_version: "8"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  # IMPORTANT: we MUST use 64-bit node or node-gyp will fail
+  - ps: Install-Product node $env:nodejs_version x64
+  # Use 64-bit Visual C++ toolset
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+  # install modules
+  - npm install -g node-gyp
+  - npm config set python C:\Python27
+  - npm config set msvs_version 2017
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # build application
+  - npm run electron:windows
+
+# Don't actually build.
+build: off

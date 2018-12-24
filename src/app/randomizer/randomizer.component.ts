@@ -3,9 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
-import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { Goal } from '../../../common/randomizer/enums/goal';
+import { Config } from '../../../common/randomizer/Config';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 
@@ -18,26 +17,29 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   tabs = [
     'ROM Settings',
     'Main Rules',
+    'Item Logic'
   ];
   selectedTab = 0;
   patching = false;
-  patchUpdate: string;
   randomizerForm: FormGroup;
-  settings = {};
   permalink = '';
+  submitted = false;
   valueSub: any;
+  maxSafeInteger = Number.MAX_SAFE_INTEGER;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
     public electronService: ElectronService
-  ) {
-    this.settings = this.randomizerService.getSettings();
-  }
+  ) {}
 
   ngOnInit() {
     this.createForm();
     this.importSettingsFromFile();
+
+    this.randomizerService.getSubmittedFlag().subscribe(submitted => {
+      this.submitted = submitted;
+    });
 
     this.valueSub = this.randomizerForm.valueChanges.subscribe(() => {
       this.permalink = this.getPermalink();
@@ -54,13 +56,13 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
     // Handle successful file patch
     this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
-      this.patchUpdate = null;
       this.patching = false;
       this.changeDetectorRef.detectChanges();
       this.electronService.dialog.showMessageBox({
         type: 'info',
         title: 'Success',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
     });
 
@@ -71,16 +73,9 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: arg
+        message: arg,
+        buttons: ['OK']
       });
-    });
-
-    // Patch update, send to view
-    this.electronService.ipcRenderer.on('patch-progress', (event, arg) => {
-      if (this.patching) {
-        this.patchUpdate = arg.percent + ': ' + arg.msg;
-        this.changeDetectorRef.detectChanges();
-      }
     });
   }
 
@@ -91,130 +86,190 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   createForm() {
     const fb = new FormBuilder();
     this.randomizerForm = fb.group({
-      seed: [''],
-      rom: fb.group({
-        baseIso: ['', Validators.required],
-        outputFolder: [''],
-        spoiler: [true],
-        createIso: [true],
-        skipFrigate: [true],
-        skipHudPopups: [true]
-      }),
-      settings: this.setDefaultSettings()
+      seed: [null, [Validators.min(1), Validators.max(this.maxSafeInteger)]],
+      baseIso: ['', Validators.required],
+      outputFolder: [''],
+      generateRom: [true],
+      fileType: ['ciso'],
+      spoiler: [true],
+      skipFrigate: [true],
+      skipHudPopups: [true],
+      hideItemIcons: [false],
+      goal: [Goal.ARTIFACTS],
+      goalArtifacts: [12, [Validators.min(0), Validators.max(12)]],
+      shuffleArtifacts: [true],
+      shuffleMissileLauncher: [true],
+      shuffleMorph: [true],
+      shuffleBombs: [true],
+      shuffleCharge: [true],
+      shuffleSpaceJump: [true],
+      noSupers: [false],
+      noBombsPointOfNoReturnTunnels: [false],
+      noVanillaBeams: [false],
+      noGravitySuitInGravityChamber: [false],
+      noEarlyPhazonSuit: [false],
+      noReversePhendranaBombs: [true],
+      requireThermal: [true],
+      requireXRay: [true],
+      noCrashedFrigate: [false],
+      noBoostBallLowerMinesGlitched: [false],
+      dontRequireFlaahgra: [false],
+      dontRequireThardus: [false],
+      dontRequireOmegaPirate: [false],
+      rootCaveSW: [false],
+      ibbf: [false],
+      trainingChamberOOB: [false],
+      waveSun: [false],
+      workstationToPlasmaProcessing: [false],
+      earlyNewborn: [false],
+      oobNoBombs: [false],
+      floatyJump: [false],
+      damageBoostLiquids: [false],
+      dashing: [false],
+      standableTerrain: [false],
+      lJumping: [false],
+      rJumping: [false],
+      ghettoJumping: [false],
+      earlyWild: [false],
+      infiniteSpeedEarlySun: [false],
+      infiniteSpeedMagmaPool: [false],
+      infiniteSpeedHote: [false],
+      barsSkip: [false],
+      spinnersNoBoost: [false],
+      spiderlessShafts: [false],
+      infiniteBoostEliteResearch: [false],
+      phazonMiningTunnelNoPhazonSuit: [false],
+      halfPipeBombJumps: [false],
+      dbj: [false],
+      hbjPastHote: [false],
+      bypassBombsWithBoost: [false],
+      vmr: [false],
+      vmrTanks: [5, [Validators.min(3), Validators.max(14)]],
+      earlyMagmoorNoSuit: [false],
+      earlyMagmoorNoSuitTanks: [7, [Validators.min(7), Validators.max(14)]]
     });
   }
+
+  resetSettings() {
+    this.randomizerForm.patchValue({
+      seed: null,
+      fileType: 'ciso',
+      spoiler: true,
+      skipFrigate: true,
+      skipHudPopups: true,
+      hideItemIcons: false,
+      goal: Goal.ARTIFACTS,
+      goalArtifacts: 12,
+      shuffleArtifacts: true,
+      shuffleMissileLauncher: true,
+      shuffleMorph: true,
+      shuffleBombs: true,
+      shuffleCharge: true,
+      shuffleSpaceJump: true,
+      noSupers: false,
+      noBombsPointOfNoReturnTunnels: false,
+      noVanillaBeams: false,
+      noGravitySuitInGravityChamber: false,
+      noEarlyPhazonSuit: false,
+      noReversePhendranaBombs: true,
+      requireThermal: true,
+      requireXRay: true,
+      noCrashedFrigate: false,
+      noBoostBallLowerMinesGlitched: false,
+      dontRequireFlaahgra: false,
+      dontRequireThardus: false,
+      dontRequireOmegaPirate: false,
+      rootCaveSW: false,
+      ibbf: false,
+      trainingChamberOOB: false,
+      waveSun: false,
+      workstationToPlasmaProcessing: false,
+      earlyNewborn: false,
+      oobNoBombs: false,
+      floatyJump: false,
+      damageBoostLiquids: false,
+      dashing: false,
+      standableTerrain: false,
+      lJumping: false,
+      rJumping: false,
+      ghettoJumping: false,
+      earlyWild: false,
+      infiniteSpeedEarlySun: false,
+      infiniteSpeedMagmaPool: false,
+      infiniteSpeedHote: false,
+      barsSkip: false,
+      spinnersNoBoost: false,
+      spiderlessShafts: false,
+      infiniteBoostEliteResearch: false,
+      phazonMiningTunnelNoPhazonSuit: false,
+      halfPipeBombJumps: false,
+      dbj: false,
+      hbjPastHote: false,
+      bypassBombsWithBoost: false,
+      vmr: false,
+      vmrTanks: 5,
+      earlyMagmoorNoSuit: false,
+      earlyMagmoorNoSuitTanks: 7
+    });
+  }
+
 
   runRandomizer() {
     this.randomizerService.updateSubmittedFlag(true);
 
     if (this.randomizerForm.valid) {
+      const config = new Config();
       if (!this.randomizerForm.get('seed').value) {
         this.getNewSeed();
       }
       const game = JSON.parse(JSON.stringify(this.randomizerForm.value));
       game['version'] = environment.version;
       game['permalink'] = this.getPermalink();
+      game['settingsString'] = config.settingsToBase32Text(this.randomizerForm.value);
       this.patching = true;
       this.electronService.ipcRenderer.send('randomizer', game);
     }
   }
 
-  setDefaultSettings() {
-    const fb = new FormBuilder();
-
-    return fb.group({
-      logic: [RandomizerLogic.NO_GLITCHES],
-      mode: [RandomizerMode.STANDARD],
-      artifacts: [RandomizerArtifacts.VANILLA],
-    });
-  }
-
-  resetSettings() {
-    this.randomizerForm.patchValue({
-      seed: '',
-      settings: {
-        logic: RandomizerLogic.NO_GLITCHES,
-        mode: RandomizerMode.STANDARD,
-        artifacts: RandomizerArtifacts.VANILLA,
-      }
-    });
-  }
-
   getPermalink(): string {
+    const config = new Config();
     const seed = this.randomizerForm.get('seed').value;
-    const settingsHex = this.getHexStringFromSettings();
-    if (seed && settingsHex)
-      return btoa(seed + ',' + settingsHex);
+    const settingsString = config.settingsToBase32Text(this.randomizerForm.value);
+    const fullString = seed + ',' + settingsString;
+    if (seed && fullString)
+      return btoa(fullString);
     return '';
   }
 
   importPermalink(): void {
     let settingsToImport;
     try {
+      const config = new Config();
       settingsToImport = atob(this.permalink).split(',');
       if (settingsToImport.length === 2) {
-        const newSeed = settingsToImport[0];
-        let newSettings = this.getSettingsFromHexString(settingsToImport[1]);
-        if (!newSettings) {
-          newSettings = this.getSettingsFromHexString('000');
-        }
-        this.randomizerForm.patchValue({
-          seed: newSeed,
-          settings: newSettings
-        });
+        let newSettings = config.base32TextToSettings(settingsToImport[1]);
+        newSettings['seed'] = settingsToImport[0];
+        this.randomizerForm.patchValue(newSettings);
       } else {
         this.electronService.dialog.showMessageBox({
           type: 'error',
           title: 'Error',
-          message: 'This permalink is invalid.'
+          message: 'This permalink is invalid.',
+          buttons: ['OK']
         });
       }
     } catch {
-      console.error(new TypeError('Base64 invalid').toString());
       this.electronService.dialog.showMessageBox({
         type: 'error',
         title: 'Error',
-        message: 'This permalink is invalid.'
+        message: 'This permalink is invalid.',
+        buttons: ['OK']
       });
-    }
-  }
-
-  getHexStringFromSettings(): string {
-    let hexString = '';
-    const settings = this.randomizerForm.get('settings').value;
-    const keys = Object.keys(settings);
-
-    for (const key of keys) {
-      this.settings[key].find((setting: any, index: number) => {
-        if (setting.value === settings[key]) {
-          hexString += index.toString(16);
-        }
-      });
-    }
-
-    return hexString;
-  }
-
-  getSettingsFromHexString(hexString: string): object {
-    const settings = {};
-    const keys = Object.keys(this.settings);
-    try {
-      let index = 0;
-      for (const key of keys) {
-        const hexWidth = (this.settings[key].length - 1).toString(16).length;
-        const settingVal = hexString.substr(index, hexWidth);
-        settings[key] = this.settings[key][settingVal].value;
-        index += hexWidth;
-      }
-      return settings;
-    } catch {
-      console.log(new RangeError('More settings than hex string values').toString());
-      return null;
     }
   }
 
   getNewSeed() {
-    this.randomizerForm.patchValue({seed: Utilities.getRandomInt(1, 999999999)});
+    this.randomizerForm.patchValue({ seed: Utilities.getRandomInt(1, Number.MAX_SAFE_INTEGER) });
   }
 
   importSettingsFromFile() {

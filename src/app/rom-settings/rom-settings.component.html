@@ -18,32 +18,63 @@
       <button class="button file-cta" (click)="selectOutputFolder()">Select Folder</button>
     </div>
   </div>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" formControlName="spoiler"> Create Spoiler
-      </label>
+  <div class="columns">
+    <div class="column">
+      <p class="label">ROM Output</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="generateRom"> Generate ROM
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <label>File Type</label>
+          <div class="control">
+            <div class="select">
+              <select formControlName="fileType">
+                <option *ngFor="let fileType of fileTypes" value="{{ fileType.value }}">{{ fileType.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Game</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spoiler"> Create Spoiler
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="skipFrigate"> Skip the Space Pirate Frigate
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="skipHudPopups"> Skip Item Acquisition Popups
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="hideItemIcons"> Hide Item Icons
+            </label>
+          </div>
+        </div>
+        <p style="color: #f00;">Changing these settings will change the seed!</p>
+      </div>
     </div>
   </div>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" formControlName="createIso"> Create ISO
-      </label>
-    </div>
-  </div>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" formControlName="skipFrigate"> Skip Frigate
-      </label>
-    </div>
-  </div>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" formControlName="skipHudPopups"> Skip Item Acquisition Popups
-      </label>
-    </div>
-  </div>
+
 </form>

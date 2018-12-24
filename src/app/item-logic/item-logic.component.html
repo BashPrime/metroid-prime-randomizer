@@ -1,0 +1,346 @@
+<form [formGroup]="settingsForm">
+  <div class="columns">
+    <div class="column">
+      <p class="label">Restrictions</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="requireThermal"> Require Thermal Visor for power conduits,
+              Thardus
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="requireXRay"> Require X-Ray Visor for invisible platforms
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noReversePhendranaBombs"> Require Bombs for reverse Phendrana
+              Drifts
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noBombsPointOfNoReturnTunnels"> No Bombs in "Point of No Return"
+              Morph Ball tunnels
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noEarlyPhazonSuit"> No Phazon Suit in early item locations
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noSupers"> Don't require Super Missiles
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noCrashedFrigate"> No progression items in Crashed Frigate
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noVanillaBeams"> No beams in vanilla beam rooms
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noGravitySuitInGravityChamber"> No Gravity Suit in Gravity
+              Chamber
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
+              (Glitched Seeds)
+            </label>
+          </div>
+        </div>
+        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <p class="label has-text-weight-semibold">Don't Require Bosses</p>
+        </div>
+        <div class="box" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireFlaahgra"> Flaahgra
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireThardus"> Thardus
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="dontRequireOmegaPirate"> Omega Pirate
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="label">Out of Bounds</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="rootCaveSW"> Root Cave Secret World
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="ibbf"> "IBBF" Wallcrawl for late Chozo access
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="trainingChamberOOB"> Training Chamber (Access) Wallcrawl
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="waveSun"> Wave/Sun Infinite Speed
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="workstationToPlasmaProcessing"> Magmoor Workstation SW to Plasma
+              Processing
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyNewborn"> Early Newborn
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="oobNoBombs"> Allow OOB without Morph Ball Bombs
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="floatyJump"> Floaty Jump
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <p class="label">Expected Tricks</p>
+      <div class="box">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="damageBoostLiquids"> Damage Boost through Hazardous Liquids
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="dashing"> Dashing/Scan Dashing
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="standableTerrain"> Standable terrain exploits
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="lJumping"> L Jumping
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="rJumping"> R Jumping
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="ghettoJumping"> Ghetto Jumps
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyWild"> Sunchamber Ghost Fight item early
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteSpeedEarlySun"> Infinite Speed (Early Sun)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteSpeedMagmaPool"> Infinite Speed (Magma Pool)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteSpeedHote"> Infinite Speed (Hall of the Elders)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="barsSkip"> Great Tree Hall Gate Skip
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spinnersNoBoost"> Life Grove spinner without
+              Boost Ball
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spiderlessShafts"> Spiderless Shafts (Phazon Mines)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="infiniteBoostEliteResearch"> Infinite Boost Wall Clip into Elite
+              Research (Mines)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="phazonMiningTunnelNoPhazonSuit"> Phazon Mining Tunnel without
+              Phazon Suit
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="dbj"> Double Bomb Jump sequence breaks
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="hbjPastHote"> Hyper Bomb Jump (HBJ) past Hall of the Elders
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="halfPipeBombJumps"> Half-Pipe Bomb Jumps
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="bypassBombsWithBoost"> Allow Boost Ball for morph tunnels that
+              need bombs
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="vmr"> Suitless Magmoor Run to Phendrana/Mines
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="vmrTanks">
+                <option *ngFor="let tank of vmrEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="earlyMagmoorNoSuit"> Early Magmoor Items Without a Suit
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="earlyMagmoorNoSuitTanks">
+                <option *ngFor="let tank of earlyMagmoorEtanks" [ngValue]="tank">{{ tank }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

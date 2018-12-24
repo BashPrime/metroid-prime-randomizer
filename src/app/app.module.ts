@@ -25,13 +25,15 @@ import { FileService } from './services/file.service';
 import { RandomizerComponent } from './randomizer/randomizer.component';
 import { RomSettingsComponent } from './rom-settings/rom-settings.component';
 import { MainRulesComponent } from './main-rules/main-rules.component';
+import { ItemLogicComponent } from './item-logic/item-logic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RandomizerComponent,
     RomSettingsComponent,
-    MainRulesComponent
+    MainRulesComponent,
+    ItemLogicComponent
   ],
   imports: [
     AppRoutingModule,

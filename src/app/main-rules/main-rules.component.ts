@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { RandomizerService } from '../services/randomizer.service';
-
-import { RandomizerMode } from '../../../common/randomizer/enums/RandomizerMode';
-import { RandomizerLogic } from '../../../common/randomizer/enums/RandomizerLogic';
-import { RandomizerArtifacts } from '../../../common/randomizer/enums/RandomizerArtifacts';
+import { Utilities } from '../../../common/Utilities';
+import { Goal } from '../../../common/randomizer/enums/goal';
+import { Config } from '../../../common/randomizer/Config';
 
 @Component({
   selector: 'app-main-rules',
@@ -14,11 +12,13 @@ import { RandomizerArtifacts } from '../../../common/randomizer/enums/Randomizer
 })
 export class MainRulesComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
-  dropdowns: any = {};
-  defaultLogic = RandomizerLogic.NO_GLITCHES;
+  goals: any[];
+  artifactCount = Utilities.numberRange(0, 12);
+  goalArtifacts = Goal.ARTIFACTS;
 
-  constructor(private randomizerService: RandomizerService) {
-    this.dropdowns = this.randomizerService.getSettings();
+  constructor() {
+    const config = new Config();
+    this.goals = config.getDropdownsForField('goal');
   }
 
   ngOnInit() {}

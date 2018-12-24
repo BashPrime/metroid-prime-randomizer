@@ -10,10 +10,13 @@
   </div>
   <div class="section rando-content">
     <section *ngIf="selectedTab === 0">
-      <app-rom-settings [group]="randomizerForm.controls['rom']"></app-rom-settings>
+      <app-rom-settings [group]="randomizerForm"></app-rom-settings>
     </section>
     <section *ngIf="selectedTab === 1">
-      <app-main-rules [group]="randomizerForm.controls['settings']"></app-main-rules>
+      <app-main-rules [group]="randomizerForm"></app-main-rules>
+    </section>
+    <section *ngIf="selectedTab === 2">
+      <app-item-logic [group]="randomizerForm"></app-item-logic>
     </section>
   </div>
   <div class="section rando-footer">
@@ -24,12 +27,13 @@
           <label class="label">Seed Number</label>
           <div class="field has-addons">
             <div class="control is-expanded">
-              <input class="input" type="number" min="1" max="999999999" placeholder="Random Seed" formControlName="seed">
+              <input class="input" type="number" placeholder="Random Seed" formControlName="seed" [min]="1" [max]="maxSafeInteger" [ngClass]="{'is-danger': submitted && randomizerForm.get('seed').errors}">
             </div>
             <div class="control">
               <button class="button file-cta" (click)="getNewSeed()">New Seed</button>
             </div>
           </div>
+          <p class="help is-danger" *ngIf="submitted && randomizerForm.get('seed').errors">Invalid seed</p>
         </div>
         <div class="column">
           <label class="label">Permalink</label>
