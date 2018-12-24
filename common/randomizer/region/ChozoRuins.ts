@@ -77,9 +77,11 @@ export class ChozoRuins extends Region {
     };
 
     this.locations.get(PrimeLocation.RUINED_FOUNTAIN).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return (items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
-      || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
-        && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)); // abuse collision to get to item without defeating Flaahgra
+      return items.hasMissiles() && ( // need missiles to access room
+        (items.canLayBombs() && items.has(PrimeItem.SPIDER_BALL)) // Defeat Flaahgra
+        || (settings.standableTerrain && settings.lJumping && items.has(PrimeItem.MORPH_BALL)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SPIDER_BALL)) // abuse collision to get to item without defeating Flaahgra
+      );
     };
 
     this.locations.get(PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
