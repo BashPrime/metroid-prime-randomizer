@@ -77,7 +77,7 @@ export class Patcher {
         layout_string: layoutDescriptor,
         skip_frigate: randomizerConfig.skipFrigate,
         skip_hudmenus: randomizerConfig.skipHudPopups,
-        obfuscate_items: randomizerConfig.obfuscateItems,
+        obfuscate_items: randomizerConfig.hideItemIcons,
         quiet: true,
         comment: 'prime-randomizer-web ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
