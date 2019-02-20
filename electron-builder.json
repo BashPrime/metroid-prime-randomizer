@@ -1,7 +1,7 @@
 {
   "productName": "Metroid Prime Randomizer",
   "directories": {
-    "output": "app-builds"
+    "output": "release/"
   },
   "files": [
     "**/*",
