@@ -1,6 +1,7 @@
 import { Option, OptionType } from './Option';
 import { Utilities } from '../Utilities';
 import { Goal } from './enums/goal';
+import { HeatDamagePrevention } from './enums/heatDamagePrevention';
 
 export class Config {
   options = [
@@ -13,6 +14,7 @@ export class Config {
     // Main Rules
     new Option('goal', OptionType.DROPDOWN, 1, true),
     new Option('goalArtifacts', OptionType.NUMBER, 4, true, 0, 12),
+    new Option('heatDamagePrevention', OptionType.DROPDOWN, 1, true),
     new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleArtifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMissileLauncher', OptionType.BOOLEAN, 1, true),
@@ -70,6 +72,10 @@ export class Config {
     goal: [
       { name: 'Artifact Collection', value: Goal.ARTIFACTS },
       { name: 'All Bosses', value: Goal.ALL_BOSSES }
+    ],
+    heatDamagePrevention: [
+      { name: 'Any Suit', value: HeatDamagePrevention.ANY_SUIT },
+      { name: 'Varia Suit Only', value: HeatDamagePrevention.VARIA_ONLY }
     ]
   };
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

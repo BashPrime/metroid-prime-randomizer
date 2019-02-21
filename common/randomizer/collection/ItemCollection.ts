@@ -1,6 +1,7 @@
 import {Collection} from './Collection';
 import {Item} from '../Item';
 import {PrimeItem} from '../enums/PrimeItem';
+import { HeatDamagePrevention } from '../enums/heatDamagePrevention';
 
 export class ItemCollection extends Collection {
   protected items: Array<Item>;
@@ -97,7 +98,11 @@ export class ItemCollection extends Collection {
     return false;
   }
 
-  public hasAnySuit(): boolean {
+  public hasSuit(settings: any): boolean {
+    if (settings.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY) {
+      return this.has(PrimeItem.VARIA_SUIT);
+    }
+
     return this.has(PrimeItem.VARIA_SUIT) || this.has(PrimeItem.GRAVITY_SUIT) || this.has(PrimeItem.PHAZON_SUIT);
   }
 
@@ -177,9 +182,9 @@ export class ItemCollection extends Collection {
   }
 
   public canCrossMagmaPool(settings: any): boolean {
-    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasAnySuit())) // E tank or suit for safety
+    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasSuit(settings))) // E tank or suit for safety
     || (settings.damageBoostLiquids && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
-    || (this.hasAnySuit() && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
+    || (this.hasSuit(settings) && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
   public canAccessTowerOfLight(settings: any): boolean {
@@ -190,7 +195,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasEarlyMagmoorItemReqs(settings: any): boolean {
-    return this.hasMissiles() && (this.hasAnySuit() || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks))) && (
+    return this.hasMissiles() && (this.hasSuit(settings) || (settings.earlyMagmoorNoSuit && this.hasEnergyTankCount(settings.earlyMagmoorNoSuitTanks))) && (
       settings.damageBoostLiquids // damage boost through lava from Tallon elevator
       || (this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.MORPH_BALL_BOMB) || this.has(PrimeItem.GRAPPLE_BEAM))) // developer intended through Lava Lake/Fiery Shores
     );
@@ -205,13 +210,13 @@ export class ItemCollection extends Collection {
         || (settings.damageBoostLiquids && ((settings.dbj && this.canLayBombs()) || this.has(PrimeItem.GRAVITY_SUIT))) // damage boost through lava with a DBJ or jump out with gravity
       ) // cross Twin Fires Tunnel without morph or spider
     )
-    && (this.hasAnySuit() || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
+    && (this.hasSuit(settings) || (settings.vmr && this.hasEnergyTankCount(settings.vmrTanks))); // VMR or suit depending on settings
   }
 
   // "Front" Phendrana Requirements from Magmoor, near Shorelines
   public hasPhendranaReqsMagmoorWest(settings: any): boolean {
     return this.hasMissiles() && (this.canLayBombs() || (settings.bypassBombsWithBoost && this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL)))
-    && (this.hasAnySuit() || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
+    && (this.hasSuit(settings) || (settings.vmr && settings.dashing && settings.standableTerrain && this.hasEnergyTankCount(settings.vmrTanks) && this.has(PrimeItem.SPACE_JUMP_BOOTS)));
   }
 
   // "Back" Phendrana Requirements from Magmoor, near Phednrana's Edge/Quarantine Cave

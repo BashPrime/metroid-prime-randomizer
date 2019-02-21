@@ -7,6 +7,7 @@ import { Goal } from '../../../common/randomizer/enums/goal';
 import { Config } from '../../../common/randomizer/Config';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
+import { HeatDamagePrevention } from '../../../common/randomizer/enums/heatDamagePrevention';
 
 @Component({
   selector: 'app-randomizer',
@@ -97,6 +98,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       hideItemIcons: [false],
       goal: [Goal.ARTIFACTS],
       goalArtifacts: [12, [Validators.min(0), Validators.max(12)]],
+      heatDamagePrevention: [HeatDamagePrevention.ANY_SUIT],
       shuffleArtifacts: [true],
       shuffleMissileLauncher: [true],
       shuffleMorph: [true],
@@ -160,6 +162,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       hideItemIcons: false,
       goal: Goal.ARTIFACTS,
       goalArtifacts: 12,
+      heatDamagePrevention: HeatDamagePrevention.ANY_SUIT,
       shuffleArtifacts: true,
       shuffleMissileLauncher: true,
       shuffleMorph: true,

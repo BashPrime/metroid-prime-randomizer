@@ -62,7 +62,7 @@ export class ChozoRuins extends Region {
         items.has(PrimeItem.GRAPPLE_BEAM) || (settings.dashing && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // grapple or dash from the tree
       ))
       || (settings.lJumping && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // L jump to the ledge
-      || (items.hasMissiles() && items.canLayBombs() && items.hasAnySuit() && items.has(PrimeItem.GRAPPLE_BEAM)
+      || (items.hasMissiles() && items.canLayBombs() && items.hasSuit(settings) && items.has(PrimeItem.GRAPPLE_BEAM)
         && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.WAVE_BEAM)); // developer intended through Magma Pool and Training Chamber
     };
 
