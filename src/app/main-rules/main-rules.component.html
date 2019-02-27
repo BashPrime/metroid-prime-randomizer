@@ -34,6 +34,16 @@
             </div>
           </div>
         </div>
+        <div class="field">
+          <p class="label has-text-weight-semibold">Suit Damage Reduction</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="suitDamageReduction">
+                <option *ngFor="let option of suitDamageReduction" value="{{ option.value }}">{{ option.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="column">

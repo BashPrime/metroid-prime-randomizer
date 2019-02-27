@@ -2,6 +2,7 @@ import { Option, OptionType } from './Option';
 import { Utilities } from '../Utilities';
 import { Goal } from './enums/goal';
 import { HeatDamagePrevention } from './enums/heatDamagePrevention';
+import { SuitDamageReduction } from './enums/suitDamageReduction';
 
 export class Config {
   options = [
@@ -15,6 +16,7 @@ export class Config {
     new Option('goal', 'Goal', OptionType.DROPDOWN, 1, true),
     new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 0, 12),
     new Option('heatDamagePrevention', 'Heat Damage Prevention', OptionType.DROPDOWN, 1, true),
+    new Option('suitDamageReduction', 'Suit Damage Reduction', OptionType.DROPDOWN, 1, true),
     new Option('shuffleArtifacts', 'Shuffle Chozo Artifacts', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMissileLauncher', 'Shuffle Missile Launcher', OptionType.BOOLEAN, 1, true),
     new Option('shuffleMorph', 'Shuffle Morph Ball', OptionType.BOOLEAN, 1, true),
@@ -75,6 +77,10 @@ export class Config {
     heatDamagePrevention: [
       { name: 'Any Suit', value: HeatDamagePrevention.ANY_SUIT },
       { name: 'Varia Suit Only', value: HeatDamagePrevention.VARIA_ONLY }
+    ],
+    suitDamageReduction: [
+      { name: 'Default', value: SuitDamageReduction.DEFAULT },
+      { name: 'Cumulative', value: SuitDamageReduction.CUMULATIVE }
     ]
   };
   private letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

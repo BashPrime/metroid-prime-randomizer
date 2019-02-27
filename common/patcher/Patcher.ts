@@ -5,6 +5,9 @@ import * as path from 'path';
 import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
 import { Config } from '../randomizer/Config';
+import { HeatDamagePrevention } from '../randomizer/enums/heatDamagePrevention';
+import { SuitDamageReduction } from '../randomizer/enums/suitDamageReduction';
+
 const ProgressBar = require('electron-progressbar');
 
 export class Patcher {
@@ -78,8 +81,11 @@ export class Patcher {
         skip_frigate: randomizerConfig.skipFrigate,
         skip_hudmenus: randomizerConfig.skipHudPopups,
         obfuscate_items: randomizerConfig.hideItemIcons,
+        nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
+        staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
+
         quiet: true,
-        comment: 'prime-randomizer-web ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
+        comment: 'Metroid Prime Randomizer by BashPrime, April Wade, and Pwootage, version ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
