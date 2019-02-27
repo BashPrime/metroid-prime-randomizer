@@ -23,7 +23,7 @@ export class Config {
     new Option('shuffleSpaceJump', 'Shuffle Space Jump Boots', OptionType.BOOLEAN, 1, true),
     // Item Logic
     new Option('noSupers', 'Don\'t require Super Missiles', OptionType.BOOLEAN, 1, true),
-    new Option('noBombsPointOfNoReturnTunnels', 'No Bombs in "Point of No Return" Morph Ball tunnels', OptionType.BOOLEAN, 1, true),
+    new Option('noBombsPointOfNoReturnTunnels', 'No Bombs in \'Point of No Return\' Morph Ball tunnels', OptionType.BOOLEAN, 1, true),
     new Option('noVanillaBeams', 'No beams in vanilla beam rooms', OptionType.BOOLEAN, 1, true),
     new Option('noEarlyPhazonSuit', 'No Phazon Suit in early item locations', OptionType.BOOLEAN, 1, true),
     new Option('noGravitySuitInGravityChamber', 'No Gravity Suit in Gravity Chamber', OptionType.BOOLEAN, 1, true),
@@ -36,7 +36,7 @@ export class Config {
     new Option('dontRequireThardus', 'Don\'t require Thardus', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireOmegaPirate', 'Don\'t require Omega Pirate', OptionType.BOOLEAN, 1, true),
     new Option('rootCaveSW', 'Root Cave Secret World', OptionType.BOOLEAN, 1, true),
-    new Option('ibbf', '"IBBF" Wallcrawl for late Chozo access', OptionType.BOOLEAN, 1, true),
+    new Option('ibbf', 'IBBF Wallcrawl for late Chozo access', OptionType.BOOLEAN, 1, true),
     new Option('trainingChamberOOB', 'Training Chamber (Access) Wallcrawl', OptionType.BOOLEAN, 1, true),
     new Option('waveSun', 'Wave/Sun Infinite Speed', OptionType.BOOLEAN, 1, true),
     new Option('workstationToPlasmaProcessing', 'Magmoor Workstation SW to Plasma Processing', OptionType.BOOLEAN, 1, true),

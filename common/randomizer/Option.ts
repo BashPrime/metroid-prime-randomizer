@@ -18,6 +18,7 @@ export class Option {
 
     constructor (name: string, longName: string, type: OptionType, bitWidth: number, shared: boolean, minValue?: number, maxValue?: number) {
         this.name = name;
+        this.longName = longName;
         this.type = type;
         this.bitWidth = bitWidth;
         this.shared = shared;
