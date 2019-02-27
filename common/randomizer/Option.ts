@@ -9,13 +9,14 @@ export enum OptionType {
 
 export class Option {
     name: string;
+    longName: string;
     type: OptionType;
     bitWidth: number;
     shared: boolean;
     minValue: number;
     maxValue: number;
 
-    constructor (name: string, type: OptionType, bitWidth: number, shared: boolean, minValue?: number, maxValue?: number) {
+    constructor (name: string, longName: string, type: OptionType, bitWidth: number, shared: boolean, minValue?: number, maxValue?: number) {
         this.name = name;
         this.type = type;
         this.bitWidth = bitWidth;
