@@ -100,6 +100,7 @@ export class World {
       let myItems = new ItemCollection();
       let myLocations = new LocationCollection();
       let newLocations = new LocationCollection();
+      let firstMissileFound = false, firstPbFound = false;
 
       do {
         const searchLocations = new LocationCollection(locations.filter(location => {
@@ -114,9 +115,22 @@ export class World {
 
         const newLocationsObj = {};
         const newLocationsWithItems = newLocations.toArray().filter(location => location.hasItem());
+
         for (const location of newLocationsWithItems) {
-          console.log(JSON.stringify(location));
-          newLocationsObj[location.getName()] = location.getItem().getName();
+          const item = location.getItem().getName();
+          if (item === PrimeItem.MISSILE_LAUNCHER || item === PrimeItem.MISSILE_EXPANSION) {
+            if (!firstMissileFound) {
+              firstMissileFound = true;
+              newLocationsObj[location.getName()] = item;
+            }
+          } else if (item === PrimeItem.POWER_BOMB || item === PrimeItem.POWER_BOMB_EXPANSION) {
+            if (!firstPbFound) {
+              firstPbFound = true;
+              newLocationsObj[location.getName()] = item;
+            }
+          } else {
+            newLocationsObj[location.getName()] = item;
+          }
         }
 
         if (newLocations.size() > 0) {

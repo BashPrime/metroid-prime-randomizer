@@ -86,8 +86,7 @@ export class Randomizer {
       this.fillArtifacts(itemFiller, settings);
 
       // Create walkthrough and cache it for later use
-      const walkthrough = this.world.getWalkthrough();
-      console.log('Hello this is the walkthrough speaking');
+      this.world.getWalkthrough();
 
       /*
       * Fast fill the rest of the items.
