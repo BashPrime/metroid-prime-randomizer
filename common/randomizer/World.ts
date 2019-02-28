@@ -15,6 +15,7 @@ import { PrimeItem } from './enums/PrimeItem';
 
 export class World {
   private config: any;
+  private walkthrough: any;
   protected regions: Array<Region>;
   protected locations: Array<Location>;
   protected locationsMap: Map<string, Location>;
@@ -93,34 +94,40 @@ export class World {
   }
 
   public getWalkthrough(): object[] {
-    const walkthrough = [];
-    const locations = this.getLocations();
-    let myItems = new ItemCollection();
-    let myLocations = new LocationCollection();
-    let newLocations = new LocationCollection();
+    if (!this.walkthrough) {
+      const walkthrough = [];
+      const locations = this.getLocations();
+      let myItems = new ItemCollection();
+      let myLocations = new LocationCollection();
+      let newLocations = new LocationCollection();
 
-    do {
-      const searchLocations = new LocationCollection(locations.filter(location => {
-        return location.canFillItem(undefined, myItems) && location.canEscape(location.getItem(), myItems);
-      }));
+      do {
+        const searchLocations = new LocationCollection(locations.filter(location => {
+          return location.canFillItem(undefined, myItems) && location.canEscape(location.getItem(), myItems);
+        }));
 
-      myItems = searchLocations.getItems();
+        myItems = searchLocations.getItems();
 
-      const oldLocations = myLocations.diff(searchLocations);
-      newLocations = searchLocations.diff(myLocations);
-      myLocations = searchLocations.merge(oldLocations);
+        const oldLocations = myLocations.diff(searchLocations);
+        newLocations = searchLocations.diff(myLocations);
+        myLocations = searchLocations.merge(oldLocations);
 
-      const newLocationsObj = {};
-      for (const location of newLocations.toArray()) {
-        newLocationsObj[location.getName()] = location.getItem().getName();
-      }
+        const newLocationsObj = {};
+        const newLocationsWithItems = newLocations.toArray().filter(location => location.hasItem());
+        for (const location of newLocationsWithItems) {
+          console.log(JSON.stringify(location));
+          newLocationsObj[location.getName()] = location.getItem().getName();
+        }
 
-      if (newLocations.size() > 0) {
-        walkthrough.push(newLocationsObj);
-      }
-    } while (newLocations.size() > 0);
+        if (newLocations.size() > 0) {
+          walkthrough.push(newLocationsObj);
+        }
+      } while (newLocations.size() > 0);
 
-    return walkthrough;
+      this.walkthrough = walkthrough;
+    }
+
+    return this.walkthrough;
   }
 
   public generateLayout(): string {

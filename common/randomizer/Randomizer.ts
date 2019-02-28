@@ -82,11 +82,18 @@ export class Randomizer {
       */
       this.fillProgressiveItems(itemFiller, settings);
 
+      // Fast fill Chozo Artifacts. Separating from the junk items to make walkthrough generation easier.
+      this.fillArtifacts(itemFiller, settings);
+
+      // Create walkthrough and cache it for later use
+      const walkthrough = this.world.getWalkthrough();
+      console.log('Hello this is the walkthrough speaking');
+
       /*
       * Fast fill the rest of the items.
       *
       * This item pool contains items that don't affect progression in any way,
-      * including shuffled Chozo Artifacts, and the remaining Energy Tanks/Missile Expansions (if any).
+      * including the remaining Energy Tanks/Missile Expansions (if any).
       *
       * Because the progression items are already set in the game world at this point,
       * these items have no restrictions on placement.
@@ -166,7 +173,7 @@ export class Randomizer {
     itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 0);
 
-    // If the goal isn't All Bosses, 
+    // If the goal isn't All Bosses, get random collection of artifacts
     if (settings.goal !== Goal.ALL_BOSSES) {
       let artifacts: string[];
 
@@ -260,14 +267,9 @@ export class Randomizer {
     itemFiller.fill(this.createItemsFromMap(itemsMap));
   }
 
-  private fillJunkItems(itemFiller: RandomAssumed, settings: any): void {
+  private fillArtifacts(itemFiller: RandomAssumed, settings: any): void {
     const itemsMap: Map<string, number> = new Map<string, number>();
 
-    itemsMap.set(PrimeItem.WAVEBUSTER, this.itemPool.get(PrimeItem.WAVEBUSTER));
-    itemsMap.set(PrimeItem.ICE_SPREADER, this.itemPool.get(PrimeItem.ICE_SPREADER));
-    itemsMap.set(PrimeItem.FLAMETHROWER, this.itemPool.get(PrimeItem.FLAMETHROWER));
-    itemsMap.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION));
-    itemsMap.set(PrimeItem.ENERGY_TANK, this.itemPool.get(PrimeItem.ENERGY_TANK));
     itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_TRUTH));
     itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_STRENGTH));
     itemsMap.set(PrimeItem.ARTIFACT_OF_ELDER, this.itemPool.get(PrimeItem.ARTIFACT_OF_ELDER));
@@ -280,6 +282,30 @@ export class Randomizer {
     itemsMap.set(PrimeItem.ARTIFACT_OF_WORLD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WORLD));
     itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, this.itemPool.get(PrimeItem.ARTIFACT_OF_SPIRIT));
     itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, this.itemPool.get(PrimeItem.ARTIFACT_OF_NEWBORN));
+
+    itemFiller.fill(this.createItemsFromMap(itemsMap), true);
+  }
+
+  private fillJunkItems(itemFiller: RandomAssumed, settings: any): void {
+    const itemsMap: Map<string, number> = new Map<string, number>();
+
+    itemsMap.set(PrimeItem.WAVEBUSTER, this.itemPool.get(PrimeItem.WAVEBUSTER));
+    itemsMap.set(PrimeItem.ICE_SPREADER, this.itemPool.get(PrimeItem.ICE_SPREADER));
+    itemsMap.set(PrimeItem.FLAMETHROWER, this.itemPool.get(PrimeItem.FLAMETHROWER));
+    itemsMap.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION));
+    itemsMap.set(PrimeItem.ENERGY_TANK, this.itemPool.get(PrimeItem.ENERGY_TANK));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_TRUTH));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_STRENGTH));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_ELDER, this.itemPool.get(PrimeItem.ARTIFACT_OF_ELDER));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_WILD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WILD));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, this.itemPool.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_WARRIOR, this.itemPool.get(PrimeItem.ARTIFACT_OF_WARRIOR));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_CHOZO, this.itemPool.get(PrimeItem.ARTIFACT_OF_CHOZO));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_NATURE, this.itemPool.get(PrimeItem.ARTIFACT_OF_NATURE));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_SUN, this.itemPool.get(PrimeItem.ARTIFACT_OF_SUN));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_WORLD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WORLD));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, this.itemPool.get(PrimeItem.ARTIFACT_OF_SPIRIT));
+    // itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, this.itemPool.get(PrimeItem.ARTIFACT_OF_NEWBORN));
 
     itemFiller.fill(this.createItemsFromMap(itemsMap), true);
   }
