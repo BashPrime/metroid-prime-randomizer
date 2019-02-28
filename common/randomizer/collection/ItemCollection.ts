@@ -202,6 +202,12 @@ export class ItemCollection extends Collection {
   }
 
   public hasLateMagmoorItemReqs(settings: any): boolean {
+    // Going from mines is valid, especially for varia only heat damage seeds
+    if (this.hasMinesReqsTallonSouth(settings) && this.canLayPowerBombs()) {
+      return true;
+    }
+
+    // Calculate logic from Tallon/Chozo elevators
     return this.hasMissiles() && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.SPACE_JUMP_BOOTS)
     && (
       (this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL)) // developer intended to cross Twin Fires Tunnel
