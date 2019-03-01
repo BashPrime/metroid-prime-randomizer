@@ -52,7 +52,7 @@ export class ChozoRuins extends Region {
   public init(settings: any): void {
     this.locations.get(PrimeLocation.MAIN_PLAZA_HALF_PIPE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.BOOST_BALL)) // developer intended
-      || ((settings.ghettoJumping || settings.standableTerrain) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto or space jump off of the topmost standable portion of ramp
+      || items.has(PrimeItem.SPACE_JUMP_BOOTS) // space jump from corner of upper part of room, or top of half pipe, to the item
       || (settings.halfPipeBombJumps && items.canLayBombs()); // hpbj to item
     };
 
