@@ -83,8 +83,6 @@ export class Patcher {
         obfuscate_items: randomizerConfig.hideItemIcons,
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
-
-        quiet: true,
         comment: 'Metroid Prime Randomizer by BashPrime, April Wade, and Pwootage, version ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
 
