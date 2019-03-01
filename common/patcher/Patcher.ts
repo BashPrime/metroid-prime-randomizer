@@ -5,6 +5,9 @@ import * as path from 'path';
 import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
 import { Config } from '../randomizer/Config';
+import { HeatDamagePrevention } from '../randomizer/enums/heatDamagePrevention';
+import { SuitDamageReduction } from '../randomizer/enums/suitDamageReduction';
+
 const ProgressBar = require('electron-progressbar');
 
 export class Patcher {
@@ -77,9 +80,10 @@ export class Patcher {
         layout_string: layoutDescriptor,
         skip_frigate: randomizerConfig.skipFrigate,
         skip_hudmenus: randomizerConfig.skipHudPopups,
-        obfuscate_items: randomizerConfig.obfuscateItems,
-        quiet: true,
-        comment: 'prime-randomizer-web ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
+        obfuscate_items: randomizerConfig.hideItemIcons,
+        nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
+        staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
+        comment: 'Metroid Prime Randomizer by BashPrime, April Wade, and Pwootage, version ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
@@ -124,15 +128,25 @@ export class Patcher {
     spoiler.info.version = game.version;
     spoiler.info.permalink = game.permalink;
     spoiler.info.seed = game.seed;
+
+    // Transform settings object to their long name keys, filter out all non-shared settings, and sort them alphabetically
     spoiler.info.settings = Object.keys(game)
     .filter(key => {
       const option = config.getOptionByName(key);
       return option && option.shared;
     })
-    .reduce((obj, key) => {
-      obj[key] = game[key];
-      return obj;
-    }, {});
+    .sort((a,b) => {
+      const aLong = config.getOptionByName(a).longName;
+      const bLong = config.getOptionByName(b).longName;
+      if (aLong < bLong) {
+        return -1;
+      } else if (aLong > bLong) {
+        return 1;
+      }
+      return 0;
+    })
+    .reduce((obj, key) => (obj[config.getOptionByName(key).longName] = game[key], obj), {});
+
     spoiler.locations = JSON.parse(randomizer.getWorld().toJson());
     spoiler.walkthrough = randomizer.getWorld().getWalkthrough();
 

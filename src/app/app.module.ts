@@ -1,17 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatToolbarModule,
-  MatSidenavModule,
-  MatCardModule,
-  MatIconModule,
-  MatInputModule,
-  MatMenuModule,
-  MatSelectModule,
-  MatButtonModule,
-  MatListModule,
-  MatSnackBarModule
-} from '@angular/material';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,17 +26,6 @@ import { ItemLogicComponent } from './item-logic/item-logic.component';
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatListModule,
-    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
     ClipboardModule
