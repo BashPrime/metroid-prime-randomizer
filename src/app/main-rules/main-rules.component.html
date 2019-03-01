@@ -1,7 +1,7 @@
 <form [formGroup]="settingsForm">
   <div class="columns">
     <div class="column">
-      <p class="label">Goal</p>
+      <p class="label">Rules</p>
       <div class="box">
         <div class="field">
           <p class="label has-text-weight-semibold">Goal</p>
@@ -19,6 +19,27 @@
             <div class="select">
               <select formControlName="goalArtifacts">
                 <option *ngFor="let number of artifactCount" [ngValue]="number">{{ number }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="field">
+          <p class="label has-text-weight-semibold">Heat Damage Prevention</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="heatDamagePrevention">
+                <option *ngFor="let option of heatDamagePrevention" value="{{ option.value }}">{{ option.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <p class="label has-text-weight-semibold">Suit Damage Reduction</p>
+          <div class="control">
+            <div class="select">
+              <select formControlName="suitDamageReduction">
+                <option *ngFor="let option of suitDamageReduction" value="{{ option.value }}">{{ option.name }}</option>
               </select>
             </div>
           </div>

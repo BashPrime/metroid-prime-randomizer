@@ -32,7 +32,7 @@ To build the project for production, run one of the following commands depending
 * macOS: `npm run electron:mac`
 * Linux: `npm run electron:linux`
 
-The randomizer application will be packaged in the `app-builds` directory.
+The randomizer application will be packaged in the `release` directory.
 
 ## Special Thanks
 * Pwootage, for providing significant contributions to this project

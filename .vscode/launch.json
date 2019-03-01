@@ -6,6 +6,7 @@
             "request": "launch",
             "name": "Electron: Main",
             "program": "${workspaceFolder}/main.ts",
+            "preLaunchTask": "electron-build",
             "outFiles": [
                 "${workspaceFolder}/main.js",
                 "${workspaceFolder}/common/**/*.js"
