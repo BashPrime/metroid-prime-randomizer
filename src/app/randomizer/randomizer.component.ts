@@ -32,6 +32,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   valueSub: any;
   maxSafeInteger = Number.MAX_SAFE_INTEGER;
   newVersion: string;
+  closedUpdate: boolean = false;
   private updateChecked = false;
 
   constructor(

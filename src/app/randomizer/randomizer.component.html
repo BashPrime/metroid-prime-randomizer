@@ -21,9 +21,11 @@
   </div>
   <div class="section rando-footer">
     <hr>
-    <div class="box" id="newUpdate" *ngIf="newVersion">
-      <label class="label">New Version Available!</label>
-      <a (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer/releases/latest')">Download version {{ newVersion }}</a>
+    <div class="notification is-info" id="newUpdate" *ngIf="!closedUpdate && newVersion">
+      <button class="delete" (click)="closedUpdate = true"></button>
+      <p class="has-text-weight-semibold">New Version Available!</p>
+      <p>You are on version {{ getVersion() }}, and the latest version is {{ newVersion }}.</p>
+      <p><a (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer/releases/latest')">Download version {{ newVersion }}</a></p>
     </div>
     <form [formGroup]="randomizerForm">
       <div class="columns">
