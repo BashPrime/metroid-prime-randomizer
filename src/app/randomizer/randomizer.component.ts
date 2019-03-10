@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import * as compareVersions from 'compare-versions';
+
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
 import { Goal } from '../../../common/randomizer/enums/goal';
@@ -9,6 +11,7 @@ import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 import { HeatDamagePrevention } from '../../../common/randomizer/enums/heatDamagePrevention';
 import { SuitDamageReduction } from '../../../common/randomizer/enums/suitDamageReduction';
+import { UpdateService } from '../services/update.service';
 
 @Component({
   selector: 'app-randomizer',
@@ -28,16 +31,20 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   submitted = false;
   valueSub: any;
   maxSafeInteger = Number.MAX_SAFE_INTEGER;
+  newVersion: string;
+  private updateChecked = false;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
-    public electronService: ElectronService
-  ) {}
+    private electronService: ElectronService,
+    private updateService: UpdateService
+  ) { }
 
   ngOnInit() {
     this.createForm();
     this.importSettingsFromFile();
+    this.checkForNewVersion();
 
     this.randomizerService.getSubmittedFlag().subscribe(submitted => {
       this.submitted = submitted;
@@ -286,5 +293,27 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   importSettingsFromFile() {
     this.electronService.ipcRenderer.send('settings-get');
+  }
+
+  private checkForNewVersion() {
+    // Run update check if we haven't checked already and the user has not opted to skip checking
+    if (!this.updateChecked) {
+      this.updateService.getRandomizerVersion().subscribe((data: any) => {
+        this.updateChecked = true;
+
+        // Check if version is less than what's on Github master
+        if (compareVersions(environment.version, data.version) < 0) {
+          this.newVersion = data.version;
+        }
+      });
+    }
+  }
+
+  getVersion() {
+    return environment.version;
+  }
+
+  openExternalUrl(url: string) {
+    this.electronService.openExternalLink(url);
   }
 }
