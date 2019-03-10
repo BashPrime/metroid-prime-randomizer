@@ -11,10 +11,16 @@ serve = Utilities.isServe();
 const version = require('./package.json').version
 
 function createWindow() {
-  // Check if we are on a Mac, non-serve build
-  if (!serve && process.platform === 'darwin') {
+  // Check if we are on a non-serve build
+  if (!serve) {
     // Create our menu entries so that we can use Mac shortcuts
     Menu.setApplicationMenu(Menu.buildFromTemplate([
+      {
+        label: 'File',
+        submenu: [
+          { role: 'quit' }
+        ]
+      },
       {
         label: 'Edit',
         submenu: [
@@ -26,7 +32,7 @@ function createWindow() {
           { role: 'paste' },
           { role: 'pasteandmatchstyle' },
           { role: 'delete' },
-          { role: 'selectall' }
+          { role: 'selectall' },
         ]
       }
     ]));
