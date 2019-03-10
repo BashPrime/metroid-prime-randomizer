@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import { Patcher } from './common/patcher/Patcher';
 import { Settings } from './common/settings/Settings';
 import { Utilities } from './common/Utilities';
@@ -11,9 +11,26 @@ serve = Utilities.isServe();
 const version = require('./package.json').version
 
 function createWindow() {
-
-  const electronScreen = screen;
-  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  // Check if we are on a Mac, non-serve build
+  if (!serve && process.platform === 'darwin') {
+    // Create our menu entries so that we can use Mac shortcuts
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
+      {
+        label: 'Edit',
+        submenu: [
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
+          { role: 'cut' },
+          { role: 'copy' },
+          { role: 'paste' },
+          { role: 'pasteandmatchstyle' },
+          { role: 'delete' },
+          { role: 'selectall' }
+        ]
+      }
+    ]));
+  }
 
   // Create the browser window.
   win = new BrowserWindow({
