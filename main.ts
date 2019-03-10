@@ -2,6 +2,7 @@ import { app, BrowserWindow, screen } from 'electron';
 import { Patcher } from './common/patcher/Patcher';
 import { Settings } from './common/settings/Settings';
 import { Utilities } from './common/Utilities';
+import { PathHandler } from './common/PathHandler';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -77,3 +78,4 @@ try {
 
 const patcher = new Patcher();
 const settings = new Settings();
+const pathHandler = new PathHandler();

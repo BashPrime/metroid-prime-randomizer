@@ -57,14 +57,20 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     });
 
     // Handle successful file patch
-    this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-success', (event, msg, path) => {
       this.patching = false;
       this.changeDetectorRef.detectChanges();
-      this.electronService.dialog.showMessageBox({
+      this.electronService.dialog.showMessageBox(null, {
         type: 'info',
         title: 'Success',
-        message: arg,
-        buttons: ['OK']
+        message: msg,
+        defaultId: 1,
+        buttons: ['Open Folder', 'OK']
+      }, (response) => {
+        // Open folder is checked, open folder
+        if (response === 0) {
+          this.electronService.ipcRenderer.send('open-file-path', path);
+        }
       });
     });
 

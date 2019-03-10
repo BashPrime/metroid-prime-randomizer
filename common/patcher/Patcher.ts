@@ -96,7 +96,7 @@ export class Patcher {
             break;
           }
           case 'success': {
-            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
+            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
             break;
           }
           case 'error': {
@@ -112,7 +112,7 @@ export class Patcher {
       });
     } else {
       progressBar.close();
-      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
+      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
     }
   }
 
