@@ -14,3 +14,7 @@ html, body {
   content: ' *';
   color: red;
 }
+
+.tooltip.is-tooltip-multiline::before {
+  white-space: pre-line;
+}

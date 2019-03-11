@@ -1,6 +1,6 @@
 <form [formGroup]="romSettingsForm">
   <label class="label is-required">Base ISO</label>
-  <div class="field has-addons tooltip is-tooltip-bottom" data-tooltip="Base ISO.">
+  <div class="field has-addons tooltip is-tooltip-bottom is-tooltip-multiline" attr.data-tooltip="{{ tooltips.baseIso }}">
     <div class="control is-expanded">
       <input class="input" type="text" formControlName="baseIso" [ngClass]="{'is-danger': submitted && romSettingsForm.get('baseIso').errors}">
     </div>
@@ -29,7 +29,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.fileType }}">
           <label>File Type</label>
           <div class="control">
             <div class="select">
