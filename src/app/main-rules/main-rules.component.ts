@@ -18,8 +18,8 @@ export class MainRulesComponent implements OnInit {
   goals: any[];
   heatDamagePrevention: any[];
   suitDamageReduction: any[];
-  artifactCount = Utilities.numberRange(0, 12);
-  goalArtifacts = Goal.ARTIFACTS;
+  artifactCount = Utilities.numberRange(1, 12);
+  goalArtifacts = Goal.ARTIFACT_COLLECTION;
   defaultHeatDamageOption = HeatDamagePrevention.ANY_SUIT;
   defaultSuitDamageOption = SuitDamageReduction.DEFAULT;
   tooltips: any;

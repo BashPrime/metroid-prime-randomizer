@@ -71,7 +71,8 @@ export class Config {
   ];
   private optionDropdowns = {
     goal: [
-      { name: 'Artifact Collection', value: Goal.ARTIFACTS },
+      { name: 'Always Open', value: Goal.ALWAYS_OPEN },
+      { name: 'Artifact Collection', value: Goal.ARTIFACT_COLLECTION },
       { name: 'All Bosses', value: Goal.ALL_BOSSES }
     ],
     heatDamagePrevention: [

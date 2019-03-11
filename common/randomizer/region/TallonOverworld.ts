@@ -4,6 +4,7 @@ import { Item } from '../Item';
 import { ItemCollection } from '../collection/ItemCollection';
 import { PrimeItem } from '../enums/PrimeItem';
 import { PrimeLocation } from '../enums/PrimeLocation';
+import { Goal } from '../enums/goal';
 
 export class TallonOverworld extends Region {
   constructor() {
@@ -40,7 +41,12 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.ARTIFACT_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return settings.goalArtifacts > 0 && items.hasMissiles();
+      // If the seed uses the Always Open goal, do not put a progression item here
+      if (settings.goal === Goal.ALWAYS_OPEN) {
+        return false;
+      }
+      
+      return items.hasMissiles();
     };
 
     this.locations.get(PrimeLocation.ROOT_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
