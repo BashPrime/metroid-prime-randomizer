@@ -78,10 +78,10 @@
             </label>
           </div>
         </div>
-        <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+        <div class="field" *ngIf="settingsForm.get('goal').value !== allBosses">
           <p class="label has-text-weight-semibold">Don't Require Bosses</p>
         </div>
-        <div class="box" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+        <div class="box" *ngIf="settingsForm.get('goal').value !== allBosses">
           <div class="field">
             <div class="control">
               <label class="checkbox">
@@ -313,7 +313,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field" *ngIf="settingsForm.get('vmr').value">
           <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
             <div class="select">
@@ -330,7 +330,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field" *ngIf="settingsForm.get('earlyMagmoorNoSuit').value">
           <p class="label has-text-weight-normal">Number of Energy Tanks Required</p>
           <div class="control">
             <div class="select">

@@ -14,7 +14,7 @@ export class ItemLogicComponent implements OnInit {
   @Input('group') settingsForm: FormGroup;
   vmrEtanks = Utilities.numberRange(3, 14);
   earlyMagmoorEtanks = Utilities.numberRange(7, 14);
-  goalArtifacts = Goal.ARTIFACT_COLLECTION;
+  allBosses = Goal.ALL_BOSSES;
   tooltips: any;
 
   constructor(private randomizerService: RandomizerService) {
