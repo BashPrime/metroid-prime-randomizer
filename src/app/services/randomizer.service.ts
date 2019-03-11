@@ -35,7 +35,7 @@ export class RandomizerService {
       '\'All Bosses:\': Defeat Flaahgra, Thardus, and Omega Pirate, and collect their Chozo Artifacts.',
     heatDamagePrevention: '\'Any Suit\': Collecting any of the three suits will prevent heat damage.\n' +
       '\'Varia Suit Only\': Only the Varia Suit will prevent heat damage.',
-    hideItemIcons: 'Replaces all item models with a "glitched texture" suit model.',
+    hideItemModels: 'Replaces all item models with a "glitched texture" suit model.',
     shuffleArtifacts: 'Enabling this shuffles the Chozo Artifacts around the game world, after items are placed. ' +
       'This only applies for Artifact Collection seeds.',
     shuffleBombs: 'Enabling this shuffle the Morph Ball Bombs into the item pool.',

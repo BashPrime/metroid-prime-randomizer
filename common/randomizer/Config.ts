@@ -11,7 +11,7 @@ export class Config {
     new Option('generateRom', null, null, null, false),
     new Option('skipFrigate', 'Skip the Space Pirate Frigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', 'Skip Item Acquisition Popups', OptionType.BOOLEAN, 1, true),
-    new Option('hideItemIcons', 'Hide Item Icons', OptionType.BOOLEAN, 1, true),
+    new Option('hideItemModels', 'Hide Item Models', OptionType.BOOLEAN, 1, true),
     // Main Rules
     new Option('goal', 'Goal', OptionType.DROPDOWN, 1, true),
     new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 0, 12),
