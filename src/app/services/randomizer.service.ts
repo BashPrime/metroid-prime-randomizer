@@ -25,6 +25,12 @@ export class RandomizerService {
       { name: 'Randomized', value: RandomizerArtifacts.RANDOMIZED }
     ]
   };
+  private tooltips = {
+    hideItemIcons: 'Replaces all item models with a "glitched suit model.',
+    skipFrigate: 'Start the game on Tallon Overworld instead of the frigate.',
+    skipHudPopups: 'The game won\'t pause or display a popup when obtaining items.',
+    spoiler: 'Creates a spoiler .txt file.'
+  };
 
   constructor() {}
 
@@ -34,6 +40,10 @@ export class RandomizerService {
 
   getSubmittedFlag() {
     return this.submitted$;
+  }
+
+  getTooltips() {
+    return this.tooltips;
   }
 
   updateSubmittedFlag(submitted: boolean) {
