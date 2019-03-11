@@ -13,8 +13,8 @@ export class Config {
     new Option('skipHudPopups', 'Skip Item Acquisition Popups', OptionType.BOOLEAN, 1, true),
     new Option('hideItemModels', 'Hide Item Models', OptionType.BOOLEAN, 1, true),
     // Main Rules
-    new Option('goal', 'Goal', OptionType.DROPDOWN, 1, true),
-    new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 0, 12),
+    new Option('goal', 'Goal', OptionType.DROPDOWN, 2, true),
+    new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 1, 12),
     new Option('heatDamagePrevention', 'Heat Damage Prevention', OptionType.DROPDOWN, 1, true),
     new Option('suitDamageReduction', 'Suit Damage Reduction', OptionType.DROPDOWN, 1, true),
     new Option('shuffleArtifacts', 'Shuffle Chozo Artifacts', OptionType.BOOLEAN, 1, true),
