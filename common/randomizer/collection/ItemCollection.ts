@@ -257,7 +257,7 @@ export class ItemCollection extends Collection {
 
   // base requirements to enter Quarantine Cave from Ruined Courtyard
   public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
-    return this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
+    return !settings.noSupers && this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
