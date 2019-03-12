@@ -3,7 +3,7 @@
     <div class="column">
       <p class="label">Restrictions</p>
       <div class="box">
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline is-tooltip-bottom" attr.data-tooltip="{{ tooltips.requireThermal }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="requireThermal"> Require Thermal Visor for power conduits,
@@ -11,14 +11,14 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline is-tooltip-bottom" attr.data-tooltip="{{ tooltips.requireXRay }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="requireXRay"> Require X-Ray Visor for invisible platforms
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noReversePhendranaBombs }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noReversePhendranaBombs"> Require Bombs for reverse Phendrana
@@ -26,7 +26,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noBombsPointOfNoReturnTunnels }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noBombsPointOfNoReturnTunnels"> No Bombs in "Point of No Return"
@@ -34,35 +34,35 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noEarlyPhazonSuit }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noEarlyPhazonSuit"> No Phazon Suit in early item locations
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noSupers }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noSupers"> Don't require Super Missiles
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noCrashedFrigate }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noCrashedFrigate"> No progression items in Crashed Frigate
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noVanillaBeams }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noVanillaBeams"> No beams in vanilla beam rooms
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noGravitySuitInGravityChamber }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noGravitySuitInGravityChamber"> No Gravity Suit in Gravity
@@ -70,7 +70,7 @@
             </label>
           </div>
         </div>
-        <div class="field">
+        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.noBoostBallLowerMinesGlitched }}">
           <div class="control">
             <label class="checkbox">
               <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
@@ -82,21 +82,21 @@
           <p class="label has-text-weight-semibold">Don't Require Bosses</p>
         </div>
         <div class="box" *ngIf="settingsForm.get('goal').value !== allBosses">
-          <div class="field">
+          <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.dontRequireFlaahgra }}">
             <div class="control">
               <label class="checkbox">
                 <input type="checkbox" formControlName="dontRequireFlaahgra"> Flaahgra
               </label>
             </div>
           </div>
-          <div class="field">
+          <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.dontRequireThardus }}">
             <div class="control">
               <label class="checkbox">
                 <input type="checkbox" formControlName="dontRequireThardus"> Thardus
               </label>
             </div>
           </div>
-          <div class="field">
+          <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.dontRequireOmegaPirate }}">
             <div class="control">
               <label class="checkbox">
                 <input type="checkbox" formControlName="dontRequireOmegaPirate"> Omega Pirate
