@@ -29,10 +29,10 @@
             </label>
           </div>
         </div>
-        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.fileType }}">
+        <div class="field">
           <label>File Type</label>
           <div class="control">
-            <div class="select">
+            <div class="select tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.fileType }}">
               <select formControlName="fileType">
                 <option *ngFor="let fileType of fileTypes" value="{{ fileType.value }}">{{ fileType.name }}</option>
               </select>
@@ -44,30 +44,30 @@
     <div class="column">
       <p class="label">Game</p>
       <div class="box">
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.spoiler }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.spoiler }}">
               <input type="checkbox" formControlName="spoiler"> Create Spoiler
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.skipFrigate }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.skipFrigate }}">
               <input type="checkbox" formControlName="skipFrigate"> Skip the Space Pirate Frigate
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.skipHudPopups }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.skipHudPopups }}">
               <input type="checkbox" formControlName="skipHudPopups"> Skip Item Acquisition Popups
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.hideItemModels }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.hideItemModels }}">
               <input type="checkbox" formControlName="hideItemModels"> Hide Item Models
             </label>
           </div>

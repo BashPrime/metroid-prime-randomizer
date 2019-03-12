@@ -3,21 +3,21 @@
     <div class="column">
       <p class="label">Rules</p>
       <div class="box">
-        <div class="field tooltip is-tooltip-bottom is-tooltip-multiline" attr.data-tooltip="{{ tooltips.goal }}">
+        <div class="field">
           <p class="label has-text-weight-semibold">Goal</p>
           <div class="control">
-            <div class="select">
+            <div class="select tooltip is-tooltip-right-tablet is-tooltip-multiline" attr.data-tooltip="{{ tooltips.goal }}">
               <select formControlName="goal">
                 <option *ngFor="let goal of goals" value="{{ goal.value }}">{{ goal.name }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.artifactCount }}"
+        <div class="field"
           *ngIf="settingsForm.get('goal').value === goalArtifacts">
           <p class="label has-text-weight-semibold">Number of Artifacts</p>
           <div class="control">
-            <div class="select">
+            <div class="select tooltip is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.artifactCount }}">
               <select formControlName="goalArtifacts">
                 <option *ngFor="let number of artifactCount" [ngValue]="number">{{ number }}</option>
               </select>
@@ -25,20 +25,20 @@
           </div>
         </div>
         <hr>
-        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.heatDamagePrevention }}">
+        <div class="field">
           <p class="label has-text-weight-semibold">Heat Damage Prevention</p>
           <div class="control">
-            <div class="select">
+            <div class="select tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.heatDamagePrevention }}">
               <select formControlName="heatDamagePrevention">
                 <option *ngFor="let option of heatDamagePrevention" value="{{ option.value }}">{{ option.name }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="field tooltip is-tooltip-multiline" attr.data-tooltip="{{ tooltips.suitDamageReduction }}">
+        <div class="field">
           <p class="label has-text-weight-semibold">Suit Damage Reduction</p>
           <div class="control">
-            <div class="select">
+            <div class="select tooltip is-tooltip-right-tablet is-tooltip-multiline" attr.data-tooltip="{{ tooltips.suitDamageReduction }}">
               <select formControlName="suitDamageReduction">
                 <option *ngFor="let option of suitDamageReduction" value="{{ option.value }}">{{ option.name }}</option>
               </select>
@@ -50,45 +50,45 @@
     <div class="column">
       <p class="label">Shuffle</p>
       <div class="box">
-        <div class="field tooltip is-tooltip-multiline is-tooltip-bottom" attr.data-tooltip="{{ tooltips.shuffleArtifacts }}"
+        <div class="field"
           *ngIf="settingsForm.get('goal').value === goalArtifacts">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleArtifacts }}">
               <input type="checkbox" formControlName="shuffleArtifacts"> Shuffle Chozo Artifacts
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.shuffleMissileLauncher }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleMissileLauncher }}">
               <input type="checkbox" formControlName="shuffleMissileLauncher"> Shuffle Missile Launcher
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.shuffleMorph }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleMorph }}">
               <input type="checkbox" formControlName="shuffleMorph"> Shuffle Morph Ball
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.shuffleBombs }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleBombs }}">
               <input type="checkbox" formControlName="shuffleBombs"> Shuffle Bombs
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.shuffleCharge }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleCharge }}">
               <input type="checkbox" formControlName="shuffleCharge"> Shuffle Charge Beam
             </label>
           </div>
         </div>
-        <div class="field tooltip" attr.data-tooltip="{{ tooltips.shuffleSpaceJump }}">
+        <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox tooltip is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.shuffleSpaceJump }}">
               <input type="checkbox" formControlName="shuffleSpaceJump"> Shuffle Space Jump Boots
             </label>
           </div>

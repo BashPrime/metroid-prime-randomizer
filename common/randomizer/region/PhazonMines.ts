@@ -82,7 +82,7 @@ export class PhazonMines extends Region {
       return items.hasLowerMinesAccess(settings)
         && (settings.phazonMiningTunnelNoPhazonSuit && ( // non phazon suit requirements
           (items.hasEnergyTankCount(11) && items.has(PrimeItem.BOOST_BALL)) // Early Newborn inbounds
-          || (settings.earlyNewborn && items.canWallcrawl(settings)) // Early Newborn wallcrawl
+          || (settings.earlyNewborn && items.canWallcrawl(settings) && items.has(PrimeItem.BOOST_BALL)) // Early Newborn wallcrawl
         )
           || items.has(PrimeItem.PHAZON_SUIT)); // or have Phazon Suit (developer intended)
     };
