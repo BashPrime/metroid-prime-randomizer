@@ -506,7 +506,6 @@ export class Randomizer {
     if (settings.noEarlyPhazonSuit) {
       const phazonLocations = [
         // Tallon Overworld
-        PrimeLocation.ARBOR_CHAMBER,
         PrimeLocation.LIFE_GROVE_TUNNEL,
         PrimeLocation.LIFE_GROVE_START,
         PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER,
@@ -522,14 +521,10 @@ export class Randomizer {
         PrimeLocation.ELDER_CHAMBER,
         PrimeLocation.ANTECHAMBER,
         // Magmoor Caverns
+        PrimeLocation.MAGMOOR_WORKSTATION,
         PrimeLocation.PLASMA_PROCESSING,
         // Phendrana Drifts
-        PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE,
         PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK,
-        PrimeLocation.CHOZO_ICE_TEMPLE,
-        PrimeLocation.ICE_RUINS_WEST,
-        PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE,
-        PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK,
         PrimeLocation.QUARANTINE_CAVE,
         PrimeLocation.QUARANTINE_MONITOR,
         PrimeLocation.OBSERVATORY,
