@@ -30,7 +30,7 @@ export class RandomizerService {
     barsSkip: 'You can skip traversing the crashed frigate with a precise ' +
       'double bomb jump over the gate in Great Tree Hall.',
     baseIso: 'NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.',
-    bypassBombsWithBoost: 'Boost Ball can also be considered when traversing some Morph Ball tunnels, including ' +
+    bypassBombsWithBoost: 'Boost Ball without bombs will be considered when traversing some Morph Ball tunnels, including ' +
       'escaping Burn Dome, entering Furnace, and entering the Phendrana North elevator in Magmoor Caverns. You may also ' +
       'be expected to obtain the Furnace tunnel and Ruined Gallery tunnel items without bombs. This trick is difficult.',
     dashing: 'When strafe dashing left or right while locked on, you can release your lock-on partway through ' +
@@ -105,7 +105,7 @@ export class RandomizerService {
       'only a few items to access, including most of Tallon Overworld, almost all of the first ' +
       'half of Chozo Ruins, most of Magmoor Caverns, and almost all of the early ' +
       'Phendrana Drifts locations.',
-    noGravitySuitInGravityChamber: 'The Gravity Suit will not appear in either of the two item locations ' +
+    noGravitySuitInGravityChamber: 'The Gravity Suit will never appear in either of the two item locations ' +
       'in Gravity Chamber.',
     noReversePhendranaBombs: 'You will never be required to enter Phendrana Drifts from the south ' +
       'elevator to obtain the Morph Ball Bomb.',
