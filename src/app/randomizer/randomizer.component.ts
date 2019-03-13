@@ -314,7 +314,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   }
 
   private checkForNewVersion() {
-    // Run update check if we haven't checked already and the user has not opted to skip checking
+    // Run update check if we haven't checked already
     if (!this.updateChecked) {
       this.updateService.getRandomizerVersion().subscribe((data: any) => {
         this.updateChecked = true;
