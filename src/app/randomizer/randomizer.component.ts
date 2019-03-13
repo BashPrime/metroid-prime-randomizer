@@ -258,7 +258,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     } catch (err) {
       return '';
     }
-    const fullString = seed + ',' + settingsString;
+    const fullString = seed + ',' + environment.version + ',' + settingsString;
     if (seed && fullString)
       return btoa(fullString);
     return '';
@@ -269,10 +269,22 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     try {
       const config = new Config();
       settingsToImport = atob(this.permalink).split(',');
-      if (settingsToImport.length === 2) {
-        let newSettings = config.base32TextToSettings(settingsToImport[1]);
-        newSettings['seed'] = settingsToImport[0];
-        this.randomizerForm.patchValue(newSettings);
+      if (settingsToImport.length === 3) {
+        // Verify the versions match
+        const version = settingsToImport[1];
+        if (compareVersions(environment.version, version) === 0) {
+          let newSettings = config.base32TextToSettings(settingsToImport[2]);
+          newSettings['seed'] = settingsToImport[0];
+          this.randomizerForm.patchValue(newSettings);
+        } else {
+          // Display version mismatch error dialog
+          this.electronService.dialog.showMessageBox({
+            type: 'error',
+            title: 'Error',
+            message: 'This permalink is for version ' + version + ' of the randomizer, but you are using version ' + environment.version + '.',
+            buttons: ['OK']
+          });
+        }
       } else {
         this.electronService.dialog.showMessageBox({
           type: 'error',
