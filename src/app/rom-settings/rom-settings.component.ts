@@ -17,10 +17,13 @@ export class RomSettingsComponent implements OnInit {
     { name: 'ISO', value: 'iso' },
     { name: 'GCZ (Dolphin only)', value: 'gcz' }
   ];
+  tooltips: any;
 
   constructor(private randomizerService: RandomizerService, private electronService: ElectronService) { }
 
   ngOnInit() {
+    this.tooltips = this.randomizerService.getTooltips();
+
     this.randomizerService.getSubmittedFlag().subscribe(submitted => {
       this.submitted = submitted;
     });

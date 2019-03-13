@@ -1,4 +1,4 @@
 export enum HeatDamagePrevention {
-    ANY_SUIT = 'anySuit',
-    VARIA_ONLY = 'variaOnly'
+    ANY_SUIT = 'any-suit',
+    VARIA_ONLY = 'varia-only'
 }

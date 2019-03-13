@@ -6,6 +6,7 @@ import { Goal } from '../../../common/randomizer/enums/goal';
 import { Config } from '../../../common/randomizer/Config';
 import { HeatDamagePrevention } from '../../../common/randomizer/enums/heatDamagePrevention';
 import { SuitDamageReduction } from '../../../common/randomizer/enums/suitDamageReduction';
+import { RandomizerService } from '../services/randomizer.service';
 
 @Component({
   selector: 'app-main-rules',
@@ -17,12 +18,14 @@ export class MainRulesComponent implements OnInit {
   goals: any[];
   heatDamagePrevention: any[];
   suitDamageReduction: any[];
-  artifactCount = Utilities.numberRange(0, 12);
-  goalArtifacts = Goal.ARTIFACTS;
+  artifactCount = Utilities.numberRange(1, 12);
+  goalArtifacts = Goal.ARTIFACT_COLLECTION;
   defaultHeatDamageOption = HeatDamagePrevention.ANY_SUIT;
   defaultSuitDamageOption = SuitDamageReduction.DEFAULT;
+  tooltips: any;
 
-  constructor() {
+  constructor(private randomizerService: RandomizerService) {
+    this.tooltips = this.randomizerService.getTooltips();
     const config = new Config();
     this.goals = config.getDropdownsForField('goal');
     this.heatDamagePrevention = config.getDropdownsForField('heatDamagePrevention');

@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import * as compareVersions from 'compare-versions';
+
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
 import { Goal } from '../../../common/randomizer/enums/goal';
@@ -9,6 +11,7 @@ import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
 import { HeatDamagePrevention } from '../../../common/randomizer/enums/heatDamagePrevention';
 import { SuitDamageReduction } from '../../../common/randomizer/enums/suitDamageReduction';
+import { UpdateService } from '../services/update.service';
 
 @Component({
   selector: 'app-randomizer',
@@ -28,16 +31,21 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   submitted = false;
   valueSub: any;
   maxSafeInteger = Number.MAX_SAFE_INTEGER;
+  newVersion: string;
+  closedUpdate: boolean = false;
+  private updateChecked = false;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private randomizerService: RandomizerService,
-    public electronService: ElectronService
-  ) {}
+    private electronService: ElectronService,
+    private updateService: UpdateService
+  ) { }
 
   ngOnInit() {
     this.createForm();
     this.importSettingsFromFile();
+    this.checkForNewVersion();
 
     this.randomizerService.getSubmittedFlag().subscribe(submitted => {
       this.submitted = submitted;
@@ -57,14 +65,20 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     });
 
     // Handle successful file patch
-    this.electronService.ipcRenderer.on('patch-success', (event, arg) => {
+    this.electronService.ipcRenderer.on('patch-success', (event, msg, path) => {
       this.patching = false;
       this.changeDetectorRef.detectChanges();
-      this.electronService.dialog.showMessageBox({
+      this.electronService.dialog.showMessageBox(null, {
         type: 'info',
         title: 'Success',
-        message: arg,
-        buttons: ['OK']
+        message: msg,
+        defaultId: 1,
+        buttons: ['Open Folder', 'OK']
+      }, (response) => {
+        // Open folder is checked, open folder
+        if (response === 0) {
+          this.electronService.ipcRenderer.send('open-file-path', path);
+        }
       });
     });
 
@@ -96,9 +110,10 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       spoiler: [true],
       skipFrigate: [true],
       skipHudPopups: [true],
-      hideItemIcons: [false],
-      goal: [Goal.ARTIFACTS],
-      goalArtifacts: [12, [Validators.min(0), Validators.max(12)]],
+      hideItemModels: [false],
+      goal: [Goal.ARTIFACT_COLLECTION],
+      goalArtifacts: [12, [Validators.min(1), Validators.max(12)]],
+      artifactLocationHints: [false],
       heatDamagePrevention: [HeatDamagePrevention.ANY_SUIT],
       suitDamageReduction: [SuitDamageReduction.DEFAULT],
       shuffleArtifacts: [true],
@@ -139,7 +154,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       infiniteSpeedMagmaPool: [false],
       infiniteSpeedHote: [false],
       barsSkip: [false],
-      spinnersNoBoost: [false],
       spiderlessShafts: [false],
       infiniteBoostEliteResearch: [false],
       phazonMiningTunnelNoPhazonSuit: [false],
@@ -161,9 +175,10 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       spoiler: true,
       skipFrigate: true,
       skipHudPopups: true,
-      hideItemIcons: false,
-      goal: Goal.ARTIFACTS,
+      hideItemModels: false,
+      goal: Goal.ARTIFACT_COLLECTION,
       goalArtifacts: 12,
+      artifactLocationHints: false,
       heatDamagePrevention: HeatDamagePrevention.ANY_SUIT,
       suitDamageReduction: SuitDamageReduction.DEFAULT,
       shuffleArtifacts: true,
@@ -204,7 +219,6 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       infiniteSpeedMagmaPool: false,
       infiniteSpeedHote: false,
       barsSkip: false,
-      spinnersNoBoost: false,
       spiderlessShafts: false,
       infiniteBoostEliteResearch: false,
       phazonMiningTunnelNoPhazonSuit: false,
@@ -240,8 +254,13 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   getPermalink(): string {
     const config = new Config();
     const seed = this.randomizerForm.get('seed').value;
-    const settingsString = config.settingsToBase32Text(this.randomizerForm.value);
-    const fullString = seed + ',' + settingsString;
+    let settingsString;
+    try {
+      settingsString = config.settingsToBase32Text(this.randomizerForm.value);
+    } catch (err) {
+      return '';
+    }
+    const fullString = seed + ',' + environment.version + ',' + settingsString;
     if (seed && fullString)
       return btoa(fullString);
     return '';
@@ -252,10 +271,22 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     try {
       const config = new Config();
       settingsToImport = atob(this.permalink).split(',');
-      if (settingsToImport.length === 2) {
-        let newSettings = config.base32TextToSettings(settingsToImport[1]);
-        newSettings['seed'] = settingsToImport[0];
-        this.randomizerForm.patchValue(newSettings);
+      if (settingsToImport.length === 3) {
+        // Verify the versions match
+        const version = settingsToImport[1];
+        if (compareVersions(environment.version, version) === 0) {
+          let newSettings = config.base32TextToSettings(settingsToImport[2]);
+          newSettings['seed'] = settingsToImport[0];
+          this.randomizerForm.patchValue(newSettings);
+        } else {
+          // Display version mismatch error dialog
+          this.electronService.dialog.showMessageBox({
+            type: 'error',
+            title: 'Version Mismatch',
+            message: 'This permalink is for version ' + version + ' of the randomizer, but you are using version ' + environment.version + '.',
+            buttons: ['OK']
+          });
+        }
       } else {
         this.electronService.dialog.showMessageBox({
           type: 'error',
@@ -280,5 +311,27 @@ export class RandomizerComponent implements OnInit, OnDestroy {
 
   importSettingsFromFile() {
     this.electronService.ipcRenderer.send('settings-get');
+  }
+
+  private checkForNewVersion() {
+    // Run update check if we haven't checked already
+    if (!this.updateChecked) {
+      this.updateService.getRandomizerVersion().subscribe((data: any) => {
+        this.updateChecked = true;
+
+        // Check if version is less than what's on Github master
+        if (compareVersions(environment.version, data.version) < 0) {
+          this.newVersion = data.version;
+        }
+      });
+    }
+  }
+
+  getVersion() {
+    return environment.version;
+  }
+
+  openExternalUrl(url: string) {
+    this.electronService.openExternalLink(url);
   }
 }

@@ -11,10 +11,11 @@ export class Config {
     new Option('generateRom', null, null, null, false),
     new Option('skipFrigate', 'Skip the Space Pirate Frigate', OptionType.BOOLEAN, 1, true),
     new Option('skipHudPopups', 'Skip Item Acquisition Popups', OptionType.BOOLEAN, 1, true),
-    new Option('hideItemIcons', 'Hide Item Icons', OptionType.BOOLEAN, 1, true),
+    new Option('hideItemModels', 'Hide Item Models', OptionType.BOOLEAN, 1, true),
     // Main Rules
-    new Option('goal', 'Goal', OptionType.DROPDOWN, 1, true),
-    new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 0, 12),
+    new Option('goal', 'Goal', OptionType.DROPDOWN, 2, true),
+    new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 1, 12),
+    new Option('artifactLocationHints', 'Show Chozo Artifact location hints in Artifact Temple', OptionType.BOOLEAN, 1, true),
     new Option('heatDamagePrevention', 'Heat Damage Prevention', OptionType.DROPDOWN, 1, true),
     new Option('suitDamageReduction', 'Suit Damage Reduction', OptionType.DROPDOWN, 1, true),
     new Option('shuffleArtifacts', 'Shuffle Chozo Artifacts', OptionType.BOOLEAN, 1, true),
@@ -37,11 +38,11 @@ export class Config {
     new Option('dontRequireFlaahgra', 'Don\'t require Flaahgra', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireThardus', 'Don\'t require Thardus', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireOmegaPirate', 'Don\'t require Omega Pirate', OptionType.BOOLEAN, 1, true),
-    new Option('rootCaveSW', 'Root Cave Secret World', OptionType.BOOLEAN, 1, true),
+    new Option('rootCaveSW', 'Wallcrawl to Arbor Chamber', OptionType.BOOLEAN, 1, true),
     new Option('ibbf', 'IBBF Wallcrawl for late Chozo access', OptionType.BOOLEAN, 1, true),
     new Option('trainingChamberOOB', 'Training Chamber (Access) Wallcrawl', OptionType.BOOLEAN, 1, true),
     new Option('waveSun', 'Wave/Sun Infinite Speed', OptionType.BOOLEAN, 1, true),
-    new Option('workstationToPlasmaProcessing', 'Magmoor Workstation SW to Plasma Processing', OptionType.BOOLEAN, 1, true),
+    new Option('workstationToPlasmaProcessing', 'Wallcrawl to Plasma Processing', OptionType.BOOLEAN, 1, true),
     new Option('earlyNewborn', 'Early Newborn', OptionType.BOOLEAN, 1, true),
     new Option('oobNoBombs', 'Allow OOB without Morph Ball Bombs', OptionType.BOOLEAN, 1, true),
     new Option('floatyJump', 'Floaty Jump', OptionType.BOOLEAN, 1, true),
@@ -56,7 +57,6 @@ export class Config {
     new Option('infiniteSpeedMagmaPool', 'Infinite Speed (Magma Pool)', OptionType.BOOLEAN, 1, true),
     new Option('infiniteSpeedHote', 'Infinite Speed (Hall of the Elders)', OptionType.BOOLEAN, 1, true),
     new Option('barsSkip', 'Great Tree Hall Gate Skip', OptionType.BOOLEAN, 1, true),
-    new Option('spinnersNoBoost', 'Life Grove spinner without Boost Ball', OptionType.BOOLEAN, 1, true),
     new Option('spiderlessShafts', 'Spiderless Shafts (Phazon Mines)', OptionType.BOOLEAN, 1, true),
     new Option('infiniteBoostEliteResearch', 'Infinite Boost Wall Clip into Elite Research (Mines)', OptionType.BOOLEAN, 1, true),
     new Option('phazonMiningTunnelNoPhazonSuit', 'Phazon Mining Tunnel without Phazon Suit', OptionType.BOOLEAN, 1, true),
@@ -71,7 +71,8 @@ export class Config {
   ];
   private optionDropdowns = {
     goal: [
-      { name: 'Artifact Collection', value: Goal.ARTIFACTS },
+      { name: 'Always Open', value: Goal.ALWAYS_OPEN },
+      { name: 'Artifact Collection', value: Goal.ARTIFACT_COLLECTION },
       { name: 'All Bosses', value: Goal.ALL_BOSSES }
     ],
     heatDamagePrevention: [

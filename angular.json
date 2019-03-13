@@ -23,7 +23,6 @@
               "src/favicon.512x512.png"
             ],
             "styles": [
-              "node_modules/bulma/bulma.sass",
               "src/global.scss"
             ],
             "scripts": []
@@ -74,7 +73,6 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "node_modules/bulma/bulma.sass",
               "src/global.scss"
             ],
             "assets": [

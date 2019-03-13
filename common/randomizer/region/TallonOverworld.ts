@@ -4,6 +4,7 @@ import { Item } from '../Item';
 import { ItemCollection } from '../collection/ItemCollection';
 import { PrimeItem } from '../enums/PrimeItem';
 import { PrimeLocation } from '../enums/PrimeLocation';
+import { Goal } from '../enums/goal';
 
 export class TallonOverworld extends Region {
   constructor() {
@@ -40,7 +41,12 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.ARTIFACT_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return settings.goalArtifacts > 0 && items.hasMissiles();
+      // If the seed uses the Always Open goal, do not put a progression item here
+      if (settings.goal === Goal.ALWAYS_OPEN) {
+        return false;
+      }
+
+      return items.hasMissiles();
     };
 
     this.locations.get(PrimeLocation.ROOT_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
@@ -99,7 +105,7 @@ export class TallonOverworld extends Region {
     this.locations.get(PrimeLocation.LIFE_GROVE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
+      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL)) // dbj or boost to item
       && (
         items.hasReflectingPoolReqs(settings)
         || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
@@ -117,9 +123,8 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-      && ((settings.halfPipeBombJumps && settings.spinnersNoBoost) || items.has(PrimeItem.BOOST_BALL))
       && (
         items.hasReflectingPoolReqs(settings)
         || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
