@@ -45,7 +45,7 @@ export class TallonOverworld extends Region {
       if (settings.goal === Goal.ALWAYS_OPEN) {
         return false;
       }
-      
+
       return items.hasMissiles();
     };
 
@@ -105,7 +105,7 @@ export class TallonOverworld extends Region {
     this.locations.get(PrimeLocation.LIFE_GROVE_TUNNEL).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL))
+      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL)) // dbj or boost to item
       && (
         items.hasReflectingPoolReqs(settings)
         || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
@@ -123,9 +123,8 @@ export class TallonOverworld extends Region {
     };
 
     this.locations.get(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      return items.has(PrimeItem.ICE_BEAM) && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.BOOST_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       && (settings.standableTerrain || items.has(PrimeItem.SPIDER_BALL))
-      && (settings.halfPipeBombJumps || items.has(PrimeItem.BOOST_BALL)) // hpbj and spinner manip, or have boost
       && (
         items.hasReflectingPoolReqs(settings)
         || (items.hasCrashedFrigateReqs(settings) && items.canLayBombs() && (settings.barsSkip || items.has(PrimeItem.BOOST_BALL))) // reverse bars skip
