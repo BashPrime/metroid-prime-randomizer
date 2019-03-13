@@ -252,7 +252,12 @@ export class RandomizerComponent implements OnInit, OnDestroy {
   getPermalink(): string {
     const config = new Config();
     const seed = this.randomizerForm.get('seed').value;
-    const settingsString = config.settingsToBase32Text(this.randomizerForm.value);
+    let settingsString;
+    try {
+      settingsString = config.settingsToBase32Text(this.randomizerForm.value);
+    } catch (err) {
+      return '';
+    }
     const fullString = seed + ',' + settingsString;
     if (seed && fullString)
       return btoa(fullString);
