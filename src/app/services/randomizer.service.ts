@@ -27,9 +27,8 @@ export class RandomizerService {
   };
   private tooltips = {
     artifactCount: 'Sets the number of Chozo Artifacts for Artifact Collection seeds.',
-    barsSkip: 'You can skip traversing through the crashed frigate (and also Gravity Suit) with a precise ' +
-      'double bomb jump over the boost ball spinner bars in Great Tree Hall. This allows for more direct ' +
-      'Phazon Mines access, and in rare cases, Wave Beam to be placed in Hydro Access Tunnel.',
+    barsSkip: 'You can skip traversing through the crashed frigate with a precise ' +
+      'double bomb jump over the gate in Great Tree Hall.',
     baseIso: 'NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.',
     dashing: 'When strafe dashing left or right while locked on, you can release your lock-on partway through ' +
       'the dash to leap sideways at high speeds. This can be used to get to item locations earlier than intended. ' +
@@ -68,6 +67,8 @@ export class RandomizerService {
     hideItemModels: 'Replaces all item models with a "glitched texture" suit model.',
     ibbf: 'You can reach the latter section of Chozo Ruins without either Wave or Ice Beam by ' +
       'wallcrawling from Gathering Hall to either Crossway or Reflecting Pool Access.',
+    infiniteBoostEliteResearch: 'If you have Boost Ball, it\'s possible to enter Elite Research from the ' +
+      'upper door before using the laser. You can get stuck in the wall and continually boost to clip through.',
     infiniteSpeedEarlySun: 'You can obtain the Chozo Ice Temple and Phendrana Shorelines (Behind Ice) ' +
       'items early by getting Infinite Speed in Chapel of the Elders, then boosting in Chapel Tunnel ' +
       'and Phendrana Shorelines respectively.',
@@ -125,6 +126,9 @@ export class RandomizerService {
     shuffleSpaceJump: 'Enabling this shuffles the Space Jump boots into the item pool.',
     skipFrigate: 'Start the game on Tallon Overworld instead of the frigate.',
     skipHudPopups: 'The game won\'t pause or display a popup when obtaining items.',
+    spiderlessShafts: 'It\'s possible to climb Elevator Access A and Research Access without Spider Ball. ' +
+      'For Elevator Access A, there is standable collision that you can BSJ and jump to next to the spider track. ' +
+      'For Research Access, you can jump to some narrow collision on a boulder to reach the Elite Research door.',
     spoiler: 'Creates a spoiler .txt file.',
     standableTerrain: 'You can stand on a lot of collision in the game, even if it doesn\'t look like you can ' +
       'stand on it. Usually this setting is used in conjunction with dashing, L jumping, R jumping, and more ' +
