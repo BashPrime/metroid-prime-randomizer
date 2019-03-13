@@ -280,7 +280,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
           // Display version mismatch error dialog
           this.electronService.dialog.showMessageBox({
             type: 'error',
-            title: 'Error',
+            title: 'Version Mismatch',
             message: 'This permalink is for version ' + version + ' of the randomizer, but you are using version ' + environment.version + '.',
             buttons: ['OK']
           });
