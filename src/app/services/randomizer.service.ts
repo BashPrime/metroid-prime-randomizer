@@ -27,6 +27,9 @@ export class RandomizerService {
   };
   private tooltips = {
     artifactCount: 'Sets the number of Chozo Artifacts for Artifact Collection seeds.',
+    artifactLocationHints: 'Scanning the totems in the Artifact Temple will reveal where each Chozo Artifact is placed. ' +
+      'As in the original game, only some of the totems are scannable in the beginning. You will gain access to more scans ' +
+      'as you collect more Chozo Artifacts.\n\nNOTE: Changing this setting will change the seed.',
     barsSkip: 'You can skip traversing the crashed frigate with a precise ' +
       'double bomb jump over the gate in Great Tree Hall.',
     baseIso: 'NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.',
