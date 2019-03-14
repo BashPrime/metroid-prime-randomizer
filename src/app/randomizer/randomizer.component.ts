@@ -73,6 +73,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         title: 'Success',
         message: msg,
         defaultId: 1,
+        noLink: true,
         buttons: ['Open Folder', 'OK']
       }, (response) => {
         // Open folder is checked, open folder
