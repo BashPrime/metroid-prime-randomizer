@@ -182,8 +182,10 @@ export class ItemCollection extends Collection {
   }
 
   public canCrossMagmaPool(settings: any): boolean {
-    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasSuit(settings))) // E tank or suit for safety
-    || (settings.damageBoostLiquids && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
+    const suitOrETankReqs = (settings.crossMagmaPoolNoHeatProtection && this.hasEnergyTankCount(2)) || this.hasSuit(settings);
+
+    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && suitOrETankReqs) // E tank or suit for safety
+    || (this.hasSuit(settings) && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
     || (this.hasSuit(settings) && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 

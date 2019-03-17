@@ -64,6 +64,7 @@ export class Config {
     new Option('dbj', 'Double Bomb Jump sequence breaks', OptionType.BOOLEAN, 1, true),
     new Option('hbjPastHote', 'Hyper Bomb Jump (HBJ) past Hall of the Elders', OptionType.BOOLEAN, 1, true),
     new Option('bypassBombsWithBoost', 'Allow Boost Ball for morph tunnels that need bombs', OptionType.BOOLEAN, 1, true),
+    new Option('crossMagmaPoolNoHeatProtection', 'Cross Magma Pool without Heat Protection', OptionType.BOOLEAN, 1, true),
     new Option('vmr', 'Suitless Magmoor Run to Phendrana/Mines', OptionType.BOOLEAN, 1, true),
     new Option('vmrTanks', 'Suitless Magmoor Run to Phendrana/Mines - Required Energy Tanks', OptionType.NUMBER, 4, true, 3, 14),
     new Option('earlyMagmoorNoSuit', 'Early Magmoor Items Without a Suit', OptionType.BOOLEAN, 1, true),
