@@ -14,7 +14,6 @@ export class Patcher {
   private appRoot: string;
   private randomPrime: any;
   private serve: boolean;
-  private defaultOutputFolderName = 'prime-randomizer-output';
 
   constructor() {
     this.serve = Utilities.isServe();
@@ -48,7 +47,9 @@ export class Patcher {
     const randomizer = new Randomizer(randomizerConfig);
     randomizer.randomize();
 
-    const outputFile = 'Prime_' + randomizerConfig.permalink;
+    const outputPrefix = 'Prime Randomizer';
+    const outputFile = outputPrefix + ' - ' + randomizerConfig.permalink;
+    const outputSpoiler = outputPrefix + ' Spoiler - ' + randomizerConfig.permalink + '.json';
 
     // If no folder is specified, use default output folder
     if (!randomizerConfig.outputFolder) {
@@ -67,7 +68,7 @@ export class Patcher {
 
     if (randomizerConfig.spoiler) {
       progressBar.text = 'Creating spoiler log...';
-      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputFile + '_spoiler.txt'));
+      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputSpoiler));
     }
 
     if (randomizerConfig.generateRom) {
@@ -84,7 +85,7 @@ export class Patcher {
         show_artifact_location_hints: randomizerConfig.artifactLocationHints,
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
-        comment: 'Metroid Prime Randomizer by BashPrime, April Wade, and Pwootage, version ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
+        comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
