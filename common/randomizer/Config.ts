@@ -34,7 +34,7 @@ export class Config {
     new Option('requireXRay', 'Require X-Ray Visor for invisible platforms', OptionType.BOOLEAN, 1, true),
     new Option('noReversePhendranaBombs', 'Require Bombs for reverse Phendrana Drifts', OptionType.BOOLEAN, 1, true),
     new Option('noCrashedFrigate', 'No progression items in Crashed Frigate', OptionType.BOOLEAN, 1, true),
-    new Option('noBoostBallLowerMinesGlitched', 'No Boost Ball in Lower Mines (Glitched Seeds)', OptionType.BOOLEAN, 1, true),
+    new Option('allowBoostBallLowerMines', 'Allow Boost Ball in Lower Phazon Mines', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireFlaahgra', 'Don\'t require Flaahgra', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireThardus', 'Don\'t require Thardus', OptionType.BOOLEAN, 1, true),
     new Option('dontRequireOmegaPirate', 'Don\'t require Omega Pirate', OptionType.BOOLEAN, 1, true),

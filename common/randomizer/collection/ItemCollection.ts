@@ -321,9 +321,8 @@ export class ItemCollection extends Collection {
 
   // Base requirements to climb out top side of Ventilation Shaft
   public canClimbVentShaft(settings) {
-    return this.has(PrimeItem.BOOST_BALL) || (
-      !settings.noBoostBallLowerMinesGlitched
-      && ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS)))
+    return (this.has(PrimeItem.BOOST_BALL) || settings.allowBoostBallLowerMines) || (
+      (settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))
     );
   }
 

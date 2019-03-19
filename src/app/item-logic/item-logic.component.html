@@ -70,14 +70,6 @@
             </label>
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.noBoostBallLowerMinesGlitched }}">
-              <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
-              (Glitched Seeds)
-            </label>
-          </div>
-        </div>
         <div class="field" *ngIf="settingsForm.get('goal').value !== allBosses">
           <p class="label has-text-weight-semibold">Don't Require Bosses</p>
         </div>
@@ -242,6 +234,13 @@
           <div class="control">
             <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.barsSkip }}">
               <input type="checkbox" formControlName="barsSkip"> Great Tree Hall Gate Skip
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.allowBoostBallLowerMines }}">
+              <input type="checkbox" formControlName="allowBoostBallLowerMines"> Allow Boost Ball in Lower Phazon Mines
             </label>
           </div>
         </div>
