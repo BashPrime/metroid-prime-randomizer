@@ -7,6 +7,7 @@
             "name": "Electron: Main",
             "program": "${workspaceFolder}/main.ts",
             "preLaunchTask": "electron-build",
+            "outputCapture": "std",
             "outFiles": [
                 "${workspaceFolder}/main.js",
                 "${workspaceFolder}/common/**/*.js"
