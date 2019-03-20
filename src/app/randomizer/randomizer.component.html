@@ -21,6 +21,12 @@
   </div>
   <div class="section rando-footer">
     <hr>
+    <div class="notification is-info" id="newUpdate" *ngIf="!closedUpdate && newVersion">
+      <button class="delete" (click)="closedUpdate = true"></button>
+      <p class="has-text-weight-semibold">New Version Available!</p>
+      <p>You are on version {{ getVersion() }}, and the latest version is {{ newVersion }}.</p>
+      <p><a (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer/releases/latest')">Download version {{ newVersion }}</a></p>
+    </div>
     <form [formGroup]="randomizerForm">
       <div class="columns">
         <div class="column">
@@ -49,7 +55,7 @@
       </div>
     </form>
     <div class="buttons is-centered" style="margin-top: 2em;">
-      <button class="button" (click)="electronService.openExternalLink('https://randomizer.metroidprime.run/help/modes')">Help</button>
+      <button class="button" (click)="openExternalUrl('https://randomizer.metroidprime.run/help')">Help</button>
       <button class="button" (click)="resetSettings()">Reset Settings to Default</button>
       <button class="button is-primary " (click)="runRandomizer()" [disabled]="patching">Randomize</button>
     </div>

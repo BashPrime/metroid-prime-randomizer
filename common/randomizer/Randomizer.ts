@@ -126,7 +126,18 @@ export class Randomizer {
   }
 
   private getInitialItemPool(settings: any): Map<string, number> {
-    const numberOfArtifacts = settings.goal === Goal.ALL_BOSSES ? 3 : settings.goalArtifacts;
+    // Get number of artifacts depending on the goal
+    let numberOfArtifacts;
+    switch (settings.goal) {
+      case Goal.ALL_BOSSES:
+        numberOfArtifacts = 3;
+        break;
+      case Goal.ALWAYS_OPEN:
+        numberOfArtifacts = 0;
+        break;
+      default:
+        numberOfArtifacts = settings.goalArtifacts;
+    }
     const emptyArtifactSlots = 12 - numberOfArtifacts;
 
     const itemPool = new Map<string, number>();
@@ -172,8 +183,8 @@ export class Randomizer {
     itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_NEWBORN, 0);
 
-    // If the goal isn't All Bosses, get random collection of artifacts
-    if (settings.goal !== Goal.ALL_BOSSES) {
+    // If the goal is Artifact Collection, get random collection of artifacts
+    if (settings.goal === Goal.ARTIFACT_COLLECTION) {
       let artifacts: string[];
 
       if (settings.goalArtifacts === 12) {
@@ -293,18 +304,6 @@ export class Randomizer {
     itemsMap.set(PrimeItem.FLAMETHROWER, this.itemPool.get(PrimeItem.FLAMETHROWER));
     itemsMap.set(PrimeItem.MISSILE_EXPANSION, this.itemPool.get(PrimeItem.MISSILE_EXPANSION));
     itemsMap.set(PrimeItem.ENERGY_TANK, this.itemPool.get(PrimeItem.ENERGY_TANK));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_TRUTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_TRUTH));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_STRENGTH, this.itemPool.get(PrimeItem.ARTIFACT_OF_STRENGTH));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_ELDER, this.itemPool.get(PrimeItem.ARTIFACT_OF_ELDER));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_WILD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WILD));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, this.itemPool.get(PrimeItem.ARTIFACT_OF_LIFEGIVER));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_WARRIOR, this.itemPool.get(PrimeItem.ARTIFACT_OF_WARRIOR));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_CHOZO, this.itemPool.get(PrimeItem.ARTIFACT_OF_CHOZO));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_NATURE, this.itemPool.get(PrimeItem.ARTIFACT_OF_NATURE));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_SUN, this.itemPool.get(PrimeItem.ARTIFACT_OF_SUN));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_WORLD, this.itemPool.get(PrimeItem.ARTIFACT_OF_WORLD));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_SPIRIT, this.itemPool.get(PrimeItem.ARTIFACT_OF_SPIRIT));
-    // itemsMap.set(PrimeItem.ARTIFACT_OF_NEWBORN, this.itemPool.get(PrimeItem.ARTIFACT_OF_NEWBORN));
 
     itemFiller.fill(this.createItemsFromMap(itemsMap), true);
   }
@@ -334,7 +333,7 @@ export class Randomizer {
     const locations = this.world.getLocationsMap();
 
     // Chozo Artifacts
-    if (!settings.shuffleArtifacts && settings.goal !== Goal.ALL_BOSSES) {
+    if (!settings.shuffleArtifacts && settings.goal === Goal.ARTIFACT_COLLECTION) {
       const artifactLocations: { location: string, artifact: string }[] = [
         { location: PrimeLocation.ARTIFACT_TEMPLE, artifact: PrimeItem.ARTIFACT_OF_TRUTH },
         { location: PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER, artifact: PrimeItem.ARTIFACT_OF_CHOZO },
@@ -507,7 +506,6 @@ export class Randomizer {
     if (settings.noEarlyPhazonSuit) {
       const phazonLocations = [
         // Tallon Overworld
-        PrimeLocation.ARBOR_CHAMBER,
         PrimeLocation.LIFE_GROVE_TUNNEL,
         PrimeLocation.LIFE_GROVE_START,
         PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER,
@@ -523,14 +521,10 @@ export class Randomizer {
         PrimeLocation.ELDER_CHAMBER,
         PrimeLocation.ANTECHAMBER,
         // Magmoor Caverns
+        PrimeLocation.MAGMOOR_WORKSTATION,
         PrimeLocation.PLASMA_PROCESSING,
         // Phendrana Drifts
-        PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE,
         PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK,
-        PrimeLocation.CHOZO_ICE_TEMPLE,
-        PrimeLocation.ICE_RUINS_WEST,
-        PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE,
-        PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK,
         PrimeLocation.QUARANTINE_CAVE,
         PrimeLocation.QUARANTINE_MONITOR,
         PrimeLocation.OBSERVATORY,

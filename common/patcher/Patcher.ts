@@ -14,7 +14,6 @@ export class Patcher {
   private appRoot: string;
   private randomPrime: any;
   private serve: boolean;
-  private defaultOutputFolderName = 'prime-randomizer-output';
 
   constructor() {
     this.serve = Utilities.isServe();
@@ -48,7 +47,9 @@ export class Patcher {
     const randomizer = new Randomizer(randomizerConfig);
     randomizer.randomize();
 
-    const outputFile = 'Prime_' + randomizerConfig.permalink;
+    const outputPrefix = 'Prime Randomizer';
+    const outputFile = outputPrefix + ' - ' + randomizerConfig.permalink;
+    const outputSpoiler = outputPrefix + ' Spoiler - ' + randomizerConfig.permalink + '.json';
 
     // If no folder is specified, use default output folder
     if (!randomizerConfig.outputFolder) {
@@ -67,7 +68,7 @@ export class Patcher {
 
     if (randomizerConfig.spoiler) {
       progressBar.text = 'Creating spoiler log...';
-      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputFile + '_spoiler.txt'));
+      this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputSpoiler));
     }
 
     if (randomizerConfig.generateRom) {
@@ -80,10 +81,11 @@ export class Patcher {
         layout_string: layoutDescriptor,
         skip_frigate: randomizerConfig.skipFrigate,
         skip_hudmenus: randomizerConfig.skipHudPopups,
-        obfuscate_items: randomizerConfig.hideItemIcons,
+        obfuscate_items: randomizerConfig.hideItemModels,
+        show_artifact_location_hints: randomizerConfig.artifactLocationHints,
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
-        comment: 'Metroid Prime Randomizer by BashPrime, April Wade, and Pwootage, version ' + randomizerConfig.version + ' permalink: ' + randomizerConfig.permalink
+        comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink
       };
 
       this.randomPrime.patchRandomizedGame(JSON.stringify(configObj), message => {
@@ -96,7 +98,7 @@ export class Patcher {
             break;
           }
           case 'success': {
-            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
+            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
             break;
           }
           case 'error': {
@@ -112,7 +114,7 @@ export class Patcher {
       });
     } else {
       progressBar.close();
-      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder);
+      event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
     }
   }
 

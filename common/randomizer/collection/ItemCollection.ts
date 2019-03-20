@@ -182,8 +182,10 @@ export class ItemCollection extends Collection {
   }
 
   public canCrossMagmaPool(settings: any): boolean {
-    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && (this.hasEnergyTankCount(2) || this.hasSuit(settings))) // E tank or suit for safety
-    || (settings.damageBoostLiquids && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
+    const suitOrETankReqs = (settings.crossMagmaPoolNoHeatProtection && this.hasEnergyTankCount(2)) || this.hasSuit(settings);
+
+    return (settings.dashing && (this.has(PrimeItem.SPACE_JUMP_BOOTS) || this.canFloatyJump(settings)) && suitOrETankReqs) // E tank or suit for safety
+    || (this.hasSuit(settings) && settings.standableTerrain && this.has(PrimeItem.GRAVITY_SUIT) && this.has(PrimeItem.SPACE_JUMP_BOOTS)) // jump off debris in lava with gravity suit + space jump
     || (this.hasSuit(settings) && this.has(PrimeItem.GRAPPLE_BEAM)) // developer intended
   }
 
@@ -257,7 +259,7 @@ export class ItemCollection extends Collection {
 
   // base requirements to enter Quarantine Cave from Ruined Courtyard
   public canEnterQuarantineCaveFromRuinedCourtyard(settings: any) {
-    return this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
+    return !settings.noSupers && this.canFireSuperMissiles() && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
   // base requirements to exit Quarantine Cave to the Magmoor South elevator room
@@ -269,7 +271,7 @@ export class ItemCollection extends Collection {
   // base requirements to exit Quarantine Cave to Ruined Courtyard
   // Require Super Missiles or bombs so you don't softlock in front Phendrana
   public canExitQuarantineCaveToRuinedCourtyard(settings: any): boolean {
-    return (this.canFireSuperMissiles() || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL))
+    return ((!settings.noSupers && this.canFireSuperMissiles()) || this.canLayBombs()) && (settings.ghettoJumping || this.has(PrimeItem.SPIDER_BALL))
     && (!settings.requireThermal || this.has(PrimeItem.THERMAL_VISOR));
   }
 
@@ -319,9 +321,8 @@ export class ItemCollection extends Collection {
 
   // Base requirements to climb out top side of Ventilation Shaft
   public canClimbVentShaft(settings) {
-    return this.has(PrimeItem.BOOST_BALL) || (
-      !settings.noBoostBallLowerMinesGlitched
-      && ((settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS)))
+    return (this.has(PrimeItem.BOOST_BALL) || settings.allowBoostBallLowerMines) || (
+      (settings.halfPipeBombJumps && this.canLayBombs()) || (settings.dashing && this.has(PrimeItem.SPACE_JUMP_BOOTS))
     );
   }
 
