@@ -26,6 +26,8 @@ export class RandomizerService {
     ]
   };
   private tooltips = {
+    allowBoostBallLowerMines: 'You may be required to pass through Ventilation Shaft in order to obtain the Boost Ball ' +
+    'in lower Phazon Mines.',
     artifactCount: 'Sets the number of Chozo Artifacts for Artifact Collection seeds.',
     artifactLocationHints: 'Scanning the totems in the Artifact Temple will reveal where each Chozo Artifact is placed. ' +
       'As in the original game, only some of the totems are scannable in the beginning. You will gain access to more scans ' +
@@ -36,6 +38,8 @@ export class RandomizerService {
     bypassBombsWithBoost: 'Boost Ball without bombs will be considered when traversing some Morph Ball tunnels, including ' +
       'escaping Burn Dome, entering Furnace, and entering the Phendrana North elevator in Magmoor Caverns. You may also ' +
       'be expected to obtain the Furnace tunnel and Ruined Gallery tunnel items without bombs. This trick is difficult.',
+    crossMagmaPoolNoHeatProtection: 'You may be required to collect 2 Energy Tanks and dash across Magma Pool without ' +
+      'heat protection, if you also have dashing enabled.',
     dashing: 'When strafe dashing left or right while locked on, you can release your lock-on partway through ' +
       'the dash to leap sideways at high speeds. This can be used to get to item locations earlier than intended. ' +
       'All of the common Any%/100% dashes are accounted for, usually to skip Grapple Beam, Boost Ball, and Spider Ball. ' +
@@ -101,8 +105,6 @@ export class RandomizerService {
     noBombsPointOfNoReturnTunnels: 'You will never be required to commit to entering Burn Dome, ' +
       'the Fiery Shores tunnel below Warrior Shrine, and the Control Tower morph tunnel to ' +
       'obtain the Morph Ball Bomb.',
-    noBoostBallLowerMinesGlitched: 'You will never be required to pass through Ventilation Shaft to ' +
-      'obtain the Boost Ball, even if you can dash or half-pipe bomb jump to climb back up the half-pipe.',
     noCrashedFrigate: 'You will never be required to obtain any of the Crashed Frigate\'s three items.',
     noEarlyPhazonSuit: 'The Phazon Suit will not appear in "early-game" locations that require ' +
       'only a few items to access, including most of Tallon Overworld, almost all of the first ' +

@@ -70,14 +70,6 @@
             </label>
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.noBoostBallLowerMinesGlitched }}">
-              <input type="checkbox" formControlName="noBoostBallLowerMinesGlitched"> No Boost Ball in Lower Mines
-              (Glitched Seeds)
-            </label>
-          </div>
-        </div>
         <div class="field" *ngIf="settingsForm.get('goal').value !== allBosses">
           <p class="label has-text-weight-semibold">Don't Require Bosses</p>
         </div>
@@ -247,6 +239,13 @@
         </div>
         <div class="field">
           <div class="control">
+            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.allowBoostBallLowerMines }}">
+              <input type="checkbox" formControlName="allowBoostBallLowerMines"> Allow Boost Ball in Lower Phazon Mines
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
             <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.spiderlessShafts }}">
               <input type="checkbox" formControlName="spiderlessShafts"> Spiderless Shafts (Phazon Mines)
             </label>
@@ -299,7 +298,14 @@
         </div>
         <div class="field">
           <div class="control">
-            <label class="checkbox  tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.vmr }}">
+            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.crossMagmaPoolNoHeatProtection }}">
+              <input type="checkbox" formControlName="crossMagmaPoolNoHeatProtection"> Cross Magma Pool without any Heat Protection
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox tooltip is-tooltip-multiline is-tooltip-left-tablet" attr.data-tooltip="{{ tooltips.vmr }}">
               <input type="checkbox" formControlName="vmr"> Suitless Magmoor Run to Phendrana/Mines
             </label>
           </div>

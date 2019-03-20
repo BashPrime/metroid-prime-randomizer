@@ -73,6 +73,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
         title: 'Success',
         message: msg,
         defaultId: 1,
+        noLink: true,
         buttons: ['Open Folder', 'OK']
       }, (response) => {
         // Open folder is checked, open folder
@@ -131,7 +132,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       requireThermal: [true],
       requireXRay: [true],
       noCrashedFrigate: [false],
-      noBoostBallLowerMinesGlitched: [false],
+      allowBoostBallLowerMines: [false],
       dontRequireFlaahgra: [false],
       dontRequireThardus: [false],
       dontRequireOmegaPirate: [false],
@@ -161,6 +162,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       dbj: [false],
       hbjPastHote: [false],
       bypassBombsWithBoost: [false],
+      crossMagmaPoolNoHeatProtection: [false],
       vmr: [false],
       vmrTanks: [5, [Validators.min(3), Validators.max(14)]],
       earlyMagmoorNoSuit: [false],
@@ -196,7 +198,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       requireThermal: true,
       requireXRay: true,
       noCrashedFrigate: false,
-      noBoostBallLowerMinesGlitched: false,
+      allowBoostBallLowerMines: false,
       dontRequireFlaahgra: false,
       dontRequireThardus: false,
       dontRequireOmegaPirate: false,
@@ -226,6 +228,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       dbj: false,
       hbjPastHote: false,
       bypassBombsWithBoost: false,
+      crossMagmaPoolNoHeatProtection: false,
       vmr: false,
       vmrTanks: 5,
       earlyMagmoorNoSuit: false,
