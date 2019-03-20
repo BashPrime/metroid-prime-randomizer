@@ -105,9 +105,16 @@ export class Randomizer {
     }
   }
 
-  private getSafeSha256Integer(str: string): number {
+  private getSafeSha256Integer(str: string, salt?: string): number {
     const safeHexChars = Number.MAX_SAFE_INTEGER.toString(16).length;
-    const strHash = crypto.SHA256(str).toString();
+    let hashData = str;
+
+    // If a salt is provided, get its SHA-256 digest and append to the configuration string
+    if (salt) {
+      hashData += crypto.SHA256(salt).toString();
+    }
+
+    const strHash = crypto.SHA256(hashData).toString();
 
     /*
     * Parse the first 14 characters of the hash. If the resulting number is a safe integer, return it.
