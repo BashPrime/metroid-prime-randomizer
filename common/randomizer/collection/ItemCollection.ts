@@ -205,7 +205,7 @@ export class ItemCollection extends Collection {
 
   public hasLateMagmoorItemReqs(settings: any): boolean {
     // Going from mines is valid, especially for varia only heat damage seeds
-    if (this.hasMinesReqsTallonSouth(settings) && this.canLayPowerBombs()) {
+    if (this.hasMinesReqsTallonSouth(settings) && this.has(PrimeItem.SPIDER_BALL) && this.canLayPowerBombs()) {
       return true;
     }
 
