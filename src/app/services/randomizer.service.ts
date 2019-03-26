@@ -82,7 +82,10 @@ export class RandomizerService {
       'collect the Main Plaza pipe, Ruined Shrine pipe, Life Grove Tunnel, and Life Grove items without Boost Ball.',
     hbjPastHote: 'In Hall of the Elders, you can HBJ to the Reflecting Pool Access door without Wave Beam and Spider Ball.',
     heatDamagePrevention: '\'Any Suit\': Collecting any of the three suits will prevent heat damage.\n' +
-      '\'Varia Suit Only\': Only the Varia Suit will prevent heat damage.',
+      '\'Varia Suit Only\': Only the Varia Suit will prevent heat damage.\n\n' +
+      'The item logic does take this setting into account. Keep in mind that while all of early Magmoor is superheated, ' +
+      'only Twin Fires Tunnel is superheated when going to far Magmoor. This means that you MAY be required to reach far ' +
+      'Magmoor or Phendrana Drifts through Phazon Mines to obtain Varia or your first suit upgrade.',
     hideItemModels: 'Replaces all item models with a "glitched texture" suit model.',
     ibbf: 'You can reach the latter section of Chozo Ruins without either Wave or Ice Beam by ' +
       'wallcrawling from Gathering Hall to either Crossway or Reflecting Pool Access.',
