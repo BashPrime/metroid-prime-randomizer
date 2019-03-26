@@ -59,7 +59,7 @@ export class RandomizerService {
     earlyMagmoorNoSuit: 'You may be expected to obtain your first suit (or Varia) in early Magmoor Caverns. ' +
       'Quite difficult if you don\'t set many Energy Tanks.',
     earlyNewborn: 'You can grab the Phazon Mining Tunnel item without any Energy Tanks or Phazon Suit ' +
-      'by going out of bounds (usually by Glider clipping in Metroid Quarantine A), infinite boosting ' +
+      'by going out of bounds (usually by Glider clipping in Fungal Hall A), infinite boosting ' +
       'into Phazon Mining Tunnel, grabbing the item, and then infinite boosting out. This is a ' +
       'difficult wallcrawl.',
     earlyWild: 'Requires you to hit the invisible layer change trigger in Sun Tower and climb back up to the door ' +
