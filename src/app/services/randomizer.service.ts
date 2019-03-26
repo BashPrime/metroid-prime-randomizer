@@ -145,6 +145,8 @@ export class RandomizerService {
     shuffleSpaceJump: 'Enabling this shuffles the Space Jump Boots into the item pool.',
     skipFrigate: 'Start the game on Tallon Overworld instead of the frigate.',
     skipHudPopups: 'The game won\'t pause or display a popup when obtaining items.',
+    spiderlessPPC: 'It\'s possible to climb Phazon Processing Center and reach the Magmoor South elevator without ' +
+      'Spider Ball by jumping up the window scaffolding to reach the upper door.',
     spiderlessShafts: 'It\'s possible to climb Elevator Access A and Research Access without Spider Ball. ' +
       'For Elevator Access A, there is standable collision that you can BSJ and jump to next to the spider track. ' +
       'For Research Access, you can jump to some narrow collision on a boulder to reach the Elite Research door.',
