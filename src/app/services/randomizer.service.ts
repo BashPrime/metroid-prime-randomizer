@@ -34,7 +34,9 @@ export class RandomizerService {
       'as you collect more Chozo Artifacts.\n\nNOTE: Changing this setting will change the seed.',
     barsSkip: 'You can skip traversing the crashed frigate with a precise ' +
       'double bomb jump over the gate in Great Tree Hall.',
-    baseIso: 'NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.',
+    baseIso: 'NTSC-U 1.00, 1.01, or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.\n\n' +
+      'While all three versions are compatible with the default item logic settings, 1.00 is strongly recommended if you plan ' +
+      'on removing any restrictions or adding any expected tricks.',
     bypassBombsWithBoost: 'Boost Ball without bombs will be considered when traversing some Morph Ball tunnels, including ' +
       'escaping Burn Dome, entering Furnace, and entering the Phendrana North elevator in Magmoor Caverns. You may also ' +
       'be expected to obtain the Furnace tunnel and Ruined Gallery tunnel items without bombs. This trick is difficult.',
