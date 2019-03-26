@@ -58,6 +58,7 @@ export class Config {
     new Option('infiniteSpeedHote', 'Infinite Speed (Hall of the Elders)', OptionType.BOOLEAN, 1, true),
     new Option('barsSkip', 'Great Tree Hall Gate Skip', OptionType.BOOLEAN, 1, true),
     new Option('spiderlessShafts', 'Spiderless Shafts (Phazon Mines)', OptionType.BOOLEAN, 1, true),
+    new Option('spiderlessPPC', 'Climb Phazon Processing Center without Spider Ball', OptionType.BOOLEAN, 1, true),
     new Option('infiniteBoostEliteResearch', 'Infinite Boost Wall Clip into Elite Research (Mines)', OptionType.BOOLEAN, 1, true),
     new Option('phazonMiningTunnelNoPhazonSuit', 'Phazon Mining Tunnel without Phazon Suit', OptionType.BOOLEAN, 1, true),
     new Option('halfPipeBombJumps', 'Half-Pipe Bomb Jumps', OptionType.BOOLEAN, 1, true),
