@@ -34,7 +34,9 @@ export class RandomizerService {
       'as you collect more Chozo Artifacts.\n\nNOTE: Changing this setting will change the seed.',
     barsSkip: 'You can skip traversing the crashed frigate with a precise ' +
       'double bomb jump over the gate in Great Tree Hall.',
-    baseIso: 'NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.',
+    baseIso: 'NTSC-U 1.00, 1.01, or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.\n\n' +
+      'While all three versions are compatible with the default item logic settings, 1.00 is strongly recommended if you plan ' +
+      'on removing any restrictions or adding any expected tricks.',
     bypassBombsWithBoost: 'Boost Ball without bombs will be considered when traversing some Morph Ball tunnels, including ' +
       'escaping Burn Dome, entering Furnace, and entering the Phendrana North elevator in Magmoor Caverns. You may also ' +
       'be expected to obtain the Furnace tunnel and Ruined Gallery tunnel items without bombs. This trick is difficult.',
@@ -59,7 +61,7 @@ export class RandomizerService {
     earlyMagmoorNoSuit: 'You may be expected to obtain your first suit (or Varia) in early Magmoor Caverns. ' +
       'Quite difficult if you don\'t set many Energy Tanks.',
     earlyNewborn: 'You can grab the Phazon Mining Tunnel item without any Energy Tanks or Phazon Suit ' +
-      'by going out of bounds (usually by Glider clipping in Metroid Quarantine A), infinite boosting ' +
+      'by going out of bounds (usually by Glider clipping in Fungal Hall A), infinite boosting ' +
       'into Phazon Mining Tunnel, grabbing the item, and then infinite boosting out. This is a ' +
       'difficult wallcrawl.',
     earlyWild: 'Requires you to hit the invisible layer change trigger in Sun Tower and climb back up to the door ' +
@@ -82,7 +84,10 @@ export class RandomizerService {
       'collect the Main Plaza pipe, Ruined Shrine pipe, Life Grove Tunnel, and Life Grove items without Boost Ball.',
     hbjPastHote: 'In Hall of the Elders, you can HBJ to the Reflecting Pool Access door without Wave Beam and Spider Ball.',
     heatDamagePrevention: '\'Any Suit\': Collecting any of the three suits will prevent heat damage.\n' +
-      '\'Varia Suit Only\': Only the Varia Suit will prevent heat damage.',
+      '\'Varia Suit Only\': Only the Varia Suit will prevent heat damage.\n\n' +
+      'The item logic does take this setting into account. Keep in mind that while all of early Magmoor is superheated, ' +
+      'only Twin Fires Tunnel is superheated when going to far Magmoor. This means that you MAY be required to reach far ' +
+      'Magmoor or Phendrana Drifts through Phazon Mines to obtain Varia or your first suit upgrade.',
     hideItemModels: 'Replaces all item models with a "glitched texture" suit model.',
     ibbf: 'You can reach the latter section of Chozo Ruins without either Wave or Ice Beam by ' +
       'wallcrawling from Gathering Hall to either Crossway or Reflecting Pool Access.',
@@ -145,6 +150,8 @@ export class RandomizerService {
     shuffleSpaceJump: 'Enabling this shuffles the Space Jump Boots into the item pool.',
     skipFrigate: 'Start the game on Tallon Overworld instead of the frigate.',
     skipHudPopups: 'The game won\'t pause or display a popup when obtaining items.',
+    spiderlessPPC: 'It\'s possible to climb Phazon Processing Center and reach the Magmoor South elevator without ' +
+      'Spider Ball by jumping up the window scaffolding to reach the upper door.',
     spiderlessShafts: 'It\'s possible to climb Elevator Access A and Research Access without Spider Ball. ' +
       'For Elevator Access A, there is standable collision that you can BSJ and jump to next to the spider track. ' +
       'For Research Access, you can jump to some narrow collision on a boulder to reach the Elite Research door.',
