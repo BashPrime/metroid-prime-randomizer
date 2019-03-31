@@ -311,7 +311,7 @@ export class ItemCollection extends Collection {
   // Base requirements for climbing Ore Processing
   public canClimbOreProcessing(settings) {
     return (settings.standableTerrain && settings.ghettoJumping) // climb spiderless
-    || (this.canLayBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL)); // developer intended
+    || (this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.GRAPPLE_BEAM) && this.has(PrimeItem.SPIDER_BALL)); // developer intended
   }
 
   // Base requirements for climbing from Elite Control to Ore Processing/Elite Research
