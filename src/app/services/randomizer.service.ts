@@ -78,7 +78,8 @@ export class RandomizerService {
     goal: 'Changing this affects the requirements to access the Ridley fight and the Impact Crater.\n\n' +
       '\'Always Open\': Collecting the Artifact Temple item immediately begins the Ridley fight.\n' +
       '\'Artifact Collection:\' Collect 1-12 Chozo Artifacts placed in the game world.\n' +
-      '\'All Bosses:\': Defeat Flaahgra, Thardus, and Omega Pirate, and collect their Chozo Artifacts they leave behind.',
+      '\'All Bosses:\': Defeat Flaahgra, Thardus, and Omega Pirate, and collect their Chozo Artifacts they leave behind.\n\n' +
+      'If less than 12 artifacts are placed in the game world, any leftover locations will be filled with Missile Expansions.',
     halfPipeBombJumps: 'You can do a 5 bomb jump up some half-pipe ramps to cross rooms including Crossway, ' +
       'Life Grove Tunnel, and Ventilation Shaft without Boost Ball. You can also perform this trick to ' +
       'collect the Main Plaza pipe, Ruined Shrine pipe, Life Grove Tunnel, and Life Grove items without Boost Ball.',
