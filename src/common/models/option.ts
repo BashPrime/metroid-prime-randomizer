@@ -15,6 +15,13 @@ interface CheckboxArgs {
   shared: boolean;
 }
 
+interface SelectOptionArgs {
+  name: string;
+  displayName: string;
+  shared: boolean;
+  choices: {[key: string]: string}
+}
+
 export class Option {
     name: string;
     displayName: string;
@@ -52,6 +59,18 @@ export class Checkbox extends Option {
       type: OptionType.BOOLEAN,
       shared: args.shared,
       choices: choices
+    } as OptionArgs);
+  }
+}
+
+export class SelectOption extends Option {
+  constructor(args: SelectOptionArgs) {
+    super({
+      name: args.name,
+      displayName: args.displayName,
+      type: OptionType.SELECT,
+      shared: args.shared,
+      choices: args.choices
     } as OptionArgs);
   }
 }
