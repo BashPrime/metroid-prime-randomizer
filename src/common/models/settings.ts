@@ -71,8 +71,8 @@ const settings = [
     name: 'goalArtifacts',
     displayName: 'Number of Chozo Artifacts',
     shared: true,
-    choices: strArrayRangeToObject(1, 12),
-    default: '12'
+    choices: arrayRangeToObject(1, 12),
+    default: 12
   }),
   new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: false }),
   new SelectOption({
@@ -83,7 +83,7 @@ const settings = [
       'any-suit': 'Any Suit',
       'varia-only': 'Varia Only'
     },
-    default: '12'
+    default: 'any-suit'
   }),
   new SelectOption({
     name: 'suitDamageReduction',
@@ -113,12 +113,12 @@ const tricks = {
   }
 };
 
-function strArrayRangeToObject(min: number, max: number): { [key: string]: string } {
+function arrayRangeToObject(min: number, max: number): { [key: string]: number } {
   const obj = {};
-  const arrayRange = Array.from({ length: max - min + 1 }, (x, i) => (min + 1).toString());
+  const arrayRange = Array.from({ length: max - min + 1 }, (x, i) => min + 1);
 
   arrayRange.forEach(item => {
-    obj[item] = item;
+    obj[item.toString()] = item;
   });
 
   return obj;

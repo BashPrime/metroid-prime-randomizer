@@ -6,7 +6,7 @@ interface OptionArgs {
   displayName: string;
   type: OptionType;
   shared: boolean;
-  choices?: {[key: string]: string};
+  choices?: {[key: string]: string | number};
   default?: number | string | boolean;
   tooltip?: string;
 }
@@ -23,7 +23,7 @@ interface SelectOptionArgs {
   name: string;
   displayName: string;
   shared: boolean;
-  choices: {[key: string]: string}
+  choices: {[key: string]: string | number}
   default?: number | string;
   tooltip?: string;
 }
