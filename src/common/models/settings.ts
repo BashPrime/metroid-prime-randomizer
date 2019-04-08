@@ -38,6 +38,7 @@ export class Settings {
   }
 }
 
+// Object containing settings metadata such as their default values, whether each setting is shared, etc
 const settings = [
   new Checkbox({ name: 'spoiler', displayName: 'Create Spoiler', shared: true, default: false }),
   new Checkbox({ name: 'skipFrigate', displayName: 'Skip the Space Pirate Frigate', shared: true, default: true }),
