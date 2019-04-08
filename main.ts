@@ -1,10 +1,9 @@
 import { app, BrowserWindow, Menu } from 'electron';
-import { Patcher } from './common/patcher/Patcher';
-import { Settings } from './common/settings/Settings';
-import { Utilities } from './common/Utilities';
-import { PathHandler } from './common/PathHandler';
 import * as path from 'path';
 import * as url from 'url';
+
+import { SaveSettingsController } from './src/common/controllers/saveSettingsController';
+import { Utilities } from './src/common/utilities';
 
 let win, serve;
 serve = Utilities.isServe();
@@ -66,7 +65,7 @@ function createWindow() {
     // when you should delete the corresponding element.
 
     // Write settings file if changes have been made.
-    settings.writeSettingsFile();
+    saveSettingsController.writeSettingsFile();
     win = null;
   });
 }
@@ -100,6 +99,5 @@ try {
   // throw e;
 }
 
-const patcher = new Patcher();
-const settings = new Settings();
-const pathHandler = new PathHandler();
+// Initialize IPC controllers
+const saveSettingsController = new SaveSettingsController();
