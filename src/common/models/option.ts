@@ -1,4 +1,4 @@
-import { OptionType } from './optionType';
+import { OptionType } from '../enums/optionType';
 import { Utilities } from '../utilities';
 
 interface OptionArgs {
