@@ -28,6 +28,14 @@ interface SelectOptionArgs {
   tooltip?: string;
 }
 
+interface ListOptionArgs {
+  name: string;
+  displayName: string;
+  shared: boolean;
+  choices: {[key: string]: string},
+  default
+}
+
 export class Option {
     name: string;
     displayName: string;
@@ -35,6 +43,8 @@ export class Option {
     bitWidth: number;
     shared: boolean;
     choices: {[key: string]: string};
+    default: number | string | boolean;
+    tooltip: string;
 
     constructor(args: OptionArgs) {
       Object.assign(this, args);

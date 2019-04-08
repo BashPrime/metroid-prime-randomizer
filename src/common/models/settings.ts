@@ -1,23 +1,23 @@
 import { Checkbox, SelectOption } from './option';
 
 interface SettingsArgs {
-  spoiler: boolean;
-  skipFrigate: boolean;
-  skipHudPopups: boolean;
-  hideItemModels: boolean;
-  goal: string;
-  goalArtifacts: number;
-  artifactLocationHints: boolean;
-  heatDamagePrevention: string;
-  suitDamageReduction: string;
-  shuffleArtifacts: boolean;
-  shuffleMissileLauncher: boolean;
-  shuffleMorph: boolean;
-  shuffleBombs: boolean;
-  shuffleCharge: boolean;
-  shuffleSpaceJump: boolean;
-  disabledLocations: string[];
-  allowedTricks: string[];
+  spoiler?: boolean;
+  skipFrigate?: boolean;
+  skipHudPopups?: boolean;
+  hideItemModels?: boolean;
+  goal?: string;
+  goalArtifacts?: number;
+  artifactLocationHints?: boolean;
+  heatDamagePrevention?: string;
+  suitDamageReduction?: string;
+  shuffleArtifacts?: boolean;
+  shuffleMissileLauncher?: boolean;
+  shuffleMorph?: boolean;
+  shuffleBombs?: boolean;
+  shuffleCharge?: boolean;
+  shuffleSpaceJump?: boolean;
+  disabledLocations?: string[];
+  allowedTricks?: string[];
 }
 
 export class Settings {
@@ -35,6 +35,18 @@ export class Settings {
 
   constructor(args: SettingsArgs) {
     Object.assign(this, args);
+    this.assignDefaultSettings(args);
+  }
+
+  private assignDefaultSettings(args: SettingsArgs) {
+    // Get only settings metadata for arguments that weren't provided
+    const argKeys = Object.keys(args);
+    const defaultSettings = settings.filter(setting => !argKeys.includes(setting.name));
+
+    // Assign default value to missing fields
+    for (let setting of defaultSettings) {
+      this[setting.name] = setting.default;
+    }
   }
 }
 
