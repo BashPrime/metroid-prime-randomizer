@@ -82,12 +82,12 @@ const settings = [
     },
     default: 'default'
   }),
-  new Checkbox({ name: 'shuffleArtifacts', displayName: 'Shuffle Chozo Artifacts', shared: true }),
-  new Checkbox({ name: 'shuffleMissileLauncher', displayName: 'Shuffle Missile Launcher', shared: true }),
-  new Checkbox({ name: 'shuffleMorph', displayName: 'Shuffle Morph Ball', shared: true }),
-  new Checkbox({ name: 'shuffleBombs', displayName: 'Shuffle Bombs', shared: true }),
-  new Checkbox({ name: 'shuffleCharge', displayName: 'Shuffle Charge Beam', shared: true }),
-  new Checkbox({ name: 'shuffleSpaceJump', displayName: 'Shuffle Space Jump Boots', shared: true })
+  new Checkbox({ name: 'shuffleArtifacts', displayName: 'Shuffle Chozo Artifacts', shared: true, default: true }),
+  new Checkbox({ name: 'shuffleMissileLauncher', displayName: 'Shuffle Missile Launcher', shared: true, default: true }),
+  new Checkbox({ name: 'shuffleMorph', displayName: 'Shuffle Morph Ball', shared: true, default: true }),
+  new Checkbox({ name: 'shuffleBombs', displayName: 'Shuffle Bombs', shared: true, default: true }),
+  new Checkbox({ name: 'shuffleCharge', displayName: 'Shuffle Charge Beam', shared: true, default: true }),
+  new Checkbox({ name: 'shuffleSpaceJump', displayName: 'Shuffle Space Jump Boots', shared: true, default: true })
 ];
 
 const tricks = {
