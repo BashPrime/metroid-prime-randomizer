@@ -7,12 +7,16 @@ interface OptionArgs {
   type: OptionType;
   shared: boolean;
   choices?: {[key: string]: string};
+  default?: number | string | boolean;
+  tooltip?: string;
 }
 
 interface CheckboxArgs {
   name: string;
   displayName: string;
   shared: boolean;
+  default?: boolean;
+  tooltip?: string;
 }
 
 interface SelectOptionArgs {
@@ -20,6 +24,8 @@ interface SelectOptionArgs {
   displayName: string;
   shared: boolean;
   choices: {[key: string]: string}
+  default?: number | string;
+  tooltip?: string;
 }
 
 export class Option {
@@ -58,7 +64,9 @@ export class Checkbox extends Option {
       displayName: args.displayName,
       type: OptionType.BOOLEAN,
       shared: args.shared,
-      choices: choices
+      choices: choices,
+      default: args.default,
+      tooltip: args.tooltip
     } as OptionArgs);
   }
 }
@@ -70,7 +78,9 @@ export class SelectOption extends Option {
       displayName: args.displayName,
       type: OptionType.SELECT,
       shared: args.shared,
-      choices: args.choices
+      choices: args.choices,
+      default: args.default,
+      tooltip: args.tooltip
     } as OptionArgs);
   }
 }
