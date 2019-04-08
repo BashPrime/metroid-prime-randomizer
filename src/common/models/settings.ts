@@ -16,7 +16,7 @@ interface SettingsArgs {
   shuffleBombs: boolean;
   shuffleCharge: boolean;
   shuffleSpaceJump: boolean;
-  disabledLocations: boolean[];
+  disabledLocations: string[];
   allowedTricks: string[];
 }
 
@@ -30,7 +30,7 @@ export class Settings {
   artifactLocationHints: boolean;
   heatDamagePrevention: string;
   suitDamageReduction: string;
-  disabledLocations: boolean[];
+  disabledLocations: string[];
   allowedTricks: string[];
 
   constructor(args: SettingsArgs) {
