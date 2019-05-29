@@ -65,8 +65,12 @@ export class PhazonMines extends Region {
     };
 
     this.locations.get(PrimeLocation.STORAGE_DEPOT_B).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasMinesReqsMagmoorSouth(settings)
-        || (items.hasMinesReqsTallonSouth(settings) && items.canClimbOreProcessing(settings));
+      return items.hasMinesReqsMagmoorSouth(settings) || (
+        items.hasMinesReqsTallonSouth(settings) && ( // climb ore processing, without grapple beam requirement
+          (settings.standableTerrain && settings.ghettoJumping) // climb spiderless
+          || (this.canLayBombs() && this.canLayPowerBombs() && this.has(PrimeItem.SPIDER_BALL))
+        )
+      );
     };
 
     // Overriding lower mines access checks because grapple isn't needed for this room
