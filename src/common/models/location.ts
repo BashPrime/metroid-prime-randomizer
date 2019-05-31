@@ -1,14 +1,18 @@
 import { Item } from './item';
 
+interface LocationArgs {
+  name: string;
+  index: number;
+  item?: Item;
+}
+
 export class Location {
   private name: string;
   private index: number;
   private item: Item;
 
-  constructor(name: string, index: number, item?: Item) {
-    this.name = name;
-    this.index = index;
-    this.item = item;
+  constructor(args: LocationArgs) {
+    Object.assign(this, args);
   }
 
   getName(): string {
