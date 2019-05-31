@@ -46,6 +46,7 @@
     "electron:mac": "npm run build:prod && electron-builder build --mac",
     "native:build": "./node_modules/.bin/electron-rebuild",
     "test": "npm run postinstall:web && ng test",
+    "test:electron": "mocha -r ts-node/register test/**/*.test.ts",
     "e2e": "npm run postinstall:web && ng e2e",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
