@@ -327,7 +327,7 @@ export class ItemCollection extends Collection {
   }
 
   public hasMinesReqsTallonSouth(settings): boolean {
-    return (settings.barsSkip && this.hasReflectingPoolReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM)) // bars skip
+    return (settings.barsSkip && this.canLayBombs() && this.hasReflectingPoolReqs(settings) && this.has(PrimeItem.WAVE_BEAM) && this.has(PrimeItem.ICE_BEAM)) // bars skip
     || (this.hasCrashedFrigateReqs(settings) && this.canLayBombs()); // developer intended
   }
 

@@ -438,15 +438,11 @@ export class Randomizer {
     if (settings.dontRequireFlaahgra) {
       const flaahgraLocations = [
         PrimeLocation.SUNCHAMBER_FLAAHGRA,
-        PrimeLocation.SUNCHAMBER_GHOSTS
+        PrimeLocation.SUNCHAMBER_GHOSTS,
+        PrimeLocation.RUINED_FOUNTAIN
       ];
 
-      // Add Ruined Fountain to locations if standable terrain and l jumping are turned off.
-      if (!(settings.standableTerrain && settings.lJumping)) {
-        flaahgraLocations.push(PrimeLocation.RUINED_FOUNTAIN);
-      }
-
-      // Add Watery Hall Underwater if damage boost is turned off.
+      // Add Watery Hall Underwater if damage boost liquids is turned off.
       if (!settings.damageBoostLiquids) {
         flaahgraLocations.push(PrimeLocation.WATERY_HALL_UNDERWATER);
       }
