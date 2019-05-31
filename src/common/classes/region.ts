@@ -6,7 +6,7 @@ import { Item } from './item';
 interface RegionArgs {
   name: string;
   locations?: { [key: string]: Location };
-  accessItems: Item[];
+  accessItems?: Item[];
 }
 
 /**
