@@ -9,6 +9,19 @@ describe('Prime Regions', () => {
     expect(regions.length).to.equal(expectedRegions);
   });
 
+  it('should contain 100 total locations', () => {
+    const regions = primeRegions();
+    let locations = [];
+
+    // Iterate through each region key
+    for(let key of Object.keys(regions)) {
+      locations = locations.concat(Object.keys(regions[key].getLocations()));
+    }
+
+    const expectedLocations = 100;
+    expect(locations.length).to.equal(expectedLocations);
+  });
+
   it('Tallon Overworld should contain 15 locations', () => {
     const tallonLocations = Object.keys(tallonOverworld().getLocations());
     const expectedLocations = 15;
