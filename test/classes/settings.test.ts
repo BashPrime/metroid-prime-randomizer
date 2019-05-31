@@ -1,4 +1,4 @@
-import { Settings } from '../../src/common/models/settings';
+import { Settings } from '../../src/common/classes/settings';
 import { expect } from 'chai';
 import 'mocha';
 

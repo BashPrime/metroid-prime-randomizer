@@ -1,4 +1,4 @@
-import { Item } from '../../src/common/models/item';
+import { Item } from '../../src/common/classes/item';
 import { expect } from 'chai';
 import 'mocha';
 
