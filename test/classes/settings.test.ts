@@ -8,10 +8,26 @@ describe('Settings', () => {
     expect(settings).to.be.an.instanceof(Settings);
   });
 
-  it('should contain defined default settings', () => {
+  it('should contain default settings', () => {
+    const expectedSettings = {
+      spoiler: false,
+      skipFrigate: true,
+      skipHudPopups: true,
+      hideItemModels: false,
+      goal: 'artifact-collection',
+      goalArtifacts: 12,
+      artifactLocationHints: false,
+      heatDamagePrevention: 'any-suit',
+      suitDamageReduction: 'default',
+      shuffleArtifacts: true,
+      shuffleMissileLauncher: true,
+      shuffleMorph: true,
+      shuffleBombs: true,
+      shuffleCharge: true,
+      shuffleSpaceJump: true
+    };
     const settings = new Settings({});
 
-    const definedItems = Object.keys(settings)
-    expect(settings).to.be.an.instanceof(Settings);
+    expect(settings).to.deep.include(expectedSettings);
   });
 });
