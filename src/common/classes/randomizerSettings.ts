@@ -1,6 +1,6 @@
 import { Checkbox, SelectOption } from './option';
 
-interface SettingsArgs {
+interface RandomizerSettingsArgs {
   spoiler?: boolean;
   skipFrigate?: boolean;
   skipHudPopups?: boolean;
@@ -20,7 +20,7 @@ interface SettingsArgs {
   allowedTricks?: string[];
 }
 
-export class Settings {
+export class RandomizerSettings {
   spoiler: boolean;
   skipFrigate: boolean;
   skipHudPopups: boolean;
@@ -33,12 +33,12 @@ export class Settings {
   disabledLocations: string[];
   allowedTricks: string[];
 
-  constructor(args: SettingsArgs) {
+  constructor(args: RandomizerSettingsArgs) {
     Object.assign(this, args);
     this.assignDefaultSettings(args);
   }
 
-  private assignDefaultSettings(args: SettingsArgs) {
+  private assignDefaultSettings(args: RandomizerSettingsArgs) {
     // Get only settings metadata for arguments that weren't provided
     const argKeys = Object.keys(args);
     const defaultSettings = settings.filter(setting => !argKeys.includes(setting.name));

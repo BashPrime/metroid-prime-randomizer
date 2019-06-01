@@ -1,11 +1,11 @@
-import { Settings } from '../../src/common/classes/settings';
+import { RandomizerSettings } from '../../src/common/classes/randomizerSettings';
 import { expect } from 'chai';
 import 'mocha';
 
-describe('Settings', () => {
+describe('RandomizerSettings', () => {
   it('should return a settings instance', () => {
-    const settings = new Settings({});
-    expect(settings).to.be.an.instanceof(Settings);
+    const settings = new RandomizerSettings({});
+    expect(settings).to.be.an.instanceof(RandomizerSettings);
   });
 
   it('should contain default settings', () => {
@@ -26,7 +26,7 @@ describe('Settings', () => {
       shuffleCharge: true,
       shuffleSpaceJump: true
     };
-    const settings = new Settings({});
+    const settings = new RandomizerSettings({});
 
     expect(settings).to.deep.include(expectedSettings);
   });

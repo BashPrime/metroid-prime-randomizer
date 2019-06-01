@@ -1,5 +1,5 @@
-import { Item } from '../../src/common/classes/item';
-import { primeItems } from '../../src/common/classes/prime/items';
+import { Item } from '../../../src/common/classes/item';
+import { primeItems } from '../../../src/common/classes/prime/items';
 import { expect } from 'chai';
 import 'mocha';
 
