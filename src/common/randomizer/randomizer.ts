@@ -1,4 +1,4 @@
-import { Settings } from '../models/settings';
+import { Settings } from '../classes/settings';
 
 export class Randomizer {
   private settings: Settings;

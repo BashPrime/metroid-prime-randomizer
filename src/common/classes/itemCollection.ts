@@ -11,6 +11,10 @@ export class ItemCollection {
     return this.items;
   }
 
+  size(): number {
+    return this.items.length;
+  }
+
   has(itemKey: string): boolean {
     return this.items.map(item => item.getName()).includes(itemKey);
   }

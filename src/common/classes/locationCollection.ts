@@ -12,6 +12,10 @@ export class LocationCollection {
     return this.locations;
   }
 
+  size(): number {
+    return this.locations.length;
+  }
+
   getEmptyLocations(): Location[] {
     return this.locations.filter(location => !location.hasItem());
   }

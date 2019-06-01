@@ -3,6 +3,7 @@ import { Location } from '../location';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { primeItems } from './items';
 import { PrimeItem } from '../../enums/primeItem';
+import { ItemCollection } from '../itemCollection';
 
 export function primeRegions() {
   return {
@@ -15,7 +16,7 @@ export function primeRegions() {
 }
 
 export function tallonOverworld() {
-  return new Region({
+  const tallon = new Region({
     name: 'Tallon Overworld',
     locations: {
       [PrimeLocation.LANDING_SITE]: new Location(PrimeLocation.LANDING_SITE, 58),
@@ -35,10 +36,12 @@ export function tallonOverworld() {
       [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: new Location(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER, 72)
     }
   });
+
+  return tallon;
 };
 
 export function chozoRuins() {
-  return new Region({
+  const chozo = new Region({
     name: 'Chozo Ruins',
     locations: {
       [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: new Location(PrimeLocation.MAIN_PLAZA_HALF_PIPE, 0),
@@ -78,10 +81,12 @@ export function chozoRuins() {
       [PrimeLocation.ANTECHAMBER]: new Location(PrimeLocation.ANTECHAMBER, 34)
     }
   });
+
+  return chozo;
 };
 
 export function magmoorCaverns() {
-  return new Region({
+  const magmoor = new Region({
     name: 'Magmoor Caverns',
     locations: {
       [PrimeLocation.LAVA_LAKE]: new Location(PrimeLocation.LAVA_LAKE, 90),
@@ -96,10 +101,27 @@ export function magmoorCaverns() {
       [PrimeLocation.MAGMOOR_WORKSTATION]: new Location(PrimeLocation.MAGMOOR_WORKSTATION, 99)
     }
   });
+
+  magmoor.setAccessItems([
+    new ItemCollection([
+      primeItems.variaSuit,
+      primeItems.missileExpansion,
+      primeItems.morphBall,
+      primeItems.morphBallBomb
+    ]),
+    new ItemCollection([
+      primeItems.variaSuit,
+      primeItems.missileExpansion,
+      primeItems.morphBall,
+      primeItems.grappleBeam
+    ])
+  ]);
+
+  return magmoor;
 };
 
 export function phendranaDrifts() {
-  return new Region({
+  const phendrana = new Region({
     name: 'Phendrana Drifts',
     locations: {
       [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]: new Location(PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE, 35),
@@ -125,13 +147,30 @@ export function phendranaDrifts() {
       [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: new Location(PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE, 55),
       [PrimeLocation.STORAGE_CAVE]: new Location(PrimeLocation.STORAGE_CAVE, 56),
       [PrimeLocation.SECURITY_CAVE]: new Location(PrimeLocation.SECURITY_CAVE, 57)
-
     }
   });
+
+  phendrana.setAccessItems([
+    new ItemCollection([
+      primeItems.variaSuit,
+      primeItems.missileExpansion,
+      primeItems.morphBall,
+      primeItems.morphBallBomb,
+    ]),
+    new ItemCollection([
+      primeItems.variaSuit,
+      primeItems.spaceJumpBoots,
+      primeItems.waveBeam,
+      primeItems.missileExpansion,
+      primeItems.morphBall
+    ])
+  ]);
+
+  return phendrana;
 };
 
 export function phazonMines() {
-  return new Region({
+  const mines = new Region({
     name: 'Phazon Mines',
     locations: {
       [PrimeLocation.MAIN_QUARRY]: new Location(PrimeLocation.MAIN_QUARRY, 73),
@@ -153,4 +192,31 @@ export function phazonMines() {
       [PrimeLocation.FUNGAL_HALL_ACCESS]: new Location(PrimeLocation.FUNGAL_HALL_ACCESS, 89)
     }
   });
+
+  mines.setAccessItems([
+    // Tallon
+    new ItemCollection([
+      primeItems.waveBeam,
+      primeItems.iceBeam,
+      primeItems.gravitySuit,
+      primeItems.thermalVisor,
+      primeItems.spaceJumpBoots,
+      primeItems.missileExpansion,
+      primeItems.morphBall,
+      primeItems.morphBallBomb
+    ]),
+    // Magmoor
+    new ItemCollection([
+      primeItems.waveBeam,
+      primeItems.iceBeam,
+      primeItems.spiderBall,
+      primeItems.spaceJumpBoots,
+      primeItems.missileExpansion,
+      primeItems.morphBall,
+      primeItems.morphBallBomb,
+      primeItems.powerBomb
+    ]),
+  ]);
+
+  return mines;
 };
