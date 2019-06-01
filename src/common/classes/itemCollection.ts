@@ -15,8 +15,8 @@ export class ItemCollection {
     return this.items.map(item => item.getName()).includes(itemKey);
   }
 
-  hasCount(itemKey: string): number {
-    return this.items.filter(item => item.getName() === itemKey).length;
+  hasCount(itemKey: string, count: number): boolean {
+    return this.items.filter(item => item.getName() === itemKey).length >= count;
   }
 
   diff(otherItems: ItemCollection): ItemCollection {
