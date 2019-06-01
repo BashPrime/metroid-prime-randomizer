@@ -9,7 +9,7 @@ interface RegionArgs {
 }
 
 /**
- * A region that has a name descriptor, item locations, and prerequisite items required to access.
+ * A region that has a name descriptor, item locations, and elevators (with their prerequisite items) required to access.
  * @class
  */
 export class Region {
@@ -18,6 +18,7 @@ export class Region {
   private elevators: Elevator[];
 
   constructor(args: RegionArgs) {
+    this.elevators = [];
     Object.assign(this, args);
   }
 
@@ -45,13 +46,11 @@ export class Region {
     return this.elevators;
   }
 
-  // canAccess(items: ItemCollection) {
-  //   if (!this.accessItems) return true;
+  canAccess(items: ItemCollection) {
+    for (const elevator of this.elevators) {
+      if (elevator.canAccess(items)) return true;
+    }
 
-  //   for (const collection of this.accessItems) {
-  //     if (collection.diff(items).size() === 0) return true;
-  //   }
-
-  //   return false;
-  // }
+    return false;
+  }
 }
