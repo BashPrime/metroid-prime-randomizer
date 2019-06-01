@@ -1,13 +1,11 @@
 import { Location } from './location';
-import { Item } from './item';
 import { ItemCollection } from './itemCollection';
-
-
+import { Elevator } from './elevator';
 
 interface RegionArgs {
   name: string;
   locations?: { [key: string]: Location };
-  accessItems?: ItemCollection[]; //array of item collections. Access checks will iterate over item collections
+  elevators?: Elevator[];
 }
 
 /**
@@ -17,7 +15,7 @@ interface RegionArgs {
 export class Region {
   private name: string;
   private locations: { [key: string]: Location };
-  private accessItems: ItemCollection[];
+  private elevators: Elevator[];
 
   constructor(args: RegionArgs) {
     Object.assign(this, args);
@@ -39,21 +37,21 @@ export class Region {
     this.locations = locations;
   }
 
-  getAccessItems(): ItemCollection[] {
-    return this.accessItems;
+  getElevators(): Elevator[] {
+    return this.elevators;
   }
 
-  setAccessItems(accessItems: ItemCollection[]): void {
-    this.accessItems = accessItems;
+  setElevators(elevators: Elevator[]) {
+    return this.elevators;
   }
 
-  canAccess(items: ItemCollection) {
-    if (!this.accessItems) return true;
+  // canAccess(items: ItemCollection) {
+  //   if (!this.accessItems) return true;
 
-    for (const collection of this.accessItems) {
-      if (collection.diff(items).size() === 0) return true;
-    }
+  //   for (const collection of this.accessItems) {
+  //     if (collection.diff(items).size() === 0) return true;
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
 }

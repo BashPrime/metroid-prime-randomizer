@@ -1,9 +1,7 @@
 import { Region } from '../region';
 import { Location } from '../location';
 import { PrimeLocation } from '../../enums/primeLocation';
-import { primeItems } from './items';
-import { PrimeItem } from '../../enums/primeItem';
-import { ItemCollection } from '../itemCollection';
+import * as Elevators from './elevators';
 
 export function primeRegions() {
   return {
@@ -34,7 +32,11 @@ export function tallonOverworld() {
       [PrimeLocation.LIFE_GROVE_TUNNEL]: new Location(PrimeLocation.LIFE_GROVE_TUNNEL, 70),
       [PrimeLocation.LIFE_GROVE_START]: new Location(PrimeLocation.LIFE_GROVE_START, 71),
       [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: new Location(PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER, 72)
-    }
+    },
+    elevators: [
+      Elevators.tallonTransportChozoEast(),
+      Elevators.tallonTransportMagmoorNorth()
+    ]
   });
 
   return tallon;
@@ -102,21 +104,6 @@ export function magmoorCaverns() {
     }
   });
 
-  magmoor.setAccessItems([
-    new ItemCollection([
-      primeItems.variaSuit,
-      primeItems.missileExpansion,
-      primeItems.morphBall,
-      primeItems.morphBallBomb
-    ]),
-    new ItemCollection([
-      primeItems.variaSuit,
-      primeItems.missileExpansion,
-      primeItems.morphBall,
-      primeItems.grappleBeam
-    ])
-  ]);
-
   return magmoor;
 };
 
@@ -150,22 +137,6 @@ export function phendranaDrifts() {
     }
   });
 
-  phendrana.setAccessItems([
-    new ItemCollection([
-      primeItems.variaSuit,
-      primeItems.missileExpansion,
-      primeItems.morphBall,
-      primeItems.morphBallBomb,
-    ]),
-    new ItemCollection([
-      primeItems.variaSuit,
-      primeItems.spaceJumpBoots,
-      primeItems.waveBeam,
-      primeItems.missileExpansion,
-      primeItems.morphBall
-    ])
-  ]);
-
   return phendrana;
 };
 
@@ -192,31 +163,6 @@ export function phazonMines() {
       [PrimeLocation.FUNGAL_HALL_ACCESS]: new Location(PrimeLocation.FUNGAL_HALL_ACCESS, 89)
     }
   });
-
-  mines.setAccessItems([
-    // Tallon
-    new ItemCollection([
-      primeItems.waveBeam,
-      primeItems.iceBeam,
-      primeItems.gravitySuit,
-      primeItems.thermalVisor,
-      primeItems.spaceJumpBoots,
-      primeItems.missileExpansion,
-      primeItems.morphBall,
-      primeItems.morphBallBomb
-    ]),
-    // Magmoor
-    new ItemCollection([
-      primeItems.waveBeam,
-      primeItems.iceBeam,
-      primeItems.spiderBall,
-      primeItems.spaceJumpBoots,
-      primeItems.missileExpansion,
-      primeItems.morphBall,
-      primeItems.morphBallBomb,
-      primeItems.powerBomb
-    ]),
-  ]);
 
   return mines;
 };
