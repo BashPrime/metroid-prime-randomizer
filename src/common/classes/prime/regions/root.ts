@@ -3,7 +3,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { Location } from '../../location';
 import { PrimeItemCollection } from '../itemCollection';
 
-export function tallonOverworld() {
+export function root() {
   const regions = [
     new Region({
       name: 'Root',
