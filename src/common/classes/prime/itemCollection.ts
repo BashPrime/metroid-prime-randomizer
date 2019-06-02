@@ -16,6 +16,14 @@ export class PrimeItemCollection extends ItemCollection {
     return this.has(PrimeItem.MORPH_BALL) && (this.has(PrimeItem.POWER_BOMB) || this.has(PrimeItem.POWER_BOMB_EXPANSION));
   }
 
+  canBoost(): boolean {
+    return this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.BOOST_BALL);
+  }
+
+  canSpider(): boolean {
+    return this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.SPIDER_BALL);
+  }
+
   hasSuit(settings: PrimeRandomizerSettings): boolean {
     if (settings.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY) {
       return this.has(PrimeItem.VARIA_SUIT);

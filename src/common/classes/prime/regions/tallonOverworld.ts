@@ -22,7 +22,8 @@ export function tallonOverworld(): Region[] {
         'Tallon Crashed Frigate': (items: PrimeItemCollection) => {
           return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
             && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
-        }
+        },
+        'Chozo Main Plaza': () => true
       }
     }),
     new Region({
