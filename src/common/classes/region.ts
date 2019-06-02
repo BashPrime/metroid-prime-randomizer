@@ -1,11 +1,10 @@
 import { Location } from './location';
-import { ItemCollection } from './itemCollection';
-import { Elevator } from './elevator';
+import { ExitObject } from './exit';
 
 interface RegionArgs {
   name: string;
   locations?: { [key: string]: Location };
-  elevators?: Elevator[];
+  exits?: ExitObject;
 }
 
 /**
@@ -15,10 +14,10 @@ interface RegionArgs {
 export class Region {
   private name: string;
   private locations: { [key: string]: Location };
-  private elevators: Elevator[];
+  private exits: ExitObject;
 
   constructor(args: RegionArgs) {
-    this.elevators = [];
+    this.exits = {};
     Object.assign(this, args);
   }
 
@@ -38,19 +37,11 @@ export class Region {
     this.locations = locations;
   }
 
-  getElevators(): Elevator[] {
-    return this.elevators;
+  getExits(): ExitObject {
+    return this.exits;
   }
 
-  setElevators(elevators: Elevator[]) {
-    return this.elevators;
-  }
-
-  canAccess(items: ItemCollection) {
-    for (const elevator of this.elevators) {
-      if (elevator.canAccess(items)) return true;
-    }
-
-    return false;
+  setExits(exits: ExitObject) {
+    return this.exits;
   }
 }
