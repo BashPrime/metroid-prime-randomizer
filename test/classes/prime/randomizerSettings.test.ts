@@ -1,11 +1,11 @@
-import { RandomizerSettings } from '../../src/common/classes/randomizerSettings';
+import { PrimeRandomizerSettings } from '../../../src/common/classes/prime/randomizerSettings';
 import { expect } from 'chai';
 import 'mocha';
 
-describe('RandomizerSettings', () => {
+describe('PrimeRandomizerSettings', () => {
   it('should return a settings instance', () => {
-    const settings = new RandomizerSettings({});
-    expect(settings).to.be.an.instanceof(RandomizerSettings);
+    const settings = new PrimeRandomizerSettings({});
+    expect(settings).to.be.an.instanceof(PrimeRandomizerSettings);
   });
 
   it('should contain default settings', () => {
@@ -26,7 +26,7 @@ describe('RandomizerSettings', () => {
       shuffleCharge: true,
       shuffleSpaceJump: true
     };
-    const settings = new RandomizerSettings({});
+    const settings = new PrimeRandomizerSettings({});
 
     expect(settings).to.deep.include(expectedSettings);
   });
