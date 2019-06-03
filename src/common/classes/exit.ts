@@ -2,7 +2,7 @@ import { Region } from './region';
 import { ItemCollection } from './itemCollection';
 
 export interface ExitObject {
-  [key: string]: (items: ItemCollection) => boolean;
+  [key: string]: (items?: ItemCollection) => boolean;
 };
 
 export class Exit {

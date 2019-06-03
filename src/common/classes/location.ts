@@ -1,4 +1,10 @@
 import { Item } from './item';
+import { ItemCollection } from './itemCollection';
+import { RandomizerSettings } from './randomizerSettings';
+
+export interface LocationObject {
+  [key: string]: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+};
 
 export class Location {
   private name: string;

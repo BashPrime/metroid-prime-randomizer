@@ -1,9 +1,9 @@
-import { Location } from './location';
+import { LocationObject } from './location';
 import { ExitObject } from './exit';
 
 interface RegionArgs {
   name: string;
-  locations?: { [key: string]: Location };
+  locations?: LocationObject;
   exits?: ExitObject;
 }
 
@@ -13,7 +13,7 @@ interface RegionArgs {
  */
 export class Region {
   private name: string;
-  private locations: { [key: string]: Location };
+  private locations: LocationObject;
   private exits: ExitObject;
 
   constructor(args: RegionArgs) {
@@ -29,11 +29,11 @@ export class Region {
     this.name = name;
   }
 
-  getLocations(): { [key: string]: Location } {
+  getLocations(): LocationObject {
     return this.locations;
   }
 
-  setLocations(locations: { [key: string]: Location }) {
+  setLocations(locations: LocationObject) {
     this.locations = locations;
   }
 
