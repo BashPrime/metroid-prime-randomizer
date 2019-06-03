@@ -1,0 +1,50 @@
+import { Region } from '../../region';
+import { RegionCollection } from '../../regionCollection';
+import { PrimeItem } from '../../../enums/primeItem';
+import { PrimeLocation } from '../../../enums/primeLocation';
+import { PrimeItemCollection } from '../itemCollection';
+
+export function phazonMines(): RegionCollection {
+  const regions = new RegionCollection([
+    new Region({
+      name: 'Mines Upper',
+      locations: {
+        [PrimeLocation.MAIN_QUARRY]: () => true,
+        [PrimeLocation.SECURITY_ACCESS_A]: () => true,
+        [PrimeLocation.STORAGE_DEPOT_A]: () => true,
+        [PrimeLocation.STORAGE_DEPOT_B]: () => true,
+        [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: () => true,
+        [PrimeLocation.ELITE_RESEARCH_LASER]: () => true
+      },
+      exits: {
+      }
+    }),
+    new Region({
+      name: 'Mines Lower',
+      locations: {
+        [PrimeLocation.ELITE_CONTROL_ACCESS]: () => true,
+        [PrimeLocation.VENTILATION_SHAFT]: () => true,
+        [PrimeLocation.PHAZON_PROCESSING_CENTER]: () => true,
+        [PrimeLocation.CENTRAL_DYNAMO]: () => true,
+        [PrimeLocation.METROID_QUARANTINE_A]: () => true
+      },
+      exits: {
+      }
+    }),
+    new Region({
+      name: 'Mines Depths',
+      locations: {
+        [PrimeLocation.FUNGAL_HALL_ACCESS]: () => true,
+        [PrimeLocation.METROID_QUARANTINE_B]: () => true,
+        [PrimeLocation.PHAZON_MINING_TUNNEL]: () => true,
+        [PrimeLocation.FUNGAL_HALL_B]: () => true,
+        [PrimeLocation.ELITE_QUARTERS]: () => true,
+        [PrimeLocation.PROCESSING_CENTER_ACCESS]: () => true
+      },
+      exits: {
+      }
+    })
+  ]);
+
+  return regions;
+};
