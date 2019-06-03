@@ -1,12 +1,11 @@
 import { Region } from '../../region';
+import { RegionCollection } from '../../regionCollection';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
-import { Location } from '../../location';
 import { PrimeItemCollection } from '../itemCollection';
-import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function magmoorCaverns(): Region[] {
-  const regions = [
+export function magmoorCaverns(): RegionCollection {
+  const regions = new RegionCollection([
     new Region({
       name: 'Magmoor First Half',
       locations: {
@@ -52,7 +51,7 @@ export function magmoorCaverns(): Region[] {
         'Magmoor Fiery Shores': () => true
       }
     })
-  ];
+  ]);
 
   return regions;
 };

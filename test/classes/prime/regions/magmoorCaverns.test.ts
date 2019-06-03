@@ -7,9 +7,8 @@ import 'mocha';
 
 describe('Magmoor Caverns region', () => {
   it('should fill Fiery Shores (Morph Track)', () => {
-    const magmoorFieryShoresRegion = magmoorCaverns().find(region => region.getName() === 'Magmoor Fiery Shores');
-    const items = new PrimeItemCollection([primeItems.morphBall, primeItems.morphBallBomb])
-
+    const magmoorFieryShoresRegion = magmoorCaverns().getRegionByKey('Magmoor Fiery Shores');
+    const items = new PrimeItemCollection([primeItems.morphBall, primeItems.morphBallBomb]);
     const res = magmoorFieryShoresRegion.getLocations()['Fiery Shores (Morph Track)'](items);
 
     expect(res).to.equal(true);
