@@ -25,7 +25,7 @@ export function magmoorCaverns(): Region[] {
     new Region({
       name: 'Magmoor Fiery Shores',
       locations: {
-        [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: () => true
+        [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
         'Magmoor First Half': () => true,
@@ -39,7 +39,7 @@ export function magmoorCaverns(): Region[] {
         [PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL]: () => true
       },
       exits: {
-        'Magmoor Fiery shores': (items: PrimeItemCollection) => items.canLayBombs()
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs()
       }
     }),
     new Region({
