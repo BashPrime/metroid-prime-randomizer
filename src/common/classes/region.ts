@@ -42,6 +42,6 @@ export class Region {
   }
 
   setExits(exits: ExitObject) {
-    return this.exits;
+    this.exits = exits;
   }
 }
