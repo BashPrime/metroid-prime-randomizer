@@ -1,7 +1,9 @@
+import { World } from './world';
 import { LocationObject } from './location';
-import { ExitObject } from './exit';
+import { Exit, ExitObject } from './exit';
+import { LocationCollection } from './locationCollection';
 
-interface RegionArgs {
+export interface RegionObject {
   name: string;
   locations?: LocationObject;
   exits?: ExitObject;
@@ -13,12 +15,13 @@ interface RegionArgs {
  */
 export class Region {
   private name: string;
-  private locations: LocationObject;
-  private exits: ExitObject;
+  private world: World;
+  private locations: LocationCollection;
+  private entrances: Exit[] = [];
+  private exits: Exit[] = [];
 
-  constructor(args: RegionArgs) {
-    this.exits = {};
-    Object.assign(this, args);
+  constructor(name: string) {
+    this.name = name;
   }
 
   getName(): string {
@@ -29,19 +32,35 @@ export class Region {
     this.name = name;
   }
 
-  getLocations(): LocationObject {
+  getLocations(): LocationCollection {
     return this.locations;
   }
 
-  setLocations(locations: LocationObject) {
+  setLocations(locations: LocationCollection) {
     this.locations = locations;
   }
 
-  getExits(): ExitObject {
+  getExits(): Exit[] {
     return this.exits;
   }
 
-  setExits(exits: ExitObject) {
+  setExits(exits: Exit[]) {
     this.exits = exits;
+  }
+
+  getEntrances(): Exit[] {
+    return this.entrances;
+  }
+
+  setEntrances(entrances: Exit[]) {
+    this.entrances = entrances;
+  }
+
+  getWorld(): World {
+    return this.world;
+  }
+
+  setWorld(world: World) {
+    this.world = world;
   }
 }

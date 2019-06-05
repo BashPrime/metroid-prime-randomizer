@@ -1,12 +1,12 @@
-import { Region } from '../../region';
-import { RegionCollection } from '../../regionCollection';
+import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
+import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function tallonOverworld(): RegionCollection {
-  const regions = new RegionCollection([
-    new Region({
+export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
       name: 'Tallon North',
       locations: {
         [PrimeLocation.LANDING_SITE]: () => true,
@@ -23,8 +23,8 @@ export function tallonOverworld(): RegionCollection {
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
         'Chozo Main Plaza': () => true
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Tallon Root Cave',
       locations: {
         [PrimeLocation.ROOT_CAVE]: () => true,
@@ -35,8 +35,8 @@ export function tallonOverworld(): RegionCollection {
         'Tallon North': () => true,
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Tallon Crashed Frigate',
       locations: {
         [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: () => true,
@@ -47,8 +47,8 @@ export function tallonOverworld(): RegionCollection {
         'Tallon North': () => true
         // 'Tallon South': (items: PrimeItemCollection) => items.canLayBombs()
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Tallon South',
       locations: {
         [PrimeLocation.GREAT_TREE_CHAMBER]: () => true,
@@ -59,8 +59,8 @@ export function tallonOverworld(): RegionCollection {
       exits: {
         'Tallon Crashed Frigate': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
       }
-    })
-  ]);
+    }
+  ];
 
   return regions;
 };

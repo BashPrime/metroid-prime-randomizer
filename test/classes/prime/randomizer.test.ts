@@ -5,8 +5,7 @@ import 'mocha';
 
 describe('PrimeRandomizer', () => {
   it('should return a randomizer instance', () => {
-    const settings = new PrimeRandomizerSettings({});
-    const randomizer = new PrimeRandomizer(settings);
+    const randomizer = new PrimeRandomizer();
     expect(randomizer).to.be.an.instanceof(PrimeRandomizer);
   });
 });

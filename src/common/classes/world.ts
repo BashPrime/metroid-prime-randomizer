@@ -1,17 +1,28 @@
 import { Region } from './region';
+import { RandomizerSettings } from './randomizerSettings';
+import { RegionCollection } from './regionCollection';
 
 export class World {
-  private regions: { [key: string]: Region };
+  protected settings: RandomizerSettings;
+  protected regions: RegionCollection;
 
-  getRegions(): { [key: string]: Region } {
+  constructor(settings: RandomizerSettings) {
+    this.settings = settings;
+  }
+
+  getRegions(): RegionCollection {
     return this.regions;
   }
 
-  setRegions(regions: { [key: string]: Region }): void {
+  setRegions(regions: RegionCollection) {
     this.regions = regions;
   }
 
-  getRegionByKey(key: string): Region {
-    return this.regions[key];
+  getSettings(): RandomizerSettings {
+    return this.settings;
+  }
+
+  setSettings(settings: RandomizerSettings) {
+    this.settings = settings;
   }
 }

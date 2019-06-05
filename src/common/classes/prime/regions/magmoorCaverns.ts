@@ -1,12 +1,11 @@
-import { Region } from '../../region';
-import { RegionCollection } from '../../regionCollection';
+import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 
-export function magmoorCaverns(): RegionCollection {
-  const regions = new RegionCollection([
-    new Region({
+export function magmoorCaverns(): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
       name: 'Magmoor First Half',
       locations: {
         [PrimeLocation.LAVA_LAKE]: () => true,
@@ -20,8 +19,8 @@ export function magmoorCaverns(): RegionCollection {
         'Magmoor Shrine Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs(),
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Magmoor Fiery Shores',
       locations: {
         [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs()
@@ -31,8 +30,8 @@ export function magmoorCaverns(): RegionCollection {
         'Tallon North': () => true,
         'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Magmoor Shrine Tunnel',
       locations: {
         [PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL]: () => true
@@ -40,8 +39,8 @@ export function magmoorCaverns(): RegionCollection {
       exits: {
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs()
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Magmoor Second Half',
       locations: {
         [PrimeLocation.PLASMA_PROCESSING]: () => true,
@@ -50,8 +49,8 @@ export function magmoorCaverns(): RegionCollection {
       exits: {
         'Magmoor Fiery Shores': () => true
       }
-    })
-  ]);
+    }
+  ];
 
   return regions;
 };

@@ -6,10 +6,19 @@ export interface ExitObject {
 };
 
 export class Exit {
+  private name: string;
   private destination: Region;
 
-  constructor(destination: Region) {
-    this.destination = destination;
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  setName(name: string) {
+    this.name = name;
   }
 
   getDestination(): Region {

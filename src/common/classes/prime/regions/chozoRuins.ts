@@ -1,13 +1,11 @@
-import { Region } from '../../region';
-import { RegionCollection } from '../../regionCollection';
+import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
-import { Location } from '../../location';
 import { PrimeItemCollection } from '../itemCollection';
 
-export function chozoRuins(): RegionCollection {
-  const regions = new RegionCollection([
-    new Region({
+export function chozoRuins(): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
       name: 'Chozo Main Plaza',
       locations: {
         [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: () => true,
@@ -50,8 +48,8 @@ export function chozoRuins(): RegionCollection {
         'Tallon North': () => true,
         'Chozo Ruined Shrine': (items: PrimeItemCollection) => items.hasMissiles()
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Chozo Ruined Shrine',
       locations: {
         [PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE]: () => true,
@@ -62,8 +60,8 @@ export function chozoRuins(): RegionCollection {
         'Chozo Main Plaza': () => true,
         'Chozo Tower of Light': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM)
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Chozo Tower of Light',
       locations: {
         [PrimeLocation.TOWER_OF_LIGHT]: () => true,
@@ -72,8 +70,8 @@ export function chozoRuins(): RegionCollection {
       exits: {
         'Chozo Ruined Shrine': () => true
       }
-    })
-  ]);
+    }
+  ];
 
   return regions;
 };

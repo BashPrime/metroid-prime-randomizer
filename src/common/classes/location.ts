@@ -1,4 +1,5 @@
 import { Item } from './item';
+import { Region } from './region';
 import { ItemCollection } from './itemCollection';
 import { RandomizerSettings } from './randomizerSettings';
 
@@ -8,21 +9,28 @@ export interface LocationObject {
 
 export class Location {
   private name: string;
-  private index: number;
+  private parentRegion: Region;
   private item: Item;
+  canFill: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
 
-  constructor(name: string, index: number, item?: Item) {
+  constructor(name: string) {
     this.name = name;
-    this.index = index;
-    this.item = item;
   }
 
   getName(): string {
     return this.name;
   }
 
-  getIndex(): number {
-    return this.index;
+  setName(name: string) {
+    this.name = name;
+  }
+
+  getParentRegion(): Region {
+    return this.parentRegion;
+  }
+
+  setParentRegion(parentRegion: Region) {
+    this.parentRegion = parentRegion;
   }
 
   getItem(): Item {
@@ -34,6 +42,6 @@ export class Location {
   }
 
   hasItem(): boolean {
-    return this.item !== undefined;
+    return this.item ? true : false;
   }
 }

@@ -1,16 +1,13 @@
-import { Region } from '../../region';
-import { PrimeLocation } from '../../../enums/primeLocation';
-import { Location } from '../../location';
-import { PrimeItemCollection } from '../itemCollection';
+import { RegionObject } from '../../region';
 
 export function root() {
-  const regions = [
-    new Region({
+  const regions: RegionObject[] = [
+    {
       name: 'Root',
       exits: {
         'Tallon North': () => true
       }
-    })
+    }
   ];
 
   return regions;

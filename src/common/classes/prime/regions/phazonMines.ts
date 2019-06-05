@@ -1,12 +1,11 @@
-import { Region } from '../../region';
-import { RegionCollection } from '../../regionCollection';
+import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 
-export function phazonMines(): RegionCollection {
-  const regions = new RegionCollection([
-    new Region({
+export function phazonMines(): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
       name: 'Mines Upper',
       locations: {
         [PrimeLocation.MAIN_QUARRY]: () => true,
@@ -18,8 +17,8 @@ export function phazonMines(): RegionCollection {
       },
       exits: {
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Mines Lower',
       locations: {
         [PrimeLocation.ELITE_CONTROL_ACCESS]: () => true,
@@ -30,8 +29,8 @@ export function phazonMines(): RegionCollection {
       },
       exits: {
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Mines Depths',
       locations: {
         [PrimeLocation.FUNGAL_HALL_ACCESS]: () => true,
@@ -43,8 +42,8 @@ export function phazonMines(): RegionCollection {
       },
       exits: {
       }
-    })
-  ]);
+    }
+  ];
 
   return regions;
 };

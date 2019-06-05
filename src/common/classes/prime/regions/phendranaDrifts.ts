@@ -1,12 +1,11 @@
-import { Region } from '../../region';
-import { RegionCollection } from '../../regionCollection';
+import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 
-export function phendranaDrifts(): RegionCollection {
-  const regions = new RegionCollection([
-    new Region({
+export function phendranaDrifts(): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
       name: 'Phendrana Shorelines',
       locations: {
         [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]: () => true,
@@ -18,8 +17,8 @@ export function phendranaDrifts(): RegionCollection {
       },
       exits: {
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Phendrana Chozo Ice Temple',
       locations: {
         [PrimeLocation.CHOZO_ICE_TEMPLE]: () => true,
@@ -28,8 +27,8 @@ export function phendranaDrifts(): RegionCollection {
       exits: {
         'Phendrana Shorelines': () => true
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Phendrana Mid',
       locations: {
         [PrimeLocation.RUINED_COURTYARD]: () => true,
@@ -42,8 +41,8 @@ export function phendranaDrifts(): RegionCollection {
       },
       exits: {
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Phendrana Quarantine Cave',
       locations: {
         [PrimeLocation.QUARANTINE_CAVE]: () => true,
@@ -51,8 +50,8 @@ export function phendranaDrifts(): RegionCollection {
       },
       exits: {
       }
-    }),
-    new Region({
+    },
+    {
       name: 'Phendrana Deep',
       locations: {
         [PrimeLocation.TRANSPORT_ACCESS]: () => true,
@@ -64,8 +63,8 @@ export function phendranaDrifts(): RegionCollection {
       },
       exits: {
       }
-    })
-  ]);
+    }
+  ];
 
   return regions;
 };
