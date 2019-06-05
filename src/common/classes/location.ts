@@ -11,7 +11,7 @@ export class Location {
   private name: string;
   private parentRegion: Region;
   private item: Item;
-  canFill: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+  private enabled: boolean = true;
 
   constructor(name: string) {
     this.name = name;
@@ -44,4 +44,20 @@ export class Location {
   hasItem(): boolean {
     return this.item ? true : false;
   }
+
+  isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  setEnabled(enabled: boolean) {
+    this.enabled = enabled;
+  }
+
+  canFill: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+}
+
+enum EnableType {
+  ENABLED,
+  PENDING,
+  DISABLED
 }

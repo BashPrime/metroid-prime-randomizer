@@ -7,10 +7,13 @@ export interface ExitObject {
 
 export class Exit {
   private name: string;
-  private destination: Region;
+  private parentRegion: Region;
+  private connectedRegion: Region;
+  private connectedRegionKey: string;
 
-  constructor(name: string) {
+  constructor(name: string, parentRegion?: Region) {
     this.name = name;
+    this.parentRegion = parentRegion;
   }
 
   getName(): string {
@@ -21,12 +24,47 @@ export class Exit {
     this.name = name;
   }
 
-  getDestination(): Region {
-    return this.destination;
+  getParentRegion(): Region {
+    return this.parentRegion;
   }
 
-  setDestination(destination: Region) {
-    this.destination = destination;
+  setParentRegion(region: Region) {
+    this.parentRegion = region;
+  }
+
+  getConnectedRegion(): Region {
+    return this.connectedRegion;
+  }
+
+  setConnectedRegion(region: Region) {
+    this.connectedRegion = region;
+  }
+
+  getConnectedRegionKey(): string {
+    return this.connectedRegionKey;
+  }
+
+  setConnectedRegionKey(key: string) {
+    this.connectedRegionKey = key;
+  }
+
+  connect(region: Region): void {
+    this.connectedRegion = region;
+
+    // Make sure connections are bidirectional!
+    const regionEntrances = region.getEntrances();
+    regionEntrances.push(this);
+    region.setEntrances(regionEntrances);
+  }
+
+  disconnect(): Region {
+    const regionEntrances = this.connectedRegion.getEntrances();
+    const newEntrances = regionEntrances.filter(entrance => entrance.getName() !== this.getName());
+    this.connectedRegion.setEntrances(newEntrances);
+
+    const previouslyConnected = this.connectedRegion;
+    this.connectedRegion = null;
+    return previouslyConnected;
   }
 
   canExit: (items: ItemCollection) => boolean;

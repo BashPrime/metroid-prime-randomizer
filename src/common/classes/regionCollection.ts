@@ -7,7 +7,7 @@ export class RegionCollection {
     this.regions = regions;
   }
 
-  getRegions(): Region[] {
+  getRegionsArray(): Region[] {
     return this.regions;
   }
 
@@ -28,6 +28,6 @@ export class RegionCollection {
   }
 
   merge(otherRegions: RegionCollection): RegionCollection {
-    return new RegionCollection(this.regions.concat(otherRegions.getRegions()));
+    return new RegionCollection(this.regions.concat(otherRegions.getRegionsArray()));
   }
 }

@@ -2,14 +2,18 @@ import { Location } from './location';
 import { ItemCollection } from './itemCollection';
 
 export class LocationCollection {
-  private locations: Location[];
+  private locations: Location[] = [];
 
   constructor(locations: Location[]) {
     this.locations = locations;
   }
 
-  getLocations(): Location[] {
+  getLocationsArray(): Location[] {
     return this.locations;
+  }
+
+  getLocationByKey(key: string): Location {
+    return this.locations.find(location => location.getName() === key);
   }
 
   size(): number {
@@ -29,7 +33,7 @@ export class LocationCollection {
   }
 
   merge(otherLocations: LocationCollection): LocationCollection {
-    return new LocationCollection(this.locations.concat(otherLocations.getLocations()));
+    return new LocationCollection(this.locations.concat(otherLocations.getLocationsArray()));
   }
 
   getItems(): ItemCollection {

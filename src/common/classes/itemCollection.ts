@@ -7,7 +7,7 @@ export class ItemCollection {
     this.items = items;
   }
 
-  getItems(): Item[] {
+  getItemsArray(): Item[] {
     return this.items;
   }
 
@@ -28,6 +28,6 @@ export class ItemCollection {
   }
 
   merge(otherItems: ItemCollection): ItemCollection {
-    return new ItemCollection(this.items.concat(otherItems.getItems()));
+    return new ItemCollection(this.items.concat(otherItems.getItemsArray()));
   }
 }

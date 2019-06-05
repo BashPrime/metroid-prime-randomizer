@@ -21,7 +21,7 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
             && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
         },
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Main Plaza': () => true
+        // 'Chozo Main Plaza': () => true
       }
     },
     {
@@ -33,7 +33,7 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
       },
       exits: {
         'Tallon North': () => true,
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
+        // 'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {

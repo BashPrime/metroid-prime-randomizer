@@ -16,7 +16,7 @@ export interface RegionObject {
 export class Region {
   private name: string;
   private world: World;
-  private locations: LocationCollection;
+  private locations: LocationCollection = new LocationCollection([]);
   private entrances: Exit[] = [];
   private exits: Exit[] = [];
 
