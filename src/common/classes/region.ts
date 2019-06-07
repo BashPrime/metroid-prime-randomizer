@@ -1,12 +1,13 @@
 import { World } from './world';
 import { LocationObject } from './location';
-import { Exit, ExitObject } from './exit';
+import { Entrance, EntranceObject } from './entrance';
 import { LocationCollection } from './locationCollection';
+import { ItemCollection } from './itemCollection';
 
 export interface RegionObject {
   name: string;
   locations?: LocationObject;
-  exits?: ExitObject;
+  exits?: EntranceObject;
 }
 
 /**
@@ -17,8 +18,8 @@ export class Region {
   private name: string;
   private world: World;
   private locations: LocationCollection = new LocationCollection([]);
-  private entrances: Exit[] = [];
-  private exits: Exit[] = [];
+  private entrances: Entrance[] = [];
+  private exits: Entrance[] = [];
 
   constructor(name: string) {
     this.name = name;
@@ -40,19 +41,19 @@ export class Region {
     this.locations = locations;
   }
 
-  getExits(): Exit[] {
+  getExits(): Entrance[] {
     return this.exits;
   }
 
-  setExits(exits: Exit[]) {
+  setExits(exits: Entrance[]) {
     this.exits = exits;
   }
 
-  getEntrances(): Exit[] {
+  getEntrances(): Entrance[] {
     return this.entrances;
   }
 
-  setEntrances(entrances: Exit[]) {
+  setEntrances(entrances: Entrance[]) {
     this.entrances = entrances;
   }
 
@@ -62,5 +63,15 @@ export class Region {
 
   setWorld(world: World) {
     this.world = world;
+  }
+
+  canReach(items: ItemCollection): boolean {
+    for (const entrance of this.entrances) {
+      if (entrance.canReach(items)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -1,7 +1,7 @@
 import { World } from '../world';
 import { Region } from '../region';
 import { Location } from '../location';
-import { Exit } from '../exit';
+import { Entrance } from '../entrance';
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { root } from './regions/root';
 import { tallonOverworld } from './regions/tallonOverworld';
@@ -44,11 +44,11 @@ export class PrimeWorld extends World {
 
       // Set region exits
       if (region.exits) {
-        const newExits: Exit[] = [];
+        const newExits: Entrance[] = [];
 
         for (const exitKey of Object.keys(region.exits)) {
           const exitName = newRegion.getName() + ' --> ' + exitKey;
-          const newExit = new Exit(exitName, newRegion);
+          const newExit = new Entrance(exitName, newRegion);
 
           newExit.setConnectedRegionKey(exitKey);
           // newExit.canFill = region.locations[exitKey];
