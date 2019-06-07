@@ -49,10 +49,8 @@ export class PrimeWorld extends World {
         for (const exitKey of Object.keys(region.exits)) {
           const exitName = newRegion.getName() + ' --> ' + exitKey;
           const newExit = new Entrance(exitName, newRegion);
-          newExit.accessRule = region.exits[exitKey];
-
           newExit.setConnectedRegionKey(exitKey);
-          // newExit.canFill = region.locations[exitKey];
+          newExit.accessRule = region.exits[exitKey];
 
           newExits.push(newExit);
         }
