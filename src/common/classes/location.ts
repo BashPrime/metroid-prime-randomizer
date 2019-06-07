@@ -12,6 +12,7 @@ export class Location {
   private parentRegion: Region;
   private item: Item;
   private enabled: boolean = true;
+  accessRule: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
 
   constructor(name: string) {
     this.name = name;
@@ -53,7 +54,9 @@ export class Location {
     this.enabled = enabled;
   }
 
-  canFill: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+  canReach(items: ItemCollection, settings: RandomizerSettings, noParent: boolean = false): boolean {
+    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items, settings));
+  }
 }
 
 enum EnableType {

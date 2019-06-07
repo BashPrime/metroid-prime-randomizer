@@ -3,6 +3,7 @@ import { LocationObject } from './location';
 import { Entrance, EntranceObject } from './entrance';
 import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
+import { RandomizerSettings } from './randomizerSettings';
 
 export interface RegionObject {
   name: string;
@@ -65,9 +66,9 @@ export class Region {
     this.world = world;
   }
 
-  canReach(items: ItemCollection): boolean {
+  canReach(items: ItemCollection, settings: RandomizerSettings): boolean {
     for (const entrance of this.entrances) {
-      if (entrance.canReach(items)) {
+      if (entrance.canReach(items, settings)) {
         return true;
       }
     }

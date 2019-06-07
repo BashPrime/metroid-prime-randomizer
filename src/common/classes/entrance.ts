@@ -1,5 +1,6 @@
 import { Region } from './region';
 import { ItemCollection } from './itemCollection';
+import { RandomizerSettings } from './RandomizerSettings';
 
 export interface EntranceObject {
   [key: string]: (items?: ItemCollection) => boolean;
@@ -10,6 +11,7 @@ export class Entrance {
   private parentRegion: Region;
   private connectedRegion: Region;
   private connectedRegionKey: string;
+  public accessRule: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
 
   constructor(name: string, parentRegion?: Region) {
     this.name = name;
@@ -67,9 +69,7 @@ export class Entrance {
     return previouslyConnected;
   }
 
-  canReach(items: ItemCollection): boolean {
-    return true; // stub
+  canReach(items: ItemCollection, settings: RandomizerSettings, noParent: boolean = false): boolean {
+    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items, settings));
   }
-
-  canExit: (items: ItemCollection) => boolean;
 }

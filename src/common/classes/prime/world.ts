@@ -34,7 +34,7 @@ export class PrimeWorld extends World {
         for (const locationKey of Object.keys(region.locations)) {
           const newLocation = new Location(locationKey);
           newLocation.setParentRegion(newRegion);
-          newLocation.canFill = region.locations[locationKey];
+          newLocation.accessRule = region.locations[locationKey];
 
           newLocations.push(newLocation);
         }
@@ -49,6 +49,7 @@ export class PrimeWorld extends World {
         for (const exitKey of Object.keys(region.exits)) {
           const exitName = newRegion.getName() + ' --> ' + exitKey;
           const newExit = new Entrance(exitName, newRegion);
+          newExit.accessRule = region.exits[exitKey];
 
           newExit.setConnectedRegionKey(exitKey);
           // newExit.canFill = region.locations[exitKey];
