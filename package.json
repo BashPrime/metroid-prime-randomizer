@@ -28,7 +28,8 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps && npm run randomprime:build && npm run native:build",
+    "preinstall": "npm run randomprime:build",
+    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps && npm run native:build",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     "ng": "ng",
