@@ -1,6 +1,7 @@
 import { Option, OptionType } from './Option';
 import { Utilities } from '../Utilities';
 import { Goal } from './enums/goal';
+import { ArtifactLocationHints } from './enums/artifactLocationHints';
 import { HeatDamagePrevention } from './enums/heatDamagePrevention';
 import { SuitDamageReduction } from './enums/suitDamageReduction';
 
@@ -15,7 +16,7 @@ export class Config {
     // Main Rules
     new Option('goal', 'Goal', OptionType.DROPDOWN, 2, true),
     new Option('goalArtifacts', 'Number of Artifacts', OptionType.NUMBER, 4, true, 1, 12),
-    new Option('artifactLocationHints', 'Show Chozo Artifact location hints in Artifact Temple', OptionType.BOOLEAN, 1, true),
+    new Option('artifactLocationHints', 'Chozo Artifact Location Hints', OptionType.DROPDOWN, 2, true),
     new Option('heatDamagePrevention', 'Heat Damage Prevention', OptionType.DROPDOWN, 1, true),
     new Option('suitDamageReduction', 'Suit Damage Reduction', OptionType.DROPDOWN, 1, true),
     new Option('shuffleArtifacts', 'Shuffle Chozo Artifacts', OptionType.BOOLEAN, 1, true),
@@ -72,6 +73,11 @@ export class Config {
     new Option('earlyMagmoorNoSuitTanks', 'Early Magmoor Items Without a Suit - Required Energy Tanks', OptionType.NUMBER, 4, true, 7, 14)
   ];
   private optionDropdowns = {
+    artifactLocationHints: [
+      { name: 'Show All', value: ArtifactLocationHints.ALL },
+      { name: 'Vanilla Behavior', value: ArtifactLocationHints.DEFAULT },
+      { name: 'No Hints', value: ArtifactLocationHints.NONE }
+    ],
     goal: [
       { name: 'Always Open', value: Goal.ALWAYS_OPEN },
       { name: 'Artifact Collection', value: Goal.ARTIFACT_COLLECTION },

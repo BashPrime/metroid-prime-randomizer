@@ -6,6 +6,7 @@ import * as compareVersions from 'compare-versions';
 import { RandomizerService } from '../services/randomizer.service';
 import { ElectronService } from '../services/electron.service';
 import { Goal } from '../../../common/randomizer/enums/goal';
+import { ArtifactLocationHints } from '../../../common/randomizer/enums/artifactLocationHints';
 import { Config } from '../../../common/randomizer/Config';
 import { Utilities } from '../../../common/Utilities';
 import { environment } from '../../environments/environment';
@@ -114,7 +115,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       hideItemModels: [false],
       goal: [Goal.ARTIFACT_COLLECTION],
       goalArtifacts: [12, [Validators.min(1), Validators.max(12)]],
-      artifactLocationHints: [false],
+      artifactLocationHints: [ArtifactLocationHints.ALL],
       heatDamagePrevention: [HeatDamagePrevention.ANY_SUIT],
       suitDamageReduction: [SuitDamageReduction.DEFAULT],
       shuffleArtifacts: [true],
@@ -181,7 +182,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
       hideItemModels: false,
       goal: Goal.ARTIFACT_COLLECTION,
       goalArtifacts: 12,
-      artifactLocationHints: false,
+      artifactLocationHints: ArtifactLocationHints.ALL,
       heatDamagePrevention: HeatDamagePrevention.ANY_SUIT,
       suitDamageReduction: SuitDamageReduction.DEFAULT,
       shuffleArtifacts: true,

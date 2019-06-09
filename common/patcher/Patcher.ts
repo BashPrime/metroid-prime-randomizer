@@ -82,7 +82,7 @@ export class Patcher {
         skip_frigate: randomizerConfig.skipFrigate,
         skip_hudmenus: randomizerConfig.skipHudPopups,
         obfuscate_items: randomizerConfig.hideItemModels,
-        show_artifact_location_hints: randomizerConfig.artifactLocationHints,
+        artifact_hint_behavior: randomizerConfig.artifactLocationHints,
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
         comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink

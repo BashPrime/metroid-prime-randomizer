@@ -24,10 +24,13 @@
           </div>
         </div>
         <div class="field" *ngIf="settingsForm.get('goal').value === goalArtifacts">
+          <p class="label has-text-weight-semibold">Chozo Artifact Location Hints</p>
           <div class="control">
-            <label class="checkbox tooltip is-tooltip-right-tablet is-tooltip-multiline" attr.data-tooltip="{{ tooltips.artifactLocationHints }}">
-              <input type="checkbox" formControlName="artifactLocationHints"> Show Chozo Artifact location hints in Artifact Temple
-            </label>
+            <div class="select tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.artifactLocationHints }}">
+              <select formControlName="artifactLocationHints">
+                <option *ngFor="let option of artifactLocationHints" value="{{ option.value }}">{{ option.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <hr>
