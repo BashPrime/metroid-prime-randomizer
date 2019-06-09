@@ -18,6 +18,15 @@
       <button class="button file-cta" (click)="selectOutputFolder()">Select Folder</button>
     </div>
   </div>
+  <label class="label">Trilogy ISO (for Flaahgra music fix)</label>
+  <div class="field has-addons tooltip is-tooltip-bottom is-tooltip-multiline" attr.data-tooltip="{{ tooltips.trilogyIso }}">
+    <div class="control is-expanded">
+      <input class="input" type="text" formControlName="trilogyIso">
+    </div>
+    <div class="control">
+      <button class="button file-cta" (click)="selectTrilogyIso()">Select ISO</button>
+    </div>
+  </div>
   <div class="columns">
     <div class="column">
       <p class="label">ROM Output</p>

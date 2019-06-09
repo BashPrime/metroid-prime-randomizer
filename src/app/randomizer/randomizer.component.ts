@@ -106,6 +106,7 @@ export class RandomizerComponent implements OnInit, OnDestroy {
     this.randomizerForm = fb.group({
       seed: [null, [Validators.min(1), Validators.max(this.maxSafeInteger)]],
       baseIso: ['', Validators.required],
+      trilogyIso: [''],
       outputFolder: [''],
       generateRom: [true],
       fileType: ['ciso'],

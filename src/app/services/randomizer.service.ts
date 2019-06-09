@@ -167,6 +167,9 @@ export class RandomizerService {
     trainingChamberOOB: 'You can wallcrawl from Main Plaza to Training Chamber or Training Chamber Access, ' +
       'then grab their items without the Wave Beam (or Boost/Spider/Supers for Training Chamber) by using a ' +
       'ceiling warp to clip back inbounds.',
+    trilogyIso: `NTSC-U Metroid Prime Trilogy ISO or WBFS file.
+
+      This is used to fix the Flaahgra music, which is bugged on the NTSC GameCube versions of Prime.`,
     vmr: 'You may be expected to perform the suitless Magmoor run to either the Phendrana North elevator, or to ' +
     'cross Twin Fires Tunnel suitless. Both tricks require glitches; the standard suitless run to Phendrana is ' +
     'difficult with fewer Energy Tanks. Crossing Twin Fires Tunnel suitless is easier, but you must dash, R Jump, ' +

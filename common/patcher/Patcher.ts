@@ -71,6 +71,11 @@ export class Patcher {
       this.writeSpoilerLog(randomizer, randomizerConfig, path.join(randomizerConfig.outputFolder, outputSpoiler));
     }
 
+    // Remove trilogy ISO property if no value is used
+    if (!randomizerConfig.trilogyIso) {
+      delete randomizerConfig.trilogyIso;
+    }
+
     if (randomizerConfig.generateRom) {
       progressBar.text = 'Patching ROM...';
       const layoutDescriptor = randomizer.getWorld().generateLayout();
@@ -85,6 +90,7 @@ export class Patcher {
         artifact_hint_behavior: randomizerConfig.artifactLocationHints,
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
+        trilogy_disc_path: randomizerConfig.trilogyIso,
         comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink
       };
 
