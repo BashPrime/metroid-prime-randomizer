@@ -28,7 +28,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps && npm run native:build",
+    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps && npm run randomprime:build && npm run native:build",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     "ng": "ng",
@@ -45,6 +45,8 @@
     "electron:windows": "npm run build:prod && electron-builder build --windows",
     "electron:mac": "npm run build:prod && electron-builder build --mac",
     "native:build": "./node_modules/.bin/electron-rebuild",
+    "randomprime:build": "cargo build --release --manifest-path=./randomprime/Cargo.toml",
+    "randomprime:clean": "cargo clean --manifest-path=./randomprime/Cargo.toml",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
