@@ -70,10 +70,9 @@
             </label>
           </div>
         </div>
-        <div class="field" *ngIf="settingsForm.get('goal').value !== allBosses">
+        <hr *ngIf="settingsForm.get('goal').value !== allBosses">
+        <div *ngIf="settingsForm.get('goal').value !== allBosses">
           <p class="label has-text-weight-semibold">Don't Require Bosses</p>
-        </div>
-        <div class="box" *ngIf="settingsForm.get('goal').value !== allBosses">
           <div class="field">
             <div class="control">
               <label class="checkbox tooltip is-tooltip-multiline is-tooltip-right-tablet" attr.data-tooltip="{{ tooltips.dontRequireFlaahgra }}">

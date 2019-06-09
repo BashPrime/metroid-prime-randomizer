@@ -1,0 +1,3 @@
+[submodule "randomprime"]
+	path = randomprime
+	url = https://github.com/aprilwade/randomprime.git

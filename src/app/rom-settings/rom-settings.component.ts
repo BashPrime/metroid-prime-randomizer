@@ -43,6 +43,20 @@ export class RomSettingsComponent implements OnInit {
     }
   }
 
+  selectTrilogyIso() {
+    const result = this.electronService.dialog.showOpenDialog({
+      filters: [
+        { name: 'Wii ISO Files', extensions: ['iso', 'wbfs'] },
+        { name: 'All Files', extensions: ['*'] }
+      ],
+      properties: ['openFile']
+    });
+
+    if (result) {
+      this.romSettingsForm.get('trilogyIso').setValue(result[0]);
+    }
+  }
+
   selectOutputFolder() {
     const result = this.electronService.dialog.showOpenDialog({
       properties: ['openDirectory']
