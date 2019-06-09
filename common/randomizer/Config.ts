@@ -75,12 +75,12 @@ export class Config {
   private optionDropdowns = {
     artifactLocationHints: [
       { name: 'Show All', value: ArtifactLocationHints.ALL },
-      { name: 'Vanilla Behavior', value: ArtifactLocationHints.DEFAULT },
-      { name: 'No Hints', value: ArtifactLocationHints.NONE }
+      { name: 'No Hints', value: ArtifactLocationHints.NONE },
+      { name: 'Default', value: ArtifactLocationHints.DEFAULT }
     ],
     goal: [
-      { name: 'Always Open', value: Goal.ALWAYS_OPEN },
       { name: 'Artifact Collection', value: Goal.ARTIFACT_COLLECTION },
+      { name: 'Always Open', value: Goal.ALWAYS_OPEN },
       { name: 'All Bosses', value: Goal.ALL_BOSSES }
     ],
     heatDamagePrevention: [

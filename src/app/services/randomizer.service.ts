@@ -29,9 +29,11 @@ export class RandomizerService {
     allowBoostBallLowerMines: 'You may be required to pass through Ventilation Shaft in order to obtain the Boost Ball ' +
     'in lower Phazon Mines.',
     artifactCount: 'Sets the number of Chozo Artifacts for Artifact Collection seeds.',
-    artifactLocationHints: 'Scanning the totems in the Artifact Temple will reveal where each Chozo Artifact is placed. ' +
-      'As in the original game, only some of the totems are scannable in the beginning. You will gain access to more scans ' +
-      'as you collect more Chozo Artifacts.\n\nNOTE: Changing this setting will change the seed.',
+    artifactLocationHints: `Changes the behavior of the totem scans in the Artifact Temple.
+    
+    'Show All': All artifact hints are available from the start.
+    'No Hints': Removes all artifact hints from the game.
+    'Default': Some artifact hints will be available at the start, with more becoming available as you collect artifacts.`,
     barsSkip: 'You can skip traversing the crashed frigate with a precise ' +
       'double bomb jump over the gate in Great Tree Hall.',
     baseIso: 'NTSC-U 1.00, 1.01, or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.\n\n' +
@@ -55,7 +57,7 @@ export class RandomizerService {
     dbj: 'Expects some easier DBJ sequence breaks, including DBJing out of the lava to cross Twin Fires ' +
       'Tunnel, getting the Alcove, Gathering Hall, Warrior Shrine, and Fiery Shores (tunnel) items ' +
       'without Space Jump, and getting the Furnace (Spider Track) item without Spider Ball.',
-    dontRequireFlaahgra: 'Both item locations in Sunchamber will never contain any required items.',
+    dontRequireFlaahgra: 'Both Sunchamber item locations, Ruined Fountain, and Watery Hall (Underwater) will never contain any required items.',
     dontRequireOmegaPirate: 'Elite Quarters and Processing Center Access will never contain any required items.',
     dontRequireThardus: 'Quarantine Cave and Quarantine Monitor will never contain any required items.',
     earlyMagmoorNoSuit: 'You may be expected to obtain your first suit (or Varia) in early Magmoor Caverns. ' +
@@ -76,8 +78,8 @@ export class RandomizerService {
       'such as jumping up half-pipes to otherwise unreachable ledges, reaching Tower Chamber without Gravity Suit, ' +
       'and climbing taller rooms without Spider Ball, Boost Ball, or Grapple Beam.',
     goal: 'Changing this affects the requirements to access the Ridley fight and the Impact Crater.\n\n' +
-      '\'Always Open\': Collecting the Artifact Temple item immediately begins the Ridley fight.\n' +
       '\'Artifact Collection:\' Collect 1-12 Chozo Artifacts placed in the game world.\n' +
+      '\'Always Open\': Collecting the Artifact Temple item immediately begins the Ridley fight.\n' +
       '\'All Bosses:\': Defeat Flaahgra, Thardus, and Omega Pirate, and collect their Chozo Artifacts they leave behind.\n\n' +
       'If less than 12 artifacts are placed in the game world, any leftover locations will be filled with Missile Expansions.',
     halfPipeBombJumps: 'You can do a 5 bomb jump up some half-pipe ramps to cross rooms including Crossway, ' +
