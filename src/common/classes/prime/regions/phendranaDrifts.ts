@@ -4,7 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function phendranaDrifts(settings: PrimeRandomizerSettings): RegionObject[] {
+export function phendranaDrifts(): RegionObject[] {
   const regions: RegionObject[] = [
     {
       name: 'Phendrana Shorelines',

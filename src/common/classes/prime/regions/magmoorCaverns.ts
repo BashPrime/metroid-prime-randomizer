@@ -4,7 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function magmoorCaverns(settings: PrimeRandomizerSettings): RegionObject[] {
+export function magmoorCaverns(): RegionObject[] {
   const regions: RegionObject[] = [
     {
       name: 'Magmoor Lava Lake',
@@ -12,24 +12,24 @@ export function magmoorCaverns(settings: PrimeRandomizerSettings): RegionObject[
         [PrimeLocation.LAVA_LAKE]: () => true
       },
       exits: {
-        'Magmoor First Half': () => true,
+        'Magmoor First Half': (items: PrimeItemCollection) => items.canLayBombs(),
         'Chozo Sun Tower': () => true,
       }
     },
     {
       name: 'Magmoor First Half',
       locations: {
-        [PrimeLocation.TRICLOPS_PIT]: () => true,
-        [PrimeLocation.STORAGE_CAVERN]: () => true,
-        [PrimeLocation.TRANSPORT_TUNNEL_A]: () => true,
-        [PrimeLocation.WARRIOR_SHRINE]: () => true,
-        [PrimeLocation.SHORE_TUNNEL]: () => true,
+        [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.XRAY_VISOR),
+        [PrimeLocation.STORAGE_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        [PrimeLocation.TRANSPORT_TUNNEL_A]: (items: PrimeItemCollection) => items.canLayBombs(),
+        [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
       },
       exits: {
-        'Magmoor Lava Lake': () => true,
+        'Magmoor Lava Lake': (items: PrimeItemCollection) => items.canLayBombs(),
         'Magmoor Shrine Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs(),
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
-        'Phendrana Shorelines': () => true
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
+        'Phendrana Shorelines': (items: PrimeItemCollection) => items.canLayBombs()
       }
     },
     {
@@ -38,9 +38,8 @@ export function magmoorCaverns(settings: PrimeRandomizerSettings): RegionObject[
         [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
-        'Magmoor First Half': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM),
-        'Tallon North': () => true
+        'Magmoor First Half': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
+        'Tallon Root Cave': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
@@ -55,13 +54,23 @@ export function magmoorCaverns(settings: PrimeRandomizerSettings): RegionObject[
     {
       name: 'Magmoor Second Half',
       locations: {
-        [PrimeLocation.PLASMA_PROCESSING]: () => true,
-        [PrimeLocation.MAGMOOR_WORKSTATION]: () => true
+        [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Magmoor Fiery Shores': () => true,
+        'Magmoor Plasma Processing': (items: PrimeItemCollection) =>
+          items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
         'Phendrana Transport Magmoor South': () => true,
+        'Tallon Root Cave': () => true,
         'Mines Central': () => true
+      }
+    },
+    {
+      name: 'Magmoor Plasma Processing',
+      locations: {
+        [PrimeLocation.PLASMA_PROCESSING]: () => true
+      },
+      exits: {
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM)
       }
     }
   ];

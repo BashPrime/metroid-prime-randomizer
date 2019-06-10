@@ -3,10 +3,15 @@ import { Region } from '../region';
 import { Location } from '../location';
 import { Entrance } from '../entrance';
 import { PrimeRandomizerSettings } from './randomizerSettings';
-import { root } from './regions/root';
-import { tallonOverworld } from './regions/tallonOverworld';
 import { RegionCollection } from '../regionCollection';
 import { LocationCollection } from '../locationCollection';
+import { root } from './regions/root';
+import { tallonOverworld } from './regions/tallonOverworld';
+import { chozoRuins } from './regions/chozoRuins';
+import { magmoorCaverns } from './regions/magmoorCaverns';
+import { phendranaDrifts } from './regions/phendranaDrifts';
+import { phazonMines } from './regions/phazonMines';
+
 
 export class PrimeWorld extends World {
   protected settings: PrimeRandomizerSettings;
@@ -18,7 +23,11 @@ export class PrimeWorld extends World {
   loadRegions(): void {
     const rawRegions = [
       ...root(),
-      ...tallonOverworld(this.settings)
+      ...tallonOverworld(),
+      ...chozoRuins(),
+      ...magmoorCaverns(),
+      ...phendranaDrifts(),
+      ...phazonMines()
     ];
     const regions: Region[] = [];
 

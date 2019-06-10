@@ -4,7 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function phazonMines(settings: PrimeRandomizerSettings): RegionObject[] {
+export function phazonMines(): RegionObject[] {
   const regions: RegionObject[] = [
     {
       name: 'Mines Upper',

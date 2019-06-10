@@ -3,7 +3,7 @@ import { ItemCollection } from './itemCollection';
 import { RandomizerSettings } from './RandomizerSettings';
 
 export interface EntranceObject {
-  [key: string]: (items?: ItemCollection) => boolean;
+  [key: string]: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
 };
 
 export class Entrance {

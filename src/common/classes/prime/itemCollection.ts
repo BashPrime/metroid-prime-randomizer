@@ -8,6 +8,12 @@ export class PrimeItemCollection extends ItemCollection {
     return this.has(PrimeItem.MISSILE_LAUNCHER) || this.has(PrimeItem.MISSILE_EXPANSION);
   }
 
+  hasMissileCount(count: number) {
+    return this.getItemsArray().filter(item => {
+      return item.getName() === PrimeItem.MISSILE_EXPANSION || item.getName() === PrimeItem.MISSILE_LAUNCHER
+    }).length >= count;
+  }
+
   canLayBombs(): boolean {
     return this.has(PrimeItem.MORPH_BALL) && this.has(PrimeItem.MORPH_BALL_BOMB);
   }
