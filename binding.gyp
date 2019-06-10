@@ -3,10 +3,17 @@
     {
       "target_name": "randomprime",
       "sources": [ "./native/randomprime.cpp" ],
-      "conditions": [
+    "conditions": [
         ["OS=='win'", {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "AdditionalOptions": [
+                "/MD"
+              ]
+            }
+          },
           "libraries": [
-            "-l<(module_root_dir)/native/lib/randomprime",
+            "-l<(module_root_dir)/randomprime/target/release/randomprime",
             "-lcredui.lib",
             "-lmsimg32.lib",
             "-lopengl32.lib",
@@ -22,12 +29,12 @@
         }],
         ["OS=='mac'", {
           "libraries": [
-            "<(module_root_dir)/native/lib/librandomprime_mac.a"
+            "<(module_root_dir)/randomprime/target/release/librandomprime.a"
           ]
         }],
         ["OS=='linux'", {
           "libraries": [
-            "<(module_root_dir)/native/lib/librandomprime_linux.a"
+            "<(module_root_dir)/randomprime/target/release/librandomprime.a"
           ]
         }]
       ],

@@ -18,6 +18,7 @@ export class MainRulesComponent implements OnInit {
   goals: any[];
   heatDamagePrevention: any[];
   suitDamageReduction: any[];
+  artifactLocationHints: any[];
   artifactCount = Utilities.numberRange(1, 12);
   goalArtifacts = Goal.ARTIFACT_COLLECTION;
   defaultHeatDamageOption = HeatDamagePrevention.ANY_SUIT;
@@ -30,6 +31,7 @@ export class MainRulesComponent implements OnInit {
     this.goals = config.getDropdownsForField('goal');
     this.heatDamagePrevention = config.getDropdownsForField('heatDamagePrevention');
     this.suitDamageReduction = config.getDropdownsForField('suitDamageReduction');
+    this.artifactLocationHints = config.getDropdownsForField('artifactLocationHints');
   }
 
   ngOnInit() {}
