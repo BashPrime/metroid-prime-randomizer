@@ -2,13 +2,23 @@ import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
+import { PrimeRandomizerSettings } from '../randomizerSettings';
 
-export function magmoorCaverns(): RegionObject[] {
+export function magmoorCaverns(settings: PrimeRandomizerSettings): RegionObject[] {
   const regions: RegionObject[] = [
+    {
+      name: 'Magmoor Lava Lake',
+      locations: {
+        [PrimeLocation.LAVA_LAKE]: () => true
+      },
+      exits: {
+        'Magmoor First Half': () => true,
+        'Chozo Sun Tower': () => true,
+      }
+    },
     {
       name: 'Magmoor First Half',
       locations: {
-        [PrimeLocation.LAVA_LAKE]: () => true,
         [PrimeLocation.TRICLOPS_PIT]: () => true,
         [PrimeLocation.STORAGE_CAVERN]: () => true,
         [PrimeLocation.TRANSPORT_TUNNEL_A]: () => true,
@@ -16,8 +26,10 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.SHORE_TUNNEL]: () => true,
       },
       exits: {
+        'Magmoor Lava Lake': () => true,
         'Magmoor Shrine Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs(),
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
+        'Phendrana Shorelines': () => true
       }
     },
     {
@@ -27,8 +39,8 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Magmoor First Half': () => true,
-        'Tallon North': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM)
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM),
+        'Tallon North': () => true
       }
     },
     {
@@ -47,7 +59,9 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.MAGMOOR_WORKSTATION]: () => true
       },
       exits: {
-        'Magmoor Fiery Shores': () => true
+        'Magmoor Fiery Shores': () => true,
+        'Phendrana Transport Magmoor South': () => true,
+        'Mines Central': () => true
       }
     }
   ];

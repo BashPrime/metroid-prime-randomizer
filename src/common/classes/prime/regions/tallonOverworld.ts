@@ -11,17 +11,32 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
       locations: {
         [PrimeLocation.LANDING_SITE]: () => true,
         [PrimeLocation.ALCOVE]: () => true,
-        [PrimeLocation.FRIGATE_CRASH_SITE]: () => true,
-        [PrimeLocation.OVERGROWN_CAVERN]: () => true,
         [PrimeLocation.ARTIFACT_TEMPLE]: () => true
       },
       exits: {
-        'Tallon Crashed Frigate': (items: PrimeItemCollection) => {
-          return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
-            && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
-        },
+        'Tallon Crash Site': () => true,
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
-        // 'Chozo Main Plaza': () => true
+        'Chozo West': () => true
+      }
+    },
+    {
+      name: 'Tallon Crash Site',
+      locations: {
+        [PrimeLocation.FRIGATE_CRASH_SITE]: () => true
+      },
+      exits: {
+        'Tallon North': () => true,
+        'Tallon Crashed Frigate': () => true
+      }
+    },
+    {
+      name: 'Tallon Overgrown Cavern',
+      locations: {
+        [PrimeLocation.OVERGROWN_CAVERN]: () => true
+      },
+      exits: {
+        'Chozo Reflecting Pool': () => true,
+        'Tallon Crash Site': () => true
       }
     },
     {
@@ -33,7 +48,7 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
       },
       exits: {
         'Tallon North': () => true,
-        // 'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
@@ -44,12 +59,12 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
         [PrimeLocation.HYDRO_ACCESS_TUNNEL]: () => true
       },
       exits: {
-        'Tallon North': () => true
-        // 'Tallon South': (items: PrimeItemCollection) => items.canLayBombs()
+        'Tallon North': () => true,
+        'Tallon South Lower': (items: PrimeItemCollection) => items.canLayBombs()
       }
     },
     {
-      name: 'Tallon South',
+      name: 'Tallon South Upper',
       locations: {
         [PrimeLocation.GREAT_TREE_CHAMBER]: () => true,
         [PrimeLocation.LIFE_GROVE_TUNNEL]: () => true,
@@ -57,7 +72,15 @@ export function tallonOverworld(settings: PrimeRandomizerSettings): RegionObject
         [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: () => true
       },
       exits: {
-        'Tallon Crashed Frigate': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
+        'Chozo Reflecting Pool': () => true
+      }
+    },
+    {
+      name: 'Tallon South Lower',
+      locations: {
+      },
+      exits: {
+        'Mines Upper': () => true
       }
     }
   ];
