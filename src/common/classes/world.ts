@@ -3,6 +3,7 @@ import { Location } from './location';
 import { RandomizerSettings } from './randomizerSettings';
 import { RegionCollection } from './regionCollection';
 import { LocationCollection } from './locationCollection';
+import { ItemCollection } from './itemCollection';
 
 export class World {
   protected settings: RandomizerSettings;
@@ -58,4 +59,49 @@ export class World {
       }
     }
   }
+
+  isReachable(source: Region, destination: Region, items: ItemCollection): boolean {
+    // Mark all regions as not visited by default (false)
+    const visitedRegions = this.getLocations().getLocationsArray().map(location => {
+      return { [location.getName()]: false };
+    });
+
+    // Use an array instance as a queue
+    const regionQueue: Region[] = [];
+
+    // Mark the starting region as visited and enqueue it
+    visitedRegions[source.getName()] = true;
+    regionQueue.push(source);
+
+    while (regionQueue.length) {
+      // Dequeue a region.
+      const region = regionQueue.shift();
+
+      // Get all exits (and their connected regions) for the current region.
+      // If an adjacent region hasn't been visited, check if it can be visited.
+      // If it can, mark it visited and enqueue it.
+      for(const exit of region.getExits()) {
+        const connectedRegion = exit.getConnectedRegion();
+
+        // Check if the adjacent region can be visited
+        if(exit.accessRule(items, this.settings)) {
+          // If adjacent region is the destination, then return true
+          if (connectedRegion.getName() === destination.getName()) {
+            return true;
+          }
+
+          // Else, continue BFS
+          if (!visitedRegions[connectedRegion.getName()]) {
+            visitedRegions[connectedRegion.getName()] = true;
+            regionQueue.push(connectedRegion);
+          }
+        }
+      }
+    }
+
+    // If BFS completed without visiting destination, return false
+    return false;
+  }
+
+  
 }
