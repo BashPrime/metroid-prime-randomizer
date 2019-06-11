@@ -17,6 +17,10 @@ export class World {
     return this.regions;
   }
 
+  getRegionByKey(key: string): Region {
+    return this.regions.getRegionByKey(key);
+  }
+
   setRegions(regions: RegionCollection) {
     this.regions = regions;
   }
@@ -41,6 +45,10 @@ export class World {
     }
 
     return this.cachedLocations;
+  }
+
+  getLocationByKey(key: string) {
+    return this.getLocations().getLocationByKey(key);
   }
 
   initializeEntrances(): void {
