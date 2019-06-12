@@ -19,7 +19,7 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Magmoor First Half',
       locations: {
-        [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.XRAY_VISOR),
+        [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.XRAY_VISOR),
         [PrimeLocation.STORAGE_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         [PrimeLocation.TRANSPORT_TUNNEL_A]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
@@ -61,7 +61,7 @@ export function magmoorCaverns(): RegionObject[] {
           items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
         'Phendrana Transport Magmoor South': () => true,
         'Tallon Root Cave': () => true,
-        'Mines Central': () => true
+        'Mines Central': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
