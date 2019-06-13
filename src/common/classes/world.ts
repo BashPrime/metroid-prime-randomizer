@@ -107,6 +107,11 @@ export class World {
   }
 
   isReachable(destination: Region, items: ItemCollection, forceSearch?: boolean): boolean {
+    // Immediately return false if root region is not set
+    if (!this.rootRegion) {
+      return false;
+    }
+
     // Run search if it hasn't been run already, or forced
     if (forceSearch || Object.keys(this.cachedVisitedRegions).length === 0) {
       this.searchRegions(items);

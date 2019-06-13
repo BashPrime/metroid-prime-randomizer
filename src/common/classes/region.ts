@@ -66,13 +66,7 @@ export class Region {
     this.world = world;
   }
 
-  canReach(items: ItemCollection, settings: RandomizerSettings): boolean {
-    for (const entrance of this.entrances) {
-      if (entrance.canReach(items, settings)) {
-        return true;
-      }
-    }
-
-    return false;
+  canReach(items: ItemCollection): boolean {
+    return this.world.isReachable(this, items);
   }
 }

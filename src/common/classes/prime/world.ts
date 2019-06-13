@@ -43,7 +43,7 @@ export class PrimeWorld extends World {
         for (const locationKey of Object.keys(region.locations)) {
           const newLocation = new Location(locationKey);
           newLocation.setParentRegion(newRegion);
-          newLocation.accessRule = region.locations[locationKey];
+          newLocation.itemRule = region.locations[locationKey];
 
           newLocations.push(newLocation);
         }
