@@ -9,6 +9,8 @@ export class World {
   protected settings: RandomizerSettings;
   protected regions: RegionCollection;
   protected cachedLocations: LocationCollection;
+  protected rootRegion: Region;
+  protected cachedVisitedRegions: { [key: string]: boolean } = {};
 
   constructor(settings: RandomizerSettings) {
     this.settings = settings;
@@ -32,6 +34,14 @@ export class World {
 
   setSettings(settings: RandomizerSettings) {
     this.settings = settings;
+  }
+
+  getRootRegion(): Region {
+    return this.rootRegion;
+  }
+
+  setRootRegion(rootRegion: Region) {
+    this.rootRegion = rootRegion;
   }
 
   getLocations(): LocationCollection {
@@ -60,18 +70,19 @@ export class World {
     }
   }
 
-  isReachable(source: Region, destination: Region, items: ItemCollection): boolean {
+  searchRegions(items: ItemCollection): void {
+    this.cachedVisitedRegions = {};
     // Mark all regions as not visited by default (false)
-    const visitedRegions = this.getLocations().getLocationsArray().map(location => {
-      return { [location.getName()]: false };
-    });
+    for (const region of this.getRegions().getRegionsArray()) {
+      this.cachedVisitedRegions[region.getName()] = false;
+    }
 
     // Use an array instance as a queue
     const regionQueue: Region[] = [];
 
     // Mark the starting region as visited and enqueue it
-    visitedRegions[source.getName()] = true;
-    regionQueue.push(source);
+    this.cachedVisitedRegions[this.rootRegion.getName()] = true;
+    regionQueue.push(this.rootRegion);
 
     while (regionQueue.length) {
       // Dequeue a region.
@@ -80,28 +91,27 @@ export class World {
       // Get all exits (and their connected regions) for the current region.
       // If an adjacent region hasn't been visited, check if it can be visited.
       // If it can, mark it visited and enqueue it.
-      for(const exit of region.getExits()) {
+      for (const exit of region.getExits()) {
         const connectedRegion = exit.getConnectedRegion();
 
         // Check if the adjacent region can be visited
-        if(exit.accessRule(items, this.settings)) {
-          // If adjacent region is the destination, then return true
-          if (connectedRegion.getName() === destination.getName()) {
-            return true;
-          }
-
+        if (exit.accessRule(items, this.settings)) {
           // Else, continue BFS
-          if (!visitedRegions[connectedRegion.getName()]) {
-            visitedRegions[connectedRegion.getName()] = true;
+          if (!this.cachedVisitedRegions[connectedRegion.getName()]) {
+            this.cachedVisitedRegions[connectedRegion.getName()] = true;
             regionQueue.push(connectedRegion);
           }
         }
       }
     }
-
-    // If BFS completed without visiting destination, return false
-    return false;
   }
 
-  
+  isReachable(destination: Region, items: ItemCollection, forceSearch?: boolean): boolean {
+    // Run search if it hasn't been run already, or forced
+    if (forceSearch || Object.keys(this.cachedVisitedRegions).length === 0) {
+      this.searchRegions(items);
+    }
+
+    return this.cachedVisitedRegions[destination.getName()];
+  }
 }
