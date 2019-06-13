@@ -9,75 +9,77 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Mines Upper',
       locations: {
-        [PrimeLocation.MAIN_QUARRY]: () => true,
-        [PrimeLocation.SECURITY_ACCESS_A]: () => true,
-        [PrimeLocation.STORAGE_DEPOT_A]: () => true
+        [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.THERMAL_VISOR),
+        [PrimeLocation.SECURITY_ACCESS_A]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        [PrimeLocation.STORAGE_DEPOT_A]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM)
       },
       exits: {
         'Mines Elite Research': () => true,
+        'Mines Ore Processing': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
         'Tallon South Lower': () => true
       }
     },
     {
       name: 'Mines Elite Research',
       locations: {
-        [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: () => true,
-        [PrimeLocation.ELITE_RESEARCH_LASER]: () => true
+        [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs()
       },
       exits: {
         'Mines Upper': () => true,
-        'Mines Ore Processing': () => true
+        'Mines Ore Processing': (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs()
       }
     },
     {
       name: 'Mines Ore Processing',
       locations: {
-        [PrimeLocation.STORAGE_DEPOT_B]: () => true
+        [PrimeLocation.STORAGE_DEPOT_B]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canSpider()
       },
       exits: {
-        'Mines Upper': () => true,
-        'Mines Central': () => true
+        'Mines Upper': (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM),
+        'Mines Central': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
         // Don't add Elite Research unless trick is enabled
       }
     },
     {
       name: 'Mines Central',
       locations: {
-        [PrimeLocation.ELITE_CONTROL_ACCESS]: () => true,
-        [PrimeLocation.PHAZON_PROCESSING_CENTER]: () => true
+        [PrimeLocation.ELITE_CONTROL_ACCESS]: (items: PrimeItemCollection) => items.hasMissiles(),
+        [PrimeLocation.PHAZON_PROCESSING_CENTER]: (items: PrimeItemCollection) => items.canSpider() && items.canLayPowerBombs()
       },
       exits: {
         'Mines Ore Processing': () => true,
         'Mines Lower': () => true,
-        'Magmoor Second Half': () => true
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider()
         // Don't add Mines Depths as the exit is initially locked
       }
     },
     {
       name: 'Mines Lower',
       locations: {
-        [PrimeLocation.VENTILATION_SHAFT]: () => true,
-        [PrimeLocation.CENTRAL_DYNAMO]: () => true,
-        [PrimeLocation.METROID_QUARANTINE_A]: () => true
+        [PrimeLocation.VENTILATION_SHAFT]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        [PrimeLocation.CENTRAL_DYNAMO]: (items: PrimeItemCollection) => items.canLayBombs(),
+        [PrimeLocation.METROID_QUARANTINE_A]: (items: PrimeItemCollection) => items.canSpider() && items.canLayPowerBombs() && items.has(PrimeItem.XRAY_VISOR)
       },
       exits: {
-        'Mines Central': () => true,
-        'Mines Depths': () => true
+        'Mines Central': (items: PrimeItemCollection) => items.canBoost(),
+        'Mines Depths': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
       }
     },
     {
       name: 'Mines Depths',
       locations: {
         [PrimeLocation.FUNGAL_HALL_ACCESS]: () => true,
-        [PrimeLocation.METROID_QUARANTINE_B]: () => true,
-        [PrimeLocation.PHAZON_MINING_TUNNEL]: () => true,
-        [PrimeLocation.FUNGAL_HALL_B]: () => true,
-        [PrimeLocation.ELITE_QUARTERS]: () => true,
-        [PrimeLocation.PROCESSING_CENTER_ACCESS]: () => true
+        [PrimeLocation.PHAZON_MINING_TUNNEL]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.PHAZON_SUIT),
+        [PrimeLocation.FUNGAL_HALL_B]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.canLayBombs(),
+        [PrimeLocation.METROID_QUARANTINE_B]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.canSpider()
+          && items.canFireSuperMissiles(),
+        [PrimeLocation.ELITE_QUARTERS]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR),
+        [PrimeLocation.PROCESSING_CENTER_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR)
       },
       exits: {
         'Mines Lower': () => true,
-        'Mines Central': () => true
+        'Mines Central': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR)
       }
     }
   ];
