@@ -36,7 +36,6 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana Chozo Ice Temple',
       locations: {
         [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => true,
-        [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection) => true
       },
       exits: {
         'Phendrana Chapel of the Elders': (items: PrimeItemCollection) => items.canLayBombs(),

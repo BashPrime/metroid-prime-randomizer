@@ -119,4 +119,24 @@ export class World {
 
     return this.cachedVisitedRegions[destination.getName()];
   }
+
+  getFillableLocations(items: ItemCollection, forceSearch?: boolean): LocationCollection {
+    let locations: Location[] = [];
+
+    if (forceSearch || Object.keys(this.cachedVisitedRegions).length === 0) {
+      this.searchRegions(items);
+    }
+
+    const visitedRegions = Object.keys(this.cachedVisitedRegions).filter(key => this.cachedVisitedRegions[key] === true);
+
+    for (const key of visitedRegions) {
+      const fillableLocations = this.getRegionByKey(key).getLocations().getLocationsArray().filter(location =>
+        location.canFill(items, this.settings, true)
+      );
+
+      locations = locations.concat(fillableLocations);
+    }
+
+    return new LocationCollection(locations);
+  }
 }
