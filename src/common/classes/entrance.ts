@@ -70,6 +70,6 @@ export class Entrance {
   }
 
   canReach(items: ItemCollection, settings: RandomizerSettings, noParent: boolean = false): boolean {
-    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items, settings));
+    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items));
   }
 }
