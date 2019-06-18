@@ -73,4 +73,12 @@ export class PrimeWorld extends World {
 
     this.setRegions(new RegionCollection(regions));
   }
+
+  getSettings(): PrimeRandomizerSettings {
+    return this.settings;
+  }
+
+  setSettings(settings: PrimeRandomizerSettings) {
+    this.settings = settings;
+  }
 }

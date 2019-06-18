@@ -4,9 +4,11 @@ import { RandomizerSettings } from './randomizerSettings';
 import { RegionCollection } from './regionCollection';
 import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
+import { MersenneTwister } from '../mersenneTwister';
 
 export class World {
   protected settings: RandomizerSettings;
+  protected rng: MersenneTwister;
   protected regions: RegionCollection;
   protected cachedLocations: LocationCollection;
   protected rootRegion: Region;
@@ -34,6 +36,14 @@ export class World {
 
   setSettings(settings: RandomizerSettings) {
     this.settings = settings;
+  }
+
+  getRng(): MersenneTwister {
+    return this.rng;
+  }
+
+  setRng(rng: MersenneTwister) {
+    this.rng = rng;
   }
 
   getRootRegion(): Region {
