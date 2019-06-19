@@ -1,17 +1,23 @@
 import { PrimeItem } from '../../enums/primeItem';
+import { Item } from '../item';
 import { primeItems } from './items';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { PrimeWorld } from './world';
 import { randomArray } from '../../utilities';
+import { PrimeItemCollection } from './itemCollection';
 
+export type ItemPool = Item[];
 type ItemMap = { [key: string]: number };
-type ItemPool = string[];
+type ItemsObject = {
+  pool: ItemPool,
+  placedItems: { [key: string]: string };
+}
 
 function mapToItemPool(map: ItemMap): ItemPool {
   const pool = [];
 
   for (const key of Object.keys(map)) {
-    pool.push(...Array(map[key]).fill(key));
+    pool.push(...Array(map[key]).fill(primeItems[key]));
   }
 
   return pool;
@@ -19,6 +25,7 @@ function mapToItemPool(map: ItemMap): ItemPool {
 
 const alwaysItems: ItemPool = mapToItemPool({
   [PrimeItem.MISSILE_LAUNCHER]: 1,
+  [PrimeItem.MISSILE_EXPANSION]: 7,
   [PrimeItem.MORPH_BALL]: 1,
   [PrimeItem.MORPH_BALL_BOMB]: 1,
   [PrimeItem.BOOST_BALL]: 1,
@@ -41,10 +48,10 @@ const alwaysItems: ItemPool = mapToItemPool({
 
 const junkItemsBase: ItemPool = mapToItemPool({
   [PrimeItem.ENERGY_TANK]: 14,
-  [PrimeItem.MISSILE_EXPANSION]: 49
+  [PrimeItem.MISSILE_EXPANSION]: 42
 });
 
-const artifactNamesBase: ItemPool = mapToItemPool({
+const artifactsBase: ItemPool = mapToItemPool({
   [PrimeItem.ARTIFACT_OF_TRUTH]: 1,
   [PrimeItem.ARTIFACT_OF_STRENGTH]: 1,
   [PrimeItem.ARTIFACT_OF_ELDER]: 1,
@@ -66,40 +73,65 @@ const bossLocationNames: PrimeLocation[] = [
 ];
 
 export function generateItemPool(world: PrimeWorld): void {
-  // stub for now
+  const corePoolObj = getPoolCore(world);
+  const pool = new PrimeItemCollection(corePoolObj.pool);
+  const placedItems = corePoolObj.placedItems;
+
+  world.setItemPool(pool);
+
+  // Place items in the world, and lock their given locations
+  for (const key of Object.keys(placedItems)) {
+    const location = world.getLocationByKey(key);
+    const itemKey = placedItems[key];
+    const item = primeItems[itemKey];
+
+    location.setItem(item);
+    location.setLocked(true);
+  }
 }
 
 
-function getPoolCore(world: PrimeWorld) {
-  // Stub for now
-}
-
-function getArtifactPool(world: PrimeWorld): ItemPool {
+function getPoolCore(world: PrimeWorld): ItemsObject {
   const settings = world.getSettings();
   const rng = world.getRng();
 
-  if (settings.goal === 'Artifact Collection') {
-    if (settings.goalArtifacts < 12) {
-      // Get random subset of artifacts
-      return randomArray(artifactNamesBase, settings.goalArtifacts, rng);
-    }
+  const pool = [];
+  const placedItems = {};
 
-    return artifactNamesBase;
-  } else if (settings.goal === 'All Bosses') {
-    // Fill boss locations with artifacts and return empty array
-    fillAllBossesWithArtifacts(world);
+  pool.push(...alwaysItems);
+  pool.push(...junkItemsBase);
+
+  // Handle artifacts for item pool
+  switch (settings.goal) {
+    case 'artifact-collection': {
+      // Get random subset of artifacts, replace missing with missile expansions
+      if (settings.goalArtifacts < 12) {
+        pool.push(...randomArray(artifactsBase, settings.goalArtifacts, rng));
+        pool.push(...mapToItemPool({
+          [PrimeItem.MISSILE_EXPANSION]: 12 - settings.goalArtifacts
+        }));
+      }
+      // All 12 artifacts are used
+      else {
+        pool.push(...artifactsBase);
+      }
+      break;
+    }
+    case 'all-bosses': {
+      // Fill boss locations with artifacts
+      const artifacts = randomArray(artifactsBase, bossLocationNames.length, rng);
+      bossLocationNames.forEach((location, index) => {
+        placedItems[location] = artifacts[index];
+      });
+      break;
+    }
+    case 'always-open': {
+      // Replace all artifacts with missile expansions
+      pool.push(...mapToItemPool({
+        [PrimeItem.MISSILE_EXPANSION]: 12
+      }));
+    }
   }
 
-  // This is also a catch all for Always Open
-  return [];
-}
-
-function fillAllBossesWithArtifacts(world: PrimeWorld): void {
-  const bossLocations = bossLocationNames.map(locationName => world.getLocationByKey(locationName));
-  const rng = world.getRng();
-  const artifacts = randomArray(artifactNamesBase, bossLocationNames.length, rng).map(artifactName => primeItems[artifactName] );
-
-  bossLocations.forEach((location, index) => {
-    location.setItem(artifacts[index]);
-  });
+  return { pool: pool, placedItems: placedItems };
 }
