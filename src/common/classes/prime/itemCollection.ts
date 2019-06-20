@@ -9,9 +9,9 @@ export class PrimeItemCollection extends ItemCollection {
   }
 
   hasMissileCount(count: number) {
-    return this.getItemsArray().filter(item => {
+    return this.filter(item => {
       return item.getName() === PrimeItem.MISSILE_EXPANSION || item.getName() === PrimeItem.MISSILE_LAUNCHER
-    }).length >= count;
+    }).size() >= count;
   }
 
   canLayBombs(): boolean {

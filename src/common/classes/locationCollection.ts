@@ -1,44 +1,42 @@
 import { Location } from './location';
 import { ItemCollection } from './itemCollection';
+import { Collection } from './collection';
 
-export class LocationCollection {
-  private locations: Location[] = [];
+export class LocationCollection extends Collection<Location> {
+  protected items: Location[] = [];
 
   constructor(locations: Location[]) {
-    this.locations = locations;
+    super();
+    this.items = locations;
   }
 
-  getLocationsArray(): Location[] {
-    return this.locations;
+  filter(fn): LocationCollection {
+    return new LocationCollection(this.items.filter(fn));
   }
 
   getLocationByKey(key: string): Location {
-    return this.locations.find(location => location.getName() === key);
-  }
-
-  size(): number {
-    return this.locations.length;
+    return this.items.find(location => location.getName() === key);
   }
 
   getEmptyLocations(): Location[] {
-    return this.locations.filter(location => !location.hasItem());
+    return this.items.filter(location => !location.hasItem());
   }
 
-  has(locationKey: string): boolean {
-    return this.locations.map(location => location.getName()).includes(locationKey);
+  has(key: string): boolean {
+    return this.items.map(location => location.getName()).includes(key);
   }
 
   diff(otherLocations: LocationCollection): LocationCollection {
-    return new LocationCollection(this.locations.filter(item => !otherLocations.has(item.getName())));
+    return this.filter(item => !otherLocations.has(item.getName()));
   }
 
   merge(otherLocations: LocationCollection): LocationCollection {
-    return new LocationCollection(this.locations.concat(otherLocations.getLocationsArray()));
+    return new LocationCollection(this.items.concat(otherLocations.toArray()));
   }
 
   getItems(): ItemCollection {
     return new ItemCollection(
-      this.locations.filter(location => location.hasItem())
+      this.items.filter(location => location.hasItem())
       .map(location => location.getItem())
     );
   }

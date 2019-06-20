@@ -8,6 +8,6 @@ describe('PrimeRandomizer', () => {
     const settings = new PrimeRandomizerSettings({});
     const world = generateWorld(settings);
 
-    expect(world.getItemPool().getItemsArray()).to.have.lengthOf.above(0);
+    expect(world.getItemPool().size()).to.be.above(0);
   });
 });
