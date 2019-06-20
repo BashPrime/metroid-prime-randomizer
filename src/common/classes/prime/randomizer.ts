@@ -1,20 +1,19 @@
-import { Randomizer } from '../randomizer';
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { PrimeWorld } from './world';
+import { generateItemPool } from './itemPool';
 import { setEntrances } from '../entranceShuffle';
 
-export class PrimeRandomizer extends Randomizer {
-  runRandomizer() {};
+export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
+  const world = new PrimeWorld(settings);
 
-  generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
-    const world = new PrimeWorld(settings);
+  // Set up Prime world regions
+  world.loadRegions();
 
-    // Set up Prime world regions
-    world.loadRegions();
+  // Generate item pool based on settings and set in world
+  generateItemPool(world);
 
-    // Pass world into entrance shuffle class, using settings to determine entrance shuffle
-    setEntrances(world);
+  // Pass world into entrance shuffle class, using settings to determine entrance shuffle
+  setEntrances(world);
 
-    return world;
-  }
+  return world;
 }
