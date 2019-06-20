@@ -10,6 +10,7 @@ export class World {
   protected settings: RandomizerSettings;
   protected rng: MersenneTwister;
   protected regions: RegionCollection;
+  protected itemPool: ItemCollection;
   protected cachedLocations: LocationCollection;
   protected rootRegion: Region;
   protected cachedVisitedRegions: { [key: string]: boolean } = {};
@@ -36,6 +37,14 @@ export class World {
 
   setSettings(settings: RandomizerSettings) {
     this.settings = settings;
+  }
+
+  getItemPool(): ItemCollection {
+    return this.itemPool;
+  }
+
+  setItemPool(itemPool: ItemCollection) {
+    this.itemPool = itemPool;
   }
 
   getRng(): MersenneTwister {

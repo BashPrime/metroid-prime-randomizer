@@ -12,6 +12,8 @@ export class Location {
   private parentRegion: Region;
   private item: Item;
   private enabled: boolean = true;
+  private locked: boolean = false;
+
   itemRule: (items: ItemCollection, settings: RandomizerSettings) => boolean;
 
   constructor(name: string) {
@@ -52,6 +54,14 @@ export class Location {
 
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
+  }
+
+  isLocked(): boolean {
+    return this.locked;
+  }
+
+  setLocked(locked: boolean) {
+    this.locked = locked;
   }
 
   canFill(items: ItemCollection, settings: RandomizerSettings, noParent?: boolean): boolean {
