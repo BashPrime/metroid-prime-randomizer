@@ -26,7 +26,7 @@ export function randomArray<T>(arr: T[], size: number, rng: MersenneTwister): T[
     return null;
   }
 
-  const oldItems = this.toArray();
+  const oldItems = arr;
   let newItems = [];
 
   while (size-- > 0 && oldItems.length > 0) {

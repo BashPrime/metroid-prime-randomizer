@@ -67,8 +67,8 @@ export class World {
     if (!this.cachedLocations) {
       let locations: Location[] = [];
 
-      for (const region of this.regions.getRegionsArray()) {
-        locations = locations.concat(region.getLocations().getLocationsArray());
+      for (const region of this.regions.toArray()) {
+        locations.push(...region.getLocations().toArray());
       }
 
       this.cachedLocations = new LocationCollection(locations);
@@ -82,7 +82,7 @@ export class World {
   }
 
   initializeEntrances(): void {
-    for (const region of this.getRegions().getRegionsArray()) {
+    for (const region of this.getRegions().toArray()) {
       for (const exit of region.getExits()) {
         exit.connect(this.getRegions().getRegionByKey(exit.getConnectedRegionKey()));
       }
@@ -92,7 +92,7 @@ export class World {
   searchRegions(items: ItemCollection): void {
     this.cachedVisitedRegions = {};
     // Mark all regions as not visited by default (false)
-    for (const region of this.getRegions().getRegionsArray()) {
+    for (const region of this.getRegions().toArray()) {
       this.cachedVisitedRegions[region.getName()] = false;
     }
 
@@ -149,7 +149,7 @@ export class World {
     const visitedRegions = Object.keys(this.cachedVisitedRegions).filter(key => this.cachedVisitedRegions[key] === true);
 
     for (const key of visitedRegions) {
-      const fillableLocations = this.getRegionByKey(key).getLocations().getLocationsArray().filter(location =>
+      const fillableLocations = this.getRegionByKey(key).getLocations().toArray().filter(location =>
         location.canFill(items, this.settings, true)
       );
 

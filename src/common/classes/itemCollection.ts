@@ -1,5 +1,7 @@
 import { Item } from './item';
 import { Collection } from './collection';
+import { MersenneTwister } from '../mersenneTwister';
+import { randomArray } from '../utilities';
 
 export class ItemCollection extends Collection<Item> {
   protected items: Item[];
@@ -11,6 +13,21 @@ export class ItemCollection extends Collection<Item> {
 
   filter(fn): ItemCollection {
     return new ItemCollection(this.items.filter(fn));
+  }
+
+  shuffle(rng: MersenneTwister): ItemCollection {
+    return new ItemCollection(randomArray(this.items, this.items.length, rng));
+  }
+
+  remove(element: Item): Item {
+    const firstIndex = this.items.findIndex(item => item.getName() === element.getName());
+
+    if (firstIndex > -1) {
+      this.items.splice(firstIndex, 1);
+      return element;
+    }
+
+    return null;
   }
 
   has(key: string): boolean {

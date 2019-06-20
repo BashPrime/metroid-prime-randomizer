@@ -1,6 +1,8 @@
 import { Location } from './location';
 import { ItemCollection } from './itemCollection';
 import { Collection } from './collection';
+import { MersenneTwister } from '../mersenneTwister';
+import { randomArray } from '../utilities';
 
 export class LocationCollection extends Collection<Location> {
   protected items: Location[] = [];
@@ -12,6 +14,21 @@ export class LocationCollection extends Collection<Location> {
 
   filter(fn): LocationCollection {
     return new LocationCollection(this.items.filter(fn));
+  }
+
+  shuffle(rng: MersenneTwister): LocationCollection {
+    return new LocationCollection(randomArray(this.items, this.items.length, rng));
+  }
+
+  remove(element: Location): Location {
+    const firstIndex = this.items.findIndex(item => item.getName() === element.getName());
+
+    if (firstIndex > -1) {
+      this.items.splice(firstIndex, 1);
+      return element;
+    }
+
+    return null;
   }
 
   getLocationByKey(key: string): Location {
