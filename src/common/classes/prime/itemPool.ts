@@ -1,6 +1,6 @@
 import { PrimeItem } from '../../enums/primeItem';
 import { Item } from '../item';
-import { primeItems } from './items';
+import { primeItems, ItemPriority } from './items';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { PrimeWorld } from './world';
 import { randomArray } from '../../utilities';
@@ -13,11 +13,16 @@ type ItemsObject = {
   placedItems: { [key: string]: string };
 }
 
-function mapToItemPool(map: ItemMap): ItemPool {
+function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
   const pool = [];
 
   for (const key of Object.keys(map)) {
-    pool.push(...Array(map[key]).fill(primeItems[key]));
+    const item = primeItems[key];
+    if (priority) {
+      item.setPriority(priority);
+    }
+
+    pool.push(...Array(map[key]).fill(item));
   }
 
   return pool;
@@ -44,12 +49,12 @@ const alwaysItems: ItemPool = mapToItemPool({
   [PrimeItem.XRAY_VISOR]: 1,
   [PrimeItem.SPACE_JUMP_BOOTS]: 1,
   [PrimeItem.GRAPPLE_BEAM]: 1
-});
+}, ItemPriority.PROGRESSION);
 
 const junkItemsBase: ItemPool = mapToItemPool({
   [PrimeItem.ENERGY_TANK]: 14,
   [PrimeItem.MISSILE_EXPANSION]: 42
-});
+}, ItemPriority.EXTRA);
 
 const artifactsBase: ItemPool = mapToItemPool({
   [PrimeItem.ARTIFACT_OF_TRUTH]: 1,
@@ -64,7 +69,7 @@ const artifactsBase: ItemPool = mapToItemPool({
   [PrimeItem.ARTIFACT_OF_WORLD]: 1,
   [PrimeItem.ARTIFACT_OF_SPIRIT]: 1,
   [PrimeItem.ARTIFACT_OF_NEWBORN]: 1
-});
+}, ItemPriority.EXTRA);
 
 const bossLocationNames: PrimeLocation[] = [
   PrimeLocation.SUNCHAMBER_FLAAHGRA,

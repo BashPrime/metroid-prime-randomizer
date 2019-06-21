@@ -3,7 +3,6 @@ import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
-import { PrimeRandomizer } from '../randomizer';
 
 export function tallonOverworld(): RegionObject[] {
   const regions: RegionObject[] = [
