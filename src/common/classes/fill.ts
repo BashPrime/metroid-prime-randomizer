@@ -1,23 +1,37 @@
 import { World } from './world';
 import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
+import { Location } from './location';
 
 export function fillRestrictive(world: World, locations: LocationCollection, itemPool: ItemCollection) {
     const rng = world.getRng();
     const settings = world.getSettings();
+    const totalItems = itemPool.size();
+    const totalLocations = locations.size();
 
     while(itemPool.size() > 0 && locations.size() > 0) {
         world.searchRegions(itemPool);
         const itemToPlace = itemPool.pop();
         const shuffledLocations = locations.shuffle(rng);
+        let locationToFill: Location;
 
         for (const location of shuffledLocations.toArray()) {
             if (location.canFill(itemPool, settings)) {
+                locationToFill = location;
                 location.setItem(itemToPlace);
-                shuffledLocations.remove(location);
+                locations.remove(location);
                 break;
             }
         }
+
+        // If we failed to find a suitable location, throw an error, since all items need to be placed
+        if (!locationToFill) {
+          throw new RangeError('Game unbeatable: No more locations to place ' + itemToPlace.getName() + ' (' + locations.size() + '/' + totalLocations + ' locations, ' + itemPool.size() + '/' + totalItems + ' items)');
+        }
+
+        // Place the item in the world and continue
+        locationToFill.setItem(itemToPlace);
+        locations.remove(locationToFill);
     }
 };
 

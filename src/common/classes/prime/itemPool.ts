@@ -30,7 +30,6 @@ function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
 
 const alwaysItems: ItemPool = mapToItemPool({
   [PrimeItem.MISSILE_LAUNCHER]: 1,
-  [PrimeItem.MISSILE_EXPANSION]: 7,
   [PrimeItem.MORPH_BALL]: 1,
   [PrimeItem.MORPH_BALL_BOMB]: 1,
   [PrimeItem.BOOST_BALL]: 1,
@@ -53,7 +52,7 @@ const alwaysItems: ItemPool = mapToItemPool({
 
 const junkItemsBase: ItemPool = mapToItemPool({
   [PrimeItem.ENERGY_TANK]: 14,
-  [PrimeItem.MISSILE_EXPANSION]: 42
+  [PrimeItem.MISSILE_EXPANSION]: 49
 }, ItemPriority.EXTRA);
 
 const artifactsBase: ItemPool = mapToItemPool({
@@ -114,7 +113,7 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
         pool.push(...randomArray(artifactsBase, settings.goalArtifacts, rng));
         pool.push(...mapToItemPool({
           [PrimeItem.MISSILE_EXPANSION]: 12 - settings.goalArtifacts
-        }));
+        }, ItemPriority.EXTRA));
       }
       // All 12 artifacts are used
       else {
@@ -134,7 +133,7 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
       // Replace all artifacts with missile expansions
       pool.push(...mapToItemPool({
         [PrimeItem.MISSILE_EXPANSION]: 12
-      }));
+      }, ItemPriority.EXTRA));
     }
   }
 
