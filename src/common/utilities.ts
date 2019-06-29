@@ -26,7 +26,8 @@ export function randomArray<T>(arr: T[], size: number, rng: MersenneTwister): T[
     return null;
   }
 
-  const oldItems = arr;
+  // Shallow copy array so arr isn't affected
+  const oldItems = [...arr];
   let newItems = [];
 
   while (size-- > 0 && oldItems.length > 0) {
