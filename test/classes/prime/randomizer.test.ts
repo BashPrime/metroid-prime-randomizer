@@ -8,6 +8,8 @@ describe('PrimeRandomizer', () => {
     const settings = new PrimeRandomizerSettings({});
     const world = generateWorld(settings);
 
-    expect(world.getItemPool().size()).to.be.above(0);
+    const placedItemLocations = world.getLocations().toArray().filter(location => location.hasItem());
+
+    expect(placedItemLocations.length).to.equal(100);
   });
 });

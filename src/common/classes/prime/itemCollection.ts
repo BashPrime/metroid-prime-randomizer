@@ -2,8 +2,22 @@ import { ItemCollection } from '../itemCollection';
 import { PrimeItem } from '../../enums/primeItem';
 import { HeatDamagePrevention } from '../../enums/heatDamagePrevention';
 import { PrimeRandomizerSettings } from './randomizerSettings';
+import { MersenneTwister } from '../../mersenneTwister';
+import { randomArray } from '../../utilities';
 
 export class PrimeItemCollection extends ItemCollection {
+  filter(fn): PrimeItemCollection {
+    return new PrimeItemCollection(this.items.filter(fn));
+  }
+
+  shuffle(rng: MersenneTwister): PrimeItemCollection {
+    return new PrimeItemCollection(randomArray(this.items, this.items.length, rng));
+  }
+
+  merge(otherItems: PrimeItemCollection): PrimeItemCollection {
+    return new PrimeItemCollection(this.items.concat(otherItems.toArray()));
+  }
+
   hasMissiles(): boolean {
     return this.has(PrimeItem.MISSILE_LAUNCHER) || this.has(PrimeItem.MISSILE_EXPANSION);
   }
