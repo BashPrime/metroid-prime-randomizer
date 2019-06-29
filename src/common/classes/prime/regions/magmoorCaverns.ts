@@ -39,7 +39,7 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Magmoor First Half': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
-        'Tallon Root Cave': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM)
+        'Magmoor Transport Tallon West': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
@@ -52,6 +52,16 @@ export function magmoorCaverns(): RegionObject[] {
       }
     },
     {
+      name: 'Magmoor Transport Tallon West',
+      locations: {},
+      exits: {
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM),
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          && items.has(PrimeItem.WAVE_BEAM),
+        'Tallon Root Cave': (items: PrimeItemCollection) => true
+      }
+    },
+    {
       name: 'Magmoor Second Half',
       locations: {
         [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
@@ -60,7 +70,7 @@ export function magmoorCaverns(): RegionObject[] {
         'Magmoor Plasma Processing': (items: PrimeItemCollection) =>
           items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
         'Phendrana Transport Magmoor South': () => true,
-        'Tallon Root Cave': () => true,
+        'Magmoor Transport Tallon West': () => true,
         'Mines Central': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
       }
     },

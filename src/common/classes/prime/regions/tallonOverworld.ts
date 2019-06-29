@@ -65,9 +65,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Tallon North': () => true,
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM),
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-          && items.has(PrimeItem.WAVE_BEAM)
+        'Magmoor Transport Tallon West': () => true
       }
     },
     {
