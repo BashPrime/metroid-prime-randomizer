@@ -17,7 +17,7 @@ function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
   const pool = [];
 
   for (const key of Object.keys(map)) {
-    const item = primeItems[key];
+    const item = primeItems[key].copy();
     if (priority) {
       item.setPriority(priority);
     }
@@ -30,6 +30,7 @@ function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
 
 const alwaysItems: ItemPool = mapToItemPool({
   [PrimeItem.MISSILE_LAUNCHER]: 1,
+  [PrimeItem.MISSILE_EXPANSION]: 7,
   [PrimeItem.MORPH_BALL]: 1,
   [PrimeItem.MORPH_BALL_BOMB]: 1,
   [PrimeItem.BOOST_BALL]: 1,
@@ -52,7 +53,7 @@ const alwaysItems: ItemPool = mapToItemPool({
 
 const junkItemsBase: ItemPool = mapToItemPool({
   [PrimeItem.ENERGY_TANK]: 14,
-  [PrimeItem.MISSILE_EXPANSION]: 49
+  [PrimeItem.MISSILE_EXPANSION]: 42
 }, ItemPriority.EXTRA);
 
 const artifactsBase: ItemPool = mapToItemPool({

@@ -29,4 +29,8 @@ export class Item {
   setPriority(priority: number) {
     this.priority = priority;
   }
+
+  copy(): Item {
+    return new Item(this.name, this.type, this.patcherId);
+  }
 }
