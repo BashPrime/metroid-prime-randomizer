@@ -53,7 +53,10 @@ const alwaysItems: ItemPool = mapToItemPool({
 
 const junkItemsBase: ItemPool = mapToItemPool({
   [PrimeItem.ENERGY_TANK]: 14,
-  [PrimeItem.MISSILE_EXPANSION]: 42
+  [PrimeItem.MISSILE_EXPANSION]: 42,
+  [PrimeItem.WAVEBUSTER]: 1,
+  [PrimeItem.ICE_SPREADER]: 1,
+  [PrimeItem.FLAMETHROWER]: 1
 }, ItemPriority.EXTRA);
 
 const artifactsBase: ItemPool = mapToItemPool({
