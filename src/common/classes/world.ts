@@ -158,4 +158,8 @@ export class World {
 
     return new LocationCollection(locations);
   }
+
+  collectItems(collectedItems?: ItemCollection): ItemCollection {
+    return null; //stub
+  }
 }

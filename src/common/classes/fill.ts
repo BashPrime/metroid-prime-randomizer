@@ -2,6 +2,7 @@ import { World } from './world';
 import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
 import { Location } from './location';
+import { PrimeItemCollection } from './prime/itemCollection';
 
 export function fillRestrictive(world: World, locations: LocationCollection, itemPool: ItemCollection) {
   const rng = world.getRng();
@@ -12,14 +13,17 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
   while (itemPool.size() > 0 && locations.size() > 0) {
     // Take next item out of the item pool before searching the world for available locations to ensure completeability
     const itemToPlace = itemPool.pop();
-    world.searchRegions(itemPool);
+    // world.searchRegions(itemPool);
+
+    // Collect available placed items using the current item pool for accurate dependency checking
+    const assumedItems = new PrimeItemCollection(world.collectItems(itemPool).toArray());
 
     // Shuffle locations collection
     const shuffledLocations = locations.shuffle(rng);
     let locationToFill: Location;
 
     for (const location of shuffledLocations.toArray()) {
-      if (location.canFill(itemPool, settings)) {
+      if (location.canFill(assumedItems, settings)) {
         locationToFill = location;
         location.setItem(itemToPlace);
         locations.remove(location);
@@ -29,12 +33,11 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
 
     // If we failed to find a suitable location, throw an error, since all items need to be placed
     if (!locationToFill) {
-      throw new RangeError('Game unbeatable: No more locations to place ' + itemToPlace.getName() + ' (' + locations.size() + '/' + totalLocations + ' locations, ' + itemPool.size() + '/' + totalItems + ' items)');
+      throw new RangeError('Game unbeatable: No more locations to place ' + itemToPlace.getName() + ' (' + itemPool.size() + '/' + totalItems + ' items and ' + locations.size() + '/' + totalLocations + ' locations remaining)');
     }
 
     // Place the item in the world and continue
     locationToFill.setItem(itemToPlace);
-    console.log('Placed ' + locationToFill.getItem().getName() + ' in ' + locationToFill.getName());
     locations.remove(locationToFill);
   }
 };

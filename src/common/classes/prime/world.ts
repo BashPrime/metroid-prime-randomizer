@@ -4,6 +4,7 @@ import { Location } from '../location';
 import { Entrance } from '../entrance';
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { RegionCollection } from '../regionCollection';
+import { PrimeItemCollection } from './itemCollection';
 import { LocationCollection } from '../locationCollection';
 import { root } from './regions/root';
 import { tallonOverworld } from './regions/tallonOverworld';
@@ -11,7 +12,6 @@ import { chozoRuins } from './regions/chozoRuins';
 import { magmoorCaverns } from './regions/magmoorCaverns';
 import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
-
 
 export class PrimeWorld extends World {
   protected settings: PrimeRandomizerSettings;
@@ -80,5 +80,30 @@ export class PrimeWorld extends World {
 
   setSettings(settings: PrimeRandomizerSettings) {
     this.settings = settings;
+  }
+
+  collectItems(collectedItems?: PrimeItemCollection): PrimeItemCollection {
+    let myItems = collectedItems !== undefined ? collectedItems : new PrimeItemCollection([]);
+
+    // Get all available item locations
+    const filledItemLocations = this.getLocations().filter(location => location.hasItem());
+    let newItems = new PrimeItemCollection([]);
+
+    do {
+      // Get reachable regions using current items
+      this.searchRegions(myItems);
+
+      const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
+        return location.canFill(myItems, this.settings);
+      }));
+
+      const foundItems = new PrimeItemCollection(searchLocations.getItems().toArray());
+
+      const precollected = myItems.diff(foundItems);
+      newItems = foundItems.diff(myItems);
+      myItems = foundItems.merge(precollected);
+    } while (newItems.size() > 0);
+
+    return myItems;
   }
 }

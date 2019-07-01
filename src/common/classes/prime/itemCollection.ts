@@ -14,6 +14,10 @@ export class PrimeItemCollection extends ItemCollection {
     return new PrimeItemCollection(randomArray(this.items, this.items.length, rng));
   }
 
+  diff(otherItems: PrimeItemCollection): PrimeItemCollection {
+    return this.filter(item => !otherItems.has(item.getName()));
+  }
+
   merge(otherItems: PrimeItemCollection): PrimeItemCollection {
     return new PrimeItemCollection(this.items.concat(otherItems.toArray()));
   }
