@@ -106,10 +106,10 @@ const settings = [
 
 const tricks = {
   alcoveDash: {
-    name: 'Alcove Dash',
+    name: 'Alcove with No Additional Items',
     tooltip: `
-      It's possible to reach Alcove without any items by either scan dashing off a Red Starburst (1.00 only),
-      or by locking onto a Seedling in Temple Hall, maintaining the lock on, and dashing that way.
+      It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
+      This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
     `
   }
 };
