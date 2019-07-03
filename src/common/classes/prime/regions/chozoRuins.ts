@@ -10,7 +10,10 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo West',
       locations: {
         [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost() || items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
+        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.allowedTricks.mainPlazaGrappleLedgeWithSpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return sjReqs || items.has(PrimeItem.GRAPPLE_BEAM)
+        },
         [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles(),
         [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs(),
@@ -35,15 +38,22 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Tower of Light': (items: PrimeItemCollection) =>
-          items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Chozo Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const accessReqs = settings.allowedTricks.towerOfLightFewerAccessReqs
+            || (items.canLayBombs() && items.canBoost() && items.canSpider());
+          return accessReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        }
       }
     },
     {
       name: 'Chozo Tower of Light',
       locations: {
-        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection) => items.hasMissileCount(8),
-        [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
+        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.allowedTricks.climbTowerOfLightNoMissiles || items.hasMissileCount(8)
+        },
+        [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.allowedTricks.towerChamberNoGravity || items.has(PrimeItem.GRAVITY_SUIT)
+        }
       },
       exits: {
         'Chozo Ruined Shrine': () => true,

@@ -13,9 +13,9 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.ARTIFACT_TEMPLE]: (items: PrimeItemCollection) => items.hasMissiles()
       },
       exits: {
-        'Tallon Alcove': (items: PrimeItemCollection) => {
+        'Tallon Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const normalReqs = items.canBoost() && items.canLayBombs();
-          return normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return settings.allowedTricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tallon Crash Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),

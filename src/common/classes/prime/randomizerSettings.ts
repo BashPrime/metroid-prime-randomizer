@@ -32,8 +32,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   artifactLocationHints: boolean;
   heatDamagePrevention: string;
   suitDamageReduction: string;
-  disabledLocations: DisabledLocationsMap = {};
-  allowedTricks: AllowedTricksMap = {};
+  disabledLocations: DisabledLocationsMap;
+  allowedTricks: AllowedTricksMap;
 
   constructor(args: PrimeRandomizerSettingsArgs) {
     super(args);
@@ -48,6 +48,13 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     for (let setting of defaultSettings) {
       this[setting.name] = setting.default;
     }
+
+    // Handle allowed tricks, disabled locations objects
+    if (!argKeys.includes('allowedTricks'))
+      this.allowedTricks = {};
+    
+    if (!argKeys.includes('disabledLocations'))
+      this.disabledLocations = {};
   }
 }
 
@@ -105,24 +112,45 @@ const settings = [
 ];
 
 const tricks = {
-  alcoveDash: {
+  alcoveNoItems: {
     name: 'Alcove with No Additional Items',
     tooltip: `
       It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
       This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
     `
   },
-  mainPlazaGrappleFewerRequirements: {
-    name: 'Main Plaza (Grapple Ledge) - Fewer Requirements',
+  climbTowerOfLightNoMissiles: {
+    name: 'Climb Tower of Light without Missiles',
     tooltip: `
-      The Grapple Ledge item can be acquired with only Grapple Beam or Space Jump.
+      Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requiement.
+    `
+  },
+  mainPlazaGrappleLedgeWithSpaceJump: {
+    name: 'Main Plaza (Grapple Ledge) with only Space Jump',
+    tooltip: `
+      The Grapple Ledge item can be reached by space jumping from the overhang above the Ruined Shrine door.
+    `
+  },
+  towerChamberNoGravity: {
+    name: 'Tower Chamber without Gravity Suit',
+    tooltip: `
+      Can be reached by slope jumping underwater to the door.
+    `
+  },
+  towerOfLightFewerAccessReqs: {
+    name: 'Tower of Light - Fewer Access Requirements',
+    tooltip: `
+      The door to Tower of Light can be reached with just Space Jump Boots and Wave Beam.
     `
   }
 };
 
 interface AllowedTricksMap {
-  alcoveDash?: boolean;
-  mainPlazaGrappleFewerRequirements?: boolean;
+  alcoveNoItems?: boolean;
+  climbTowerOfLightNoMissiles?: boolean;
+  mainPlazaGrappleLedgeWithSpaceJump?: boolean;
+  towerChamberNoGravity?: boolean;
+  towerOfLightFewerAccessReqs?: boolean;
 };
 
 interface DisabledLocationsMap {
