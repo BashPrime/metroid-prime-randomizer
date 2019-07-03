@@ -52,7 +52,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     // Handle allowed tricks, disabled locations objects
     if (!argKeys.includes('allowedTricks'))
       this.allowedTricks = {};
-    
+
     if (!argKeys.includes('disabledLocations'))
       this.disabledLocations = {};
   }
@@ -122,7 +122,13 @@ const tricks = {
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
     tooltip: `
-      Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requiement.
+      Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.
+    `
+  },
+  crossTwinFiresTunnelWithoutSpider: {
+    name: 'Cross Twin Fires Tunnel without Spider Ball',
+    tooltip: `
+      Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.
     `
   },
   mainPlazaGrappleLedgeWithSpaceJump: {
@@ -148,6 +154,7 @@ const tricks = {
 interface AllowedTricksMap {
   alcoveNoItems?: boolean;
   climbTowerOfLightNoMissiles?: boolean;
+  crossTwinFiresTunnelWithoutSpider?: boolean;
   mainPlazaGrappleLedgeWithSpaceJump?: boolean;
   towerChamberNoGravity?: boolean;
   towerOfLightFewerAccessReqs?: boolean;

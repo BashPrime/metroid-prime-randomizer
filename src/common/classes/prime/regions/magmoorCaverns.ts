@@ -55,10 +55,13 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Magmoor Transport Tallon West',
       locations: {},
       exits: {
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM),
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-          && items.has(PrimeItem.WAVE_BEAM),
-        'Tallon Root Cave': (items: PrimeItemCollection) => true
+        'Magmoor Fiery Shores': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
+          items.hasSuit(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM),
+        'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const accessReqs = settings.allowedTricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
+          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM);
+        },
+        'Tallon Root Cave': () => true
       }
     },
     {
@@ -70,7 +73,7 @@ export function magmoorCaverns(): RegionObject[] {
         'Magmoor Plasma Processing': (items: PrimeItemCollection) =>
           items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
         'Phendrana Transport Magmoor South': () => true,
-        'Magmoor Transport Tallon West': () => true,
+        'Magmoor Transport Tallon West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings),
         'Mines Central': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
       }
     },
