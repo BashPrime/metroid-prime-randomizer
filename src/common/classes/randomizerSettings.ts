@@ -3,15 +3,15 @@ import { Checkbox, SelectOption } from './option';
 export interface RandomizerSettingsArgs {
   spoiler?: boolean;
   goal?: string;
-  disabledLocations?: string[];
-  allowedTricks?: string[];
+  disabledLocations?: object;
+  allowedTricks?: object;
 }
 
 export class RandomizerSettings {
   spoiler: boolean;
   goal: string;
-  disabledLocations: string[];
-  allowedTricks: string[];
+  disabledLocations: object;
+  allowedTricks: object;
 
   constructor(args: RandomizerSettingsArgs) {
     Object.assign(this, args);

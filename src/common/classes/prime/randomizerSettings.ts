@@ -1,6 +1,6 @@
 import { RandomizerSettings, RandomizerSettingsArgs, arrayRangeToObject } from '../randomizerSettings';
 import { Checkbox, SelectOption } from '../option';
-
+import { PrimeLocation } from '../../enums/primeLocation';
 
 interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   spoiler?: boolean;
@@ -18,8 +18,8 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   shuffleBombs?: boolean;
   shuffleCharge?: boolean;
   shuffleSpaceJump?: boolean;
-  disabledLocations?: string[];
-  allowedTricks?: string[];
+  disabledLocations?: DisabledLocationsMap;
+  allowedTricks?: AllowedTricksMap;
 }
 
 export class PrimeRandomizerSettings extends RandomizerSettings {
@@ -32,8 +32,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   artifactLocationHints: boolean;
   heatDamagePrevention: string;
   suitDamageReduction: string;
-  disabledLocations: string[];
-  allowedTricks: string[];
+  disabledLocations: DisabledLocationsMap = {};
+  allowedTricks: AllowedTricksMap = {};
 
   constructor(args: PrimeRandomizerSettingsArgs) {
     super(args);
@@ -111,5 +111,119 @@ const tricks = {
       It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
       This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
     `
+  },
+  mainPlazaGrappleFewerRequirements: {
+    name: 'Main Plaza (Grapple Ledge) - Fewer Requirements',
+    tooltip: `
+      The Grapple Ledge item can be acquired with only Grapple Beam or Space Jump.
+    `
   }
+};
+
+interface AllowedTricksMap {
+  alcoveDash?: boolean;
+  mainPlazaGrappleFewerRequirements?: boolean;
+};
+
+interface DisabledLocationsMap {
+  [PrimeLocation.LANDING_SITE]?: boolean;
+  [PrimeLocation.ALCOVE]?: boolean;
+  [PrimeLocation.FRIGATE_CRASH_SITE]?: boolean;
+  [PrimeLocation.OVERGROWN_CAVERN]?: boolean;
+  [PrimeLocation.ROOT_CAVE]?: boolean;
+  [PrimeLocation.ARTIFACT_TEMPLE]?: boolean;
+  [PrimeLocation.TRANSPORT_TUNNEL_B]?: boolean;
+  [PrimeLocation.ARBOR_CHAMBER]?: boolean;
+  [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]?: boolean;
+  [PrimeLocation.BIOHAZARD_CONTAINMENT]?: boolean;
+  [PrimeLocation.HYDRO_ACCESS_TUNNEL]?: boolean;
+  [PrimeLocation.GREAT_TREE_CHAMBER]?: boolean;
+  [PrimeLocation.LIFE_GROVE_TUNNEL]?: boolean;
+  [PrimeLocation.LIFE_GROVE_START]?: boolean;
+  [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]?: boolean;
+  [PrimeLocation.MAIN_PLAZA_HALF_PIPE]?: boolean;
+  [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]?: boolean;
+  [PrimeLocation.MAIN_PLAZA_TREE]?: boolean;
+  [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]?: boolean;
+  [PrimeLocation.RUINED_FOUNTAIN]?: boolean;
+  [PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE]?: boolean;
+  [PrimeLocation.RUINED_SHRINE_HALF_PIPE]?: boolean;
+  [PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL]?: boolean;
+  [PrimeLocation.VAULT]?: boolean;
+  [PrimeLocation.TRAINING_CHAMBER]?: boolean;
+  [PrimeLocation.RUINED_NURSERY]?: boolean;
+  [PrimeLocation.TRAINING_CHAMBER_ACCESS]?: boolean;
+  [PrimeLocation.MAGMA_POOL]?: boolean;
+  [PrimeLocation.TOWER_OF_LIGHT]?: boolean;
+  [PrimeLocation.TOWER_CHAMBER]?: boolean;
+  [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]?: boolean;
+  [PrimeLocation.RUINED_GALLERY_TUNNEL]?: boolean;
+  [PrimeLocation.TRANSPORT_ACCESS_NORTH]?: boolean;
+  [PrimeLocation.GATHERING_HALL]?: boolean;
+  [PrimeLocation.HIVE_TOTEM]?: boolean;
+  [PrimeLocation.SUNCHAMBER_FLAAHGRA]?: boolean;
+  [PrimeLocation.SUNCHAMBER_GHOSTS]?: boolean;
+  [PrimeLocation.WATERY_HALL_ACCESS]?: boolean;
+  [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]?: boolean;
+  [PrimeLocation.WATERY_HALL_UNDERWATER]?: boolean;
+  [PrimeLocation.DYNAMO_LOWER]?: boolean;
+  [PrimeLocation.DYNAMO_SPIDER_TRACK]?: boolean;
+  [PrimeLocation.BURN_DOME_TUNNEL]?: boolean;
+  [PrimeLocation.BURN_DOME_I_DRONE]?: boolean;
+  [PrimeLocation.FURNACE_SPIDER_TRACKS]?: boolean;
+  [PrimeLocation.FURNACE_TUNNEL]?: boolean;
+  [PrimeLocation.HALL_OF_THE_ELDERS]?: boolean;
+  [PrimeLocation.CROSSWAY]?: boolean;
+  [PrimeLocation.ELDER_CHAMBER]?: boolean;
+  [PrimeLocation.ANTECHAMBER]?: boolean;
+  [PrimeLocation.LAVA_LAKE]?: boolean;
+  [PrimeLocation.TRICLOPS_PIT]?: boolean;
+  [PrimeLocation.STORAGE_CAVERN]?: boolean;
+  [PrimeLocation.TRANSPORT_TUNNEL_A]?: boolean;
+  [PrimeLocation.WARRIOR_SHRINE]?: boolean;
+  [PrimeLocation.SHORE_TUNNEL]?: boolean;
+  [PrimeLocation.FIERY_SHORES_MORPH_TRACK]?: boolean;
+  [PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL]?: boolean;
+  [PrimeLocation.PLASMA_PROCESSING]?: boolean;
+  [PrimeLocation.MAGMOOR_WORKSTATION]?: boolean;
+  [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]?: boolean;
+  [PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK]?: boolean;
+  [PrimeLocation.CHOZO_ICE_TEMPLE]?: boolean;
+  [PrimeLocation.ICE_RUINS_WEST]?: boolean;
+  [PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE]?: boolean;
+  [PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK]?: boolean;
+  [PrimeLocation.CHAPEL_OF_THE_ELDERS]?: boolean;
+  [PrimeLocation.RUINED_COURTYARD]?: boolean;
+  [PrimeLocation.PHENDRANA_CANYON]?: boolean;
+  [PrimeLocation.QUARANTINE_CAVE]?: boolean;
+  [PrimeLocation.RESEARCH_LAB_HYDRA]?: boolean;
+  [PrimeLocation.QUARANTINE_MONITOR]?: boolean;
+  [PrimeLocation.OBSERVATORY]?: boolean;
+  [PrimeLocation.TRANSPORT_ACCESS]?: boolean;
+  [PrimeLocation.CONTROL_TOWER]?: boolean;
+  [PrimeLocation.RESEARCH_CORE]?: boolean;
+  [PrimeLocation.FROST_CAVE]?: boolean;
+  [PrimeLocation.RESEARCH_LAB_AETHER_TANK]?: boolean;
+  [PrimeLocation.RESEARCH_LAB_AETHER_MORPH_TRACK]?: boolean;
+  [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]?: boolean;
+  [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]?: boolean;
+  [PrimeLocation.STORAGE_CAVE]?: boolean;
+  [PrimeLocation.SECURITY_CAVE]?: boolean;
+  [PrimeLocation.MAIN_QUARRY]?: boolean;
+  [PrimeLocation.SECURITY_ACCESS_A]?: boolean;
+  [PrimeLocation.STORAGE_DEPOT_B]?: boolean;
+  [PrimeLocation.STORAGE_DEPOT_A]?: boolean;
+  [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]?: boolean;
+  [PrimeLocation.ELITE_RESEARCH_LASER]?: boolean;
+  [PrimeLocation.ELITE_CONTROL_ACCESS]?: boolean;
+  [PrimeLocation.VENTILATION_SHAFT]?: boolean;
+  [PrimeLocation.PHAZON_PROCESSING_CENTER]?: boolean;
+  [PrimeLocation.PROCESSING_CENTER_ACCESS]?: boolean;
+  [PrimeLocation.ELITE_QUARTERS]?: boolean;
+  [PrimeLocation.CENTRAL_DYNAMO]?: boolean;
+  [PrimeLocation.METROID_QUARANTINE_B]?: boolean;
+  [PrimeLocation.METROID_QUARANTINE_A]?: boolean;
+  [PrimeLocation.FUNGAL_HALL_B]?: boolean;
+  [PrimeLocation.PHAZON_MINING_TUNNEL]?: boolean;
+  [PrimeLocation.FUNGAL_HALL_ACCESS]?: boolean;
 };
