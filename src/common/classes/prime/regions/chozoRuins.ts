@@ -39,13 +39,17 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo Ruined Shrine',
       locations: {
         [PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE]: () => true,
-        [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost(),
+        [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.allowedTricks.upperRuinedShrineTowerOfLightFewerAccessReqs
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.MORPH_BALL);
+          return sjReqs || items.canBoost();
+        },
         [PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
         'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         'Chozo Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.allowedTricks.towerOfLightFewerAccessReqs
+          const accessReqs = settings.allowedTricks.upperRuinedShrineTowerOfLightFewerAccessReqs
             || (items.canLayBombs() && items.canBoost() && items.canSpider());
           return accessReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         }

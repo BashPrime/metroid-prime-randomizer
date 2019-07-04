@@ -143,10 +143,10 @@ const tricks = {
       Can be reached by slope jumping underwater to the door.
     `
   },
-  towerOfLightFewerAccessReqs: {
-    name: 'Tower of Light - Fewer Access Requirements',
+  upperRuinedShrineTowerOfLightFewerAccessReqs: {
+    name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
     tooltip: `
-      The door to Tower of Light can be reached with just Space Jump Boots and Wave Beam.
+      Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
     `
   }
 };
@@ -157,7 +157,7 @@ interface AllowedTricksMap {
   crossTwinFiresTunnelWithoutSpider?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
   towerChamberNoGravity?: boolean;
-  towerOfLightFewerAccessReqs?: boolean;
+  upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
 };
 
 interface DisabledLocationsMap {
