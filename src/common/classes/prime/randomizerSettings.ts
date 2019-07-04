@@ -131,10 +131,10 @@ const tricks = {
       Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.
     `
   },
-  mainPlazaGrappleLedgeWithSpaceJump: {
-    name: 'Main Plaza (Grapple Ledge) with only Space Jump',
+  mainPlazaItemsOnlySpaceJump: {
+    name: 'Main Plaza Items with only Space Jump',
     tooltip: `
-      The Grapple Ledge item can be reached by space jumping from the overhang above the Ruined Shrine door.
+      The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.
     `
   },
   towerChamberNoGravity: {
@@ -155,7 +155,7 @@ interface AllowedTricksMap {
   alcoveNoItems?: boolean;
   climbTowerOfLightNoMissiles?: boolean;
   crossTwinFiresTunnelWithoutSpider?: boolean;
-  mainPlazaGrappleLedgeWithSpaceJump?: boolean;
+  mainPlazaItemsOnlySpaceJump?: boolean;
   towerChamberNoGravity?: boolean;
   towerOfLightFewerAccessReqs?: boolean;
 };

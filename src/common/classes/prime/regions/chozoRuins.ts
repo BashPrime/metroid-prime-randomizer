@@ -9,13 +9,19 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Chozo West',
       locations: {
-        [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost() || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return sjReqs || items.canBoost();
+        },
         [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.allowedTricks.mainPlazaGrappleLedgeWithSpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           return sjReqs || items.has(PrimeItem.GRAPPLE_BEAM)
         },
         [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles(),
-        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
+        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return sjReqs || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
+        },
         [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles(),
         [PrimeLocation.RUINED_GALLERY_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs(),
