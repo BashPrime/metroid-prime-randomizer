@@ -121,7 +121,7 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       },
       exits: {
-        'Phendrana Transport Magmoor South': () => true,
+        'Phendrana Transport Magmoor South': (items: PrimeItemCollection) => items.canLayBombs(),
         'Phendrana Labs Second Half': () => true
       }
     }

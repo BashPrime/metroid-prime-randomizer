@@ -31,7 +31,10 @@ export function magmoorCaverns(): RegionObject[] {
           return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
-        'Phendrana Shorelines': (items: PrimeItemCollection) => items.canLayBombs()
+        'Phendrana Shorelines': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
+          return canBoost || items.canLayBombs();
+        }
       }
     },
     {

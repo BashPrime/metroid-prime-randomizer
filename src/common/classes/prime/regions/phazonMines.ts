@@ -9,7 +9,11 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Mines Upper',
       locations: {
-        [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.THERMAL_VISOR),
+        [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = settings.allowedTricks.mainQuarryItemWithoutSpider || items.canSpider();
+          const thermalReqs = settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return spiderReqs && thermalReqs;
+        },
         [PrimeLocation.SECURITY_ACCESS_A]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
         [PrimeLocation.STORAGE_DEPOT_A]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM)
       },
@@ -59,11 +63,17 @@ export function phazonMines(): RegionObject[] {
       locations: {
         [PrimeLocation.VENTILATION_SHAFT]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
         [PrimeLocation.CENTRAL_DYNAMO]: (items: PrimeItemCollection) => items.canLayBombs(),
-        [PrimeLocation.METROID_QUARANTINE_A]: (items: PrimeItemCollection) => items.canSpider() && items.canLayPowerBombs() && items.has(PrimeItem.XRAY_VISOR)
+        [PrimeLocation.METROID_QUARANTINE_A]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return items.canSpider() && items.canLayPowerBombs() && xrayReqs;
+        }
       },
       exits: {
         'Mines Central': (items: PrimeItemCollection) => items.canBoost(),
-        'Mines Depths': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.PLASMA_BEAM)
+        'Mines Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return items.canSpider() && xrayReqs && items.has(PrimeItem.PLASMA_BEAM)
+        }
       }
     },
     {

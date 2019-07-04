@@ -119,6 +119,14 @@ const tricks = {
       This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
     `
   },
+  boostThroughBombTunnels: {
+    name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
+    tooltip: `
+      In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
+
+      This trick is difficult and not recommended for beginners.
+    `
+  },
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
     tooltip: `
@@ -160,9 +168,15 @@ const tricks = {
 
 interface AllowedTricksMap {
   alcoveNoItems?: boolean;
+  boostThroughBombTunnels?: boolean;
   climbTowerOfLightNoMissiles?: boolean;
   crossTwinFiresTunnelWithoutSpider?: boolean;
+  furnaceAccessWithoutSpider?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
+  mainQuarryItemWithoutSpider?: boolean;
+  phendranaDepthsGrappleSkips?: boolean;
+  removeThermalReqs?: boolean;
+  removeXrayReqs?: boolean;
   towerChamberNoGravity?: boolean;
   upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
   warriorShrineWithoutBoost?: boolean;
