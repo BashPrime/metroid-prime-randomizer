@@ -148,6 +148,13 @@ const tricks = {
     tooltip: `
       Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
     `
+  },
+  warriorShrineWithoutBoost: {
+    name: 'Warrior Shrine without Boost Ball',
+    tooltip: `
+
+      Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
+    `
   }
 };
 
@@ -158,6 +165,7 @@ interface AllowedTricksMap {
   mainPlazaItemsOnlySpaceJump?: boolean;
   towerChamberNoGravity?: boolean;
   upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
+  warriorShrineWithoutBoost?: boolean;
 };
 
 interface DisabledLocationsMap {

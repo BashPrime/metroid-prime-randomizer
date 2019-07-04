@@ -22,12 +22,14 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.XRAY_VISOR),
         [PrimeLocation.STORAGE_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         [PrimeLocation.TRANSPORT_TUNNEL_A]: (items: PrimeItemCollection) => items.canLayBombs(),
-        [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
       },
       exits: {
         'Magmoor Lava Lake': (items: PrimeItemCollection) => items.canLayBombs(),
-        'Magmoor Shrine Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        'Magmoor Warrior Shrine': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const wsReqs = settings.allowedTricks.warriorShrineWithoutBoost || (items.canBoost() && items.canLayBombs());
+          return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
         'Phendrana Shorelines': (items: PrimeItemCollection) => items.canLayBombs()
       }
@@ -43,12 +45,14 @@ export function magmoorCaverns(): RegionObject[] {
       }
     },
     {
-      name: 'Magmoor Shrine Tunnel',
+      name: 'Magmoor Warrior Shrine',
       locations: {
-        [PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL]: () => true
+        [PrimeLocation.WARRIOR_SHRINE]: () => true,
+        [PrimeLocation.FIERY_SHORES_WARRIOR_SHRINE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs()
       },
       exits: {
-        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs()
+        'Magmoor First Half': () => true,
+        'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs()
       }
     },
     {
