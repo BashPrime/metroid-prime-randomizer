@@ -174,7 +174,9 @@ interface AllowedTricksMap {
   furnaceAccessWithoutSpider?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
   mainQuarryItemWithoutSpider?: boolean;
+  minesSpiderlessShafts?: boolean;
   phendranaDepthsGrappleSkips?: boolean;
+  phendranaDepthsAccessWithoutSpider?: boolean;
   removeThermalReqs?: boolean;
   removeXrayReqs?: boolean;
   towerChamberNoGravity?: boolean;

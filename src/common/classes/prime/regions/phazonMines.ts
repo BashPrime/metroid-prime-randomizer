@@ -54,7 +54,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Mines Ore Processing': () => true,
         'Mines Lower': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canSpider()
+        'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.allowedTricks.minesSpiderlessShafts && items.canLayBombs()) || items.canSpider()
         // Don't add Mines Depths as the exit is initially locked
       }
     },

@@ -90,11 +90,12 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Quarantine Cave',
       locations: {
-        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection) => items.has(PrimeItem.THERMAL_VISOR),
+        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
+          settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
         [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM)
       },
       exits: {
-        'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(),
+        'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(), // to prevent softlocking
         'Phendrana Transport Magmoor South': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
       }
     },
@@ -104,7 +105,10 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Phendrana Depths': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM),
+        'Phendrana Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = (settings.allowedTricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
+          return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+        },
         'Magmoor Second Half': () => true
       }
     },
