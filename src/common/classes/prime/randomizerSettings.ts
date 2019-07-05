@@ -176,6 +176,7 @@ interface AllowedTricksMap {
   fieryShoresAccessWithoutMorphGrapple?: boolean;
   furnaceAccessWithoutSpider?: boolean;
   gravityChamberGrappleLedgeRJump?: boolean;
+  magmaPoolDash?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
   mainQuarryItemWithoutSpider?: boolean;
   minesSpiderlessShafts?: boolean;
@@ -184,10 +185,12 @@ interface AllowedTricksMap {
   plasmaProcessingWithoutGrappleSpider?: boolean;
   removeThermalReqs?: boolean;
   removeXrayReqs?: boolean;
+  ruinedFountainFlaahgraSkip?: boolean;
   quarantineMonitorDash?: boolean;
   towerChamberNoGravity?: boolean;
   upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
   warriorShrineWithoutBoost?: boolean;
+  wateryHallUnderwaterFlaahgraSkip?: boolean;
 };
 
 interface DisabledLocationsMap {

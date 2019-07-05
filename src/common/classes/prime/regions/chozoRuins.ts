@@ -75,13 +75,18 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Chozo Ruined Fountain',
       locations: {
-        [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.canSpider()
+        [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const flaahgraSkipReq = settings.allowedTricks.ruinedFountainFlaahgraSkip || items.canLayBombs();
+          return flaahgraSkipReq && items.canSpider();
+        }
       },
       exits: {
         'Chozo West': () => true,
         'Chozo Central': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Training Area': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          items.hasSuit(settings) && items.has(PrimeItem.GRAPPLE_BEAM)
+        'Chozo Training Area': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.magmaPoolDash || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.hasSuit(settings);
+        }
       }
     },
     {
@@ -102,8 +107,10 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.WATERY_HALL_ACCESS]: () => true,
         [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: () => true,
-        [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection) =>
-          items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const flaahgraSkipReq = settings.allowedTricks.wateryHallUnderwaterFlaahgraSkip || items.canLayBombs();
+          return flaahgraSkipReq && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        },
         [PrimeLocation.GATHERING_HALL]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.FURNACE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
