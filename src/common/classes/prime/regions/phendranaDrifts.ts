@@ -92,7 +92,10 @@ export function phendranaDrifts(): RegionObject[] {
       locations: {
         [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
           settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
-        [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM)
+        [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.quarantineMonitorDash || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.canSpider(); // requiring spider ball for quality of life/softlock protection
+        }
       },
       exits: {
         'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(), // to prevent softlocking
@@ -116,13 +119,23 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana Depths',
       locations: {
         [PrimeLocation.TRANSPORT_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
-        [PrimeLocation.FROST_CAVE]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT),
+        [PrimeLocation.FROST_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.has(PrimeItem.GRAVITY_SUIT);
+        },
         [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]: (items: PrimeItemCollection) => true,
-        [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
-          && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAVITY_SUIT),
-        [PrimeLocation.STORAGE_CAVE]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.GRAPPLE_BEAM)
-          && items.has(PrimeItem.PLASMA_BEAM),
-        [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
+        [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.gravityChamberGrappleLedgeRJump || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+        },
+        [PrimeLocation.STORAGE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM);
+        },
+        [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReq && items.has(PrimeItem.MORPH_BALL);
+        }
       },
       exits: {
         'Phendrana Transport Magmoor South': (items: PrimeItemCollection) => items.canLayBombs(),

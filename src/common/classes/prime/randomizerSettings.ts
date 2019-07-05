@@ -168,10 +168,13 @@ const tricks = {
 
 interface AllowedTricksMap {
   alcoveNoItems?: boolean;
+  arborChamberWithoutPlasma?: boolean;
   boostThroughBombTunnels?: boolean;
   climbTowerOfLightNoMissiles?: boolean;
   crossTwinFiresTunnelWithoutSpider?: boolean;
+  eliteResearchBoostClip?: boolean;
   furnaceAccessWithoutSpider?: boolean;
+  gravityChamberGrappleLedgeRJump?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
   mainQuarryItemWithoutSpider?: boolean;
   minesSpiderlessShafts?: boolean;
@@ -179,6 +182,7 @@ interface AllowedTricksMap {
   phendranaDepthsAccessWithoutSpider?: boolean;
   removeThermalReqs?: boolean;
   removeXrayReqs?: boolean;
+  quarantineMonitorDash?: boolean;
   towerChamberNoGravity?: boolean;
   upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
   warriorShrineWithoutBoost?: boolean;

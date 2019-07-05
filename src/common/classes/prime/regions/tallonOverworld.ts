@@ -64,20 +64,21 @@ export function tallonOverworld(): RegionObject[] {
         },
         [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
         [PrimeLocation.ARBOR_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const plasmaReqs = (settings.allowedTricks.arborChamberWithoutPlasma && items.canLayBombs())
+            || items.has(PrimeItem.PLASMA_BEAM);
           const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && xrayReqs
-            && items.has(PrimeItem.PLASMA_BEAM);
+          return xrayReqs && plasmaReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM);
         }
       },
       exits: {
-        'Tallon North': () => true,
+        'Tallon North': (items: PrimeItemCollection) => items.hasMissiles(),
         'Magmoor Transport Tallon West': () => true
       }
     },
     {
       name: 'Tallon Crashed Frigate',
       locations: {
-        [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: () => true,
+        [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM),
         [PrimeLocation.BIOHAZARD_CONTAINMENT]: (items: PrimeItemCollection) => items.canFireSuperMissiles(),
         [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
       },
