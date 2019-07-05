@@ -173,6 +173,7 @@ interface AllowedTricksMap {
   climbTowerOfLightNoMissiles?: boolean;
   crossTwinFiresTunnelWithoutSpider?: boolean;
   eliteResearchBoostClip?: boolean;
+  fieryShoresAccessWithoutMorphGrapple?: boolean;
   furnaceAccessWithoutSpider?: boolean;
   gravityChamberGrappleLedgeRJump?: boolean;
   mainPlazaItemsOnlySpaceJump?: boolean;
@@ -180,6 +181,7 @@ interface AllowedTricksMap {
   minesSpiderlessShafts?: boolean;
   phendranaDepthsGrappleSkips?: boolean;
   phendranaDepthsAccessWithoutSpider?: boolean;
+  plasmaProcessingWithoutGrappleSpider?: boolean;
   removeThermalReqs?: boolean;
   removeXrayReqs?: boolean;
   quarantineMonitorDash?: boolean;

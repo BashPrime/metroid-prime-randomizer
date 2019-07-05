@@ -62,8 +62,11 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Magmoor Transport Tallon West',
       locations: {},
       exits: {
-        'Magmoor Fiery Shores': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          items.hasSuit(settings) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM),
+        'Magmoor Fiery Shores': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleMorphReq = settings.allowedTricks.fieryShoresAccessWithoutMorphGrapple || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM));
+          return grappleMorphReq && items.hasSuit(settings);
+        },
+
         'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const accessReqs = settings.allowedTricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
           return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM);
@@ -77,8 +80,10 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Magmoor Plasma Processing': (items: PrimeItemCollection) =>
-          items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
+        'Magmoor Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleSpiderReqs = settings.allowedTricks.plasmaProcessingWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
+          return grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM);
+        },
         'Phendrana Transport Magmoor South': () => true,
         'Magmoor Transport Tallon West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings),
         'Mines Central': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
