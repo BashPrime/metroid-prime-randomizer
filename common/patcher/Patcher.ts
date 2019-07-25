@@ -1,6 +1,7 @@
 import { app, ipcMain } from 'electron';
 import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto-js';
 
 import { Utilities } from '../Utilities';
 import { Randomizer } from '../randomizer/Randomizer';
@@ -46,10 +47,12 @@ export class Patcher {
     // Create randomizer object and run based on settings
     const randomizer = new Randomizer(randomizerConfig);
     randomizer.randomize();
+    const layoutDescriptor = randomizer.getWorld().generateLayout();
+    const layoutDescriptorHash = parseInt(crypto.SHA256(layoutDescriptor).toString().substring(0, 10), 16).toString(32).toUpperCase(); // get truncated sha256 hash of descriptor, encoded as base32
 
     const outputPrefix = 'Prime Randomizer';
-    const outputFile = outputPrefix + ' - ' + randomizerConfig.permalink;
-    const outputSpoiler = outputPrefix + ' Spoiler - ' + randomizerConfig.permalink + '.json';
+    const outputFile = outputPrefix + ' - ' + layoutDescriptorHash;
+    const outputSpoiler = outputFile + ' Spoiler.txt';
 
     // If no folder is specified, use default output folder
     if (!randomizerConfig.outputFolder) {
@@ -78,7 +81,6 @@ export class Patcher {
 
     if (randomizerConfig.generateRom) {
       progressBar.text = 'Patching ROM...';
-      const layoutDescriptor = randomizer.getWorld().generateLayout();
       const configObj = {
         input_iso: randomizerConfig.baseIso,
         output_iso: path.join(randomizerConfig.outputFolder, outputFile + '.' + randomizerConfig.fileType),
@@ -91,6 +93,7 @@ export class Patcher {
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
         trilogy_disc_path: randomizerConfig.trilogyIso,
+        main_menu_message: 'Seed hash:\n' + randomizer.getSeedHashNames(true),
         comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink
       };
 
@@ -136,6 +139,7 @@ export class Patcher {
     spoiler.info.version = game.version;
     spoiler.info.permalink = game.permalink;
     spoiler.info.seed = game.seed;
+    spoiler.info.seedHash = randomizer.getSeedHashNames();
 
     // Transform settings object to their long name keys, filter out all non-shared settings, and sort them alphabetically
     spoiler.info.settings = Object.keys(game)
