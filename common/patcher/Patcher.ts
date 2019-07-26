@@ -93,7 +93,7 @@ export class Patcher {
         nonvaria_heat_damage: randomizerConfig.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY,
         staggered_suit_damage: randomizerConfig.suitDamageReduction === SuitDamageReduction.CUMULATIVE,
         trilogy_disc_path: randomizerConfig.trilogyIso,
-        main_menu_message: 'Seed hash:\n' + randomizer.getSeedHashNames(true),
+        main_menu_message: this.getMainMenuOutput(randomizer, randomizerConfig.version),
         comment: 'Metroid Prime Randomizer v' + randomizerConfig.version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + randomizerConfig.permalink
       };
 
@@ -181,5 +181,12 @@ export class Patcher {
         return path.join(this.appRoot, buildPath);
       }
     }
+  }
+
+  private getMainMenuOutput(randomizer: Randomizer, version: string) {
+    const seedHashStr = 'Seed Hash:\n' + randomizer.getSeedHashNames(true);
+    const versionStr = 'Randomizer Version: ' + version;
+
+    return seedHashStr + '\n\n' + versionStr;
   }
 }
