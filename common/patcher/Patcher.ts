@@ -107,7 +107,7 @@ export class Patcher {
             break;
           }
           case 'success': {
-            event.sender.send('patch-success', 'ROM patched successfully.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
+            event.sender.send('patch-success', 'ROM patched and saved to ' + outputFile + '.' + randomizerConfig.fileType +'.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
             break;
           }
           case 'error': {

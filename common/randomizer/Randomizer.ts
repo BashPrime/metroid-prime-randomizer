@@ -49,8 +49,8 @@ export class Randomizer {
       randomizerSuccess = this.fillItems();
     }
 
-    const layoutHash = parseInt(crypto.SHA256(this.getWorld().generateLayout()).toString(), 16);
-    this.seedHashNames = this.generateSeedHashNames(layoutHash);
+    const layoutHashInt = this.getSafeSha256Integer(this.getWorld().generateLayout());
+    this.seedHashNames = this.generateSeedHashNames(layoutHashInt);
   }
 
   private fillItems(): boolean {
