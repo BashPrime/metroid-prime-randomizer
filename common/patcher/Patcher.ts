@@ -123,7 +123,7 @@ export class Patcher {
       });
     } else {
       progressBar.close();
-      event.sender.send('patch-success', 'Spoiler log saved to ' + outputSpoiler + '.' + randomizerConfig.fileType +'.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
+      event.sender.send('patch-success', 'Spoiler log saved to ' + outputSpoiler + '.\n\nIt can be found at ' + randomizerConfig.outputFolder, randomizerConfig.outputFolder);
     }
   }
 
