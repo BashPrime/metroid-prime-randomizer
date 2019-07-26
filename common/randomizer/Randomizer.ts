@@ -14,7 +14,7 @@ import * as crypto from 'crypto-js';
 import { LocationCollection } from './collection/LocationCollection';
 import { ItemCollection } from './collection/ItemCollection';
 import { Goal } from './enums/goal';
-import * as names from './names.json'
+import * as names from './names.json';
 
 export class Randomizer {
   private config: any;
@@ -49,7 +49,8 @@ export class Randomizer {
       randomizerSuccess = this.fillItems();
     }
 
-    this.seedHashNames = this.generateSeedHashNames(this.seed);
+    const layoutHash = parseInt(crypto.SHA256(this.getWorld().generateLayout()).toString(), 16);
+    this.seedHashNames = this.generateSeedHashNames(layoutHash);
   }
 
   private fillItems(): boolean {
@@ -346,9 +347,8 @@ export class Randomizer {
     const rng = new MersenneTwister(seed);
 
     for (let i = 0; i < numNames; i++) {
-      const index = Utilities.getRandomInt(0, names.length, rng);
+      const index = Utilities.getRandomInt(0, names.length - 1, rng);
       seedNames.push(namesArr[index]);
-      namesArr.splice(index, 1);
     }
 
     return seedNames;
