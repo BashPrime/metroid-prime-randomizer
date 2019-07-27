@@ -30,7 +30,7 @@ export class RandomizerService {
     'in lower Phazon Mines.',
     artifactCount: 'Sets the number of Chozo Artifacts for Artifact Collection seeds.',
     artifactLocationHints: `Changes the behavior of the totem scans in the Artifact Temple.
-    
+
     'Show All': All artifact hints are available from the start.
     'No Hints': Removes all artifact hints from the game.
     'Default': Some artifact hints will be available at the start, with more becoming available as you collect artifacts.`,
@@ -47,8 +47,7 @@ export class RandomizerService {
     dashing: 'When strafe dashing left or right while locked on, you can release your lock-on partway through ' +
       'the dash to leap sideways at high speeds. This can be used to get to item locations earlier than intended. ' +
       'All of the common Any%/100% dashes are accounted for, usually to skip Grapple Beam, Boost Ball, and Spider Ball. ' +
-      'The scan dash to Alcove is the only dash you are not expected to also have Space Jump for.\n\n' +
-      'Note that Scan Dashing only works in the NTSC-U 1.00 version of the game.',
+      'The scan dash to Alcove and Frigate Crash Site is the only dash you are not expected to also have Space Jump for.',
     damageBoostLiquids: 'You may need to intentionally take damage moving through lava or acid to reach areas ' +
       'or items early, including accessing Magmoor Caverns without Morph Ball, crossing Magma Pool with ' +
       'Gravity Suit but without Grapple Beam, collecting the Watery Hall (Underwater) item before fighting Flaahgra, ' +
