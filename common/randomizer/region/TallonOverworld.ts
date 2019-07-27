@@ -69,7 +69,7 @@ export class TallonOverworld extends Region {
     this.locations.get(PrimeLocation.FRIGATE_CRASH_SITE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       return items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && (
         settings.dashing // scan dash from the shore
-        || (settings.ghettoJumping && !items.has(PrimeItem.GRAVITY_SUIT)) // ghetto jump underwater
+        || (settings.ghettoJumping && !items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // ghetto jump underwater
         || (items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) // developer intended
       );
     };

@@ -14,6 +14,7 @@ import * as crypto from 'crypto-js';
 import { LocationCollection } from './collection/LocationCollection';
 import { ItemCollection } from './collection/ItemCollection';
 import { Goal } from './enums/goal';
+import * as names from './names.json';
 
 export class Randomizer {
   private config: any;
@@ -21,6 +22,7 @@ export class Randomizer {
   protected world: World;
   protected rng: MersenneTwister;
   private itemPool: Map<string, number>;
+  private seedHashNames: string[];
 
   constructor(config: any) {
     this.config = config;
@@ -46,6 +48,9 @@ export class Randomizer {
 
       randomizerSuccess = this.fillItems();
     }
+
+    const layoutHashInt = this.getSafeSha256Integer(this.getWorld().generateLayout());
+    this.seedHashNames = this.generateSeedHashNames(layoutHashInt);
   }
 
   private fillItems(): boolean {
@@ -184,7 +189,7 @@ export class Randomizer {
     itemPool.set(PrimeItem.ARTIFACT_OF_LIFEGIVER, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_WARRIOR, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_CHOZO, 0);
-    itemPool.set(PrimeItem.ARTIFACT_OF_NATURE,0);
+    itemPool.set(PrimeItem.ARTIFACT_OF_NATURE, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_SUN, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_WORLD, 0);
     itemPool.set(PrimeItem.ARTIFACT_OF_SPIRIT, 0);
@@ -335,6 +340,43 @@ export class Randomizer {
     return tankCount;
   }
 
+  private generateSeedHashNames(seed: number, numNames: number = 4): string[] {
+    // Using 4 words as defult name count
+    const namesArr = JSON.parse(JSON.stringify(names)) as string[];
+    let seedNames = [];
+    const rng = new MersenneTwister(seed);
+
+    for (let i = 0; i < numNames; i++) {
+      const index = Utilities.getRandomInt(0, names.length - 1, rng);
+      seedNames.push(namesArr[index]);
+    }
+
+    return seedNames;
+  }
+
+  getSeedHashNames(asString = false): string[] | string {
+    if (asString) {
+      let names = '';
+      this.seedHashNames.forEach((name, index) => {
+        names += name;
+
+        if (index < this.seedHashNames.length - 1) {
+          // Set a newline after every name in an odd index
+          if (index % 2 !== 0) {
+            names += '\n';
+          }
+          // Else, Add a space
+          else {
+            names += ' ';
+          }
+        }
+      });
+
+      return names;
+    }
+
+    return this.seedHashNames;
+  }
 
   private fillUnshuffledItems(settings: any): void {
     const locations = this.world.getLocationsMap();
@@ -356,7 +398,7 @@ export class Randomizer {
         { location: PrimeLocation.PHAZON_MINING_TUNNEL, artifact: PrimeItem.ARTIFACT_OF_NEWBORN }
       ].filter(artifactLocation => this.itemPool.get(artifactLocation.artifact) > 0);
 
-      for(const artifactLocation of artifactLocations) {
+      for (const artifactLocation of artifactLocations) {
         locations.get(artifactLocation.location).setItem(Item.get(artifactLocation.artifact));
         this.itemPool.set(artifactLocation.artifact, 0);
       }
