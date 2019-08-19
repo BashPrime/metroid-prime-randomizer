@@ -39,6 +39,11 @@ export class TallonOverworld extends Region {
         || (settings.standableTerrain && settings.dbj && items.canLayBombs()) // DBJ off the ship to the ledge
         || (items.canLayBombs() && items.has(PrimeItem.BOOST_BALL)) || items.has(PrimeItem.SPACE_JUMP_BOOTS); // glitchless
     };
+    this.locations.get(PrimeLocation.ALCOVE).canEscape = function (item: Item, items: ItemCollection): boolean {
+      if (item)
+        items = new ItemCollection([...items.toArray(), item]);
+      return (settings.ghettoJumping) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+    };
 
     this.locations.get(PrimeLocation.ARTIFACT_TEMPLE).canFillItem = function (item: Item, items: ItemCollection): boolean {
       // If the seed uses the Always Open goal, do not put a progression item here
