@@ -143,7 +143,9 @@ export class PhendranaDrifts extends Region {
     };
 
     this.locations.get(PrimeLocation.FROST_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
-      return items.hasFarPhendranaAccess(settings) && ((settings.ghettoJumping || !settings.hideItemModels) || items.has(PrimeItem.GRAVITY_SUIT)) && (settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM));
+      const gravitySuitReqs = settings.ghettoJumping || items.has(PrimeItem.GRAVITY_SUIT);
+      const grappleReqs = settings.dashing || items.has(PrimeItem.GRAPPLE_BEAM);
+      return items.hasFarPhendranaAccess(settings) && gravitySuitReqs && grappleReqs;
     };
 
     this.locations.get(PrimeLocation.STORAGE_CAVE).canFillItem = function (item: Item, items: ItemCollection): boolean {
