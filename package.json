@@ -67,6 +67,7 @@
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
     "big-integer": "^1.6.32",
     "bulma": "^0.7.5",
+    "bulmaswatch": "^0.7.5",
     "compare-versions": "^3.4.0",
     "electron": "3.0.10",
     "napi-thread-safe-callback": "^0.0.1",
