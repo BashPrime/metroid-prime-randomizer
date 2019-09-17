@@ -31,10 +31,13 @@
       "name": "Mocha All",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
-        "-r",
+        "--register",
         "ts-node/register",
-        "test/**/*.test.ts"
+        "src/electron/tests/**/*.test.ts"
       ],
+      "env": {
+        "TS_NODE_PROJECT": "src/electron/tsconfig.json"
+      },
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
