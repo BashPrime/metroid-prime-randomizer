@@ -4,7 +4,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
-      "es2015"
+      "es2018"
     ],
     "moduleResolution": "node",
     "newLine": "LF",
@@ -13,8 +13,5 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es5"
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }
