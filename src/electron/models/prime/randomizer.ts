@@ -4,9 +4,13 @@ import { generateItemPool } from './itemPool';
 import { setEntrances } from '../entranceShuffle';
 import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
+import { MersenneTwister } from '../../mersenneTwister';
 
 export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
   const world = new PrimeWorld(settings);
+
+  // Initialize rng based on seed
+  world.setRng(new MersenneTwister(settings.seed));
 
   // Set up Prime world regions
   world.loadRegions();

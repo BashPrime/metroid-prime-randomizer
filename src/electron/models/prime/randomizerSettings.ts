@@ -3,6 +3,7 @@ import { Checkbox, SelectOption } from '../option';
 import { PrimeLocation } from '../../enums/primeLocation';
 
 interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
+  seed?: number;
   spoiler?: boolean;
   skipFrigate?: boolean;
   skipHudPopups?: boolean;
@@ -23,6 +24,7 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
 }
 
 export class PrimeRandomizerSettings extends RandomizerSettings {
+  seed: number;
   spoiler: boolean;
   skipFrigate: boolean;
   skipHudPopups: boolean;

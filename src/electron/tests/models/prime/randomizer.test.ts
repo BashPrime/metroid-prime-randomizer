@@ -5,7 +5,7 @@ import 'mocha';
 
 describe('PrimeRandomizer', () => {
   it('generated world should have an item pool', () => {
-    const settings = new PrimeRandomizerSettings({});
+    const settings = new PrimeRandomizerSettings({seed: 1337});
     const world = generateWorld(settings);
 
     const placedItemLocations = world.getLocations().toArray().filter(location => location.hasItem());

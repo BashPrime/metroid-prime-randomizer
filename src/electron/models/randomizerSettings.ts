@@ -1,6 +1,7 @@
 import { Checkbox, SelectOption } from './option';
 
 export interface RandomizerSettingsArgs {
+  seed?: number;
   spoiler?: boolean;
   goal?: string;
   disabledLocations?: object;
@@ -8,6 +9,7 @@ export interface RandomizerSettingsArgs {
 }
 
 export class RandomizerSettings {
+  seed: number;
   spoiler: boolean;
   goal: string;
   disabledLocations: object;
