@@ -51,7 +51,7 @@
     "randomprime:build": "cargo build --release --manifest-path=./randomprime/Cargo.toml",
     "randomprime:clean": "cargo clean --manifest-path=./randomprime/Cargo.toml",
     "test": "npm run postinstall:web && ng test",
-    "test:electron": "cross-env TS_NODE_PROJECT='src/electron/tsconfig.json' mocha --require ts-node/register src/electron/tests/**/*.test.ts",
+    "test:electron": "mocha --require ts-node/register src/electron/tests/**/*.test.ts",
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "dependencies": {
@@ -94,7 +94,6 @@
     "codelyzer": "^5.0.0",
     "conventional-changelog-cli": "2.0.11",
     "core-js": "~2.5.7",
-    "cross-env": "^5.2.1",
     "electron-builder": "20.36.2",
     "electron-rebuild": "^1.8.1",
     "jasmine-core": "~3.4.0",
