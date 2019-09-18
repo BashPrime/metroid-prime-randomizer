@@ -51,7 +51,7 @@
     "randomprime:build": "cargo build --release --manifest-path=./randomprime/Cargo.toml",
     "randomprime:clean": "cargo clean --manifest-path=./randomprime/Cargo.toml",
     "test": "npm run postinstall:web && ng test",
-    "test:electron": "mocha --require ts-node/register src/electron/tests/**/*.test.ts",
+    "test:electron": "mocha --require ts-node/register test/**/*.test.ts",
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "dependencies": {

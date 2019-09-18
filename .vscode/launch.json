@@ -33,7 +33,7 @@
       "args": [
         "--require",
         "ts-node/register",
-        "src/electron/tests/**/*.test.ts"
+        "test/**/*.test.ts"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
