@@ -1,6 +1,6 @@
-import { magmoorCaverns } from '../../../../models/prime/regions/magmoorCaverns';
-import { PrimeItemCollection } from '../../../../models/prime/itemCollection';
-import { primeItems } from '../../../../models/prime/items';
+import { magmoorCaverns } from '../../../../src/electron/models/prime/regions/magmoorCaverns';
+import { PrimeItemCollection } from '../../../../src/electron/models/prime/itemCollection';
+import { primeItems } from '../../../../src/electron/models/prime/items';
 
 import { expect } from 'chai';
 import 'mocha';

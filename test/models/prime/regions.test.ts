@@ -1,4 +1,4 @@
-// import { primeRegions, tallonOverworld, chozoRuins, magmoorCaverns, phendranaDrifts, phazonMines } from '../../../src/common/classes/prime/regions';
+// import { primeRegions, tallonOverworld, chozoRuins, magmoorCaverns, phendranaDrifts, phazonMines } from '../../../src/electron/models/prime/regions';
 // import { expect } from 'chai';
 // import 'mocha';
 

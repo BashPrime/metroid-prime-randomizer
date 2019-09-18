@@ -1,5 +1,5 @@
-import { Item } from '../../../models/item';
-import { primeItems } from '../../../models/prime/items';
+import { Item } from '../../../src/electron/models/item';
+import { primeItems } from '../../../src/electron/models/prime/items';
 import { expect } from 'chai';
 import 'mocha';
 

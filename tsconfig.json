@@ -15,6 +15,7 @@
     "target": "es5"
   },
   "include": [
-    "src/electron/**/*.ts"
+    "src/electron/**/*.ts",
+    "test/**/*.test.ts"
   ]
 }

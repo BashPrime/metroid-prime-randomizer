@@ -1,4 +1,4 @@
-import { PrimeRandomizerSettings } from '../../../models/prime/randomizerSettings';
+import { PrimeRandomizerSettings } from '../../../src/electron/models/prime/randomizerSettings';
 import { expect } from 'chai';
 import 'mocha';
 

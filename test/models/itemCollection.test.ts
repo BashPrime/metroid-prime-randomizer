@@ -1,6 +1,6 @@
-import { ItemCollection } from '../../models/itemCollection';
-import { primeItems } from '../../models/prime/items';
-import { PrimeItem } from '../../enums/primeItem';
+import { ItemCollection } from '../../src/electron/models/itemCollection';
+import { primeItems } from '../../src/electron/models/prime/items';
+import { PrimeItem } from '../../src/electron/enums/primeItem';
 import { expect } from 'chai';
 import 'mocha';
 

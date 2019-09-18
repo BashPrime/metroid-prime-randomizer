@@ -1,5 +1,5 @@
-import { generateWorld } from '../../../models/prime/randomizer';
-import { PrimeRandomizerSettings } from '../../../models/prime/randomizerSettings';
+import { generateWorld } from '../../../src/electron/models/prime/randomizer';
+import { PrimeRandomizerSettings } from '../../../src/electron/models/prime/randomizerSettings';
 import { expect } from 'chai';
 import 'mocha';
 
