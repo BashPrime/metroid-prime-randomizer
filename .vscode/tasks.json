@@ -6,7 +6,7 @@
     {
       "label": "electron-build",
       "type": "npm",
-      "script": "build:electron"
+      "script": "electron:build"
     }
   ]
 }

@@ -4,32 +4,9 @@
     "output": "release/"
   },
   "files": [
-    "**/*",
-    "!**/*.ts",
-    "!**/*.js.map",
-    "!*.code-workspace",
-    "!*.github/",
-    "!*.vscode/",
-    "!LICENSE",
-    "!README.md",
-    "!package.json",
-    "!package-lock.json",
-    "!src/",
-    "!e2e/",
-    "!hooks/",
-    "!.angular-cli.json",
-    "!.gitmodules",
-    "!binding.gyp",
-    "!_config.yml",
-    "!karma.conf.js",
-    "!postcss.config.js",
-    "!postinstall*.js",
-    "!tsconfig*.json",
-    "!tslint.json",
-    "!bin/",
-    "!build/",
-    "!randomprime/",
-    "!output/"
+    "dist",
+    "build",
+    "!node_modules"
   ],
   "extraFiles": [
     "build/Release/randomprime.node"

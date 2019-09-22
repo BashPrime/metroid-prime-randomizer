@@ -6,9 +6,8 @@ module.exports = {
   entry: './src/electron/main.ts',
   devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
-    devtoolModuleFilenameTemplate: '[absolute-resource-path]'
+    path: path.resolve(__dirname),
+    filename: 'main.js'
   },
   resolve: {
     extensions: ['.ts', '.js']
