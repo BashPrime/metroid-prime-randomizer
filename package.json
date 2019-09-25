@@ -44,11 +44,11 @@
     "electron:linux": "npm run build:prod && electron-builder build --linux",
     "electron:windows": "npm run build:prod && electron-builder build --windows",
     "electron:mac": "npm run build:prod && electron-builder build --mac",
+    "electron:test": "mocha --require ts-node/register test/**/*.test.ts",
     "native:build": "./node_modules/.bin/electron-rebuild",
     "randomprime:build": "cargo build --release --manifest-path=./randomprime/Cargo.toml",
     "randomprime:clean": "cargo clean --manifest-path=./randomprime/Cargo.toml",
     "test": "npm run postinstall:web && ng test",
-    "test:electron": "mocha --require ts-node/register test/**/*.test.ts",
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "dependencies": {
