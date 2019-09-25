@@ -28,7 +28,7 @@
   "main": "main.js",
   "scripts": {
     "preinstall": "npm run randomprime:build",
-    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps",
+    "postinstall": "npm run postinstall:electron && electron-builder install-app-deps && npm run native:build",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
@@ -36,6 +36,7 @@
     "build:dev": "npm run postinstall:electron && npm run electron:build && npm run ng:build",
     "build:prod": "npm run postinstall:electron && npm run electron:build && npm run ng:build:prod",
     "ng:build": "npm run ng:build --prefix src/client",
+    "ng:build:prod": "npm run ng:build:prod --prefix src/client",
     "ng:serve": "npm run ng:serve --prefix src/client",
     "ng:serve:web": "npm run postinstall:web && ng serve -o",
     "electron:build": "webpack --config ./webpack.config.js",

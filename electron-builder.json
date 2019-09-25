@@ -4,12 +4,10 @@
     "output": "release/"
   },
   "files": [
+    "main.js",
     "dist",
-    "build",
+    "build/Release/randomprime.node",
     "!node_modules"
-  ],
-  "extraFiles": [
-    "build/Release/randomprime.node"
   ],
   "win": {
     "icon": "dist",
