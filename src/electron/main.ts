@@ -5,6 +5,7 @@ import * as url from 'url';
 import * as Utilities from './utilities';
 import { defineControllers } from './controllers';
 import { writeSettingsFile } from './controllers/saveSettingsController';
+import { writeSeedHistoryToFile } from './controllers/seedController';
 import * as packageJson from '../../package.json';
 
 let win: Electron.BrowserWindow;
@@ -63,8 +64,9 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
 
-    // Write settings file if changes have been made.
+    // Write settings file, seed history file if changes have been made.
     writeSettingsFile();
+    writeSeedHistoryToFile();
 
     win = null;
   });
