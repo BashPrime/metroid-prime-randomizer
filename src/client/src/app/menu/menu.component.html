@@ -1,0 +1,11 @@
+<section class="section">
+  <div class="container">
+    <aside class="menu">
+      <ul class="menu-list">
+        <li *ngFor="let item of menuItems">
+          <a [routerLink]="item.route" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">{{ item.name }}</a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</section>

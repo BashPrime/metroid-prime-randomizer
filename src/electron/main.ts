@@ -6,7 +6,6 @@ import * as Utilities from './utilities';
 import { defineControllers } from './controllers';
 import { writeSettingsFile } from './controllers/saveSettingsController';
 import { writeSeedHistoryToFile } from './controllers/seedController';
-import * as packageJson from '../../package.json';
 
 let win: Electron.BrowserWindow;
 const serve = Utilities.isServe();
@@ -44,7 +43,7 @@ function createWindow() {
     width: 1024,
     height: 768,
     icon : path.join(__dirname, 'assets/favicon.png'),
-    title: 'Metroid Prime Randomizer ' + packageJson.version
+    title: 'Metroid Prime Randomizer'
   });
 
   if (serve) {

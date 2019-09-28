@@ -2,3 +2,7 @@
 @import '~bulmaswatch/darkly/_variables';
 @import '~bulma/bulma';
 @import '~bulmaswatch/darkly/_overrides';
+
+html {
+  overflow-y: auto;
+}
