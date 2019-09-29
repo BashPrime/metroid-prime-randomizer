@@ -1,9 +1,17 @@
-<h1 class="title is-3">Seed History</h1>
-<p>{{ isLoaded }}</p>
-<div *ngIf="isLoaded then loaded; else loading"></div>
-<ng-template #loaded>
-  <p *ngIf="seedHistory">{{ seedHistory | json }}</p>
-</ng-template>
-<ng-template #loading>
-  <div class="loading-indicator"></div>
-</ng-template>
+<div class="app-wrapper">
+  <div class="section app-content">
+    <div *ngIf="isLoaded then loaded; else loading"></div>
+    <ng-template #loaded>
+      <p *ngIf="seedHistory">{{ seedHistory | json }}</p>
+      <div *ngFor="let seed of seeds" class="seed">
+        <p>{{ seed.seed }}</p>
+        <p>{{ seed.permalink }}</p>
+        <p>{{ seed.seedHash }}</p>
+        <p>{{ seed.date | date }}</p>
+      </div>
+    </ng-template>
+    <ng-template #loading>
+      <div class="loading-indicator"></div>
+    </ng-template>
+  </div>
+</div>

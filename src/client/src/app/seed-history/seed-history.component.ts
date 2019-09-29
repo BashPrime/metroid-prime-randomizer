@@ -9,7 +9,7 @@ import { GeneratedSeed } from '../../../../common/generatedSeed';
 })
 export class SeedHistoryComponent implements OnInit {
   isLoaded = false;
-  seedHistory: GeneratedSeed[];
+  seeds: GeneratedSeed[];
 
   constructor(private changeDetectorRef: ChangeDetectorRef, private seedService: SeedService) {}
 
@@ -18,7 +18,7 @@ export class SeedHistoryComponent implements OnInit {
       if (seedHistory === undefined) {
         this.getSeedHistory();
       } else {
-        this.seedHistory = seedHistory;
+        this.seeds = seedHistory;
         this.isLoaded = true;
         this.changeDetectorRef.detectChanges();
       }

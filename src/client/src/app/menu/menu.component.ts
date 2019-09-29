@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   readonly menuItems = [
-    { name: 'Randomizer', route: '/' },
+    { name: 'Generator', route: '/' },
     { name: 'Seed History', route: '/seed-history' }
   ];
 
