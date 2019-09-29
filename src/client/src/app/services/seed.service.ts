@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { ElectronService } from './electron.service';
 import { GeneratedSeed } from '../../../../common/generatedSeed';
 
@@ -7,16 +7,14 @@ import { GeneratedSeed } from '../../../../common/generatedSeed';
   providedIn: 'root'
 })
 export class SeedService {
-  seedHistory = new BehaviorSubject<GeneratedSeed[]>([]);
-  currentSeed = new BehaviorSubject<GeneratedSeed>(undefined);
+  seedHistory = new BehaviorSubject<GeneratedSeed[]>(undefined);
 
   constructor(private electronService: ElectronService) {
     this.electronService.ipcRenderer.on('getSeedHistoryResponse', (event, seedHistory) => {
-      this.seedHistory.next(seedHistory);
-    });
-
-    this.electronService.ipcRenderer.on('getCurrentSeedResponse', (event, currentSeed) => {
-      this.currentSeed.next(currentSeed);
+      this.seedHistory.next(seedHistory.map(seed => {
+        seed.date = new Date(seed.date);
+        return seed;
+      }));
     });
   }
 

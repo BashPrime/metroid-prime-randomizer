@@ -6,3 +6,16 @@
 html {
   overflow-y: auto;
 }
+
+.loading-indicator {
+  position: relative;
+  pointer-events: none;
+  &:after {
+      @include loader;
+      position: absolute;
+      top: calc(50% - 2.5em);
+      left: calc(50% - 2.5em);
+      width: 5em;
+      height: 5em;
+  }
+}
