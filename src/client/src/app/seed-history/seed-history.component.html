@@ -4,10 +4,11 @@
     <ng-template #loaded>
       <p *ngIf="seedHistory">{{ seedHistory | json }}</p>
       <div *ngFor="let seed of seeds" class="seed">
-        <p>{{ seed.seed }}</p>
-        <p>{{ seed.permalink }}</p>
-        <p>{{ seed.seedHash }}</p>
-        <p>{{ seed.date | date }}</p>
+        <p>
+          <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
+          <span class="subtitle is-6">{{ seed.seed }}</span>
+        </p>
+        <p class="subtitle is-6">{{ seed.date | date:'MMMM d y - h:mm a' }}</p>
       </div>
     </ng-template>
     <ng-template #loading>
