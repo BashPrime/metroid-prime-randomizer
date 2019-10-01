@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { GeneratedSeedComponent } from './generated-seed/generated-seed.component';
 import { SeedHistoryComponent } from './seed-history/seed-history.component';
+import { RomGenerationComponent } from './rom-generation/rom-generation.component';
 
 
 const routes: Routes = [
@@ -15,11 +15,8 @@ const routes: Routes = [
     component: SeedHistoryComponent
   },
   {
-    path: 'seed/:index',
-    component: GeneratedSeedComponent,
-    data: {
-      withIndex: true
-    }
+    path: 'generate-rom',
+    component: RomGenerationComponent
   }
 ];
 

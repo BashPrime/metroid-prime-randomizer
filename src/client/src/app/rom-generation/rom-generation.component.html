@@ -1,11 +1,8 @@
 <div class="app-wrapper">
   <div class="section app-content">
+    <h1 class="title">Generate ROM</h1>
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
-      <p>{{ seed | json }}</p>
-      <p class="title">
-        <span *ngFor="let hashItem of seed.seedHash" class="hashItem">{{ hashItem }}</span>
-      </p>
     </ng-template>
     <ng-template #loading>
       <div class="loading-indicator"></div>

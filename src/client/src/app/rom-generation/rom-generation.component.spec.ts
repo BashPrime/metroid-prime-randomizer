@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneratedSeedComponent } from './generated-seed.component';
+import { RomGenerationComponent } from './rom-generation.component';
 
-describe('GeneratedSeedComponent', () => {
-  let component: GeneratedSeedComponent;
-  let fixture: ComponentFixture<GeneratedSeedComponent>;
+describe('RomGenerationComponent', () => {
+  let component: RomGenerationComponent;
+  let fixture: ComponentFixture<RomGenerationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneratedSeedComponent ]
+      declarations: [ RomGenerationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneratedSeedComponent);
+    fixture = TestBed.createComponent(RomGenerationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

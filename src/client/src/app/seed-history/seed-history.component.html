@@ -2,8 +2,8 @@
   <div class="section app-content">
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
-      <div *ngFor="let seed of seeds; let i = index" class="seed">
-        <a [routerLink]="['/seed', i]">
+      <div *ngFor="let seed of seeds" class="seed">
+        <a (click)="setUpRomGeneration(seed)">
           <p>
             <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
             <span class="subtitle is-6">{{ seed.seed }}</span>

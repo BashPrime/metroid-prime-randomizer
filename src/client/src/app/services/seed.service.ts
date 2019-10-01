@@ -1,4 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ElectronService } from './electron.service';
 import { GeneratedSeed } from '../../../../common/generatedSeed';
@@ -8,8 +9,9 @@ import { GeneratedSeed } from '../../../../common/generatedSeed';
 })
 export class SeedService {
   seedHistory$ = new BehaviorSubject<GeneratedSeed[]>(undefined);
+  generatedSeed$ = new BehaviorSubject<GeneratedSeed>(undefined);
   
-  constructor(private ngZone: NgZone, private electronService: ElectronService) {
+  constructor(private ngZone: NgZone, private router: Router, private electronService: ElectronService) {
     this.getSeedHistory();
 
     this.electronService.ipcRenderer.on('getSeedHistoryResponse', (event, seedHistory) => {
@@ -24,5 +26,10 @@ export class SeedService {
 
   getSeedHistory() {
     this.electronService.ipcRenderer.send('getSeedHistory');
+  }
+
+  setUpRomGeneration(seed: GeneratedSeed) {
+    this.generatedSeed$.next(seed);
+    this.router.navigate(['/generate-rom']);
   }
 }
