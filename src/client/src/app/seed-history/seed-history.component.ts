@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SeedService } from '../services/seed.service';
 import { GeneratedSeed } from '../../../../common/generatedSeed';
 
@@ -11,22 +11,12 @@ export class SeedHistoryComponent implements OnInit {
   isLoaded = false;
   seeds: GeneratedSeed[];
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private seedService: SeedService) {}
+  constructor(private seedService: SeedService) { }
 
-  ngOnInit() {              
-    this.seedService.seedHistory.subscribe(seedHistory => {
-      if (seedHistory === undefined) {
-        this.getSeedHistory();
-      } else {
-        this.seeds = seedHistory;
-        this.isLoaded = true;
-        this.changeDetectorRef.detectChanges();
-      }
+  ngOnInit() {
+    this.seedService.seedHistory$.subscribe(seedHistory => {
+      this.seeds = seedHistory;
+      this.isLoaded = true;
     });
   }
-
-  private getSeedHistory() {
-    this.seedService.getSeedHistory();
-  }
-
 }

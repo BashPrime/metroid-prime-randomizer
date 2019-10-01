@@ -15,8 +15,11 @@ const routes: Routes = [
     component: SeedHistoryComponent
   },
   {
-    path: 'seed/:seed',
-    component: GeneratedSeedComponent
+    path: 'seed/:index',
+    component: GeneratedSeedComponent,
+    data: {
+      withIndex: true
+    }
   }
 ];
 

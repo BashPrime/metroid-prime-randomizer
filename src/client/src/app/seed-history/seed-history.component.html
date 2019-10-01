@@ -2,13 +2,14 @@
   <div class="section app-content">
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
-      <p *ngIf="seedHistory">{{ seedHistory | json }}</p>
-      <div *ngFor="let seed of seeds" class="seed">
-        <p>
-          <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
-          <span class="subtitle is-6">{{ seed.seed }}</span>
-        </p>
-        <p class="subtitle is-6">{{ seed.date | date:'MMMM d y - h:mm a' }}</p>
+      <div *ngFor="let seed of seeds; let i = index" class="seed">
+        <a [routerLink]="['/seed', i]">
+          <p>
+            <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
+            <span class="subtitle is-6">{{ seed.seed }}</span>
+          </p>
+          <p class="subtitle is-6">{{ seed.date | date:'MMMM d y - h:mm a' }}</p>
+        </a>
       </div>
     </ng-template>
     <ng-template #loading>
