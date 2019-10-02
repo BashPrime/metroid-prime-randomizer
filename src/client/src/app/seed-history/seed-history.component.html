@@ -1,5 +1,5 @@
 <div class="app-wrapper">
-  <div class="section app-content">
+  <div class="section app--wrapper-content">
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
       <div *ngFor="let seed of seeds" class="seed">

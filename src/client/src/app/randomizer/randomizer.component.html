@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="container">
+    <div class="tabs is-centered is-large">
+      <ul>
+        <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': tabActive.isActive }">
+          <a routerLink="{{ tab.route }}" routerLinkActive #tabActive="routerLinkActive">{{ tab.name }}</a>
+        </li>
+      </ul>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</section>

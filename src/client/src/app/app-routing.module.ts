@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { SeedHistoryComponent } from './seed-history/seed-history.component';
-import { RomGenerationComponent } from './rom-generation/rom-generation.component';
-
+import { RandomizerComponent } from './randomizer/randomizer.component';
+import { RomSettingsComponent } from './rom-settings/rom-settings.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/randomizer/rom-settings', pathMatch: 'full' },
   {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'seed-history',
-    component: SeedHistoryComponent
-  },
-  {
-    path: 'generate-rom',
-    component: RomGenerationComponent
+    path: 'randomizer',
+    component: RandomizerComponent,
+    children: [
+      { path: '', redirectTo: 'rom-settings', pathMatch: 'full' },
+      {
+        path: 'rom-settings',
+        component: RomSettingsComponent
+      }
+    ]
   }
 ];
 
