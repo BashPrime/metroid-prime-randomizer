@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bulmaswatch/darkly/_variables';
+@import './assets/scss/bulma_overrides';
 @import '~bulma/bulma';
 @import '~bulmaswatch/darkly/_overrides';
 
@@ -12,7 +13,7 @@ html {
   display: flex;
   flex-direction: column;
 
-  .app-content {
+  .app-wrapper-content {
     flex: 1;
     overflow: auto;
     margin-top: 0;
