@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as url from 'url';
 
 import * as Utilities from './utilities';
+import menuTemplate from './menu';
 import { defineControllers } from './controllers';
 import { writeSettingsFile } from './controllers/saveSettingsController';
 import { writeSeedHistoryToFile } from './controllers/seedController';
@@ -14,28 +15,7 @@ function createWindow() {
   // Check if we are on a non-serve build
   if (!serve) {
     // Create our menu entries so that we can use Mac shortcuts
-    Menu.setApplicationMenu(Menu.buildFromTemplate([
-      {
-        label: 'File',
-        submenu: [
-          { role: 'quit' }
-        ]
-      },
-      {
-        label: 'Edit',
-        submenu: [
-          { role: 'undo' },
-          { role: 'redo' },
-          { type: 'separator' },
-          { role: 'cut' },
-          { role: 'copy' },
-          { role: 'paste' },
-          { role: 'pasteandmatchstyle' },
-          { role: 'delete' },
-          { role: 'selectall' },
-        ]
-      }
-    ]));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
   }
 
   // Create the browser window.
@@ -45,7 +25,10 @@ function createWindow() {
     minWidth: 800,
     minHeight: 600,
     icon : path.join(__dirname, 'assets/favicon.png'),
-    title: 'Metroid Prime Randomizer'
+    title: 'Metroid Prime Randomizer',
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   if (serve) {

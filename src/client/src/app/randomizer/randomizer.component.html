@@ -1,6 +1,6 @@
 <div class="app-wrapper">
   <div class="randomizer-header">
-    <div class="tabs is-centered is-large">
+    <div class="tabs is-centered">
       <ul>
         <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': tabActive.isActive }">
           <a routerLink="{{ tab.route }}" routerLinkActive #tabActive="routerLinkActive">{{ tab.name }}</a>
