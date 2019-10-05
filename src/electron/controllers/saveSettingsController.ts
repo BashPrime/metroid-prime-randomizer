@@ -6,8 +6,6 @@ const filePath = path.join(app.getPath('userData'), 'settings.json');
 let settings: any;
 
 export function initialize() {
-  console.log('Initializing save settings controller...');
-
   // Request from renderer to get settings file from main process
   ipcMain.on('electron/get-settings', (event) => {
     if (existsSync(filePath)) {
