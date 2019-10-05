@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneratorService } from '../services/generator.service';
 
 @Component({
   selector: 'app-randomizer',
@@ -13,13 +14,17 @@ export class RandomizerComponent implements OnInit {
     { name: 'History', route: 'history' }
   ];
 
-  constructor() { }
+  constructor(private generatorService: GeneratorService) { }
 
   ngOnInit() {
   }
 
   getTabs(): Tab[] {
     return this.tabs;
+  }
+
+  generateSeed() {
+    this.generatorService.generateSeed();
   }
 }
 
