@@ -1,8 +1,14 @@
+import { app } from 'electron';
+import * as path from 'path';
 import { MersenneTwister } from './mersenneTwister';
 
 export function isServe(): boolean {
   const args = process.argv.slice(1);
   return  args.some(val => val === '--serve');
+}
+
+export function getAppDataPath(): string {
+  return path.join(app.getPath('userData'), 'data');
 }
 
 export function getBaseLog(x: number, base: number) {

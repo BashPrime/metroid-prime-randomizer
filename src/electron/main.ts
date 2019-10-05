@@ -42,6 +42,8 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1024,
     height: 768,
+    minWidth: 800,
+    minHeight: 600,
     icon : path.join(__dirname, 'assets/favicon.png'),
     title: 'Metroid Prime Randomizer'
   });

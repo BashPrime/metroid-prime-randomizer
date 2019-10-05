@@ -1,9 +1,10 @@
-import { app, ipcMain } from 'electron';
+import { ipcMain } from 'electron';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
 import { GeneratedSeed } from '../../common/generatedSeed';
+import * as Utilities from '../utilities';
 
-const seedHistoryPath = path.join(app.getPath('userData'), 'seeds.json');
+const seedHistoryPath = path.join(Utilities.getAppDataPath(), 'seeds.json');
 let seedHistory: GeneratedSeed[];
 
 export function initialize() {

@@ -1,5 +1,5 @@
-<section class="section">
-  <div class="container">
+<div class="app-wrapper">
+  <div class="randomizer-header">
     <div class="tabs is-centered is-large">
       <ul>
         <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': tabActive.isActive }">
@@ -7,6 +7,11 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="app-wrapper-content">
     <router-outlet></router-outlet>
   </div>
-</section>
+  <div class="section randomizer-footer">
+    <button class="button is-link is-fullwidth">Generate</button>
+  </div>
+</div>

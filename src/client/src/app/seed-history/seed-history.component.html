@@ -2,6 +2,7 @@
   <div class="section app--wrapper-content">
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
+      <p *ngIf="!seeds || !seeds.length">No seeds were found.</p>
       <div *ngFor="let seed of seeds" class="seed">
         <a (click)="setUpRomGeneration(seed)">
           <p>
