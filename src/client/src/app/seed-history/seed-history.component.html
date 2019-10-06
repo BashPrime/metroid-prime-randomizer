@@ -1,10 +1,14 @@
 <div class="app-wrapper">
-  <div style="padding: 0.75rem 1.5rem 0;">
-    <a routerLink="/randomizer">
-      <fa-icon [icon]="faChevronLeft"></fa-icon> Back to Randomizer
-    </a>
+  <div class="tabs">
+    <ul>
+      <li>
+        <a routerLink="/randomizer">
+          <fa-icon [icon]="faChevronLeft" size="sm" style="margin-right: 0.5rem;"></fa-icon> <span>Back to Randomizer</span>
+        </a>
+      </li>
+    </ul>
   </div>
-  <div class="app-wrapper-content" style="padding: 0 1.5rem 1.5rem;">
+  <div class="app-wrapper-content">
     <div *ngIf="isLoaded then loaded; else loading"></div>
     <ng-template #loaded>
       <p *ngIf="!seeds || !seeds.length">No seeds were found.</p>
