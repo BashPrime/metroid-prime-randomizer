@@ -10,7 +10,8 @@ export class RandomizerComponent implements OnInit {
   private tabs: Tab[] = [
     { name: 'ROM Settings', route: 'rom-settings' },
     { name: 'Rules', route: 'rules' },
-    { name: 'Logic', route: 'logic' }
+    { name: 'Logic', route: 'logic' },
+    { name: 'History', route: '/history' }
   ];
 
   constructor(private generatorService: GeneratorService) { }
