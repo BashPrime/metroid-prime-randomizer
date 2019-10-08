@@ -6,22 +6,16 @@
       "request": "launch",
       "name": "Electron: Main",
       "protocol": "inspector",
-      "cwd": "${workspaceRoot}",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-      "windows": {
-        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-      },
-      "program": "${workspaceRoot}/main.js",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
       "runtimeArgs": [
-        "--enable-logging",
         "--remote-debugging-port=9223",
+        ".",
         "--serve"
       ],
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceRoot}/main.js"
-      ],
-      "internalConsoleOptions": "openOnSessionStart",
       "console": "integratedTerminal",
       "preLaunchTask": "electron-build"
     },
