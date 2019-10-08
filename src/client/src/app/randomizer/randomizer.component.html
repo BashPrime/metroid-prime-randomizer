@@ -12,6 +12,39 @@
     <router-outlet></router-outlet>
   </div>
   <div class="section randomizer-footer">
+    <div class="columns">
+      <div class="column">
+        <label class="label is-small">Seed</label>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input class="input is-small" type="text">
+          </div>
+          <div class="control">
+            <a class="button is-info is-small">
+              New Seed
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <label class="label is-small">Permalink</label>
+        <div class="field is-grouped">
+          <div class="control is-expanded">
+            <input class="input is-small" type="text" disabled>
+          </div>
+          <div class="control">
+            <a class="button is-small">
+              Copy
+            </a>
+          </div>
+          <div class="control">
+            <a class="button is-info is-small">
+              Import
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <button class="button is-link is-fullwidth" (click)="generateSeed()">Generate</button>
   </div>
 </div>
