@@ -46,3 +46,9 @@ html, body {
   color: #efefef;
   border-color: #404040;
 }
+
+[disabled].input {
+  background-color: #202020;
+  color: #b0b0b0;
+  border-color: #606060;
+}
