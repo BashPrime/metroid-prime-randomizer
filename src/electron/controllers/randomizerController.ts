@@ -21,6 +21,10 @@ export function initialize() {
     _seedQueue.push({});
     seedQueue$.next(_seedQueue);
   });
+
+  ipcMain.on('getDefaultSettings', (event) => {
+    event.sender.send('getDefaultSettingsResponse', new PrimeRandomizerSettings({}));
+  });
 }
 
 function processQueueItem() {
