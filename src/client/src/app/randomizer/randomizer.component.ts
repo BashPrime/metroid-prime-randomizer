@@ -48,7 +48,7 @@ export class RandomizerComponent implements OnInit {
       seed: [null, [Validators.min(1), Validators.max(Number.MAX_SAFE_INTEGER)]]
     });
 
-    this.randomizerService.updateForm('randomizer', this.form);
+    this.randomizerService.replaceForm('randomizer', this.form);
   }
 }
 
