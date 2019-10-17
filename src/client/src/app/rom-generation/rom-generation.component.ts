@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeedService } from '../services/seed.service';
-import { GeneratedSeed } from '../../../../common/generatedSeed';
+import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 
 @Component({
   selector: 'app-rom-generation',

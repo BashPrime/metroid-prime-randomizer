@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { SeedService } from '../services/seed.service';
-import { GeneratedSeed } from '../../../../common/generatedSeed';
+import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 
 @Component({
   selector: 'app-seed-history',

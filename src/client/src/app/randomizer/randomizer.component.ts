@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../services/generator.service';
 import { RandomizerService } from '../randomizer.service';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Component({
   selector: 'app-randomizer',
@@ -20,9 +21,9 @@ export class RandomizerComponent implements OnInit {
   constructor(private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
-    this.randomizerService.forms$.randomizer.subscribe(form => {
-      if (form && form.value) {
-        this.form.patchValue(form.value);
+    this.randomizerService.form$.subscribe((form: RandomizerForm) => {
+      if (form && form.seed) {
+        this.form.patchValue({ seed: form.seed });
       }
     });
 
@@ -45,7 +46,7 @@ export class RandomizerComponent implements OnInit {
     const fb = new FormBuilder();
 
     this.form = fb.group({
-      seed: [null, [Validators.min(1), Validators.max(Number.MAX_SAFE_INTEGER)]]
+      seed: ['']
     });
 
     this.randomizerService.replaceForm('randomizer', this.form);
