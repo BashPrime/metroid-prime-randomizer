@@ -10,12 +10,19 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
   styleUrls: ['./randomizer.component.scss']
 })
 export class RandomizerComponent implements OnInit {
+  readonly tabIds = {
+    romSettings: 0,
+    rules: 1,
+    logic: 2,
+    history: 3
+  };
   private tabs: Tab[] = [
-    { name: 'ROM Settings', route: 'rom-settings' },
-    { name: 'Rules', route: 'rules' },
-    { name: 'Logic', route: 'logic' },
-    { name: 'History', route: '/history' }
+    { id: this.tabIds.romSettings, name: 'ROM Settings' },
+    { id: this.tabIds.rules, name: 'Rules' },
+    { id: this.tabIds.logic, name: 'Logic' },
+    { id: this.tabIds.history, name: 'History' }
   ];
+  private selectedTabId: number = this.tabIds.romSettings;
   private form: FormGroup;
 
   constructor(private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
@@ -38,6 +45,18 @@ export class RandomizerComponent implements OnInit {
     return this.tabs;
   }
 
+  getSelectedTabId(): number {
+    return this.selectedTabId;
+  }
+
+  setSelectedTabId(tabId: number) {
+    this.selectedTabId = tabId;
+  }
+
+  isTabIdSelected(tabId: number): boolean {
+    return tabId === this.selectedTabId;
+  }
+
   generateSeed() {
     this.generatorService.generateSeed();
   }
@@ -54,6 +73,6 @@ export class RandomizerComponent implements OnInit {
 }
 
 interface Tab {
+  id: number;
   name: string;
-  route: string;
 }

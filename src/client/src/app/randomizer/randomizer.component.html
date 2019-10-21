@@ -1,16 +1,16 @@
-<p>{{ form.value | json }}</p>
-<div class="app-wrapper">
+  <div class="app-wrapper">
   <div class="randomizer-header">
     <div class="tabs is-centered">
       <ul>
-        <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': tabActive.isActive }">
-          <a routerLink="{{ tab.route }}" routerLinkActive #tabActive="routerLinkActive">{{ tab.name }}</a>
+        <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+          <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="app-wrapper-content">
-    <router-outlet></router-outlet>
+    <app-rom-settings *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
+    <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history>
   </div>
   <hr>
   <div class="section randomizer-footer">
