@@ -1,12 +1,12 @@
 <div class="section app-wrapper-content">
-  <form>
+  <form [formGroup]="getForm()">
     <label class="label is-small">Base ISO</label>
     <div class="field has-addons">
       <div class="control is-expanded">
-        <input class="input is-small" type="text">
+        <input class="input is-small" type="text" formControlName="baseIso">
       </div>
       <div class="control">
-        <a class="button is-info is-small">
+        <a class="button is-info is-small" (click)="selectBaseIso()">
           Select ISO
         </a>
       </div>
@@ -14,11 +14,22 @@
     <label class="label is-small">Output Folder</label>
     <div class="field has-addons">
       <div class="control is-expanded">
-        <input class="input is-small" type="text" placeholder="Defaults to Documents/Metroid Prime Randomizer">
+        <input class="input is-small" type="text" formControlName="outputFolder">
       </div>
       <div class="control">
-        <a class="button is-info is-small">
+        <a class="button is-info is-small" (click)="selectOutputFolder()">
           Select Folder
+        </a>
+      </div>
+    </div>
+    <label class="label is-small">Trilogy ISO (for Flaahgra music fix)</label>
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <input class="input is-small" type="text" formControlName="trilogyIso">
+      </div>
+      <div class="control">
+        <a class="button is-info is-small" (click)="selectTrilogyIso()">
+          Select ISO
         </a>
       </div>
     </div>

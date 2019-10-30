@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="app-wrapper-content">
-    <app-rom-settings *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
+    <app-rom-settings [form]="getForm().get('romSettings')" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
     <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history>
   </div>
   <hr>
@@ -23,14 +23,14 @@
               <input class="input is-small" type="text" formControlName="seed">
             </div>
             <div class="control">
-              <a class="button is-info is-small">
+              <a class="button is-info is-small" (click)="setRandomSeed()">
                 New Seed
               </a>
             </div>
           </div>
         </div>
         <div class="column">
-          <label class="label is-small">Permalink</label>
+          <label class="label is-small">Settings String</label>
           <div class="field is-grouped">
             <div class="control is-expanded">
               <input class="input is-small" type="text" disabled>

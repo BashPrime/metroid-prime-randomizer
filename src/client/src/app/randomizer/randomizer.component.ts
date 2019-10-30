@@ -28,13 +28,8 @@ export class RandomizerComponent implements OnInit {
   constructor(private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
-    this.randomizerService.form$.subscribe((form: RandomizerForm) => {
-      if (form && form.seed) {
-        this.form.patchValue({ seed: form.seed });
-      }
-    });
-
-    this.createForm();
+    // Get initial formgroup from randomizer service
+    this.form = this.randomizerService.createForm();
   }
 
   getForm(): FormGroup {
@@ -57,18 +52,8 @@ export class RandomizerComponent implements OnInit {
     return tabId === this.selectedTabId;
   }
 
-  generateSeed() {
+  generateSeed(): void {
     this.generatorService.generateSeed();
-  }
-
-  createForm() {
-    const fb = new FormBuilder();
-
-    this.form = fb.group({
-      seed: ['']
-    });
-
-    this.randomizerService.replaceForm('randomizer', this.form);
   }
 }
 
