@@ -1,3 +1,6 @@
+/**
+ * Enumerates the Metroid Prime items to ease on development.
+ */
 export enum PrimeItem {
   MISSILE_EXPANSION = 'Missile Expansion',
   ENERGY_TANK = 'Energy Tank',

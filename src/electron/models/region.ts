@@ -13,7 +13,6 @@ export interface RegionObject {
 
 /**
  * A region that has a name descriptor, item locations, and elevators (with their prerequisite items) required to access.
- * @class
  */
 export class Region {
   private name: string;
@@ -26,46 +25,85 @@ export class Region {
     this.name = name;
   }
 
+  /**
+   * Returns the name of the region.
+   */
   getName(): string {
     return this.name;
   }
 
+  /**
+   * Sets the region's name.
+   * @param name The region name being set.
+   */
   setName(name: string) {
     this.name = name;
   }
 
+  /**
+   * Returns all item locations belonging to this region.
+   */
   getLocations(): LocationCollection {
     return this.locations;
   }
 
+  /**
+   * Sets the collection of item locations belonging to this region.
+   * @param locations The location collection being assigned.
+   */
   setLocations(locations: LocationCollection) {
     this.locations = locations;
   }
 
+  /**
+   * Returns all of this region's exits to other regions.
+   */
   getExits(): Entrance[] {
     return this.exits;
   }
 
+  /**
+   * Sets this region's available exits to other regions.
+   * @param exits The collection of exits being assigned.
+   */
   setExits(exits: Entrance[]) {
     this.exits = exits;
   }
 
+  /**
+   * Returns all of this region's entrances from other regions.
+   */
   getEntrances(): Entrance[] {
     return this.entrances;
   }
 
+  /**
+   * Sets this region's available entrances from other regions.
+   * @param entrances The collection of entrances being assigned.
+   */
   setEntrances(entrances: Entrance[]) {
     this.entrances = entrances;
   }
 
+  /**
+   * Returns the parent world that this region belongs to.
+   */
   getWorld(): World {
     return this.world;
   }
 
+  /**
+   * Sets the parent world that this region belongs to.
+   * @param world The game world being assigned.
+   */
   setWorld(world: World) {
     this.world = world;
   }
 
+  /**
+   * Returns true if this region can be reached by the player.
+   * @param items The player's assumed inventory of items.
+   */
   canReach(items: ItemCollection): boolean {
     return this.world.isReachable(this, items);
   }

@@ -1,3 +1,6 @@
+/**
+ * Template of the menu items for the application toolbar.
+ */
 export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
   {
     label: 'File',

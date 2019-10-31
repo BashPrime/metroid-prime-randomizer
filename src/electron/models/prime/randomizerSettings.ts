@@ -1,9 +1,14 @@
-import { RandomizerSettings, RandomizerSettingsArgs, arrayRangeToObject } from '../randomizerSettings';
+import * as bigInt from 'big-integer';
+import * as crypto from 'crypto';
+
+import { RandomizerSettings, RandomizerSettingsArgs, numberRangeToObject } from '../randomizerSettings';
 import { Checkbox, SelectOption } from '../option';
+import { OptionType } from '../../enums/optionType';
 import { PrimeLocation } from '../../enums/primeLocation';
+import * as Utilities from '../../utilities';
 
 interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
-  seed?: number;
+  seed?: string;
   spoiler?: boolean;
   skipFrigate?: boolean;
   skipHudPopups?: boolean;
@@ -13,18 +18,12 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   artifactLocationHints?: boolean;
   heatDamagePrevention?: string;
   suitDamageReduction?: string;
-  shuffleArtifacts?: boolean;
-  shuffleMissileLauncher?: boolean;
-  shuffleMorph?: boolean;
-  shuffleBombs?: boolean;
-  shuffleCharge?: boolean;
-  shuffleSpaceJump?: boolean;
-  disabledLocations?: DisabledLocationsMap;
-  allowedTricks?: AllowedTricksMap;
+  disabledLocations?: DisabledLocations;
+  allowedTricks?: AllowedTricks;
 }
 
 export class PrimeRandomizerSettings extends RandomizerSettings {
-  seed: number;
+  seed: string;
   spoiler: boolean;
   skipFrigate: boolean;
   skipHudPopups: boolean;
@@ -34,11 +33,51 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   artifactLocationHints: boolean;
   heatDamagePrevention: string;
   suitDamageReduction: string;
-  disabledLocations: DisabledLocationsMap;
-  allowedTricks: AllowedTricksMap;
+  disabledLocations: DisabledLocations;
+  allowedTricks: AllowedTricks;
 
   constructor(args: PrimeRandomizerSettingsArgs) {
     super(args);
+  }
+
+  getNumericSeed(): number {
+    const stringToBeHashed = this.getSettingsString() + this.seed;
+    const sha256Hash = crypto.createHash('sha256').update(stringToBeHashed).digest('hex');
+
+    return Utilities.parseSafeIntegerFromSha256(sha256Hash);
+  }
+
+  getSettingsString(): string {
+    const delimiter = '-';
+    let bits = '';
+    const sharedSettings = settings.filter(setting => setting.shared);
+    
+    for (const setting of sharedSettings) {
+      let settingValue = this[setting.name];
+
+      // Convert value to string to ensure it is found in select option
+      if (setting.type === OptionType.SELECT && typeof(settingValue) === 'number') {
+        settingValue = settingValue.toString();
+      }
+
+      switch(setting.type) {
+        case OptionType.BOOLEAN:
+          bits += settingValue ? '1': '0';
+          break;
+        case OptionType.SELECT:
+          const index = Object.keys(setting.choices).indexOf(settingValue);
+          bits += Utilities.toPaddedBitString(index, setting.bitWidth);
+          break;
+      }
+    }
+
+    // Get bitstring from allowed tricks
+    let allowedBits = '';
+    for (let key of Object.keys(this.allowedTricks)) {
+      allowedBits += this.allowedTricks[key] ? '1' : '0';
+    }
+
+    return bigInt(bits, 2).toString(36) + '-' + bigInt(allowedBits, 2).toString(36).toUpperCase();
   }
 
   protected assignDefaultSettings(args: RandomizerSettingsArgs): void {
@@ -53,7 +92,32 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     // Handle allowed tricks, disabled locations objects
     if (!argKeys.includes('allowedTricks'))
-      this.allowedTricks = {};
+      this.allowedTricks = {
+        alcoveNoItems: false,
+        arborChamberWithoutPlasma: false,
+        boostThroughBombTunnels: false,
+        climbTowerOfLightNoMissiles: false,
+        crossTwinFiresTunnelWithoutSpider: false,
+        eliteResearchBoostClip: false,
+        fieryShoresAccessWithoutMorphGrapple: false,
+        furnaceAccessWithoutSpider: false,
+        gravityChamberGrappleLedgeRJump: false,
+        magmaPoolDash: false,
+        mainPlazaItemsOnlySpaceJump: false,
+        mainQuarryItemWithoutSpider: false,
+        minesSpiderlessShafts: false,
+        phendranaDepthsGrappleSkips: false,
+        phendranaDepthsAccessWithoutSpider: false,
+        plasmaProcessingWithoutGrappleSpider: false,
+        removeThermalReqs: false,
+        removeXrayReqs: false,
+        ruinedFountainFlaahgraSkip: false,
+        quarantineMonitorDash: false,
+        towerChamberNoGravity: false,
+        upperRuinedShrineTowerOfLightFewerAccessReqs: false,
+        warriorShrineWithoutBoost: false,
+        wateryHallUnderwaterFlaahgraSkip: false
+      };
 
     if (!argKeys.includes('disabledLocations'))
       this.disabledLocations = {};
@@ -81,7 +145,7 @@ const settings = [
     name: 'goalArtifacts',
     displayName: 'Number of Chozo Artifacts',
     shared: true,
-    choices: arrayRangeToObject(1, 12),
+    choices: numberRangeToObject(1, 12),
     default: 12
   }),
   new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: false }),
@@ -104,13 +168,7 @@ const settings = [
       'progressive': 'Progressive'
     },
     default: 'default'
-  }),
-  new Checkbox({ name: 'shuffleArtifacts', displayName: 'Shuffle Chozo Artifacts', shared: true, default: true }),
-  new Checkbox({ name: 'shuffleMissileLauncher', displayName: 'Shuffle Missile Launcher', shared: true, default: true }),
-  new Checkbox({ name: 'shuffleMorph', displayName: 'Shuffle Morph Ball', shared: true, default: true }),
-  new Checkbox({ name: 'shuffleBombs', displayName: 'Shuffle Bombs', shared: true, default: true }),
-  new Checkbox({ name: 'shuffleCharge', displayName: 'Shuffle Charge Beam', shared: true, default: true }),
-  new Checkbox({ name: 'shuffleSpaceJump', displayName: 'Shuffle Space Jump Boots', shared: true, default: true })
+  })
 ];
 
 const tricks = {
@@ -168,34 +226,34 @@ const tricks = {
   }
 };
 
-interface AllowedTricksMap {
-  alcoveNoItems?: boolean;
-  arborChamberWithoutPlasma?: boolean;
-  boostThroughBombTunnels?: boolean;
-  climbTowerOfLightNoMissiles?: boolean;
-  crossTwinFiresTunnelWithoutSpider?: boolean;
-  eliteResearchBoostClip?: boolean;
-  fieryShoresAccessWithoutMorphGrapple?: boolean;
-  furnaceAccessWithoutSpider?: boolean;
-  gravityChamberGrappleLedgeRJump?: boolean;
-  magmaPoolDash?: boolean;
-  mainPlazaItemsOnlySpaceJump?: boolean;
-  mainQuarryItemWithoutSpider?: boolean;
-  minesSpiderlessShafts?: boolean;
-  phendranaDepthsGrappleSkips?: boolean;
-  phendranaDepthsAccessWithoutSpider?: boolean;
-  plasmaProcessingWithoutGrappleSpider?: boolean;
-  removeThermalReqs?: boolean;
-  removeXrayReqs?: boolean;
-  ruinedFountainFlaahgraSkip?: boolean;
-  quarantineMonitorDash?: boolean;
-  towerChamberNoGravity?: boolean;
-  upperRuinedShrineTowerOfLightFewerAccessReqs?: boolean;
-  warriorShrineWithoutBoost?: boolean;
-  wateryHallUnderwaterFlaahgraSkip?: boolean;
+interface AllowedTricks {
+  alcoveNoItems: false,
+  arborChamberWithoutPlasma: boolean;
+  boostThroughBombTunnels: boolean;
+  climbTowerOfLightNoMissiles: boolean;
+  crossTwinFiresTunnelWithoutSpider: boolean;
+  eliteResearchBoostClip: boolean;
+  fieryShoresAccessWithoutMorphGrapple: boolean;
+  furnaceAccessWithoutSpider: boolean;
+  gravityChamberGrappleLedgeRJump: boolean;
+  magmaPoolDash: boolean;
+  mainPlazaItemsOnlySpaceJump: boolean;
+  mainQuarryItemWithoutSpider: boolean;
+  minesSpiderlessShafts: boolean;
+  phendranaDepthsGrappleSkips: boolean;
+  phendranaDepthsAccessWithoutSpider: boolean;
+  plasmaProcessingWithoutGrappleSpider: boolean;
+  removeThermalReqs: boolean;
+  removeXrayReqs: boolean;
+  ruinedFountainFlaahgraSkip: boolean;
+  quarantineMonitorDash: boolean;
+  towerChamberNoGravity: boolean;
+  upperRuinedShrineTowerOfLightFewerAccessReqs: boolean;
+  warriorShrineWithoutBoost: boolean;
+  wateryHallUnderwaterFlaahgraSkip: boolean;
 };
 
-interface DisabledLocationsMap {
+interface DisabledLocations {
   [PrimeLocation.LANDING_SITE]?: boolean;
   [PrimeLocation.ALCOVE]?: boolean;
   [PrimeLocation.FRIGATE_CRASH_SITE]?: boolean;

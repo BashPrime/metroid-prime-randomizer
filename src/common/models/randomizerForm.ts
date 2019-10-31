@@ -1,3 +1,6 @@
+/**
+ * Logical representation of the client-side randomizer form value
+ */
 export interface RandomizerForm {
   seed: string;
   romSettings: RomSettings;
@@ -5,6 +8,9 @@ export interface RandomizerForm {
   logic: Logic;
 }
 
+/**
+ * Represents the configuration for the randomized and patched rom output.
+ */
 interface RomSettings {
   baseIso: string;
   outputFolder: string;
@@ -17,6 +23,9 @@ interface RomSettings {
   hideItemModels: boolean;
 }
 
+/**
+ * Describes game-wide rules
+ */
 interface Rules {
   skipFrigate: boolean;
   skipHudPopups: boolean;
@@ -27,6 +36,9 @@ interface Rules {
   excludedShuffleItems: string[];
 }
 
+/**
+ * Describes the available item logic mutators
+ */
 interface Logic {
   alcoveNoItems: boolean;
   boostThroughBombTunnels: boolean;

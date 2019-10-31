@@ -28,14 +28,6 @@ interface SelectOptionArgs {
   tooltip?: string;
 }
 
-interface ListOptionArgs {
-  name: string;
-  displayName: string;
-  shared: boolean;
-  choices: {[key: string]: string},
-  default
-}
-
 export class Option {
     name: string;
     displayName: string;

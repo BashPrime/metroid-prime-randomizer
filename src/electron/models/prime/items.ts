@@ -1,20 +1,32 @@
 import { Item } from '../item';
 import { PrimeItem } from '../../enums/primeItem';
 
+/**
+ * Key-based item map typed for convenience.
+ */
 type ItemMap = { [key: string]: Item };
 
+/**
+ * Describes whether an item is a major upgrade, an ammo expansion, or a Chozo Artifact.
+ */
 export enum ItemType {
   ITEM = 'Item',
   ARTIFACT = 'Artifact',
   EXPANSION = 'Expansion'
 };
 
+/**
+ * Determines the precedence of items being placed.
+ */
 export enum ItemPriority {
   PRIORITY,
   PROGRESSION,
   EXTRA
 };
 
+/**
+ * List of all items and expansions in Metroid Prime.
+ */
 export const primeItems: ItemMap = {
   [PrimeItem.MISSILE_LAUNCHER]: new Item(PrimeItem.MISSILE_LAUNCHER, ItemType.ITEM, 0),
   [PrimeItem.MISSILE_EXPANSION]: new Item(PrimeItem.MISSILE_EXPANSION, ItemType.EXPANSION, 0),

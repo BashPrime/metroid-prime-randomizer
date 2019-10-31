@@ -13,6 +13,9 @@ import { magmoorCaverns } from './regions/magmoorCaverns';
 import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
 
+/**
+ * Logical representation of the Metroid Prime game world.
+ */
 export class PrimeWorld extends World {
   protected settings: PrimeRandomizerSettings;
 
@@ -20,6 +23,9 @@ export class PrimeWorld extends World {
     super(settings);
   }
 
+  /**
+   * Loads the Metroid Prime regions into the world instance.
+   */
   loadRegions(): void {
     const rawRegions = [
       ...root(),
@@ -74,14 +80,25 @@ export class PrimeWorld extends World {
     this.setRegions(new RegionCollection(regions));
   }
 
+  /**
+   * Returns the settings used for generating this world instance.
+   */
   getSettings(): PrimeRandomizerSettings {
     return this.settings;
   }
 
+  /**
+   * Sets the settings configuration object for this world instance.
+   * @param settings Configuration object for generating a PrimeWorld instance.
+   */
   setSettings(settings: PrimeRandomizerSettings) {
     this.settings = settings;
   }
 
+  /**
+   * Searches the world instance and returns a collection of every logically reachable item that has not been obtained yet.
+   * @param collectedItems The assumed item collection the player has already obtained.
+   */
   collectItems(collectedItems?: PrimeItemCollection): PrimeItemCollection {
     let myItems = collectedItems !== undefined ? collectedItems : new PrimeItemCollection([]);
 

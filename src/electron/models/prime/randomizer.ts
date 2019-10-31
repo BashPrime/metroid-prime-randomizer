@@ -6,11 +6,15 @@ import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
 import { MersenneTwister } from '../../mersenneTwister';
 
+/**
+ * Generates a Metroid Prime world with logically shuffled items.
+ * @param settings Configuration object for the world generation
+ */
 export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
   const world = new PrimeWorld(settings);
 
-  // Initialize rng based on seed
-  world.setRng(new MersenneTwister(settings.seed));
+  // Initialize rng based on hashed seed
+  world.setRng(new MersenneTwister(settings.getNumericSeed()));
 
   // Set up Prime world regions
   world.loadRegions();

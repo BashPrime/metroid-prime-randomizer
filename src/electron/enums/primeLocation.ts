@@ -1,3 +1,6 @@
+/**
+ * Enumerates the Metroid Prime locations to ease on development.
+ */
 export enum PrimeLocation {
   // Tallon Overworld
   LANDING_SITE = 'Landing Site',
