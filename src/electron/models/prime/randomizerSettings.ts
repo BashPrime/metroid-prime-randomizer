@@ -1,11 +1,13 @@
 import * as bigInt from 'big-integer';
 import * as crypto from 'crypto';
 
-import { RandomizerSettings, RandomizerSettingsArgs, numberRangeToObject } from '../randomizerSettings';
-import { Checkbox, SelectOption } from '../option';
+import { RandomizerSettings, RandomizerSettingsArgs } from '../randomizerSettings';
+import { Checkbox, SelectOption, discreteNumberSelection } from '../option';
 import { OptionType } from '../../enums/optionType';
 import { PrimeLocation } from '../../enums/primeLocation';
 import * as Utilities from '../../utilities';
+
+const SETTINGS_STRING_DELIMITER = '-';
 
 interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -48,24 +50,23 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   }
 
   getSettingsString(): string {
-    const delimiter = '-';
     let bits = '';
     const sharedSettings = settings.filter(setting => setting.shared);
-    
+
     for (const setting of sharedSettings) {
       let settingValue = this[setting.name];
 
       // Convert value to string to ensure it is found in select option
-      if (setting.type === OptionType.SELECT && typeof(settingValue) === 'number') {
-        settingValue = settingValue.toString();
-      }
+      // if (setting.type === OptionType.SELECT && typeof(settingValue) === 'number') {
+      //   settingValue = settingValue.toString();
+      // }
 
-      switch(setting.type) {
+      switch (setting.type) {
         case OptionType.BOOLEAN:
-          bits += settingValue ? '1': '0';
+          bits += settingValue ? '1' : '0';
           break;
         case OptionType.SELECT:
-          const index = Object.keys(setting.choices).indexOf(settingValue);
+          const index = setting.choices.map(choice => choice.value).indexOf(settingValue);
           bits += Utilities.toPaddedBitString(index, setting.bitWidth);
           break;
       }
@@ -77,7 +78,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       allowedBits += this.allowedTricks[key] ? '1' : '0';
     }
 
-    return bigInt(bits, 2).toString(36) + '-' + bigInt(allowedBits, 2).toString(36).toUpperCase();
+    return bigInt(bits, 2).toString(36) + SETTINGS_STRING_DELIMITER + bigInt(allowedBits, 2).toString(36).toUpperCase();
   }
 
   protected assignDefaultSettings(args: RandomizerSettingsArgs): void {
@@ -122,6 +123,77 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     if (!argKeys.includes('disabledLocations'))
       this.disabledLocations = {};
   }
+
+  static fromSettingsString(settingsString: string): PrimeRandomizerSettings {
+    // Return null if settings string is empty
+    if (!settingsString) {
+      return null;
+    }
+
+    const settingsStringSections = settingsString.split(SETTINGS_STRING_DELIMITER);
+
+    // Get general settings first
+    const newSettings = getGeneralSettingsFromSettingsString(settingsStringSections[0]);
+
+    // Get allowed tricks if they are provided
+    if (settingsStringSections.length >= 2) {
+      newSettings['allowedTricks'] = getAllowedTricksFromSettingString(settingsStringSections[1]);
+    }
+
+    return new PrimeRandomizerSettings(newSettings);
+  }
+}
+
+function getGeneralSettingsFromSettingsString(settingsString): object {
+  const newSettings = {};
+  const bitString = getPaddedBitStringFromSettingsString(settingsString, getTotalSharedSettingsBitWidth());
+
+    let index = 0;
+    for (const setting of settings.filter(setting => setting.shared)) {
+      const bitWidth = setting.bitWidth;
+      const currentBits = bitString.substr(index, bitWidth);
+
+      switch (setting.type) {
+        case OptionType.BOOLEAN:
+          newSettings[setting.name] = parseInt(currentBits, 2) === 1 ? true : false;
+          break;
+        case OptionType.SELECT:
+          newSettings[setting.name] = setting.choices[parseInt(currentBits, 2)].value;
+          break;
+      }
+      index += bitWidth;
+    }
+
+  return newSettings;
+}
+
+function getAllowedTricksFromSettingString(settingsString: string): AllowedTricks {
+  const newAllowedTricks = {};
+  const allowedTrickKeys = Object.keys(new PrimeRandomizerSettings({}).allowedTricks);
+  const bitString = getPaddedBitStringFromSettingsString(settingsString, allowedTrickKeys.length);
+
+  let index = 0;
+  for (const trickKey of allowedTrickKeys) {
+    const currentBit = bitString.substr(index, 1);
+    newAllowedTricks[trickKey] = currentBit === '1'? true : false;
+    index += 1;
+  }
+  return newAllowedTricks as AllowedTricks;
+}
+
+function getTotalSharedSettingsBitWidth(): number {
+  let totalBitWidth = 0;
+
+  for (const bitWidth of settings.filter(setting => setting.shared).map(setting => setting.bitWidth)) {
+    totalBitWidth += bitWidth;
+  }
+
+  return totalBitWidth;
+}
+
+function getPaddedBitStringFromSettingsString(settingsString: string, length: number) {
+  const settingsBits = bigInt(settingsString, 36).toString(2);
+  return '0'.repeat(length - settingsBits.length) + settingsBits;
 }
 
 // Object containing settings metadata such as their default values, whether each setting is shared, etc
@@ -134,18 +206,27 @@ const settings = [
     name: 'goal',
     displayName: 'Goal',
     shared: true,
-    choices: {
-      'always-open': 'Always Open',
-      'artifact-collection': 'Artifact Collection',
-      'all-bosses': 'All Bosses'
-    },
+    choices: [
+      {
+        name: 'Always Open',
+        value: 'always-open'
+      },
+      {
+        name: 'Artifact Collection',
+        value: 'artifact-collection'
+      },
+      {
+        name: 'All Bosses',
+        value: 'all-bosses'
+      }
+    ],
     default: 'artifact-collection'
   }),
   new SelectOption({
     name: 'goalArtifacts',
     displayName: 'Number of Chozo Artifacts',
     shared: true,
-    choices: numberRangeToObject(1, 12),
+    choices: discreteNumberSelection(1, 12),
     default: 12
   }),
   new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: false }),
@@ -153,20 +234,32 @@ const settings = [
     name: 'heatDamagePrevention',
     displayName: 'Heat Damage Prevention',
     shared: true,
-    choices: {
-      'any-suit': 'Any Suit',
-      'varia-only': 'Varia Only'
-    },
+    choices: [
+      {
+        name: 'Any Suit',
+        value: 'any-suit'
+      },
+      {
+        name: 'Varia Only',
+        value: 'varia-only'
+      }
+    ],
     default: 'any-suit'
   }),
   new SelectOption({
     name: 'suitDamageReduction',
     displayName: 'Suit Damage Reduction',
     shared: true,
-    choices: {
-      'default': 'Default',
-      'progressive': 'Progressive'
-    },
+    choices: [
+      {
+        name: 'Default',
+        value: 'default'
+      },
+      {
+        name: 'Progressive',
+        value: 'progressive'
+      }
+    ],
     default: 'default'
   })
 ];

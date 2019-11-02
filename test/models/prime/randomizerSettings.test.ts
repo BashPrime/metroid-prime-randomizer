@@ -1,5 +1,5 @@
 import { PrimeRandomizerSettings } from '../../../src/electron/models/prime/randomizerSettings';
-import { numberRangeToObject } from '../../../src/electron/models/randomizerSettings';
+import { discreteNumberSelection } from '../../../src/electron/models/option';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -9,46 +9,33 @@ describe('PrimeRandomizerSettings', () => {
     expect(settings).to.be.an.instanceof(PrimeRandomizerSettings);
   });
 
-  it('numberRangeToObject should return full range', () => {
-    const result = numberRangeToObject(1, 12);
-    const expected = {
-      [1]: 1,
-      [2]: 2,
-      [3]: 3,
-      [4]: 4,
-      [5]: 5,
-      [6]: 6,
-      [7]: 7,
-      [8]: 8,
-      [9]: 9,
-      [10]: 10,
-      [11]: 11,
-      [12]: 12
-    };
+  it('should export settings to settings string', () => {
+    const settings = new PrimeRandomizerSettings({});
+    const expected = '2jc-0';
+    const result = settings.getSettingsString();
+
+    expect(result).to.equal(expected);
+  });
+
+  it('should import settings successfully', () => {
+    const expected = new PrimeRandomizerSettings({spoiler: false, goal: 'all-bosses'});
+    const settingsString = expected.getSettingsString();
+    const result = PrimeRandomizerSettings.fromSettingsString(settingsString);
+
+    expect(result).to.deep.equal(expected);
+    expect(result.getSettingsString()).to.equal(expected.getSettingsString());
+  });
+
+  it('discreteNumberSelection should return full range of given numbers', () => {
+    const result = discreteNumberSelection(1, 5);
+    const expected = [
+      { name: '1', value: 1 },
+      { name: '2', value: 2 },
+      { name: '3', value: 3 },
+      { name: '4', value: 4 },
+      { name: '5', value: 5 }
+    ];
 
     expect(result).to.deep.equal(expected);
   });
-
-  // it('should contain default settings', () => {
-  //   const expectedSettings = {
-  //     spoiler: false,
-  //     skipFrigate: true,
-  //     skipHudPopups: true,
-  //     hideItemModels: false,
-  //     goal: 'artifact-collection',
-  //     goalArtifacts: 12,
-  //     artifactLocationHints: false,
-  //     heatDamagePrevention: 'any-suit',
-  //     suitDamageReduction: 'default',
-  //     shuffleArtifacts: true,
-  //     shuffleMissileLauncher: true,
-  //     shuffleMorph: true,
-  //     shuffleBombs: true,
-  //     shuffleCharge: true,
-  //     shuffleSpaceJump: true
-  //   };
-  //   const settings = new PrimeRandomizerSettings({});
-
-  //   expect(settings).to.deep.include(expectedSettings);
-  // });
 });

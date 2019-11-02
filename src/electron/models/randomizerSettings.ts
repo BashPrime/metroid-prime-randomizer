@@ -22,14 +22,3 @@ export class RandomizerSettings {
 
   protected assignDefaultSettings(args: RandomizerSettingsArgs) {};
 }
-
-export function numberRangeToObject(min: number, max: number): { [key: string]: number } {
-  const obj = {};
-  const arrayRange = Array.from({ length: max - min + 1 }, (x, i) => i + 1);
-
-  arrayRange.forEach(item => {
-    obj[item.toString()] = item;
-  });
-
-  return obj;
-}

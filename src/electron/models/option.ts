@@ -1,12 +1,17 @@
 import { OptionType } from '../enums/optionType';
 import * as Utilities from '../utilities';
 
+interface SettingsChoice {
+  name: string;
+  value: string | number | boolean;
+}
+
 interface OptionArgs {
   name: string;
   displayName: string;
   type: OptionType;
   shared: boolean;
-  choices?: {[key: string]: string | number};
+  choices?: SettingsChoice[];
   default?: number | string | boolean;
   tooltip?: string;
 }
@@ -23,7 +28,7 @@ interface SelectOptionArgs {
   name: string;
   displayName: string;
   shared: boolean;
-  choices: {[key: string]: string | number}
+  choices: SettingsChoice[]
   default?: number | string;
   tooltip?: string;
 }
@@ -34,7 +39,7 @@ export class Option {
     type: OptionType;
     bitWidth: number;
     shared: boolean;
-    choices: {[key: string]: string};
+    choices: SettingsChoice[];
     default: number | string | boolean;
     tooltip: string;
 
@@ -56,10 +61,16 @@ export class Option {
 
 export class Checkbox extends Option {
   constructor(args: CheckboxArgs) {
-    const choices = {
-      True: 'checked',
-      False: 'unchecked'
-    };
+    const choices: SettingsChoice[] = [
+      {
+        name: 'True',
+        value: true
+      },
+      {
+        name: 'False',
+        value: false
+      }
+    ];
 
     super({
       name: args.name,
@@ -85,4 +96,18 @@ export class SelectOption extends Option {
       tooltip: args.tooltip
     } as OptionArgs);
   }
+}
+
+export function discreteNumberSelection(min: number, max: number): SettingsChoice[] {
+  const numberRange = Array.from({ length: max - min + 1 }, (x, i) => i + 1);
+  const selection: SettingsChoice[] = [];
+
+  for(let value of numberRange) {
+    selection.push({
+      name: value.toString(),
+      value: value
+    });
+  }
+
+  return selection;
 }
