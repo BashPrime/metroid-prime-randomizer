@@ -46,11 +46,11 @@ export class Option {
     constructor(args: OptionArgs) {
       Object.assign(this, args);
       // Get bitwidth by getting the number of choice keys present
-      this.bitWidth = this.calculateBitWidth(this.choices);
+      this.bitWidth = this.calculateBitWidth();
     }
 
-    calculateBitWidth(choices: object) {
-      const numChoices = Object.keys(choices).length;
+    private calculateBitWidth() {
+      const numChoices = this.choices.length;
       if (numChoices > 0) {
         return Math.ceil(Utilities.getBaseLog(numChoices, 2));
       }
