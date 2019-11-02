@@ -1,15 +1,13 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 
-import { ElectronService } from './services/electron.service';
-import { RandomizerForm } from '../../../common/models/randomizerForm';
+import { getDefaultSettings } from '../../../electron/models/prime/randomizerSettings';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RandomizerService {  
-  constructor(private ngZone: NgZone, private electronService: ElectronService) {
+export class RandomizerService {
+  constructor() {
     // this.electronService.ipcRenderer.on('getDefaultSettingsResponse', (event, defaultSettings) => {
     //   this.ngZone.run(() => {
     //     this.settings$.next(defaultSettings);
@@ -17,20 +15,28 @@ export class RandomizerService {
     // });
   }
 
-  getDefaultSettings() {
-    this.electronService.ipcRenderer.send('getDefaultSettings');
-  }
-
+  /**
+   * Constructs a FormGroup object representing the randomizer settings.
+   * This object is meant to be as faithful in structure to the PrimeRandomizerSettings interface as possible.
+   */
   createForm(): FormGroup {
     const fb = new FormBuilder();
-    
+    const defaults = getDefaultSettings() as any;
+
     return fb.group({
       seed: [''],
-      romSettings: fb.group({
-        baseIso: [''],
-        outputFolder: [''],
-        trilogyIso: ['']
-      })
+      baseIso: [''],
+      outputFolder: [''],
+      trilogyIso: [''],
+      spoiler: [defaults.spoiler],
+      skipFrigate: [defaults.skipFrigate],
+      skipHudPopups: [defaults.skipHudPopups],
+      hideItemModels: [defaults.hideItemModels],
+      goal: [defaults.goal],
+      goalArtifacts: [defaults.goalArtifacts],
+      artifactLocationHints: [defaults.artifactLocationHints],
+      heatDamagePrevention: [defaults.heatDamagePrevention],
+      suitDamageReduction: [defaults.suitDamageReduction]
     });
   }
 }

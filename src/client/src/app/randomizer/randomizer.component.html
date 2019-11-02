@@ -1,4 +1,4 @@
-  <div class="app-wrapper">
+<div class="app-wrapper">
   <div class="randomizer-header">
     <div class="tabs is-centered">
       <ul>
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="app-wrapper-content">
-    <app-rom-settings [form]="getForm().get('romSettings')" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
+    <app-rom-settings [form]="getForm()" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
     <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history>
   </div>
   <hr>

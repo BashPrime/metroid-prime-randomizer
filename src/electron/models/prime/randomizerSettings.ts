@@ -144,6 +144,17 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   }
 }
 
+export function getDefaultSettings(): object {
+  const defaults = {};
+  for (const setting of settings) {
+    defaults[setting.name] = setting.default;
+  }
+
+  defaults['allowedTricks'] = new PrimeRandomizerSettings({}).allowedTricks;
+
+  return defaults;
+}
+
 function getGeneralSettingsFromSettingsString(settingsString): object {
   const newSettings = {};
   const bitString = getPaddedBitStringFromSettingsString(settingsString, getTotalSharedSettingsBitWidth());
