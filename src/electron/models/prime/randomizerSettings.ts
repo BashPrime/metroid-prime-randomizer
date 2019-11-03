@@ -207,7 +207,9 @@ function getPaddedBitStringFromSettingsString(settingsString: string, length: nu
   return '0'.repeat(length - settingsBits.length) + settingsBits;
 }
 
-// Object containing settings metadata such as their default values, whether each setting is shared, etc
+/**
+ * Array of randomizer/patcher settings including their default values
+ */
 const settings = [
   new Checkbox({ name: 'spoiler', displayName: 'Create Spoiler', shared: true, default: false }),
   new Checkbox({ name: 'skipFrigate', displayName: 'Skip the Space Pirate Frigate', shared: true, default: true }),

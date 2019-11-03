@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { ElectronService } from '../services/electron.service';
+
+const NO_OUTPUT = 'none';
 
 @Component({
   selector: 'app-rom-settings',
@@ -9,10 +12,28 @@ import { ElectronService } from '../services/electron.service';
 })
 export class RomSettingsComponent implements OnInit {
   @Input('form') private form: FormGroup;
+  private fileControlsDisabled: boolean = false;
+  fileControlsDisabled$ = new Subject<boolean>();
+  fileTypes = [
+    { name: 'Compressed ISO', value: 'ciso' },
+    { name: 'Uncompressed ISO', value: 'iso' },
+    { name: 'GCZ', value: 'gcz' },
+    { name: 'No Output', value: 'none' }
+  ];
 
   constructor(private electronService: ElectronService) { }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(() => {
+      const isNoOutput = this.form.get('outputType').value === NO_OUTPUT;
+
+      if (this.fileControlsDisabled !== isNoOutput) {
+        this.fileControlsDisabled = isNoOutput;
+        this.fileControlsDisabled$.next(this.fileControlsDisabled);
+      }
+    });
+
+    this.fileControlsDisabled$.subscribe(disabled => this.setFileControlsDisabled(disabled));
   }
 
   getForm(): FormGroup {
@@ -57,4 +78,19 @@ export class RomSettingsComponent implements OnInit {
     });
   }
 
+  private setFileControlsDisabled(disabled: boolean): void {
+    const controls = [
+      'baseIso',
+      'trilogyIso'
+    ];
+    const options = { emitEvent: false };
+
+    for(let control of controls) {
+      if (disabled) {
+        this.form.get(control).disable(options);
+      } else {
+        this.form.get(control).enable(options);
+      }
+    }
+  }
 }

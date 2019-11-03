@@ -6,9 +6,9 @@
         <input class="input is-small" type="text" formControlName="baseIso">
       </div>
       <div class="control">
-        <a class="button is-info is-small" (click)="selectBaseIso()">
+        <button class="button is-info is-small" [disabled]="fileControlsDisabled$ | async" (click)="selectBaseIso()">
           Select ISO
-        </a>
+        </button>
       </div>
     </div>
     <label class="label is-small">Output Folder</label>
@@ -17,9 +17,9 @@
         <input class="input is-small" type="text" formControlName="outputFolder">
       </div>
       <div class="control">
-        <a class="button is-info is-small" (click)="selectOutputFolder()">
+        <button class="button is-info is-small" (click)="selectOutputFolder()">
           Select Folder
-        </a>
+        </button>
       </div>
     </div>
     <label class="label is-small">Trilogy ISO (for Flaahgra music fix)</label>
@@ -28,9 +28,54 @@
         <input class="input is-small" type="text" formControlName="trilogyIso">
       </div>
       <div class="control">
-        <a class="button is-info is-small" (click)="selectTrilogyIso()">
+        <button class="button is-info is-small" [disabled]="fileControlsDisabled$ | async" (click)="selectTrilogyIso()">
           Select ISO
-        </a>
+        </button>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <label class="label">File Output</label>
+        <div class="field">
+          <div class="control">
+            <div class="select is-small">
+              <select formControlName="outputType">
+                <option *ngFor="let fileType of fileTypes" value="{{ fileType.value }}">{{ fileType.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <label class="label">Game Options</label>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="spoiler"> Create Spoiler Log
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="skipFrigate"> Skip the Space Pirate Frigate
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="skipHudPopups"> Skip Item Acquisition Popups
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="hideItemModels"> Hide Item Models
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </form>
