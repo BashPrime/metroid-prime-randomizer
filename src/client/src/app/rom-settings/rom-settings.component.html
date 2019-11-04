@@ -1,41 +1,50 @@
 <div class="section app-wrapper-content">
   <form [formGroup]="getForm()">
     <label class="label is-small">Base ISO</label>
-    <div class="field has-addons">
+    <div class="field is-grouped">
       <div class="control is-expanded">
         <input class="input is-small" type="text" formControlName="baseIso">
       </div>
       <div class="control">
         <button class="button is-info is-small" [disabled]="fileControlsDisabled$ | async" (click)="selectBaseIso()">
-          Select ISO
+          Choose File
         </button>
       </div>
     </div>
     <label class="label is-small">Output Folder</label>
-    <div class="field has-addons">
+    <div class="field is-grouped">
       <div class="control is-expanded">
         <input class="input is-small" type="text" formControlName="outputFolder">
       </div>
       <div class="control">
         <button class="button is-info is-small" (click)="selectOutputFolder()">
-          Select Folder
+          Choose Folder
         </button>
+      </div>
+      <div class="control">
+        <button class="button is-info is-small">Open</button>
       </div>
     </div>
     <label class="label is-small">Trilogy ISO (for Flaahgra music fix)</label>
-    <div class="field has-addons">
+    <div class="field is-grouped">
       <div class="control is-expanded">
         <input class="input is-small" type="text" formControlName="trilogyIso">
       </div>
       <div class="control">
         <button class="button is-info is-small" [disabled]="fileControlsDisabled$ | async" (click)="selectTrilogyIso()">
-          Select ISO
+          Choose File
         </button>
       </div>
     </div>
     <div class="columns">
-      <div class="column">
-        <label class="label">File Output</label>
+      <div class="column is-centered">
+        <label class="label is-small">Number of Seeds to Generate</label>
+        <div id="generation-count" class="field">
+          <div class="control">
+            <input class="input is-small has-text-centered" type="number" formControlName="generationCount">
+          </div>
+        </div>
+        <label class="label is-small">Output Type</label>
         <div class="field">
           <div class="control">
             <div class="select is-small">
@@ -47,25 +56,25 @@
         </div>
       </div>
       <div class="column">
-        <label class="label">Game Options</label>
+        <label class="label">Game Tweaks</label>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="spoiler"> Create Spoiler Log
+              <input type="checkbox" formControlName="spoiler"> Generate Spoiler Log
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="skipFrigate"> Skip the Space Pirate Frigate
+              <input type="checkbox" formControlName="skipFrigate"> Start at Landing Site (Skips the Frigate)
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="skipHudPopups"> Skip Item Acquisition Popups
+              <input type="checkbox" formControlName="skipHudPopups"> Remove Item Acquisition Popups
             </label>
           </div>
         </div>
@@ -75,6 +84,9 @@
               <input type="checkbox" formControlName="hideItemModels"> Hide Item Models
             </label>
           </div>
+        </div>
+        <div class="field">
+          <p class="has-text-danger">Changing these settings will change the seed.</p>
         </div>
       </div>
     </div>

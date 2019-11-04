@@ -211,7 +211,7 @@ function getPaddedBitStringFromSettingsString(settingsString: string, length: nu
  * Array of randomizer/patcher settings including their default values
  */
 const settings = [
-  new Checkbox({ name: 'spoiler', displayName: 'Create Spoiler', shared: true, default: false }),
+  new Checkbox({ name: 'spoiler', displayName: 'Create Spoiler', shared: true, default: true }),
   new Checkbox({ name: 'skipFrigate', displayName: 'Skip the Space Pirate Frigate', shared: true, default: true }),
   new Checkbox({ name: 'skipHudPopups', displayName: 'Skip Item Acquisition Popups', shared: true, default: true }),
   new Checkbox({ name: 'hideItemModels', displayName: 'Hide Item Models', shared: true, default: false }),

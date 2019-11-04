@@ -36,12 +36,12 @@ html, body {
       position: absolute;
       top: calc(50% - 2.5em);
       left: calc(50% - 2.5em);
-      width: 5em;
-      height: 5em;
+      width: 5rem;
+      height: 5rem;
   }
 }
 
-.input {
+.select select, .textarea, .input {
   background-color: #101010;
   color: #efefef;
   border-color: #404040;
@@ -51,4 +51,16 @@ html, body {
   background-color: #202020;
   color: #b0b0b0;
   border-color: #606060;
+}
+
+// Remove spinners from number inputs
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
 }

@@ -15,8 +15,8 @@ export class RomSettingsComponent implements OnInit {
   private fileControlsDisabled: boolean = false;
   fileControlsDisabled$ = new Subject<boolean>();
   fileTypes = [
+    { name: 'ISO', value: 'iso' },
     { name: 'Compressed ISO', value: 'ciso' },
-    { name: 'Uncompressed ISO', value: 'iso' },
     { name: 'GCZ', value: 'gcz' },
     { name: 'No Output', value: 'none' }
   ];

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { PrimeRandomizerSettings } from '../../../electron/models/prime/randomizerSettings';
 
@@ -23,13 +23,13 @@ export class RandomizerService {
     const fb = new FormBuilder();
     const defaults = new PrimeRandomizerSettings({});
 
-
     return fb.group({
       seed: [''],
       baseIso: [''],
       outputFolder: [''],
       trilogyIso: [''],
-      outputType: ['ciso'],
+      outputType: ['iso'],
+      generationCount: [1, [Validators.min(1), Validators.max(99)]],
       spoiler: [defaults.spoiler],
       skipFrigate: [defaults.skipFrigate],
       skipHudPopups: [defaults.skipHudPopups],
