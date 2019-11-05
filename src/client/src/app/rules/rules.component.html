@@ -1,0 +1,14 @@
+<div class="section">
+  <form [formGroup]="getForm()">
+    <label class="label is-small">Goal</label>
+    <div class="field">
+      <div class="control">
+        <div class="select is-small">
+          <select formControlName="goal">
+            <option *ngFor="let goal of goals" value="{{ goal.value }}">{{ goal.name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

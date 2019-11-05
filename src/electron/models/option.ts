@@ -1,7 +1,7 @@
 import { OptionType } from '../enums/optionType';
 import * as Utilities from '../utilities';
 
-interface SettingsChoice {
+export interface SettingsChoice {
   name: string;
   value: string | number | boolean;
 }

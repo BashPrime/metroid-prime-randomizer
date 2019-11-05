@@ -9,6 +9,7 @@ import { SeedHistoryComponent } from './seed-history/seed-history.component';
 import { RomGenerationComponent } from './rom-generation/rom-generation.component';
 import { RandomizerComponent } from './randomizer/randomizer.component';
 import { RomSettingsComponent } from './rom-settings/rom-settings.component';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RomSettingsComponent } from './rom-settings/rom-settings.component';
     SeedHistoryComponent,
     RomGenerationComponent,
     RandomizerComponent,
-    RomSettingsComponent
+    RomSettingsComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
