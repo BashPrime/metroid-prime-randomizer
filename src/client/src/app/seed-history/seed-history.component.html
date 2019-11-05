@@ -1,16 +1,18 @@
-<div *ngIf="isLoaded then loaded; else loading"></div>
-<ng-template #loaded>
-  <p *ngIf="!seeds || !seeds.length">No seeds were found.</p>
-  <div *ngFor="let seed of seeds" class="seed">
-    <a (click)="setUpRomGeneration(seed)">
-      <p>
-        <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
-        <span class="subtitle is-6">{{ seed.seed }}</span>
-      </p>
-      <p class="subtitle is-6">{{ seed.date | date:'MMMM d y - h:mm a' }}</p>
-    </a>
-  </div>
-</ng-template>
-<ng-template #loading>
-  <div class="loading-indicator"></div>
-</ng-template>
+<div class="section">
+  <div *ngIf="isLoaded then loaded; else loading"></div>
+  <ng-template #loaded>
+    <p *ngIf="!seeds || !seeds.length">No seeds were found.</p>
+    <div *ngFor="let seed of seeds" class="seed">
+      <a (click)="setUpRomGeneration(seed)">
+        <p>
+          <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
+          <span class="subtitle is-6">{{ seed.seed }}</span>
+        </p>
+        <p class="subtitle is-6">{{ seed.date | date:'MMMM d y - h:mm a' }}</p>
+      </a>
+    </div>
+  </ng-template>
+  <ng-template #loading>
+    <div class="loading-indicator"></div>
+  </ng-template>
+</div>
