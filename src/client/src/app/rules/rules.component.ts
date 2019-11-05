@@ -9,7 +9,13 @@ import { getChoices } from '../../../../electron/models/prime/randomizerSettings
 })
 export class RulesComponent implements OnInit {
   @Input('form') private form: FormGroup;
-  goals = getChoices('goal');
+  private readonly choices = {
+    goal: getChoices('goal'),
+    goalArtifacts: getChoices('goalArtifacts'),
+    heatProtection: getChoices('heatProtection'),
+    suitDamageReduction: getChoices('suitDamageReduction')
+  };
+  private readonly artifactCollection = 'artifact-collection';
 
   constructor() { }
 
@@ -20,4 +26,11 @@ export class RulesComponent implements OnInit {
     return this.form;
   }
 
+  getDropdownChoices(name: string) {
+    return this.choices[name];
+  }
+
+  isArtifactCollectionSelected(): boolean {
+    return this.form.get('goal').value === this.artifactCollection;
+  }
 }

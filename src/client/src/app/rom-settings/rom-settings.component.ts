@@ -14,7 +14,7 @@ export class RomSettingsComponent implements OnInit {
   @Input('form') private form: FormGroup;
   private fileControlsDisabled: boolean = false;
   fileControlsDisabled$ = new Subject<boolean>();
-  fileTypes = [
+  readonly fileTypes = [
     { name: 'ISO', value: 'iso' },
     { name: 'Compressed ISO', value: 'ciso' },
     { name: 'GCZ', value: 'gcz' },

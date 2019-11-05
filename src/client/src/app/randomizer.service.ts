@@ -30,7 +30,7 @@ export class RandomizerService {
       goal: [defaults.goal],
       goalArtifacts: [defaults.goalArtifacts],
       artifactLocationHints: [defaults.artifactLocationHints],
-      heatDamagePrevention: [defaults.heatDamagePrevention],
+      heatProtection: [defaults.heatProtection],
       suitDamageReduction: [defaults.suitDamageReduction]
     });
   }

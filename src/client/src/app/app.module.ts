@@ -10,6 +10,7 @@ import { RomGenerationComponent } from './rom-generation/rom-generation.componen
 import { RandomizerComponent } from './randomizer/randomizer.component';
 import { RomSettingsComponent } from './rom-settings/rom-settings.component';
 import { RulesComponent } from './rules/rules.component';
+import { TwoPanelMultiselectComponent } from './two-panel-multiselect/two-panel-multiselect.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RulesComponent } from './rules/rules.component';
     RomGenerationComponent,
     RandomizerComponent,
     RomSettingsComponent,
-    RulesComponent
+    RulesComponent,
+    TwoPanelMultiselectComponent
   ],
   imports: [
     BrowserModule,

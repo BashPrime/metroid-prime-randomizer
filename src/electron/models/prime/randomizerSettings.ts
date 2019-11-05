@@ -18,7 +18,7 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   goal?: string;
   goalArtifacts?: number;
   artifactLocationHints?: boolean;
-  heatDamagePrevention?: string;
+  heatProtection?: string;
   suitDamageReduction?: string;
   disabledLocations?: DisabledLocations;
   allowedTricks?: AllowedTricks;
@@ -33,7 +33,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   goal: string;
   goalArtifacts: number;
   artifactLocationHints: boolean;
-  heatDamagePrevention: string;
+  heatProtection: string;
   suitDamageReduction: string;
   disabledLocations: DisabledLocations;
   allowedTricks: AllowedTricks;
@@ -235,10 +235,10 @@ const settings = [
     choices: discreteNumberSelection(1, 12),
     default: 12
   }),
-  new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: false }),
+  new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: true }),
   new SelectOption({
-    name: 'heatDamagePrevention',
-    displayName: 'Heat Damage Prevention',
+    name: 'heatProtection',
+    displayName: 'Heat Protection',
     shared: true,
     choices: [
       {

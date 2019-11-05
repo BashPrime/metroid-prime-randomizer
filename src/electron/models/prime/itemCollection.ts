@@ -49,7 +49,7 @@ export class PrimeItemCollection extends ItemCollection {
   }
 
   hasSuit(settings: PrimeRandomizerSettings): boolean {
-    if (settings.heatDamagePrevention === HeatDamagePrevention.VARIA_ONLY) {
+    if (settings.heatProtection === HeatDamagePrevention.VARIA_ONLY) {
       return this.has(PrimeItem.VARIA_SUIT);
     }
 
