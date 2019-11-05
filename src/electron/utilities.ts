@@ -18,6 +18,10 @@ export function getAppDataPath(): string {
   return path.join(app.getPath('userData'), 'data');
 }
 
+export function getRandomizerDocumentsPath(): string {
+  return path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
+}
+
 export function getBaseLog(x: number, base: number) {
   return Math.log(x) / Math.log(base);
 }

@@ -78,6 +78,10 @@ export class RomSettingsComponent implements OnInit {
     });
   }
 
+  openOutputFolder() {
+    this.electronService.ipcRenderer.send('openOutputFolder', this.form.get('outputFolder').value);
+  }
+
   private setFileControlsDisabled(disabled: boolean): void {
     const controls = [
       'baseIso',
