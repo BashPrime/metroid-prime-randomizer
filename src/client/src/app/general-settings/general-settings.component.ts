@@ -6,11 +6,11 @@ import { ElectronService } from '../services/electron.service';
 const NO_OUTPUT = 'none';
 
 @Component({
-  selector: 'app-rom-settings',
-  templateUrl: './rom-settings.component.html',
-  styleUrls: ['./rom-settings.component.scss']
+  selector: 'app-general-settings',
+  templateUrl: './general-settings.component.html',
+  styleUrls: ['./general-settings.component.scss']
 })
-export class RomSettingsComponent implements OnInit {
+export class GeneralSettingsComponent implements OnInit {
   @Input('form') private form: FormGroup;
   private fileControlsDisabled: boolean = false;
   fileControlsDisabled$ = new Subject<boolean>();

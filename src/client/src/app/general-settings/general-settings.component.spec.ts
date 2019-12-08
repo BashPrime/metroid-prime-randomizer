@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RomSettingsComponent } from './rom-settings.component';
+import { GeneralSettingsComponent } from './general-settings.component';
 
-describe('RomSettingsComponent', () => {
-  let component: RomSettingsComponent;
-  let fixture: ComponentFixture<RomSettingsComponent>;
+describe('GeneralSettingsComponent', () => {
+  let component: GeneralSettingsComponent;
+  let fixture: ComponentFixture<GeneralSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RomSettingsComponent ]
+      declarations: [ GeneralSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RomSettingsComponent);
+    fixture = TestBed.createComponent(GeneralSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

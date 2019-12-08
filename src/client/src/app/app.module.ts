@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { SeedHistoryComponent } from './seed-history/seed-history.component';
 import { RomGenerationComponent } from './rom-generation/rom-generation.component';
 import { RandomizerComponent } from './randomizer/randomizer.component';
-import { RomSettingsComponent } from './rom-settings/rom-settings.component';
+import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { RulesComponent } from './rules/rules.component';
 import { TwoPanelMultiselectComponent } from './two-panel-multiselect/two-panel-multiselect.component';
 
@@ -18,7 +18,7 @@ import { TwoPanelMultiselectComponent } from './two-panel-multiselect/two-panel-
     SeedHistoryComponent,
     RomGenerationComponent,
     RandomizerComponent,
-    RomSettingsComponent,
+    GeneralSettingsComponent,
     RulesComponent,
     TwoPanelMultiselectComponent
   ],

@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="app-wrapper-content">
-    <app-rom-settings [form]="getForm()" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-rom-settings>
+    <app-general-settings [form]="getForm()" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-general-settings>
     <app-rules [form]="getForm()" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
     <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history>
   </div>
