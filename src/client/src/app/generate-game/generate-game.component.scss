@@ -1,0 +1,12 @@
+button.is-generate-button {
+  min-width: 12em;
+
+  &.is-spoiler {
+    background-color: #900000;
+    border-color: transparent;
+  }
+}
+
+.field.is-generate-field {
+  margin: 2em;
+}

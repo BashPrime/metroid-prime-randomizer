@@ -10,12 +10,15 @@
     </div>
   </div>
   <div class="app-wrapper-content">
-    <app-general-settings [form]="getForm()" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-general-settings>
-    <app-rules [form]="getForm()" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+    <app-welcome *ngIf="isTabIdSelected(tabIds.welcome)"></app-welcome>
+    <app-generate-game *ngIf="isTabIdSelected(tabIds.generateGame)"></app-generate-game>
     <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history>
+    <!-- <app-general-settings [form]="getForm()" *ngIf="isTabIdSelected(tabIds.romSettings)"></app-general-settings>
+    <app-rules [form]="getForm()" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+    <app-seed-history *ngIf="isTabIdSelected(tabIds.history)"></app-seed-history> -->
   </div>
   <hr>
-  <div class="section randomizer-footer">
+  <!-- <div class="section randomizer-footer">
     <form [formGroup]="getForm()">
       <div class="columns">
         <div class="column">
@@ -51,5 +54,5 @@
         </div>
       </div>
     </form>
-  </div>
+  </div> -->
 </div>

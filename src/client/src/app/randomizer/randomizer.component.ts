@@ -11,18 +11,16 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
 })
 export class RandomizerComponent implements OnInit {
   readonly tabIds = {
-    generalSettings: 0,
-    rules: 1,
-    logic: 2,
-    history: 3
+    welcome: 0,
+    generateGame: 1,
+    history: 2
   };
   private tabs: Tab[] = [
-    { id: this.tabIds.generalSettings, name: 'General Settings' },
-    { id: this.tabIds.rules, name: 'Rules' },
-    { id: this.tabIds.logic, name: 'Logic' },
-    { id: this.tabIds.history, name: 'History' }
+    { id: this.tabIds.welcome, name: 'Welcome' },
+    { id: this.tabIds.generateGame, name: 'Generate Game' },
+    { id: this.tabIds.history, name: 'History' },
   ];
-  private selectedTabId: number = this.tabIds.generalSettings;
+  private selectedTabId: number = this.tabIds.welcome;
   private form: FormGroup;
 
   constructor(private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
