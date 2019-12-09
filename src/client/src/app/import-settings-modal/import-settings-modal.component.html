@@ -1,0 +1,29 @@
+<div class="modal" [class.is-active]="getOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Import Seed</p>
+      <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
+    </header>
+    <section class="modal-card-body has-text-left">
+      <label class="label">Seed</label>
+      <form [formGroup]="getForm()">
+        <div class="field">
+          <div class="control">
+            <input class="input is-small" type="text" formControlName="seed">
+          </div>
+        </div>
+        <label class="label">Settings String</label>
+        <div class="field">
+          <div class="control">
+            <input class="input is-small" type="text" formControlName="settingsString">
+          </div>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success">Import</button>
+      <button class="button" (click)="setOpen(false)">Cancel</button>
+    </footer>
+  </div>
+</div>

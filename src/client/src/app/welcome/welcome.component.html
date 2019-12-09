@@ -2,23 +2,8 @@
   <h1 class="title">Welcome</h1>
   <div class="buttons are-large is-centered">
     <button class="button is-link" (click)="goToGenerateGame()">Generate New Game</button>
-    <button class="button is-info">Import Seed</button>
+    <button class="button is-info" (click)="openModal()">Import Seed</button>
   </div>
   <a class="button" (click)="openExternalUrl(faqLink)">Open FAQ</a>
-  <div class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Modal title</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <!-- Content ... -->
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
-      </footer>
-    </div>
-  </div>
+  <app-import-settings-modal></app-import-settings-modal>
 </div>

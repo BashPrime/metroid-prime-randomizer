@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from '../services/electron.service';
 import { ApplicationService } from '../services/application.service';
+import { ImportSettingsModalComponent } from '../import-settings-modal/import-settings-modal.component';
 
 @Component({
   selector: 'app-welcome',
@@ -9,6 +10,7 @@ import { ApplicationService } from '../services/application.service';
 })
 export class WelcomeComponent implements OnInit {
   readonly faqLink = 'https://randomizer.metroidpime.run/randomizer/prime/article/faq';
+  @ViewChild(ImportSettingsModalComponent, {static: false}) private modal: ImportSettingsModalComponent;
   private readonly generateGameTab = 1;
 
   constructor(private applicationService: ApplicationService, private electronService: ElectronService) { }
@@ -22,5 +24,9 @@ export class WelcomeComponent implements OnInit {
 
   goToGenerateGame() {
     this.applicationService.selectTab(this.generateGameTab);
+  }
+
+  openModal() {
+    this.modal.setOpen(true);
   }
 }
