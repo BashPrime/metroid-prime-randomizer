@@ -1,9 +1,12 @@
+<p>{{ getDefaultPresets() | json }}</p>
 <div class="section">
   <label class="label is-small">Settings Presets</label>
   <div class="field is-grouped">
     <div class="control is-expanded">
       <div class="select is-fullwidth is-small">
         <select>
+          <option>Custom</option>
+          <option *ngFor="let key of objectKeys(getDefaultPresets())" [value]="key">{{ key }}</option>
           <option>Default / Beginner</option>
           <option>Easy Tricks</option>
           <option>Normal Tricks</option>
@@ -14,9 +17,7 @@
       </div>
     </div>
     <div class="control">
-      <button class="button is-info is-small" [disabled]="fileControlsDisabled$ | async" (click)="selectBaseIso()">
-        Customize
-      </button>
+      <button class="button is-info is-small">Customize</button>
     </div>
   </div>
   <div class="field is-generate-field">
