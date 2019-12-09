@@ -13,6 +13,7 @@ import { RulesComponent } from './rules/rules.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { GenerateGameComponent } from './generate-game/generate-game.component';
 import { ImportSettingsModalComponent } from './import-settings-modal/import-settings-modal.component';
+import { CustomizeSettingsModalComponent } from './customize-settings-modal/customize-settings-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ImportSettingsModalComponent } from './import-settings-modal/import-set
     RulesComponent,
     WelcomeComponent,
     GenerateGameComponent,
-    ImportSettingsModalComponent
+    ImportSettingsModalComponent,
+    CustomizeSettingsModalComponent
   ],
   imports: [
     BrowserModule,

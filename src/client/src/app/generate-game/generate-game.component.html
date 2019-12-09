@@ -1,31 +1,28 @@
-<p>{{ getDefaultPresets() | json }}</p>
 <div class="section">
-  <label class="label is-small">Settings Presets</label>
-  <div class="field is-grouped">
-    <div class="control is-expanded">
-      <div class="select is-fullwidth is-small">
-        <select>
-          <option>Custom</option>
-          <option *ngFor="let key of objectKeys(getDefaultPresets())" [value]="key">{{ key }}</option>
-          <option>Default / Beginner</option>
-          <option>Easy Tricks</option>
-          <option>Normal Tricks</option>
-          <option>Hard Tricks</option>
-          <option>Insane Tricks</option>
-          <option>2019 Tournament</option>
-        </select>
+  <form [formGroup]="getForm()">
+    <label class="label is-small">Settings Presets</label>
+    <div class="field is-grouped">
+      <div class="control is-expanded">
+        <div class="select is-fullwidth is-small">
+          <select>
+            <option>Custom</option>
+            <option *ngFor="let key of objectKeys(getDefaultPresets())" [value]="key" [selected]="isSelected(key)">
+              {{ key }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="control">
+        <button class="button is-info is-small" (click)="openModal()">Customize</button>
       </div>
     </div>
-    <div class="control">
-      <button class="button is-info is-small">Customize</button>
-    </div>
-  </div>
-  <div class="field is-generate-field">
-    <div class="control">
-      <div class="buttons are-large is-centered">
-        <button class="button is-generate-button is-link">Generate</button>
-        <button class="button is-generate-button is-link is-spoiler">Generate with Spoilers</button>
+    <!-- <div class="field is-generate-field">
+      <div class="control">
+        <div class="buttons is-centered">
+          <button class="button is-generate-button is-success">Generate</button>
+          <button class="button is-generate-button is-link">Generate with Spoilers</button>
+        </div>
       </div>
-    </div>
-  </div>
+    </div> -->
+  </form>
+  <app-customize-settings-modal></app-customize-settings-modal>
 </div>

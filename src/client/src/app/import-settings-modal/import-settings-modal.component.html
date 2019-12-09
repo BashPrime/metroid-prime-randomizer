@@ -6,8 +6,8 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <label class="label">Seed</label>
       <form [formGroup]="getForm()">
+        <label class="label">Seed</label>
         <div class="field">
           <div class="control">
             <input class="input is-small" type="text" formControlName="seed">
