@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../services/generator.service';
 import { RandomizerService } from '../randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { ApplicationService } from '../services/application.service';
 
 @Component({
   selector: 'app-randomizer',
@@ -23,11 +24,16 @@ export class RandomizerComponent implements OnInit {
   private selectedTabId: number = this.tabIds.welcome;
   private form: FormGroup;
 
-  constructor(private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
+  constructor(private applicationService: ApplicationService, private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
     // Get initial formgroup from randomizer service
     this.form = this.randomizerService.createForm();
+
+    // Subscribe to selected tab subject in application service
+    this.applicationService.selectedTabId$.subscribe(tabId => {
+      this.selectedTabId = tabId;
+    });
   }
 
   getForm(): FormGroup {

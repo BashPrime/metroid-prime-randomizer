@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from '../services/electron.service';
+import { ApplicationService } from '../services/application.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,9 +8,10 @@ import { ElectronService } from '../services/electron.service';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  readonly faqLink = 'https://randomizer.metroidprime.run/randomizer/prime/article/faq';
+  readonly faqLink = 'https://randomizer.metroidpime.run/randomizer/prime/article/faq';
+  private readonly generateGameTab = 1;
 
-  constructor(private electronService: ElectronService) { }
+  constructor(private applicationService: ApplicationService, private electronService: ElectronService) { }
 
   ngOnInit() {
   }
@@ -18,4 +20,7 @@ export class WelcomeComponent implements OnInit {
     this.electronService.shell.openExternal(url);
   }
 
+  goToGenerateGame() {
+    this.applicationService.selectTab(this.generateGameTab);
+  }
 }
