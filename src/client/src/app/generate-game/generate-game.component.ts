@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { CustomizeSettingsModalComponent } from '../customize-settings-modal/customize-settings-modal.component.js';
+import { CustomizeSettingsModalComponent } from '../customize-settings-modal/customize-settings-modal.component';
 import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
 
 @Component({
