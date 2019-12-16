@@ -3,6 +3,9 @@
 @import './assets/scss/bulma_overrides';
 @import '~bulma/bulma';
 @import '~bulmaswatch/darkly/_overrides';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/nova-dark/theme.css';
+@import '~primeng/resources/primeng.min.css';
 
 html {
   overflow: auto;
