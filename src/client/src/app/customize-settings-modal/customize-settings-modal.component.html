@@ -1,11 +1,19 @@
 <div class="modal" [class.is-active]="getOpen()">
   <div class="modal-background"></div>
-  <div class="modal-card">
+  <div class="modal-card" style="width: 90%; height: 90%;">
     <header class="modal-card-head">
       <p class="modal-card-title">Customize Settings</p>
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
+      <p-pickList [source]="items" [target]="selected" [responsive]="true" [style]="{height: '100%'}"
+        [sourceStyle]="{height: '100%'}" [targetStyle]="{height: '100%'}" [showSourceControls]="false"
+        [showTargetControls]="false">
+        <ng-template let-item pTemplate="item">
+          <p style="font-weight: bold;">{{ item.label }}</p>
+          <p>{{ item.value }}</p>
+        </ng-template>
+      </p-pickList>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success">Save</button>

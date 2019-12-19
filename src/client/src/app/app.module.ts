@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { PickListModule } from 'primeng/picklist';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +37,7 @@ import { CustomizeSettingsModalComponent } from './customize-settings-modal/cust
     ReactiveFormsModule,
     AppRoutingModule,
     FontAwesomeModule,
-    MultiSelectModule
+    PickListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
