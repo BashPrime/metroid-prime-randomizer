@@ -6,15 +6,9 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <p-pickList [source]="items" [target]="selected" [metaKeySelection]="false" [responsive]="true"
-        [style]="{height: 'calc(100% - 20px)'}" [sourceStyle]="{height: 'calc(100% - 20px)'}" [targetStyle]="{height: 'calc(100% - 20px)'}"
-        [showSourceControls]="false" [showTargetControls]="false" sourceHeader="Available" targetHeader="Selected">
-        <ng-template let-item pTemplate="item">
-          <div>
-            <span style="font-weight: bold;">{{ item.label }}</span>
-          </div>
-        </ng-template>
-      </p-pickList>
+      <app-picklist [source]="items" [target]="selected" [style]="{height: 'calc(100% - 20px)'}"
+        [sourceStyle]="{height: 'calc(100% - 20px)'}" [targetStyle]="{height: 'calc(100% - 20px)'}"
+        [sourceHeader]="'Available'" [targetHeader]="'Selected'"></app-picklist>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success">Save</button>

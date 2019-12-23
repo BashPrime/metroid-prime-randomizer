@@ -16,6 +16,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { GenerateGameComponent } from './generate-game/generate-game.component';
 import { ImportSettingsModalComponent } from './import-settings-modal/import-settings-modal.component';
 import { CustomizeSettingsModalComponent } from './customize-settings-modal/customize-settings-modal.component';
+import { PicklistComponent } from './picklist/picklist.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CustomizeSettingsModalComponent } from './customize-settings-modal/cust
     WelcomeComponent,
     GenerateGameComponent,
     ImportSettingsModalComponent,
-    CustomizeSettingsModalComponent
+    CustomizeSettingsModalComponent,
+    PicklistComponent
   ],
   imports: [
     BrowserModule,

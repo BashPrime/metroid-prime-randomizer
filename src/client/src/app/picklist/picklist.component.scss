@@ -1,0 +1,11 @@
+:host {
+  ::ng-deep .ui-picklist .ui-picklist-list {
+    background-color: #101010;
+    color: #efefef;
+    border-color: #404040;
+
+    .ui-picklist-item {
+      color: #efefef;
+    }
+  }
+}
