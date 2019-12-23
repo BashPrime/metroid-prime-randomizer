@@ -270,17 +270,17 @@ const settings = [
   })
 ];
 
-const tricks = {
+export const details: OptionDetails = {
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',
-    tooltip: `
+    description: `
       It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
       This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
     `
   },
   boostThroughBombTunnels: {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
-    tooltip: `
+    description: `
       In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
 
       This trick is difficult and not recommended for beginners.
@@ -288,45 +288,53 @@ const tricks = {
   },
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
-    tooltip: `
+    description: `
       Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.
     `
   },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
-    tooltip: `
+    description: `
       Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.
     `
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
-    tooltip: `
+    description: `
       The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.
     `
   },
   towerChamberNoGravity: {
     name: 'Tower Chamber without Gravity Suit',
-    tooltip: `
-      Can be reached by slope jumping underwater to the door.
+    description: `
+      The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.
     `
   },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
-    tooltip: `
+    description: `
       Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
     `
   },
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',
-    tooltip: `
-
-      Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
+    description: `
+      Can space jump to the upper ledge in Monitor Station via R jump or dash.
     `
   }
 };
 
+interface OptionDetails {
+  [key: string]: OptionDetail;
+}
+
+interface OptionDetail {
+  name: string;
+  description: string;
+}
+
 interface AllowedTricks {
-  alcoveNoItems: false,
+  alcoveNoItems: boolean,
   arborChamberWithoutPlasma: boolean;
   boostThroughBombTunnels: boolean;
   climbTowerOfLightNoMissiles: boolean;

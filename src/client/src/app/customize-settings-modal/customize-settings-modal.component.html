@@ -6,7 +6,7 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <app-picklist [source]="items" [target]="selected" [style]="{height: 'calc(100% - 20px)'}"
+      <app-picklist [source]="tricks.available" [target]="tricks.selected" [style]="{height: 'calc(100% - 20px)'}"
         [sourceStyle]="{height: 'calc(100% - 20px)'}" [targetStyle]="{height: 'calc(100% - 20px)'}"
         [sourceHeader]="'Available'" [targetHeader]="'Selected'"></app-picklist>
     </section>

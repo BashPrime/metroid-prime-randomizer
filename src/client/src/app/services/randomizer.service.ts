@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PrimeRandomizerSettings } from '../../../../electron/models/prime/randomizerSettings';
+import { PrimeRandomizerSettings, details } from '../../../../electron/models/prime/randomizerSettings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RandomizerService {
-  private readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings({});
-  constructor() {}
+  readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings({});
+  readonly DETAILS = details;
 
-  getDefaultSettings() {
-    return this.DEFAULT_SETTINGS;
-  }
+  constructor() {}
 
   /**
    * Constructs a FormGroup object representing the randomizer settings.

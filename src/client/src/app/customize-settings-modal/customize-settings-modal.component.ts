@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import { RandomizerService } from '../services/randomizer.service';
 
 @Component({
   selector: 'app-customize-settings-modal',
@@ -8,37 +9,33 @@ import { SelectItem } from 'primeng/api';
   styleUrls: ['./customize-settings-modal.component.scss']
 })
 export class CustomizeSettingsModalComponent implements OnInit {
-  items: SelectItem[] = [
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test1' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test2' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test3' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test4' },
-    { label: 'Okay how about this', value: 'test5' },
-    { label: 'B-but memes!!!111', value: 'test6' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test7' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test8' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test9' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test1' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test2' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test3' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test4' },
-    { label: 'Okay how about this', value: 'test5' },
-    { label: 'B-but memes!!!111', value: 'test6' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test7' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test8' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test9' },
-  ];
-  selected: SelectItem[] = [];
+  tricks: PickList = {
+    available: [],
+    selected: []
+  };
   private open: boolean = false;
   private form: FormGroup;
 
-  constructor() { }
+  constructor(private randomizerService: RandomizerService) {}
 
   ngOnInit() {
+    const settings = this.randomizerService.DEFAULT_SETTINGS;
     const fb = new FormBuilder();
     this.form = fb.group({
       settings: [null]
     });
+
+    for (let key of Object.keys(settings.allowedTricks)) {
+      const trickDetails = this.randomizerService.DETAILS[key];
+
+      if (trickDetails) {
+        const trick = {
+          label: trickDetails.name,
+          value: key
+        };
+        this.tricks.available.push(trick);
+      }
+    }
   }
 
   getForm(): FormGroup {
@@ -52,4 +49,9 @@ export class CustomizeSettingsModalComponent implements OnInit {
   setOpen(open: boolean) {
     this.open = open;
   }
+}
+
+interface PickList {
+  available: SelectItem[];
+  selected: SelectItem[];
 }
