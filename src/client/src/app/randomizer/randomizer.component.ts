@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../services/generator.service';
-import { RandomizerService } from '../randomizer.service';
+import { RandomizerService } from '../services/randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
 import { ApplicationService } from '../services/application.service';
 
