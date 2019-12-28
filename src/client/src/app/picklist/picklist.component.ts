@@ -11,8 +11,8 @@ import { SelectItem } from 'primeng/api';
   styleUrls: ['./picklist.component.scss']
 })
 export class PicklistComponent implements OnInit {
-  @Input() source: SelectItem[];
-  @Input() target: SelectItem[];
+  @Input() source: PicklistItem[];
+  @Input() target: PicklistItem[];
   @Input() style: object;
   @Input() sourceStyle: object;
   @Input() targetStyle: object;
@@ -23,4 +23,8 @@ export class PicklistComponent implements OnInit {
 
   ngOnInit() {
   }
+}
+
+export interface PicklistItem extends SelectItem {
+  tooltip?: string;
 }

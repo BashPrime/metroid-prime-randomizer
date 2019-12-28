@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +40,8 @@ import { PicklistComponent } from './picklist/picklist.component';
     ReactiveFormsModule,
     AppRoutingModule,
     FontAwesomeModule,
-    PickListModule
+    PickListModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

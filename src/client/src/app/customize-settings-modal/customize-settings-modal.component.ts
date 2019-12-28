@@ -9,6 +9,7 @@ import { RandomizerService } from '../services/randomizer.service';
   styleUrls: ['./customize-settings-modal.component.scss']
 })
 export class CustomizeSettingsModalComponent implements OnInit {
+  readonly picklistStyle = { height: 'calc(100% - 70px)' };
   tricks: PickList = {
     available: [],
     selected: []
@@ -31,7 +32,8 @@ export class CustomizeSettingsModalComponent implements OnInit {
       if (trickDetails) {
         const trick = {
           label: trickDetails.name,
-          value: key
+          value: key,
+          tooltip: trickDetails.description
         };
         this.tricks.available.push(trick);
       }

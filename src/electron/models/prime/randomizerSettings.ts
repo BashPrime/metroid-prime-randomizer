@@ -152,21 +152,21 @@ function getGeneralSettingsFromSettingsString(settingsString): object {
   const newSettings = {};
   const bitString = getPaddedBitStringFromSettingsString(settingsString, getTotalSharedSettingsBitWidth());
 
-    let index = 0;
-    for (const setting of settings.filter(setting => setting.shared)) {
-      const bitWidth = setting.bitWidth;
-      const currentBits = bitString.substr(index, bitWidth);
+  let index = 0;
+  for (const setting of settings.filter(setting => setting.shared)) {
+    const bitWidth = setting.bitWidth;
+    const currentBits = bitString.substr(index, bitWidth);
 
-      switch (setting.type) {
-        case OptionType.BOOLEAN:
-          newSettings[setting.name] = parseInt(currentBits, 2) === 1 ? true : false;
-          break;
-        case OptionType.SELECT:
-          newSettings[setting.name] = setting.choices[parseInt(currentBits, 2)].value;
-          break;
-      }
-      index += bitWidth;
+    switch (setting.type) {
+      case OptionType.BOOLEAN:
+        newSettings[setting.name] = parseInt(currentBits, 2) === 1 ? true : false;
+        break;
+      case OptionType.SELECT:
+        newSettings[setting.name] = setting.choices[parseInt(currentBits, 2)].value;
+        break;
     }
+    index += bitWidth;
+  }
 
   return newSettings;
 }
@@ -179,7 +179,7 @@ function getAllowedTricksFromSettingString(settingsString: string): AllowedTrick
   let index = 0;
   for (const trickKey of allowedTrickKeys) {
     const currentBit = bitString.substr(index, 1);
-    newAllowedTricks[trickKey] = currentBit === '1'? true : false;
+    newAllowedTricks[trickKey] = currentBit === '1' ? true : false;
     index += 1;
   }
   return newAllowedTricks as AllowedTricks;
@@ -273,54 +273,42 @@ const settings = [
 export const details: OptionDetails = {
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',
-    description: `
-      It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
-      This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.
-    `
+    description: `It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
+      This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.`
+  },
+  arborChamberWithoutPlasma: {
+    name: 'Arbor Chamber without Plasma Beam',
+    description: `Arbor Chamber can be entered through the ceiling by going out of bounds.`
   },
   boostThroughBombTunnels: {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
-    description: `
-      In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
+    description: `In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
 
-      This trick is difficult and not recommended for beginners.
-    `
+    This trick is difficult and not recommended for beginners.`
   },
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
-    description: `
-      Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.
-    `
+    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`
   },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
-    description: `
-      Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.
-    `
+    description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
-    description: `
-      The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.
-    `
+    description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`
   },
   towerChamberNoGravity: {
     name: 'Tower Chamber without Gravity Suit',
-    description: `
-      The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.
-    `
+    description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`
   },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
-    description: `
-      Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).
-    `
+    description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`
   },
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',
-    description: `
-      Can space jump to the upper ledge in Monitor Station via R jump or dash.
-    `
+    description: `Can space jump to the upper ledge in Monitor Station via R jump or dash.`
   }
 };
 
