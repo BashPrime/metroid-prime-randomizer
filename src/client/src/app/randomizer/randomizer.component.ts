@@ -4,6 +4,7 @@ import { GeneratorService } from '../services/generator.service';
 import { RandomizerService } from '../services/randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
 import { ApplicationService } from '../services/application.service';
+import { Tab } from '../../../../common/models/tab';
 
 @Component({
   selector: 'app-randomizer',
@@ -59,9 +60,4 @@ export class RandomizerComponent implements OnInit {
   generateSeed(): void {
     this.generatorService.generateSeed();
   }
-}
-
-interface Tab {
-  id: number;
-  name: string;
 }

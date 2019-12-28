@@ -1,14 +1,20 @@
 <div class="modal" [class.is-active]="getOpen()">
   <div class="modal-background"></div>
-  <div class="modal-card" style="width: 90%; height: 90%;">
+  <div class="modal-card" style="width: 95%; height: 95%;">
     <header class="modal-card-head">
       <p class="modal-card-title">Customize Settings</p>
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <app-picklist [source]="tricks.available" [target]="tricks.selected" [style]="{height: 'calc(100% - 20px)'}"
-        [sourceStyle]="{height: 'calc(100% - 20px)'}" [targetStyle]="{height: 'calc(100% - 20px)'}"
-        [sourceHeader]="'Available'" [targetHeader]="'Selected'"></app-picklist>
+      <div class="tabs is-centered">
+        <ul>
+          <li *ngFor="let tab of tabs" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+            <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
+          </li>
+        </ul>
+      </div>
+      <app-general-settings *ngIf="isTabIdSelected(tabIds.general)"></app-general-settings>
+      <app-tricks *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success">Save</button>

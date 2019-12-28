@@ -274,7 +274,8 @@ export const details: OptionDetails = {
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',
     description: `It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
-      This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.`
+
+    This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.`
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
