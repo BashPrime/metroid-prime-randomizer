@@ -144,8 +144,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   }
 }
 
-export function getChoices(name: string): SettingsChoice[] {
-  return settings.find(setting => setting.name === name).choices;
+export function getSetting(name: string): Checkbox | SelectOption {
+  return settings.find(setting => setting.name === name);
 }
 
 function getGeneralSettingsFromSettingsString(settingsString): object {
@@ -214,12 +214,12 @@ const settings = [
     shared: true,
     choices: [
       {
-        name: 'Always Open',
-        value: 'always-open'
-      },
-      {
         name: 'Artifact Collection',
         value: 'artifact-collection'
+      },
+      {
+        name: 'Always Open',
+        value: 'always-open'
       },
       {
         name: 'All Bosses',

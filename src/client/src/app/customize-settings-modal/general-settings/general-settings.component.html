@@ -1,11 +1,12 @@
-<label class="label is-small">Base ISO</label>
-<div class="field is-grouped">
-  <div class="control is-expanded">
-    <input class="input is-small" type="text">
+<form [formGroup]="form">
+  <label class="label is-small">Goal</label>
+  <div class="field is-grouped">
+    <div class="control">
+      <div class="select">
+        <select formControlName="goal">
+          <option *ngFor="let goal of getSetting('goal').choices" [value]="goal.value">{{ goal.name }}</option>
+        </select>
+      </div>
+    </div>
   </div>
-  <div class="control">
-    <button class="button is-info is-small">
-      Choose File
-    </button>
-  </div>
-</div>
+</form>
