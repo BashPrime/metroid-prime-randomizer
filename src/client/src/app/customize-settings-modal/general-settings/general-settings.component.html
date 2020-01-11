@@ -1,11 +1,26 @@
 <form [formGroup]="form">
-  <label class="label is-small">Goal</label>
-  <div class="field is-grouped">
-    <div class="control">
-      <div class="select">
-        <select formControlName="goal">
-          <option *ngFor="let goal of getSetting('goal').choices" [value]="goal.value">{{ goal.name }}</option>
-        </select>
+  <div class="columns is-multiline">
+    <div class="column is-one-quarter" *ngFor="let setting of settings">
+      <div class="field" *ngIf="setting.type === optionTypes.boolean">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox label">
+              <input type="checkbox"> {{ setting.displayName }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="field" *ngIf="setting.type === optionTypes.select">
+        <label class="label is-small">{{ setting.displayName }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select>
+              <option *ngFor="let choice of setting.choices" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
