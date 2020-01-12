@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
+// import { SelectItem } from 'primeng/api';
 
-import { CustomizeSettingsModalComponent } from '../customize-settings-modal/customize-settings-modal.component';
+// import { CustomizeSettingsModalComponent } from '../customize-settings-modal/customize-settings-modal.component';
 import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
 
 @Component({
@@ -11,54 +11,44 @@ import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  readonly items: SelectItem[] = [
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test1' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test2' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test3' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test4' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test5' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test6' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test7' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test8' },
-    { label: 'Do not allow Blind Items at all, at any time, ever, unless?', value: 'test9' },
-  ];
   objectKeys = Object.keys;
-  @ViewChild(CustomizeSettingsModalComponent, {static: false}) private modal: CustomizeSettingsModalComponent;
+  // @ViewChild(CustomizeSettingsModalComponent, { static: false }) private modal: CustomizeSettingsModalComponent;
   private defaultPresets = (presetsDefaultJson as any).default;
-  private presets: object = {};
-  private selectedPreset: string = 'Custom';
+  private presets: string[];
   private form: FormGroup;
+  private readonly CUSTOM_PRESET = 'Custom';
 
   constructor() { }
 
   ngOnInit() {
+    this.buildPresets();
+
     const fb = new FormBuilder();
     this.form = fb.group({
-      settings: [null]
+      preset: [Object.keys(this.defaultPresets)[0]]
     });
+  }
+
+  private buildPresets(): void {
+    this.presets = [this.CUSTOM_PRESET];
+    for (let key of Object.keys(this.defaultPresets)) {
+      this.presets.push(key);
+    }
   }
 
   getForm(): FormGroup {
     return this.form;
   }
 
+  getPresets(): string[] {
+    return this.presets;
+  }
+
   getDefaultPresets(): object {
     return this.defaultPresets;
   }
 
-  getSelectedPreset(): string {
-    return this.selectedPreset;
-  }
-
-  setSelectedPreset(preset: string) {
-    this.selectedPreset = preset;
-  }
-
-  isSelected(key: string): boolean {
-    return key === this.selectedPreset;
-  }
-
-  openModal(): void {
-    this.modal.setOpen(true);
+  get isCustom(): boolean {
+    return this.form.get('preset').value === this.CUSTOM_PRESET;
   }
 }

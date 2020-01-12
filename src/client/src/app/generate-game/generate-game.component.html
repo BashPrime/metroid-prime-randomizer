@@ -1,20 +1,19 @@
 <div class="section">
   <form [formGroup]="getForm()">
-    <label class="label is-small">Settings Presets</label>
-    <div class="field is-grouped">
+    <label class="label is-small">Choose a Preset</label>
+    <div class="field is-grouped" style="margin-bottom: 1.5rem;">
       <div class="control is-expanded">
         <div class="select is-fullwidth is-small">
-          <select>
-            <option>Custom</option>
-            <option *ngFor="let key of objectKeys(getDefaultPresets())" [value]="key" [selected]="isSelected(key)">
-              {{ key }}</option>
+          <select formControlName="preset">
+            <option *ngFor="let preset of getPresets()" [value]="preset">{{ preset }}</option>
           </select>
         </div>
       </div>
-      <div class="control">
+      <!-- <div class="control">
         <button class="button is-info is-small" (click)="openModal()">Customize</button>
-      </div>
+      </div> -->
     </div>
+    <app-settings [disabled]="isCustom"></app-settings>
     <div class="field is-generate-field">
       <div class="control">
         <div class="buttons is-centered">
@@ -24,5 +23,5 @@
       </div>
     </div>
   </form>
-  <app-customize-settings-modal></app-customize-settings-modal>
+  <!-- <app-customize-settings-modal></app-customize-settings-modal> -->
 </div>

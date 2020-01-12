@@ -11,14 +11,15 @@ import { AppComponent } from './app.component';
 import { SeedHistoryComponent } from './seed-history/seed-history.component';
 import { RomGenerationComponent } from './rom-generation/rom-generation.component';
 import { RandomizerComponent } from './randomizer/randomizer.component';
-import { RulesComponent } from './rules/rules.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { GenerateGameComponent } from './generate-game/generate-game.component';
 import { ImportSettingsModalComponent } from './import-settings-modal/import-settings-modal.component';
-import { CustomizeSettingsModalComponent } from './customize-settings-modal/customize-settings-modal.component';
 import { PicklistComponent } from './picklist/picklist.component';
-import { GeneralSettingsComponent } from './customize-settings-modal/general-settings/general-settings.component';
-import { TricksComponent } from './customize-settings-modal/tricks/tricks.component';
+import { TricksComponent } from './settings/tricks/tricks.component';
+import { RomSettingsComponent } from './settings/rom-settings/rom-settings.component';
+import { RulesComponent } from './settings/rules/rules.component';
+import { SettingsComponent } from './settings/settings.component';
+
 
 @NgModule({
   declarations: [
@@ -26,14 +27,14 @@ import { TricksComponent } from './customize-settings-modal/tricks/tricks.compon
     SeedHistoryComponent,
     RomGenerationComponent,
     RandomizerComponent,
-    GeneralSettingsComponent,
     RulesComponent,
     WelcomeComponent,
     GenerateGameComponent,
     ImportSettingsModalComponent,
-    CustomizeSettingsModalComponent,
     PicklistComponent,
-    TricksComponent
+    TricksComponent,
+    RomSettingsComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

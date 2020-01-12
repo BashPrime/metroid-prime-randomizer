@@ -1,0 +1,10 @@
+<div class="tabs is-boxed">
+  <ul>
+    <li *ngFor="let tab of tabs" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+      <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
+    </li>
+  </ul>
+</div>
+<app-rom-settings [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
+<app-rules [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+<app-tricks [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>

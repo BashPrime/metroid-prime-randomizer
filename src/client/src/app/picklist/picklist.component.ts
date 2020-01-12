@@ -18,6 +18,7 @@ export class PicklistComponent implements OnInit {
   @Input() targetStyle: object;
   @Input() sourceHeader: string;
   @Input() targetHeader: string;
+  @Input() disabled: boolean;
 
   constructor() { }
 

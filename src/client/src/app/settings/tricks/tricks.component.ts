@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 
 import { RandomizerService } from '../../services/randomizer.service';
@@ -9,6 +9,7 @@ import { RandomizerService } from '../../services/randomizer.service';
   styleUrls: ['./tricks.component.scss']
 })
 export class TricksComponent implements OnInit {
+  @Input() disabled: boolean;
   readonly picklistStyle = { height: 'calc(100% - 70px)' };
   tricks: PickList = {
     available: [],
