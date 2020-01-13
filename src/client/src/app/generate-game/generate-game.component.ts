@@ -21,8 +21,8 @@ export class GenerateGameComponent implements OnInit {
 
   ngOnInit() {
     this.buildPresets();
-
     this.form = this.randomizerService.createForm();
+    this.onValueChanges();
   }
 
   private buildPresets(): void {
@@ -54,11 +54,14 @@ export class GenerateGameComponent implements OnInit {
     return this.form.get('preset').value === this.CUSTOM_PRESET;
   }
 
-  loadPreset(): void {
-    if (!this.isCustomPreset()) {
-      const preset = this.presets[this.form.get('preset').value];
-      this.form.patchValue(preset);
-    } 
+  // Watch for changes on specific controls
+  onValueChanges() {
+    this.form.get('preset').valueChanges.subscribe(value => {
+      if (!this.isCustomPreset()) {
+        const preset = this.presets[value];
+        this.form.patchValue(preset);
+      }
+    })
   }
 }
 
