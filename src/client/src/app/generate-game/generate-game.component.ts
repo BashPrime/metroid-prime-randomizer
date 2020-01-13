@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-// import { SelectItem } from 'primeng/api';
 
-// import { CustomizeSettingsModalComponent } from '../customize-settings-modal/customize-settings-modal.component';
 import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
 
 @Component({
@@ -11,8 +9,6 @@ import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  objectKeys = Object.keys;
-  // @ViewChild(CustomizeSettingsModalComponent, { static: false }) private modal: CustomizeSettingsModalComponent;
   private defaultPresets = (presetsDefaultJson as any).default;
   private presets: string[];
   private form: FormGroup;
@@ -48,7 +44,11 @@ export class GenerateGameComponent implements OnInit {
     return this.defaultPresets;
   }
 
-  get isCustom(): boolean {
+  setCustom(): void {
+    this.form.patchValue({ preset: this.CUSTOM_PRESET });
+  }
+
+  isCustom(): boolean {
     return this.form.get('preset').value === this.CUSTOM_PRESET;
   }
 }

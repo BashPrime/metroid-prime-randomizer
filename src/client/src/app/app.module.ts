@@ -20,6 +20,7 @@ import { RomSettingsComponent } from './settings/rom-settings/rom-settings.compo
 import { RulesComponent } from './settings/rules/rules.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
+import { ReadOnlySettingsComponent } from './settings/read-only-settings/read-only-settings.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { DisableControlDirective } from './directives/disable-control.directive'
     RomSettingsComponent,
     SettingsComponent,
     DisableControlDirective,
+    ReadOnlySettingsComponent,
   ],
   imports: [
     BrowserModule,

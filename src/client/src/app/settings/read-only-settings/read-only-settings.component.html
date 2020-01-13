@@ -1,0 +1,21 @@
+<div *ngIf="useColumns; then columnView; else verticalView"></div>
+<ng-template #columnView>
+  <div class="columns is-multiline">
+    <div class="column is-one-third" *ngFor="let setting of OBJECT_KEYS(form.value)">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName(setting) }}</label>
+        <div class="control">
+          <span class="tag is-medium">{{ getChoiceName(setting) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #verticalView>
+  <div class="field" *ngFor="let setting of OBJECT_KEYS(form.value)">
+    <label class="label is-small">{{ getDisplayName(setting) }}</label>
+    <div class="control">
+      <span class="tag is-medium">{{ getChoiceName(setting) }}</span>
+    </div>
+  </div>
+</ng-template>
