@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+
 import { RandomizerService } from 'src/app/services/randomizer.service';
 import { SettingsSection } from '../settings-section';
 
@@ -10,27 +11,14 @@ import { SettingsSection } from '../settings-section';
 })
 export class RomSettingsComponent extends SettingsSection implements OnInit {
   @Input() disabled: boolean;
+  @Input() private form: FormGroup;
   readonly SETTINGS = this.randomizerService.SETTINGS;
-  readonly optionTypes = {
-    number: 0,
-    string: 1,
-    boolean: 2,
-    select: 3
-  };
-  private form: FormGroup;
-  private readonly DEFAULT_SETTINGS = this.randomizerService.DEFAULT_SETTINGS;
 
   constructor(private randomizerService: RandomizerService) {
     super();
   }
 
   ngOnInit() {
-    const fb = new FormBuilder();
-    this.form = fb.group({
-      skipFrigate: [this.DEFAULT_SETTINGS.skipFrigate],
-      skipHudPopups: [this.DEFAULT_SETTINGS.skipHudPopups],
-      hideItemModels: [this.DEFAULT_SETTINGS.hideItemModels]
-    });
   }
 
   getForm(): FormGroup {

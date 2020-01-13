@@ -63,11 +63,11 @@ export class Checkbox extends Option {
   constructor(args: CheckboxArgs) {
     const choices: SettingsChoice[] = [
       {
-        name: 'True',
+        name: 'On',
         value: true
       },
       {
-        name: 'False',
+        name: 'Off',
         value: false
       }
     ];

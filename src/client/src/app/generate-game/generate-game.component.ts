@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
+import { RandomizerService } from '../services/randomizer.service.js';
+import { FormValue } from '../../../../common/models/formValue';
 
 @Component({
   selector: 'app-generate-game',
@@ -9,46 +11,57 @@ import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  private defaultPresets = (presetsDefaultJson as any).default;
-  private presets: string[];
+  readonly OBJECT_KEYS = Object.keys;
+  private defaultPresets = (presetsDefaultJson as any).default as PresetObject;
+  private presets: PresetObject;
   private form: FormGroup;
   private readonly CUSTOM_PRESET = 'Custom';
 
-  constructor() { }
+  constructor(private randomizerService: RandomizerService) { }
 
   ngOnInit() {
     this.buildPresets();
 
-    const fb = new FormBuilder();
-    this.form = fb.group({
-      preset: [Object.keys(this.defaultPresets)[0]]
-    });
+    this.form = this.randomizerService.createForm();
   }
 
   private buildPresets(): void {
-    this.presets = [this.CUSTOM_PRESET];
-    for (let key of Object.keys(this.defaultPresets)) {
-      this.presets.push(key);
-    }
+    this.presets = Object.assign({}, this.defaultPresets) as PresetObject;
   }
 
   getForm(): FormGroup {
     return this.form;
   }
 
-  getPresets(): string[] {
+  getPresets() {
     return this.presets;
   }
 
-  getDefaultPresets(): object {
-    return this.defaultPresets;
+  getPresetsDropdown(): string[] {
+    const presets = ['Custom'];
+    for (let presetKey of Object.keys(this.presets)) {
+      presets.push(presetKey);
+    }
+
+    return presets;
   }
 
-  setCustom(): void {
+  setCustomPreset(): void {
     this.form.patchValue({ preset: this.CUSTOM_PRESET });
   }
 
-  isCustom(): boolean {
+  isCustomPreset(): boolean {
     return this.form.get('preset').value === this.CUSTOM_PRESET;
   }
+
+  loadPreset(): void {
+    if (!this.isCustomPreset()) {
+      const preset = this.presets[this.form.get('preset').value];
+      this.form.patchValue(preset);
+    } 
+  }
+}
+
+interface PresetObject {
+  [key: string]: FormValue;
 }

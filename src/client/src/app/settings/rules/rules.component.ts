@@ -11,10 +11,9 @@ import { SettingsSection } from '../settings-section';
 })
 export class RulesComponent extends SettingsSection implements OnInit {
   @Input() disabled: boolean;
+  @Input() private form: FormGroup;
   readonly OBJECT_KEYS = Object.keys;
   readonly SETTINGS = this.randomizerService.SETTINGS;
-  private form: FormGroup;
-  private readonly DEFAULT_SETTINGS = this.randomizerService.DEFAULT_SETTINGS;
   private readonly ARTIFACT_COLLECTION = 'artifact-collection';
 
   constructor(private randomizerService: RandomizerService) {
@@ -22,14 +21,6 @@ export class RulesComponent extends SettingsSection implements OnInit {
   }
 
   ngOnInit() {
-    const fb = new FormBuilder();
-    this.form = fb.group({
-      goal: [this.DEFAULT_SETTINGS.goal],
-      goalArtifacts: [this.DEFAULT_SETTINGS.goalArtifacts],
-      artifactLocationHints: [this.DEFAULT_SETTINGS.artifactLocationHints],
-      heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
-      suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction]
-    });
   }
 
   getForm(): FormGroup {

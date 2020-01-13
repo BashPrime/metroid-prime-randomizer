@@ -1,6 +1,6 @@
 export abstract class SettingsSection {
-  readonly OBJECT_KEYS = Object.keys;
   abstract SETTINGS;
+  readonly OBJECT_KEYS = Object.keys;
 
   getSetting(name: string) {
     return this.SETTINGS.find(setting => setting.name === name);

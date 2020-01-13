@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
 import { Tab } from '../../../../common/models/tab';
 
 @Component({
@@ -7,6 +9,7 @@ import { Tab } from '../../../../common/models/tab';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+  @Input() form: FormGroup;
   @Input() disabled: boolean;
   readonly tabIds = {
     rom: 0,

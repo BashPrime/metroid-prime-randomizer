@@ -5,15 +5,18 @@
       <div class="control is-expanded">
         <div class="select is-fullwidth is-small">
           <select formControlName="preset">
-            <option *ngFor="let preset of getPresets()" [value]="preset">{{ preset }}</option>
+            <option *ngFor="let preset of getPresetsDropdown()" [value]="preset" (change)="onPresetChange($event)">{{ preset }}</option>
           </select>
         </div>
       </div>
-      <div class="control" *ngIf="!isCustom()">
-        <button class="button is-info is-small" (click)="setCustom()">Customize</button>
+      <div class="control" *ngIf="!isCustomPreset()">
+        <button class="button is-info is-small" (click)="setCustomPreset()">Customize</button>
+      </div>
+      <div class="control">
+        <button class="button is-info is-small" [disabled]="isCustomPreset()" (click)="loadPreset()">Load</button>
       </div>
     </div>
-    <app-settings [disabled]="!isCustom()"></app-settings>
+    <app-settings [form]="getForm()" [disabled]="!isCustomPreset()"></app-settings>
     <div class="field is-generate-field">
       <div class="control">
         <div class="buttons is-centered">
