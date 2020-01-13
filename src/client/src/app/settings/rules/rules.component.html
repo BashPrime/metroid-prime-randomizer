@@ -1,1 +1,70 @@
-<p>rules works!</p>
+<form [formGroup]="form">
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">Goal</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goal" (change)="onGoalChange()">
+              <option *ngFor="let choice of getChoices('goal')" value="{{ choice.value }}">{{ choice.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">Number of Chozo Artifacts</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goalArtifacts" [disableControl]="!isArtifactCollectionSelected()">
+              <option *ngFor="let choice of getChoices('goalArtifacts')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox label is-small">
+            <input type="checkbox" formControlName="artifactLocationHints"
+              [disableControl]="!isArtifactCollectionSelected()"> Show Location Hints for Chozo Artifacts
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">Heat Protection</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="heatProtection">
+              <option *ngFor="let choice of getChoices('heatProtection')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">Suit Damage Reduction</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="suitDamageReduction">
+              <option *ngFor="let choice of getChoices('suitDamageReduction')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

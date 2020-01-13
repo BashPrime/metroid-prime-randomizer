@@ -13,7 +13,7 @@
         <button class="button is-info is-small" (click)="openModal()">Customize</button>
       </div> -->
     </div>
-    <app-settings [disabled]="isCustom"></app-settings>
+    <app-settings [disabled]="!isCustom"></app-settings>
     <div class="field is-generate-field">
       <div class="control">
         <div class="buttons is-centered">

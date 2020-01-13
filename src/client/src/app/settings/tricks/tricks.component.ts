@@ -10,7 +10,6 @@ import { RandomizerService } from '../../services/randomizer.service';
 })
 export class TricksComponent implements OnInit {
   @Input() disabled: boolean;
-  readonly picklistStyle = { height: 'calc(100% - 70px)' };
   tricks: PickList = {
     available: [],
     selected: []

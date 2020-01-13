@@ -8,7 +8,7 @@ import { PrimeRandomizerSettings, details, settings } from '../../../../electron
 export class RandomizerService {
   readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings({});
   readonly DETAILS = details;
-  readonly settings = settings;
+  readonly SETTINGS = settings;
 
   constructor() {}
 

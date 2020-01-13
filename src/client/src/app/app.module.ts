@@ -19,6 +19,7 @@ import { TricksComponent } from './settings/tricks/tricks.component';
 import { RomSettingsComponent } from './settings/rom-settings/rom-settings.component';
 import { RulesComponent } from './settings/rules/rules.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DisableControlDirective } from './directives/disable-control.directive';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { SettingsComponent } from './settings/settings.component';
     TricksComponent,
     RomSettingsComponent,
     SettingsComponent,
+    DisableControlDirective,
   ],
   imports: [
     BrowserModule,
