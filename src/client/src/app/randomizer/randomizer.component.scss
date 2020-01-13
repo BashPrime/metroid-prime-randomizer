@@ -9,3 +9,9 @@
 hr {
   margin: 0;
 }
+
+app-generate-game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

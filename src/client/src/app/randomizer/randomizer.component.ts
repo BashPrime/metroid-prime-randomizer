@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../services/generator.service';
 import { RandomizerService } from '../services/randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
@@ -14,31 +13,21 @@ import { Tab } from '../../../../common/models/tab';
 export class RandomizerComponent implements OnInit {
   readonly tabIds = {
     welcome: 0,
-    generateGame: 1,
-    history: 2
+    generateGame: 1
   };
   private tabs: Tab[] = [
     { id: this.tabIds.welcome, name: 'Welcome' },
-    { id: this.tabIds.generateGame, name: 'Generate Game' },
-    { id: this.tabIds.history, name: 'History' },
+    { id: this.tabIds.generateGame, name: 'Generate Game' }
   ];
   private selectedTabId: number = this.tabIds.welcome;
-  private form: FormGroup;
 
   constructor(private applicationService: ApplicationService, private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
-    // Get initial formgroup from randomizer service
-    this.form = this.randomizerService.createForm();
-
     // Subscribe to selected tab subject in application service
     this.applicationService.selectedTabId$.subscribe(tabId => {
       this.selectedTabId = tabId;
     });
-  }
-
-  getForm(): FormGroup {
-    return this.form;
   }
 
   getTabs(): Tab[] {

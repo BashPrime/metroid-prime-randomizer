@@ -1,26 +1,37 @@
-<div class="section">
-  <form [formGroup]="getForm()">
-    <label class="label is-small">Choose a Preset</label>
-    <div class="field is-grouped" style="margin-bottom: 1.5rem;">
-      <div class="control is-expanded">
-        <div class="select is-fullwidth is-small">
-          <select formControlName="preset">
-            <option *ngFor="let preset of getPresetsDropdown()" [value]="preset" (change)="onPresetChange($event)">{{ preset }}</option>
-          </select>
+<div class="app-wrapper-content">
+  <div class="section">
+    <form [formGroup]="getForm()">
+      <label class="label is-small">Choose a Preset</label>
+      <div class="field is-grouped" style="margin-bottom: 1.5rem;">
+        <div class="control is-expanded">
+          <div class="select is-fullwidth is-small">
+            <select formControlName="preset">
+              <option *ngFor="let preset of getPresetsDropdown()" [value]="preset" (change)="onPresetChange($event)">
+                {{ preset }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="control" *ngIf="!isCustomPreset()">
+          <button class="button is-info is-small" (click)="setCustomPreset()">Customize</button>
         </div>
       </div>
-      <div class="control" *ngIf="!isCustomPreset()">
-        <button class="button is-info is-small" (click)="setCustomPreset()">Customize</button>
-      </div>
-    </div>
-    <app-settings [form]="getForm()" [disabled]="!isCustomPreset()"></app-settings>
-    <div class="field is-generate-field">
-      <div class="control">
-        <div class="buttons is-centered">
-          <button class="button is-generate-button is-success">Generate</button>
-          <button class="button is-generate-button is-link">Generate with Spoilers</button>
+      <div class="field">
+        <label class="label is-small">Number of Seeds to Generate</label>
+        <div class="control">
+          <input class="input is-small" type="number" formControlName="generationCount" style="width: 5em;">
+          <div *ngIf="form.get('generationCount').errors">
+            <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
+            <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+      <app-settings [form]="getForm()" [disabled]="!isCustomPreset()"></app-settings>
+    </form>
+  </div>
+</div>
+<div class="section randomizer-footer">
+  <div class="buttons are-large is-centered">
+    <button class="button is-generate-button is-success">Generate</button>
+    <button class="button is-generate-button is-info">Generate with Spoilers</button>
+  </div>
 </div>
