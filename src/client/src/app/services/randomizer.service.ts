@@ -22,7 +22,7 @@ export class RandomizerService {
 
     return fb.group({
       preset: [this.DEFAULT_PRESET],
-      generationCount: [1, [Validators.min(1), Validators.max(99)]],
+      generationCount: [1, [Validators.min(1), Validators.max(99), Validators.required]],
       romSettings: fb.group({
         skipFrigate: [this.DEFAULT_SETTINGS.skipFrigate],
         skipHudPopups: [this.DEFAULT_SETTINGS.skipHudPopups],
@@ -34,7 +34,8 @@ export class RandomizerService {
         artifactLocationHints: [this.DEFAULT_SETTINGS.artifactLocationHints],
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction]
-      })
+      }),
+      tricks: fb.array([])
     });
   }
 }

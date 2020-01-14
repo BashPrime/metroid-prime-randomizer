@@ -1,4 +1,4 @@
-<div class="tabs is-boxed">
+<div class="tabs is-boxed is-small">
   <ul>
     <li *ngFor="let tab of tabs" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
       <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
@@ -7,4 +7,4 @@
 </div>
 <app-rom-settings [form]="form.get('romSettings')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
 <app-rules [form]="form.get('rules')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
-<app-tricks [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
+<app-tricks [form]="form.get('tricks')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>

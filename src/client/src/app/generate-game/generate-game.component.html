@@ -1,3 +1,4 @@
+<p>{{ getForm().value.tricks | json }}</p>
 <div class="app-wrapper-content">
   <div class="section">
     <form [formGroup]="getForm()">
@@ -22,6 +23,7 @@
           <div *ngIf="form.get('generationCount').errors">
             <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
             <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
+            <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number between 1 and 99.</p>
           </div>
         </div>
       </div>

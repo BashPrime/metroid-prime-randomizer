@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
 import { RandomizerService } from '../services/randomizer.service.js';
-import { FormValue } from '../../../../common/models/formValue';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Component({
   selector: 'app-generate-game',
@@ -66,5 +66,5 @@ export class GenerateGameComponent implements OnInit {
 }
 
 interface PresetObject {
-  [key: string]: FormValue;
+  [key: string]: RandomizerForm;
 }
