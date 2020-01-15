@@ -14,6 +14,7 @@ export class RulesComponent extends SettingsSection implements OnInit {
   @Input() private form: FormGroup;
   readonly OBJECT_KEYS = Object.keys;
   readonly SETTINGS = this.randomizerService.SETTINGS;
+  readonly DETAILS = this.randomizerService.DETAILS;
   private readonly ARTIFACT_COLLECTION = 'artifact-collection';
 
   constructor(private randomizerService: RandomizerService) {

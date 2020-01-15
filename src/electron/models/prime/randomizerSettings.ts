@@ -204,13 +204,12 @@ function getPaddedBitStringFromSettingsString(settingsString: string, length: nu
  * Array of randomizer/patcher settings including their default values
  */
 export const settings = [
-  new Checkbox({ name: 'spoiler', displayName: 'Create Spoiler', shared: true, default: true }),
-  new Checkbox({ name: 'skipFrigate', displayName: 'Skip the Space Pirate Frigate', shared: true, default: true }),
-  new Checkbox({ name: 'skipHudPopups', displayName: 'Skip Item Acquisition Popups', shared: true, default: true }),
-  new Checkbox({ name: 'hideItemModels', displayName: 'Hide Item Models', shared: true, default: false }),
+  new Checkbox({ name: 'spoiler', shared: true, default: true }),
+  new Checkbox({ name: 'skipFrigate', shared: true, default: true }),
+  new Checkbox({ name: 'skipHudPopups', shared: true, default: true }),
+  new Checkbox({ name: 'hideItemModels', shared: true, default: false }),
   new SelectOption({
     name: 'goal',
-    displayName: 'Goal',
     shared: true,
     choices: [
       {
@@ -230,15 +229,13 @@ export const settings = [
   }),
   new SelectOption({
     name: 'goalArtifacts',
-    displayName: 'Number of Chozo Artifacts',
     shared: true,
     choices: discreteNumberSelection(1, 12),
     default: 12
   }),
-  new Checkbox({ name: 'artifactLocationHints', displayName: 'Show Chozo Artifact location hints in Artifact Temple', shared: true, default: true }),
+  new Checkbox({ name: 'artifactLocationHints', shared: true, default: true }),
   new SelectOption({
     name: 'heatProtection',
-    displayName: 'Heat Protection',
     shared: true,
     choices: [
       {
@@ -254,7 +251,6 @@ export const settings = [
   }),
   new SelectOption({
     name: 'suitDamageReduction',
-    displayName: 'Suit Damage Reduction',
     shared: true,
     choices: [
       {
@@ -271,6 +267,38 @@ export const settings = [
 ];
 
 export const details: OptionDetails = {
+  skipFrigate: {
+    name: 'Skip the Space Pirate Frigate',
+    description: ''
+  },
+  skipHudPopups: {
+    name: 'Skip Item Acquisition Popups',
+    description: ''
+  },
+  hideItemModels: {
+    name: 'Hide Item Models',
+    description: ''
+  },
+  goal: {
+    name: 'Goal',
+    description: ''
+  },
+  goalArtifacts: {
+    name: 'Number of Chozo Artifacts',
+    description: ''
+  },
+  artifactLocationHints: {
+    name: 'Show Chozo Artifact location hints in Artifact Temple',
+    description: ''
+  },
+  heatProtection: {
+    name: 'Heat Protection',
+    description: ''
+  },
+  suitDamageReduction: {
+    name: 'Suit Damage Reduction',
+    description: ''
+  },
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',
     description: `It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.

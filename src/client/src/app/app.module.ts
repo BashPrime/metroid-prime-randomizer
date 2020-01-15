@@ -38,7 +38,7 @@ import { ReadOnlySettingsComponent } from './settings/read-only-settings/read-on
     RomSettingsComponent,
     SettingsComponent,
     DisableControlDirective,
-    ReadOnlySettingsComponent,
+    ReadOnlySettingsComponent
   ],
   imports: [
     BrowserModule,

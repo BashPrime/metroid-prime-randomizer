@@ -3,13 +3,14 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 
 import { RandomizerService } from '../../services/randomizer.service';
+import { SettingsSection } from '../settings-section';
 
 @Component({
   selector: 'app-tricks',
   templateUrl: './tricks.component.html',
   styleUrls: ['./tricks.component.scss']
 })
-export class TricksComponent implements OnInit {
+export class TricksComponent extends SettingsSection implements OnInit {
   @Input() form: FormArray
   @Input() disabled: boolean;
   tricks: PickList = {
@@ -17,8 +18,12 @@ export class TricksComponent implements OnInit {
     selected: []
   };
   private fb = new FormBuilder();
+  readonly SETTINGS = undefined;
+  readonly DETAILS = this.randomizerService.DETAILS;
 
-  constructor(private randomizerService: RandomizerService) { }
+  constructor(private randomizerService: RandomizerService) {
+    super();
+  }
 
   ngOnInit() {
     const settings = this.randomizerService.DEFAULT_SETTINGS;
@@ -32,7 +37,13 @@ export class TricksComponent implements OnInit {
           value: key,
           tooltip: trickDetails.description
         };
-        this.tricks.available.push(trick);
+
+        // If form contains value on init, push to selected tricks. Else, push to available tricks.
+        if (this.form.value.includes(trick.value)) {
+          this.tricks.selected.push(trick);
+        } else {
+          this.tricks.available.push(trick);
+        }
       }
     }
   }

@@ -1,12 +1,30 @@
 <!-- <app-picklist [source]="tricks.available" [target]="tricks.selected" [sourceHeader]="'Available'"
   [targetHeader]="'Selected'" [disabled]="disabled">
 </app-picklist> -->
-<p-pickList [source]="tricks.available" [target]="tricks.selected" [metaKeySelection]="false" [responsive]="true"
-  [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Available'" [targetHeader]="'Selected'"
-  [disabled]="disabled" (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
-  <ng-template let-item pTemplate="item">
-    <div [pTooltip]="item.tooltip">
-      {{ item.label }}
+<div *ngIf="!disabled; then showForm; else readOnly"></div>
+<ng-template #showForm>
+  <p-pickList [source]="tricks.available" [target]="tricks.selected" [metaKeySelection]="false" [responsive]="true"
+    [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Available'" [targetHeader]="'Selected'"
+    (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
+    <ng-template let-item pTemplate="listItem">
+      <div [pTooltip]="item.tooltip">
+        {{ item.label }}
+      </div>
+    </ng-template>
+  </p-pickList>
+</ng-template>
+<ng-template #readOnly>
+  <!-- <p-dataView [value]="tricks.selected">
+    <ng-template let-item pTemplate="listItem">
+      <div>
+        {{ item.label }}
+      </div>
+    </ng-template>
+  </p-dataView> -->
+  <div class="columns is-multiline" *ngIf="form.value.length">
+    <div class="column is-one-third" *ngFor="let item of form.value">
+      <p>{{ getDisplayName(item) }}</p>
     </div>
-  </ng-template>
-</p-pickList>
+  </div>
+  <p *ngIf="!form.value.length">(none)</p>
+</ng-template>

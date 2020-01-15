@@ -14,6 +14,7 @@ export class ReadOnlySettingsComponent extends SettingsSection implements OnInit
   @Input() form: FormGroup;
   readonly OBJECT_KEYS = Object.keys;
   readonly SETTINGS = this.randomizerService.SETTINGS;
+  readonly DETAILS = this.randomizerService.DETAILS;
 
   constructor(private randomizerService: RandomizerService) {
     super();

@@ -8,7 +8,6 @@ export interface SettingsChoice {
 
 interface OptionArgs {
   name: string;
-  displayName: string;
   type: OptionType;
   shared: boolean;
   choices?: SettingsChoice[];
@@ -18,7 +17,6 @@ interface OptionArgs {
 
 interface CheckboxArgs {
   name: string;
-  displayName: string;
   shared: boolean;
   default?: boolean;
   tooltip?: string;
@@ -26,7 +24,6 @@ interface CheckboxArgs {
 
 interface SelectOptionArgs {
   name: string;
-  displayName: string;
   shared: boolean;
   choices: SettingsChoice[]
   default?: number | string;
@@ -35,7 +32,6 @@ interface SelectOptionArgs {
 
 export class Option {
     name: string;
-    displayName: string;
     type: OptionType;
     bitWidth: number;
     shared: boolean;
@@ -74,7 +70,6 @@ export class Checkbox extends Option {
 
     super({
       name: args.name,
-      displayName: args.displayName,
       type: OptionType.BOOLEAN,
       shared: args.shared,
       choices: choices,
@@ -88,7 +83,6 @@ export class SelectOption extends Option {
   constructor(args: SelectOptionArgs) {
     super({
       name: args.name,
-      displayName: args.displayName,
       type: OptionType.SELECT,
       shared: args.shared,
       choices: args.choices,
