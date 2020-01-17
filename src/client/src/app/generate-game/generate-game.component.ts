@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import * as presetsDefaultJson from '../../assets/data/presetsDefault.json';
-import { RandomizerService } from '../services/randomizer.service.js';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { RandomizerService } from '../services/randomizer.service';
+import { ApplicationService } from '../services/application.service';
+import { PresetObject } from '../../../../common/models/presetObject';
 
 @Component({
   selector: 'app-generate-game',
@@ -12,17 +12,22 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
 })
 export class GenerateGameComponent implements OnInit {
   readonly OBJECT_KEYS = Object.keys;
-  private defaultPresets = (presetsDefaultJson as any).default as PresetObject;
+  private defaultPresets: PresetObject;
   private presets: PresetObject;
   private form: FormGroup;
   private readonly CUSTOM_PRESET = 'Custom';
 
-  constructor(private randomizerService: RandomizerService) { }
+  constructor(private randomizerService: RandomizerService, private appService: ApplicationService) { }
 
   ngOnInit() {
-    this.buildPresets();
+    this.appService.getDefaultPresets();
     this.form = this.randomizerService.createForm();
     this.onValueChanges();
+
+    this.appService.defaultPresets$.subscribe(presets => {
+      this.defaultPresets = presets;
+      this.buildPresets();
+    });
   }
 
   private buildPresets(): void {
@@ -63,8 +68,4 @@ export class GenerateGameComponent implements OnInit {
       }
     })
   }
-}
-
-interface PresetObject {
-  [key: string]: RandomizerForm;
 }
