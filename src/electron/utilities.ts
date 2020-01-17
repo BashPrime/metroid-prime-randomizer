@@ -18,6 +18,9 @@ export function getAppDataPath(): string {
   return path.join(app.getPath('userData'), 'data');
 }
 
+/**
+ * Returns the full documents path for the randomizer application.
+ */
 export function getRandomizerDocumentsPath(): string {
   return path.join(app.getPath('documents'), 'Metroid Prime Randomizer');
 }
@@ -28,7 +31,7 @@ export function getBaseLog(x: number, base: number) {
 
 /**
  * Returns a pseudorandom integer between a minimum and maximum number, both inclusive.
- * 
+ *
  * @param min The minimum number in the range, inclusive
  * @param max The maximum number in the range, inclusive
  * @param rng An optional random number generator to use for the psuedorandom function
@@ -42,7 +45,7 @@ export function getRandomInt(min: number, max: number, rng?: MersenneTwister) {
 
 /**
  * Converts a number to a zero-padded bitstring of specified length
- * 
+ *
  * @param value The number being converted
  * @param length The total length (in bits) of the bit string
  */
@@ -53,7 +56,7 @@ export function toPaddedBitString(value: number, length: number): string {
 
 /**
  * Returns a random subset of a given array.
- * 
+ *
  * @param arr The input array
  * @param size The size of the returned array
  * @param rng Random number generator to use for randomization
@@ -77,7 +80,7 @@ export function randomArray<T>(arr: T[], size: number, rng: MersenneTwister): T[
 
 /**
  * Truncates and converts a hexidecimal sha256 hash into a safe integer.
- * 
+ *
  * @param sha256 A hexidecimal sha256 string to be converted.
  * @returns `null` if `sha256` isn't a valid sha256 hexadecimal string.
  */

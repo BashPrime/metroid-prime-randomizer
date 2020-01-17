@@ -18,6 +18,8 @@ export class TricksComponent extends SettingsSection implements OnInit {
     selected: []
   };
   private fb = new FormBuilder();
+
+  // Constants
   readonly SETTINGS = undefined;
   readonly DETAILS = this.randomizerService.DETAILS;
 

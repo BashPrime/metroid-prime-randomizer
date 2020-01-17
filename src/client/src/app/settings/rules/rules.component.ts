@@ -12,6 +12,8 @@ import { SettingsSection } from '../settings-section';
 export class RulesComponent extends SettingsSection implements OnInit {
   @Input() disabled: boolean;
   @Input() private form: FormGroup;
+
+  // Constants
   readonly OBJECT_KEYS = Object.keys;
   readonly SETTINGS = this.randomizerService.SETTINGS;
   readonly DETAILS = this.randomizerService.DETAILS;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { combineLatest } from 'rxjs';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { ApplicationService } from '../services/application.service';
@@ -11,27 +12,25 @@ import { PresetObject } from '../../../../common/models/presetObject';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  readonly OBJECT_KEYS = Object.keys;
-  private defaultPresets: PresetObject;
-  private presets: PresetObject;
+  private presets: PresetObject = {};
   private form: FormGroup;
+
+  // Constants
   private readonly CUSTOM_PRESET = 'Custom';
 
   constructor(private randomizerService: RandomizerService, private appService: ApplicationService) { }
 
   ngOnInit() {
-    this.appService.getDefaultPresets();
     this.form = this.randomizerService.createForm();
+    this.appService.getAllPresets();
     this.onValueChanges();
 
-    this.appService.defaultPresets$.subscribe(presets => {
-      this.defaultPresets = presets;
-      this.buildPresets();
-    });
-  }
-
-  private buildPresets(): void {
-    this.presets = Object.assign({}, this.defaultPresets) as PresetObject;
+    combineLatest(this.appService.defaultPresets$, this.appService.userPresets$)
+      .subscribe(([defaultPresets, userPresets]) => {
+        if (defaultPresets && userPresets) {
+          this.buildPresets([defaultPresets, userPresets]);
+        }
+      });
   }
 
   getForm(): FormGroup {
@@ -67,5 +66,17 @@ export class GenerateGameComponent implements OnInit {
         this.form.patchValue(preset);
       }
     })
+  }
+
+  private buildPresets(presets: PresetObject[]): void {
+    this.presets = {};
+
+    // Iterate through the presets array
+    for (let preset of presets) {
+      // Add the keys from each preset to the final preset object
+      for (let key of Object.keys(preset)) {
+        this.presets[key] = preset[key];
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './electron.service';
 import { PresetObject } from '../../../../common/models/presetObject';
@@ -9,18 +9,19 @@ import { PresetObject } from '../../../../common/models/presetObject';
 })
 export class ApplicationService {
   selectedTabId$ = new Subject<number>();
-  defaultPresets$ = new Subject<PresetObject>();
+  defaultPresets$ = new BehaviorSubject<PresetObject>(undefined);
+  userPresets$ = new BehaviorSubject<PresetObject>(undefined);
 
   constructor(private ngZone: NgZone, private electronService: ElectronService) {
-    this.electronService.ipcRenderer.on('getDefaultPresetsResponse', (event, defaultPresets: PresetObject, keys: string[]) => {
+    this.electronService.ipcRenderer.on('getDefaultPresetsResponse', (event, response: PresetsResponse) => {
       this.ngZone.run(() => {
-        const orderedPresets = {};
+        this.handlePresetsResponse(response, this.defaultPresets$);
+      });
+    });
 
-        for (let key of keys) {
-          orderedPresets[key] = defaultPresets[key];
-        }
-
-        this.defaultPresets$.next(orderedPresets);
+    this.electronService.ipcRenderer.on('getUserPresetsResponse', (event, response: PresetsResponse) => {
+      this.ngZone.run(() => {
+        this.handlePresetsResponse(response, this.userPresets$);
       });
     });
   }
@@ -32,4 +33,35 @@ export class ApplicationService {
   getDefaultPresets() {
     this.electronService.ipcRenderer.send('getDefaultPresets');
   }
+
+  getUserPresets() {
+    this.electronService.ipcRenderer.send('getUserPresets');
+  }
+
+  getAllPresets() {
+    this.getDefaultPresets();
+    this.getUserPresets();
+  }
+
+  private handlePresetsResponse(response: PresetsResponse, subject: Subject<PresetObject>): void {
+    // If presets and keys are defined, return the original order the presets were in, otherwise don't do anything
+    const finalPresets = response.presets && response.keys ? this.orderPresets(response.presets, response.keys) : response.presets;
+    subject.next(finalPresets);
+  }
+
+  private orderPresets(presets: PresetObject, keys: string[]): PresetObject {
+    const orderedPresets: PresetObject = {};
+
+    for (let key of keys) {
+      orderedPresets[key] = presets[key];
+    }
+
+    return orderedPresets;
+  }
+}
+
+interface PresetsResponse {
+  err: NodeJS.ErrnoException;
+  presets: any;
+  keys: string[];
 }
