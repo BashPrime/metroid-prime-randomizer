@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { GeneratorService } from '../services/generator.service';
-import { RandomizerService } from '../services/randomizer.service';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
-import { ApplicationService } from '../services/application.service';
+import { TabService } from '../services/tab.service';
 import { Tab } from '../../../../common/models/tab';
 
 @Component({
@@ -21,11 +20,11 @@ export class RandomizerComponent implements OnInit {
   ];
   private selectedTabId: number = this.tabIds.welcome;
 
-  constructor(private applicationService: ApplicationService, private randomizerService: RandomizerService, private generatorService: GeneratorService) { }
+  constructor(private tabService: TabService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
     // Subscribe to selected tab subject in application service
-    this.applicationService.selectedTabId$.subscribe(tabId => {
+    this.tabService.selectedTabId$.subscribe(tabId => {
       this.selectedTabId = tabId;
     });
   }

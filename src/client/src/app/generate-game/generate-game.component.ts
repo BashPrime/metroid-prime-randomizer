@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
 import { RandomizerService } from '../services/randomizer.service';
-import { ApplicationService } from '../services/application.service';
+import { PresetsService } from '../services/presets.service';
 import { PresetObject } from '../../../../common/models/presetObject';
 
 @Component({
@@ -18,14 +18,14 @@ export class GenerateGameComponent implements OnInit {
   // Constants
   private readonly CUSTOM_PRESET = 'Custom';
 
-  constructor(private randomizerService: RandomizerService, private appService: ApplicationService) { }
+  constructor(private randomizerService: RandomizerService, private presetsService: PresetsService) { }
 
   ngOnInit() {
     this.form = this.randomizerService.createForm();
-    this.appService.getAllPresets();
+    this.presetsService.getAllPresets();
     this.onValueChanges();
 
-    combineLatest(this.appService.defaultPresets$, this.appService.userPresets$)
+    combineLatest(this.presetsService.defaultPresets$, this.presetsService.userPresets$)
       .subscribe(([defaultPresets, userPresets]) => {
         if (defaultPresets && userPresets) {
           this.buildPresets([defaultPresets, userPresets]);
