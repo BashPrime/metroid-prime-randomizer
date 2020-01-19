@@ -41,6 +41,41 @@ export function initialize() {
       }
     });
   });
+
+  ipcMain.on('updateUserPreset', (event, preset, key) => {
+    // Read presets from file
+    fs.readFile(userPresetsPath, 'utf8', (err, filePresets) => {
+      // If file doesn't exist, create a new object and populate it
+      const presets = !(err && err.code === 'ENOENT') ? JSON.parse(filePresets) : {};
+
+      // Set preset object, regardless of whether it's new or not
+      presets[key] = preset;
+
+      // Write to file and return response
+      writeUserPresetsFile(presets, response => {
+        event.sender.send('updateUserPresetResponse', response);
+      });
+    });
+  });
+
+  ipcMain.on('removeUserPreset', (event, key) => {
+    // Read presets from file
+    fs.readFile(userPresetsPath, 'utf8', (err, filePresets) => {
+      if (err) {
+        event.sender.send('removeUserPresetResponse', {
+          err: err,
+          presets: null
+        });
+      } else {
+        const presets = JSON.parse(filePresets);
+        delete presets[key];
+
+        writeUserPresetsFile(presets, response => {
+          event.sender.send('removeUserPresetResponse', response);
+        });
+      }
+    });
+  });
 }
 
 /**
@@ -49,10 +84,9 @@ export function initialize() {
  */
 function readUserPresetsFile(callback) {
   fs.readFile(userPresetsPath, 'utf8', (err, presets) => {
-    console.log(presets);
     const response: PresetsResponse = {
       err: null,
-      presets: {},
+      presets: null,
       keys: null
     };
 
@@ -64,6 +98,15 @@ function readUserPresetsFile(callback) {
     }
 
     callback(response);
+  });
+}
+
+function writeUserPresetsFile(presets, callback) {
+  fs.writeFile(userPresetsPath, JSON.stringify(presets), 'utf8', (err) => {
+    callback({
+      err: err,
+      presets: !err ? presets : null
+    });
   });
 }
 
