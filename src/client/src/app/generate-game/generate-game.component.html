@@ -1,28 +1,40 @@
 <div class="app-wrapper-content">
   <div class="section">
     <form [formGroup]="getForm()">
-      <label class="label is-small">Choose a Preset</label>
-      <div class="field is-grouped" style="margin-bottom: 1.5rem;">
-        <div class="control is-expanded">
-          <div class="select is-fullwidth is-small">
-            <select formControlName="preset">
-              <option *ngFor="let preset of getPresetsDropdown()" [value]="preset" (change)="onPresetChange($event)">
-                {{ preset }}</option>
-            </select>
+      <div class="columns">
+        <div class="column is-one-half">
+          <div class="field">
+            <label class="label is-small">Choose a Preset</label>
+            <div class="control is-expanded">
+              <div class="select is-fullwidth is-small">
+                <select formControlName="preset">
+                  <option *ngFor="let preset of getPresetsDropdown()" [value]="preset"
+                    (change)="onPresetChange($event)">
+                    {{ preset }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="buttons are-small">
+              <button class="button is-success">New</button>
+              <button class="button is-info" [disabled]="isProtectedPreset()">Edit</button>
+              <button class="button is-danger" [disabled]="!isUserPreset()">Delete</button>
+            </div>
           </div>
         </div>
-        <div class="control" *ngIf="!isCustomPreset()">
-          <button class="button is-info is-small" (click)="setCustomPreset()">Customize</button>
-        </div>
-      </div>
-      <div class="field">
-        <label class="label is-small">Number of Seeds to Generate</label>
-        <div class="control">
-          <input class="input is-small" type="number" formControlName="generationCount" style="width: 5em;">
-          <div *ngIf="form.get('generationCount').errors">
-            <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
-            <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
-            <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number between 1 and 99.</p>
+        <div class="column is-one-half">
+          <div class="field">
+            <label class="label is-small">Number of Seeds to Generate</label>
+            <div class="control">
+              <input class="input is-small" type="number" formControlName="generationCount" style="width: 5em;">
+              <div *ngIf="form.get('generationCount').errors">
+                <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
+                <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
+                <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number
+                  between 1 and 99.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

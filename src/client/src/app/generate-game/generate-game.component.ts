@@ -41,6 +41,10 @@ export class GenerateGameComponent implements OnInit {
     return this.presets;
   }
 
+  getPresetValue() {
+    return this.form.get('preset').value;
+  }
+
   getPresetsDropdown(): string[] {
     const presets = ['Custom'];
     for (let presetKey of Object.keys(this.presets)) {
@@ -55,7 +59,15 @@ export class GenerateGameComponent implements OnInit {
   }
 
   isCustomPreset(): boolean {
-    return this.form.get('preset').value === this.CUSTOM_PRESET;
+    return this.getPresetValue() === this.CUSTOM_PRESET;
+  }
+
+  isProtectedPreset(): boolean {
+    return !this.isCustomPreset() && this.presets[this.getPresetValue()].hasOwnProperty('protected');
+  }
+
+  isUserPreset(): boolean {
+    return !(this.isProtectedPreset() || this.isCustomPreset());
   }
 
   // Watch for changes on specific controls
