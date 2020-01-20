@@ -2,11 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
+import { filterProperties } from '../utilities';
 import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
 import { RemovePresetModalComponent } from '../remove-preset-modal/remove-preset-modal.component';
 import { RandomizerService } from '../services/randomizer.service';
 import { PresetsService } from '../services/presets.service';
 import { PresetObject } from '../../../../common/models/presetObject';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Component({
   selector: 'app-generate-game',
@@ -98,6 +100,16 @@ export class GenerateGameComponent implements OnInit {
 
   openRemovePresetModal(preset: string): void {
     this.removePresetModal.setPresetAndOpen(preset);
+  }
+
+  addOrUpdatePreset(name: string) {
+    const preset = filterProperties(this.form.value, ['preset', 'generationCount']);
+    this.presetsService.addOrUpdatePreset(name, preset as RandomizerForm);
+  }
+
+  removePreset(name: string) {
+    this.presetsService.removePreset(name);
+    this.form.patchValue({preset: this.randomizerService.DEFAULT_PRESET});
   }
 
   private buildPresets(presets: PresetObject[]): void {

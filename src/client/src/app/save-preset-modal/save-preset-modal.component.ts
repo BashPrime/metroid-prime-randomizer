@@ -11,7 +11,7 @@ import { PresetObject } from '../../../../common/models/presetObject';
 })
 export class SavePresetModalComponent extends ModalComponent implements OnInit {
   @Output() onSave: EventEmitter<string> = new EventEmitter<string>();
-  private presets: PresetObject;
+  private presets: PresetObject = {};
   private form: FormGroup;
 
   constructor() {

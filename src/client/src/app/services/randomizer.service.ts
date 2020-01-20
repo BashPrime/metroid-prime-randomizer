@@ -9,7 +9,7 @@ export class RandomizerService {
   readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings({});
   readonly DETAILS = details;
   readonly SETTINGS = settings;
-  private readonly DEFAULT_PRESET = 'Default / Beginner';
+  readonly DEFAULT_PRESET = 'Default / Beginner';
 
   constructor() { }
 

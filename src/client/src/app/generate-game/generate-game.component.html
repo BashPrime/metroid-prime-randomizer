@@ -50,5 +50,5 @@
     <button class="button is-generate-button is-info">Generate with Spoilers</button>
   </div>
 </div>
-<app-save-preset-modal></app-save-preset-modal>
-<app-remove-preset-modal></app-remove-preset-modal>
+<app-save-preset-modal (onSave)="addOrUpdatePreset($event)"></app-save-preset-modal>
+<app-remove-preset-modal (onRemove)="removePreset($event)"></app-remove-preset-modal>

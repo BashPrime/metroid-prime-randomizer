@@ -4,6 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './electron.service';
 import { PresetObject } from '../../../../common/models/presetObject';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,12 @@ export class PresetsService {
         this.getUserPresets();
       });
     });
+
+    this.electronService.ipcRenderer.on('removeUserPresetResponse', (event, response) => {
+      this.ngZone.run(() => {
+        this.getUserPresets();
+      });
+    });
   }
 
   getDefaultPresets() {
@@ -45,6 +52,14 @@ export class PresetsService {
   getAllPresets() {
     this.getDefaultPresets();
     this.getUserPresets();
+  }
+
+  addOrUpdatePreset(name: string, preset: RandomizerForm) {
+    this.electronService.ipcRenderer.send('updateUserPreset', preset, name);
+  }
+
+  removePreset(name: string) {
+    this.electronService.ipcRenderer.send('removeUserPreset', name);
   }
 
   private handlePresetsResponse(response: PresetsResponse, subject: Subject<PresetObject>): void {

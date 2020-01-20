@@ -102,7 +102,7 @@ function readUserPresetsFile(callback) {
 }
 
 function writeUserPresetsFile(presets, callback) {
-  fs.writeFile(userPresetsPath, JSON.stringify(presets), 'utf8', (err) => {
+  fs.writeFile(userPresetsPath, JSON.stringify(presets, null, '\t'), 'utf8', (err) => {
     callback({
       err: err,
       presets: !err ? presets : null
