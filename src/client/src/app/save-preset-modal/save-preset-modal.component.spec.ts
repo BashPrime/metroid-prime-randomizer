@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReadOnlySettingsComponent } from './read-only-settings.component';
+import { SavePresetModalComponent } from './save-preset-modal.component';
 
-describe('ReadOnlySettingsComponent', () => {
-  let component: ReadOnlySettingsComponent;
-  let fixture: ComponentFixture<ReadOnlySettingsComponent>;
+describe('SavePresetModalComponent', () => {
+  let component: SavePresetModalComponent;
+  let fixture: ComponentFixture<SavePresetModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReadOnlySettingsComponent ]
+      declarations: [ SavePresetModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReadOnlySettingsComponent);
+    fixture = TestBed.createComponent(SavePresetModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

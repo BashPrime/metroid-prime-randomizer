@@ -5,11 +5,11 @@ import { RandomizerService } from 'src/app/services/randomizer.service';
 import { SettingsSection } from '../settings-section';
 
 @Component({
-  selector: 'app-read-only-settings',
-  templateUrl: './read-only-settings.component.html',
-  styleUrls: ['./read-only-settings.component.scss']
+  selector: 'app-list-settings',
+  templateUrl: './list-settings.component.html',
+  styleUrls: ['./list-settings.component.scss']
 })
-export class ReadOnlySettingsComponent extends SettingsSection implements OnInit {
+export class ListSettingsComponent extends SettingsSection implements OnInit {
   @Input() useColumns: boolean;
   @Input() form: FormGroup;
   readonly OBJECT_KEYS = Object.keys;

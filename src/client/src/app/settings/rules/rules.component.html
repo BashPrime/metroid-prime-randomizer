@@ -1,76 +1,70 @@
 <form [formGroup]="getForm()">
-  <div *ngIf="!disabled; then showForm; else readOnly"></div>
-  <ng-template #showForm>
-    <div class="columns is-multiline">
-      <div class="column is-one-third">
-        <div class="field">
-          <label class="label is-small">{{ getDisplayName('goal') }}</label>
-          <div class="control">
-            <div class="select is-small">
-              <select formControlName="goal">
-                <option *ngFor="let choice of getChoices('goal')" value="{{ choice.value }}">{{ choice.name }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="field">
-          <label class="label is-small">{{ getDisplayName('goalArtifacts') }}</label>
-          <div class="control">
-            <div class="select is-small">
-              <select formControlName="goalArtifacts" [disableControl]="!isArtifactCollectionSelected()">
-                <option *ngFor="let choice of getChoices('goalArtifacts')" value="{{ choice.value }}">
-                  {{ choice.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="artifactLocationHints"
-                [disableControl]="!isArtifactCollectionSelected()"> {{ getDisplayName('artifactLocationHints') }}
-            </label>
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('goal') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goal">
+              <option *ngFor="let choice of getChoices('goal')" value="{{ choice.value }}">{{ choice.name }}</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
-    <div class="columns is-multiline">
-      <div class="column is-one-third">
-        <div class="field">
-          <label class="label is-small">{{ getDisplayName('heatProtection') }}</label>
-          <div class="control">
-            <div class="select is-small">
-              <select formControlName="heatProtection">
-                <option *ngFor="let choice of getChoices('heatProtection')" value="{{ choice.value }}">
-                  {{ choice.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="field">
-          <label class="label is-small">{{ getDisplayName('suitDamageReduction') }}</label>
-          <div class="control">
-            <div class="select is-small">
-              <select formControlName="suitDamageReduction">
-                <option *ngFor="let choice of getChoices('suitDamageReduction')" value="{{ choice.value }}">
-                  {{ choice.name }}
-                </option>
-              </select>
-            </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('goalArtifacts') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goalArtifacts" [disableControl]="!isArtifactCollectionSelected()">
+              <option *ngFor="let choice of getChoices('goalArtifacts')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
     </div>
-  </ng-template>
-  <ng-template #readOnly>
-    <app-read-only-settings [form]="form" [useColumns]="true"></app-read-only-settings>
-  </ng-template>
+    <div class="column is-one-third">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="artifactLocationHints"
+              [disableControl]="!isArtifactCollectionSelected()"> {{ getDisplayName('artifactLocationHints') }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('heatProtection') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="heatProtection">
+              <option *ngFor="let choice of getChoices('heatProtection')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('suitDamageReduction') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="suitDamageReduction">
+              <option *ngFor="let choice of getChoices('suitDamageReduction')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

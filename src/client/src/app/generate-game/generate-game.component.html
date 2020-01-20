@@ -3,8 +3,8 @@
     <form [formGroup]="getForm()">
       <div class="columns">
         <div class="column is-one-half">
-          <div class="field">
-            <label class="label is-small">Choose a Preset</label>
+          <label class="label is-small">Choose a Preset</label>
+          <div class="field has-addons">
             <div class="control is-expanded">
               <div class="select is-fullwidth is-small">
                 <select formControlName="preset">
@@ -17,9 +17,9 @@
           </div>
           <div class="field">
             <div class="buttons are-small">
-              <button class="button is-success">New</button>
-              <button class="button is-info" [disabled]="isProtectedPreset()">Edit</button>
-              <button class="button is-danger" [disabled]="!isUserPreset()">Delete</button>
+              <button class="button is-link" (click)="setCustomPreset()" *ngIf="!isCustomPreset()">Customize</button>
+              <button class="button is-success" (click)="openSavePresetModal(getPresetValue())" *ngIf="isCustomPreset()">Save</button>
+              <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())" *ngIf="isUserPreset()">Remove</button>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
           <div class="field">
             <label class="label is-small">Number of Seeds to Generate</label>
             <div class="control">
-              <input class="input is-small" type="number" formControlName="generationCount" style="width: 5em;">
+              <input class="input is-small" type="number" formControlName="generationCount">
               <div *ngIf="form.get('generationCount').errors">
                 <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
                 <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
@@ -38,13 +38,17 @@
           </div>
         </div>
       </div>
-      <app-settings [form]="getForm()" [disabled]="!isCustomPreset()"></app-settings>
+      <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()"></app-customize-settings-container>
+      <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()"></app-read-only-settings-container >
     </form>
   </div>
 </div>
+<hr>
 <div class="section randomizer-footer">
   <div class="buttons are-large is-centered">
     <button class="button is-generate-button is-success">Generate</button>
     <button class="button is-generate-button is-info">Generate with Spoilers</button>
   </div>
 </div>
+<app-save-preset-modal></app-save-preset-modal>
+<app-remove-preset-modal></app-remove-preset-modal>

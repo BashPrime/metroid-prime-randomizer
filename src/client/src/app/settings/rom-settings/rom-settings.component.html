@@ -1,37 +1,39 @@
 <form [formGroup]="getForm()">
-  <div *ngIf="!disabled; then showForm; else readOnly"></div>
-  <ng-template #showForm>
-    <div class="columns is-multiline">
-      <div class="column is-one-third">
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <input class="is-checkradio has-background-color" id="exampleCheckboxBackgroundColorDefault" type="checkbox"
+          name="exampleCheckboxBackgroundColorDefault" checked="checked">
+        <label for="exampleCheckboxBackgroundColorDefault">Checkbox</label>
+      </div>
+      <div class="field">
+        <div class="control">
+          <!-- <label class="checkbox">
               <input type="checkbox" formControlName="skipFrigate"> {{ getDisplayName('skipFrigate') }}
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="skipHudPopups"> {{ getDisplayName('skipHudPopups') }}
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="hideItemModels"> {{ getDisplayName('hideItemModels') }}
-            </label>
-          </div>
+
+            </label> -->
+          <input class="is-checkradio" id="skipFrigate" type="checkbox" formControlName="skipFrigate">
+          <label for="skipFrigate">{{ getDisplayName('skipFrigate') }}</label>
         </div>
       </div>
     </div>
-  </ng-template>
-  <ng-template #readOnly>
-    <app-read-only-settings [form]="getForm()" [useColumns]="true"></app-read-only-settings>
-  </ng-template>
+    <div class="column is-one-third">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="skipHudPopups"> {{ getDisplayName('skipHudPopups') }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="hideItemModels"> {{ getDisplayName('hideItemModels') }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

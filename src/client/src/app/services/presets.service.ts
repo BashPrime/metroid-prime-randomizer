@@ -14,7 +14,6 @@ export class PresetsService {
 
   constructor(private ngZone: NgZone, private electronService: ElectronService) {
     this.getAllPresets();
-    this.updatePreset();
 
     this.electronService.ipcRenderer.on('getDefaultPresetsResponse', (event, response: PresetsResponse) => {
       this.ngZone.run(() => {
@@ -46,10 +45,6 @@ export class PresetsService {
   getAllPresets() {
     this.getDefaultPresets();
     this.getUserPresets();
-  }
-
-  updatePreset() {
-    this.electronService.ipcRenderer.send('updateUserPreset', {}, 'Test2');
   }
 
   private handlePresetsResponse(response: PresetsResponse, subject: Subject<PresetObject>): void {

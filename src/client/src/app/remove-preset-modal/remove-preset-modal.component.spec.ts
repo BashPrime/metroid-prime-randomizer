@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsComponent } from './settings.component';
+import { RemovePresetModalComponent } from './remove-preset-modal.component';
 
-describe('SettingsComponent', () => {
-  let component: SettingsComponent;
-  let fixture: ComponentFixture<SettingsComponent>;
+describe('RemovePresetModalComponent', () => {
+  let component: RemovePresetModalComponent;
+  let fixture: ComponentFixture<RemovePresetModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsComponent ]
+      declarations: [ RemovePresetModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsComponent);
+    fixture = TestBed.createComponent(RemovePresetModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

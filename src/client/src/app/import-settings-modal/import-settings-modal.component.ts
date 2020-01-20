@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { ModalComponent } from '../components/common/modal.component';
+
 @Component({
   selector: 'app-import-settings-modal',
   templateUrl: './import-settings-modal.component.html',
   styleUrls: ['./import-settings-modal.component.scss']
 })
-export class ImportSettingsModalComponent implements OnInit {
-  private open: boolean = false;
+export class ImportSettingsModalComponent extends ModalComponent implements OnInit {
   private form: FormGroup;
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     const fb = new FormBuilder();
     this.form = fb.group({
-      seed: [null, [Validators.required]],
+      seed: ['', [Validators.required]],
       settingsString: ['', [Validators.required]]
     });
   }
@@ -23,13 +26,4 @@ export class ImportSettingsModalComponent implements OnInit {
   getForm(): FormGroup {
     return this.form;
   }
-
-  getOpen(): boolean {
-    return this.open;
-  }
-
-  setOpen(open: boolean) {
-    this.open = open;
-  }
-
 }

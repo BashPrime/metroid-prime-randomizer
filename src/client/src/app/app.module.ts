@@ -18,9 +18,12 @@ import { PicklistComponent } from './picklist/picklist.component';
 import { TricksComponent } from './settings/tricks/tricks.component';
 import { RomSettingsComponent } from './settings/rom-settings/rom-settings.component';
 import { RulesComponent } from './settings/rules/rules.component';
-import { SettingsComponent } from './settings/settings.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
-import { ReadOnlySettingsComponent } from './settings/read-only-settings/read-only-settings.component';
+import { SavePresetModalComponent } from './save-preset-modal/save-preset-modal.component';
+import { RemovePresetModalComponent } from './remove-preset-modal/remove-preset-modal.component';
+import { ReadOnlySettingsContainerComponent } from './settings/read-only-settings-container/read-only-settings-container.component';
+import { ListSettingsComponent } from './settings/list-settings/list-settings.component';
+import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
 
 
 @NgModule({
@@ -36,9 +39,12 @@ import { ReadOnlySettingsComponent } from './settings/read-only-settings/read-on
     PicklistComponent,
     TricksComponent,
     RomSettingsComponent,
-    SettingsComponent,
     DisableControlDirective,
-    ReadOnlySettingsComponent
+    SavePresetModalComponent,
+    RemovePresetModalComponent,
+    ReadOnlySettingsContainerComponent,
+    ListSettingsComponent,
+    CustomizeSettingsContainerComponent
   ],
   imports: [
     BrowserModule,

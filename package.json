@@ -69,6 +69,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "big-integer": "^1.6.48",
     "bulma": "^0.7.5",
+    "bulma-checkradio": "^1.1.1",
     "bulmaswatch": "^0.7.5",
     "compare-versions": "^3.4.0",
     "napi-thread-safe-callback": "^0.0.1",

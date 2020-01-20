@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
+import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
+import { RemovePresetModalComponent } from '../remove-preset-modal/remove-preset-modal.component';
 import { RandomizerService } from '../services/randomizer.service';
 import { PresetsService } from '../services/presets.service';
 import { PresetObject } from '../../../../common/models/presetObject';
@@ -12,6 +14,8 @@ import { PresetObject } from '../../../../common/models/presetObject';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
+  @ViewChild(SavePresetModalComponent, {static: false}) private savePresetModal: SavePresetModalComponent;
+  @ViewChild(RemovePresetModalComponent, {static: false}) private removePresetModal: RemovePresetModalComponent;
   private presets: PresetObject = {};
   private form: FormGroup;
 
@@ -25,6 +29,7 @@ export class GenerateGameComponent implements OnInit {
     this.presetsService.getAllPresets();
     this.onValueChanges();
 
+    // Only subscribe when both presets propagate new values
     combineLatest(this.presetsService.defaultPresets$, this.presetsService.userPresets$)
       .subscribe(([defaultPresets, userPresets]) => {
         if (defaultPresets && userPresets) {
@@ -63,7 +68,13 @@ export class GenerateGameComponent implements OnInit {
   }
 
   isProtectedPreset(): boolean {
-    return !this.isCustomPreset() && this.presets[this.getPresetValue()].hasOwnProperty('protected');
+    const preset = this.presets[this.getPresetValue()];
+
+    if (!preset) {
+      return false;
+    }
+
+    return !this.isCustomPreset() && preset.hasOwnProperty('protected');
   }
 
   isUserPreset(): boolean {
@@ -78,6 +89,14 @@ export class GenerateGameComponent implements OnInit {
         this.form.patchValue(preset);
       }
     })
+  }
+
+  openSavePresetModal(preset: string): void {
+    this.savePresetModal.setPresetAndOpen(preset);
+  }
+
+  openRemovePresetModal(preset: string): void {
+    this.removePresetModal.setPresetAndOpen(preset);
   }
 
   private buildPresets(presets: PresetObject[]): void {
