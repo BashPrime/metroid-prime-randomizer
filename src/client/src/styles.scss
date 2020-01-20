@@ -3,6 +3,7 @@
 @import './assets/scss/bulma_overrides';
 @import '~bulma/bulma';
 @import '~bulmaswatch/darkly/_overrides';
+@import '~bulma-checkradio/dist/css/bulma-checkradio.min.css';
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/themes/nova-dark/theme.css';
 @import '~primeng/resources/primeng.min.css';
@@ -66,4 +67,12 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
+}
+
+.is-checkradio[type=checkbox] {
+  position: relative;
+}
+
+.is-checkradio[type=checkbox]+label:first-of-type {
+  margin-left: -1em;
 }

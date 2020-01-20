@@ -28,12 +28,8 @@
     </div>
     <div class="column is-one-third">
       <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" formControlName="artifactLocationHints"
-              [disableControl]="!isArtifactCollectionSelected()"> {{ getDisplayName('artifactLocationHints') }}
-          </label>
-        </div>
+        <input class="is-checkradio" id="artifactLocationHints" type="checkbox" formControlName="artifactLocationHints">
+        <label for="artifactLocationHints">{{ getDisplayName('artifactLocationHints') }}</label>
       </div>
     </div>
   </div>
