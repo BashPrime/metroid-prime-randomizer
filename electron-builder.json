@@ -6,6 +6,7 @@
   "files": [
     "main.js",
     "dist",
+    "icon.png",
     "build/Release/randomprime.node",
     "!node_modules"
   ],

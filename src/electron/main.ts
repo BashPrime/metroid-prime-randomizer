@@ -24,7 +24,7 @@ function createWindow() {
     height: 768,
     minWidth: 800,
     minHeight: 600,
-    icon : path.join(__dirname, 'assets/favicon.png'),
+    icon : path.join(__dirname, 'icon.png'),
     title: 'Metroid Prime Randomizer',
     webPreferences: {
       nodeIntegration: true
