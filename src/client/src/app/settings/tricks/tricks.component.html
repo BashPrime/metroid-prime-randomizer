@@ -1,7 +1,7 @@
 <!-- <app-picklist [source]="tricks.available" [target]="tricks.selected" [sourceHeader]="'Available'"
   [targetHeader]="'Selected'" [disabled]="disabled">
 </app-picklist> -->
-<p-pickList [source]="tricks.available" [target]="tricks.selected" [metaKeySelection]="false" [responsive]="true"
+<p-pickList [source]="tricks.available" [target]="tricks.selected" [style]="GLOBAL_STYLE" [sourceStyle]="GLOBAL_STYLE" [targetStyle]="GLOBAL_STYLE" [metaKeySelection]="false" [responsive]="true"
   [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Available'" [targetHeader]="'Selected'"
   (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
   <ng-template let-item pTemplate="listItem">

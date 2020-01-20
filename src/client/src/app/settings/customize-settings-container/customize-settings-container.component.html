@@ -5,6 +5,9 @@
     </li>
   </ul>
 </div>
-<app-rom-settings [form]="form.get('romSettings')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
-<app-rules [form]="form.get('rules')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
-<app-tricks [form]="form.get('tricks')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
+<div class="settings-container">
+  <app-rom-settings [form]="form.get('romSettings')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
+  <app-rules [form]="form.get('rules')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+  <app-tricks [form]="form.get('tricks')" [disabled]="disabled" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
+</div>
+

@@ -1,5 +1,5 @@
 <div class="app-wrapper-content">
-  <div class="section">
+  <section class="section randomizer-content">
     <form [formGroup]="getForm()">
       <div class="columns">
         <div class="column is-one-half">
@@ -18,8 +18,10 @@
           <div class="field">
             <div class="buttons are-small">
               <button class="button is-link" (click)="setCustomPreset()" *ngIf="!isCustomPreset()">Customize</button>
-              <button class="button is-success" (click)="openSavePresetModal(getUserPresets())" *ngIf="isCustomPreset()">Save</button>
-              <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())" *ngIf="isUserPreset()">Remove</button>
+              <button class="button is-success" (click)="openSavePresetModal(getUserPresets())"
+                *ngIf="isCustomPreset()">Save</button>
+              <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())"
+                *ngIf="isUserPreset()">Remove</button>
             </div>
           </div>
         </div>
@@ -38,17 +40,19 @@
           </div>
         </div>
       </div>
-      <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()"></app-customize-settings-container>
-      <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()"></app-read-only-settings-container >
+      <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()">
+      </app-customize-settings-container>
+      <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()">
+      </app-read-only-settings-container>
     </form>
-  </div>
+  </section>
 </div>
 <hr>
-<div class="section randomizer-footer">
+<section class="section randomizer-footer">
   <div class="buttons are-large is-centered">
     <button class="button is-generate-button is-success">Generate</button>
     <button class="button is-generate-button is-info">Generate with Spoilers</button>
   </div>
-</div>
+</section>
 <app-save-preset-modal (onSave)="addOrUpdatePreset($event)"></app-save-preset-modal>
 <app-remove-preset-modal (onRemove)="removePreset($event)"></app-remove-preset-modal>
