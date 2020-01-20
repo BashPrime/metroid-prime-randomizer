@@ -10,8 +10,12 @@ hr {
   margin: 0;
 }
 
-app-generate-game {
+app-welcome, app-generate-game {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+footer {
+  padding: 0.5rem 1.5rem;
 }
