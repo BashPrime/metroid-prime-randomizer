@@ -14,11 +14,13 @@ export class CustomizeSettingsContainerComponent implements OnInit {
   readonly tabIds = {
     rom: 0,
     rules: 1,
-    tricks: 2
+    disabledLocations: 2,
+    tricks: 3
   };
   readonly tabs: Tab[] = [
     { id: this.tabIds.rom, name: 'ROM Settings' },
     { id: this.tabIds.rules, name: 'Rules' },
+    { id: this.tabIds.disabledLocations, name: 'Disabled Locations' },
     { id: this.tabIds.tricks, name: 'Tricks' }
   ];
   private selectedTabId = this.tabIds.rom;

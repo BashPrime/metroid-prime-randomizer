@@ -1,23 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
+import { FormArray } from '@angular/forms';
 
 import { RandomizerService } from '../../services/randomizer.service';
-import { SettingsSection } from '../settings-section';
+import { PicklistFormComponent } from 'src/app/components/common/picklist-form.component';
 
 @Component({
   selector: 'app-tricks',
   templateUrl: './tricks.component.html',
   styleUrls: ['./tricks.component.scss']
 })
-export class TricksComponent extends SettingsSection implements OnInit {
-  @Input() form: FormArray
-  @Input() disabled: boolean;
-  tricks: PickList = {
-    available: [],
-    selected: []
-  };
-  private fb = new FormBuilder();
+export class TricksComponent extends PicklistFormComponent implements OnInit {
+  @Input() protected form: FormArray;
 
   // Constants
   readonly GLOBAL_STYLE = { height: '100%' };
@@ -29,6 +22,10 @@ export class TricksComponent extends SettingsSection implements OnInit {
   }
 
   ngOnInit() {
+    this.initialize();
+  }
+
+  protected initialize(): void {
     const settings = this.randomizerService.DEFAULT_SETTINGS;
 
     for (let key of Object.keys(settings.allowedTricks)) {
@@ -43,33 +40,11 @@ export class TricksComponent extends SettingsSection implements OnInit {
 
         // If form contains value on init, push to selected tricks. Else, push to available tricks.
         if (this.form.value.includes(trick.value)) {
-          this.tricks.selected.push(trick);
+          this.items.selected.push(trick);
         } else {
-          this.tricks.available.push(trick);
+          this.items.available.push(trick);
         }
       }
     }
   }
-
-  addItems(event: any): void {
-    const items = (event.items as SelectItem[]).map(item => item.value);
-
-    for (let item of items) {
-      this.form.push(this.fb.control(item));
-    }
-  }
-
-  removeItems(event: any): void {
-    const items = (event.items as SelectItem[]).map(item => item.value);
-
-    for (let item of items) {
-      const formValue = this.form.value;
-      this.form.removeAt(formValue.indexOf(item));
-    }
-  }
-}
-
-interface PickList {
-  available: SelectItem[];
-  selected: SelectItem[];
 }

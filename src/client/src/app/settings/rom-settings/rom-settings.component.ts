@@ -10,7 +10,6 @@ import { SettingsSection } from '../settings-section';
   styleUrls: ['./rom-settings.component.scss']
 })
 export class RomSettingsComponent extends SettingsSection implements OnInit {
-  @Input() disabled: boolean;
   @Input() private form: FormGroup;
 
   // Constants

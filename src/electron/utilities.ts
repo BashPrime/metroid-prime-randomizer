@@ -1,5 +1,7 @@
 import { app } from 'electron';
 import * as path from 'path';
+import * as bigInt from 'big-integer';
+
 
 import { MersenneTwister } from './mersenneTwister';
 
@@ -41,6 +43,17 @@ export function getRandomInt(min: number, max: number, rng?: MersenneTwister) {
   const random = rng ? rng.random() : Math.random();
 
   return Math.floor(random * (max - min + 1)) + min;
+}
+
+/**
+ * Converts the given settings string to a zero-padded bitstring of given length.
+ *
+ * @param settingsString The base 36 settings string
+ * @param length The length to pad the bitstring to
+ */
+export function getPaddedBitStringFromSettingsString(settingsString: string, length: number) {
+  const settingsBits = bigInt(settingsString, 36).toString(2);
+  return '0'.repeat(length - settingsBits.length) + settingsBits;
 }
 
 /**

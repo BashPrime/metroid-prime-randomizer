@@ -10,7 +10,6 @@ import { SettingsSection } from '../settings-section';
   styleUrls: ['./rules.component.scss']
 })
 export class RulesComponent extends SettingsSection implements OnInit {
-  @Input() disabled: boolean;
   @Input() private form: FormGroup;
 
   // Constants
