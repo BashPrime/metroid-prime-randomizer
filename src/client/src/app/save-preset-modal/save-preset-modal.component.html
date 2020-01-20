@@ -6,11 +6,34 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
+      <form [formGroup]="getForm()">
+        <div class="field">
+          <label class="label">Preset Name</label>
+          <div class="control">
+            <input class="input" type="text" formControlName="preset">
+            <div *ngIf="preset.invalid && (preset.dirty || preset.touched)">
+              <p class="help is-danger" *ngIf="preset.errors.required">You must enter a preset name.</p>
+            </div>
+          </div>
+        </div>
+        <section class="section">
+          <p class="has-text-centered">or...</p>
+        </section>
+        <div class="field">
+          <label class="label">Pick an Existing Preset to Overwrite</label>
+          <div class="control">
+            <div class="select is-fullwidth" *ngIf="getPresets()">
+              <select (change)="onPresetsDropdownChange($event)">
+                <option *ngFor="let item of getPresetsAsDropdown()" [value]="item">{{ item }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" (click)="onSave()">Save</button>
-      <button class="button" (click)="setOpen(false)" >Cancel</button>
+      <button class="button is-success" (click)="onSavePreset(getForm().value)">Save</button>
+      <button class="button" (click)="setOpen(false)">Cancel</button>
     </footer>
   </div>
-  <button class="modal-close is-large" aria-label="close"></button>
 </div>

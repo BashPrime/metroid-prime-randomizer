@@ -17,6 +17,7 @@ export class GenerateGameComponent implements OnInit {
   @ViewChild(SavePresetModalComponent, {static: false}) private savePresetModal: SavePresetModalComponent;
   @ViewChild(RemovePresetModalComponent, {static: false}) private removePresetModal: RemovePresetModalComponent;
   private presets: PresetObject = {};
+  private userPresets: PresetObject;
   private form: FormGroup;
 
   // Constants
@@ -33,6 +34,7 @@ export class GenerateGameComponent implements OnInit {
     combineLatest(this.presetsService.defaultPresets$, this.presetsService.userPresets$)
       .subscribe(([defaultPresets, userPresets]) => {
         if (defaultPresets && userPresets) {
+          this.userPresets = userPresets;
           this.buildPresets([defaultPresets, userPresets]);
         }
       });
@@ -46,17 +48,16 @@ export class GenerateGameComponent implements OnInit {
     return this.presets;
   }
 
+  getUserPresets() {
+    return this.userPresets;
+  }
+
   getPresetValue() {
     return this.form.get('preset').value;
   }
 
   getPresetsDropdown(): string[] {
-    const presets = ['Custom'];
-    for (let presetKey of Object.keys(this.presets)) {
-      presets.push(presetKey);
-    }
-
-    return presets;
+    return ['Custom', ...Object.keys(this.presets)];
   }
 
   setCustomPreset(): void {
@@ -91,8 +92,8 @@ export class GenerateGameComponent implements OnInit {
     })
   }
 
-  openSavePresetModal(preset: string): void {
-    this.savePresetModal.setPresetAndOpen(preset);
+  openSavePresetModal(presets: PresetObject): void {
+    this.savePresetModal.setPresetsObjectAndOpen(presets);
   }
 
   openRemovePresetModal(preset: string): void {

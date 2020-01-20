@@ -6,10 +6,10 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <p>Are you sure you want to remove {{ preset }}?</p>
+      <p>Are you sure you want to remove {{ getPreset() }}?</p>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-danger" (click)="onSave()">Remove</button>
+      <button class="button is-danger" (click)="onRemovePreset()">Remove</button>
       <button class="button" (click)="setOpen(false)" >Cancel</button>
     </footer>
   </div>
