@@ -8,7 +8,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname),
     filename: 'main.js',
-    // devtoolModuleFilenameTemplate: '[absolute-resource-path]'
   },
   resolve: {
     extensions: ['.ts', '.js']
@@ -16,10 +15,11 @@ module.exports = {
   module: {
       rules: [
           // Handle all .ts or .tsx files with ts-loader
-          { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
-
-          // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-          // { enforce: "pre", test: /\.js$/, loader: 'source-map-loader' }
+          {
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/
+          },
       ]
   },
   node: {
