@@ -11,4 +11,6 @@ export interface RandomizerForm {
     heatProtection: string;
     suitDamageReduction: string;
   };
+  excludeLocations: string[];
+  tricks: string[];
 }

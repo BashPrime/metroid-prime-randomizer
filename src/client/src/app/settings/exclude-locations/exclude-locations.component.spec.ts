@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DisabledLocationsComponent } from './disabled-locations.component';
+import { ExcludeLocationsComponent } from './exclude-locations.component';
 
-describe('DisabledLocationsComponent', () => {
-  let component: DisabledLocationsComponent;
-  let fixture: ComponentFixture<DisabledLocationsComponent>;
+describe('ExcludeLocationsComponent', () => {
+  let component: ExcludeLocationsComponent;
+  let fixture: ComponentFixture<ExcludeLocationsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisabledLocationsComponent ]
+      declarations: [ ExcludeLocationsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DisabledLocationsComponent);
+    fixture = TestBed.createComponent(ExcludeLocationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

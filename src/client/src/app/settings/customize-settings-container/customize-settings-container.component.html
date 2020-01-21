@@ -8,7 +8,7 @@
 <div class="settings-container">
   <app-rom-settings [form]="form.get('romSettings')" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
   <app-rules [form]="form.get('rules')" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
-  <app-disabled-locations [form]="form.get('disabledLocations')" *ngIf="isTabIdSelected(tabIds.disabledLocations)"></app-disabled-locations>
+  <app-exclude-locations [form]="form.get('excludeLocations')" *ngIf="isTabIdSelected(tabIds.excludeLocations)"></app-exclude-locations>
   <app-tricks [form]="form.get('tricks')" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
 </div>
 

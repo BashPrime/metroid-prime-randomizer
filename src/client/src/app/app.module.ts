@@ -24,7 +24,7 @@ import { RemovePresetModalComponent } from './remove-preset-modal/remove-preset-
 import { ReadOnlySettingsContainerComponent } from './settings/read-only-settings-container/read-only-settings-container.component';
 import { ListSettingsComponent } from './settings/list-settings/list-settings.component';
 import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
-import { DisabledLocationsComponent } from './settings/disabled-locations/disabled-locations.component';
+import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
 
 
 @NgModule({
@@ -46,7 +46,7 @@ import { DisabledLocationsComponent } from './settings/disabled-locations/disabl
     ReadOnlySettingsContainerComponent,
     ListSettingsComponent,
     CustomizeSettingsContainerComponent,
-    DisabledLocationsComponent
+    ExcludeLocationsComponent
   ],
   imports: [
     BrowserModule,

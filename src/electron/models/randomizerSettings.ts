@@ -4,7 +4,7 @@ export interface RandomizerSettingsArgs {
   seed?: string;
   spoiler?: boolean;
   goal?: string;
-  disabledLocations?: object;
+  excludeLocations?: object;
   allowedTricks?: object;
 }
 
@@ -12,7 +12,7 @@ export class RandomizerSettings {
   seed: string;
   spoiler: boolean;
   goal: string;
-  disabledLocations: object;
+  excludeLocations: object;
   allowedTricks: object;
 
   constructor(args: RandomizerSettingsArgs) {

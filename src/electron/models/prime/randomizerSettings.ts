@@ -6,7 +6,7 @@ import { Checkbox, SelectOption, SettingsChoice, discreteNumberSelection } from 
 import { OptionType } from '../../enums/optionType';
 import { AllowedTricks } from './allowedTricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
-import { DisabledLocations } from './disabledLocations';
+import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
 
 const SETTINGS_STRING_DELIMITER = '-';
@@ -22,7 +22,7 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   artifactLocationHints?: boolean;
   heatProtection?: string;
   suitDamageReduction?: string;
-  disabledLocations?: SettingsFlagsArgs;
+  excludeLocations?: SettingsFlagsArgs;
   allowedTricks?: SettingsFlagsArgs;
 }
 
@@ -37,12 +37,12 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   artifactLocationHints: boolean;
   heatProtection: string;
   suitDamageReduction: string;
-  disabledLocations: DisabledLocations;
+  excludeLocations: ExcludeLocations;
   allowedTricks: AllowedTricks;
 
   constructor(args: PrimeRandomizerSettingsArgs) {
     super(args);
-    this.disabledLocations = new DisabledLocations(args.disabledLocations);
+    this.excludeLocations = new ExcludeLocations(args.excludeLocations);
     this.allowedTricks = new AllowedTricks(args.allowedTricks);
   }
 

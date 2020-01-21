@@ -11,76 +11,8 @@
       "artifactLocationHints": true,
       "heatProtection": "any-suit",
       "suitDamageProtection": "default"
-    }
-  },
-  "Easy Tricks": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
     },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "artifactLocationHints": true,
-      "heatProtection": "any-suit",
-      "suitDamageProtection": "default"
-    }
-  },
-  "Normal Tricks": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
-    },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "artifactLocationHints": true,
-      "heatProtection": "any-suit",
-      "suitDamageProtection": "default"
-    }
-  },
-  "Hard Tricks": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
-    },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "artifactLocationHints": false,
-      "heatProtection": "any-suit",
-      "suitDamageProtection": "default"
-    }
-  },
-  "Insane Tricks": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
-    },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "artifactLocationHints": false,
-      "heatProtection": "any-suit",
-      "suitDamageProtection": "default"
-    }
-  },
-  "2019 Tournament": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
-    },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "artifactLocationHints": false,
-      "heatProtection": "varia-only",
-      "suitDamageProtection": "progressive"
-    }
+    "excludeLocations": [],
+    "tricks": []
   }
 }

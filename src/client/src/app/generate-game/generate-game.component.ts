@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
 import { filterProperties } from '../utilities';
@@ -85,13 +85,23 @@ export class GenerateGameComponent implements OnInit {
   }
 
   // Watch for changes on specific controls
-  onValueChanges() {
+  onValueChanges(): void {
     this.form.get('preset').valueChanges.subscribe(value => {
       if (!this.isCustomPreset()) {
-        const preset = this.presets[value];
-        this.form.patchValue(preset);
+        this.applyPresetToForm(this.presets[value]);
       }
     })
+  }
+
+  applyPresetToForm(preset: RandomizerForm): void {
+    const fb = new FormBuilder();
+    this.form.patchValue(preset);
+
+    const arrayControls = ['excludeLocations', 'tricks'];
+
+    for (let control of arrayControls) {
+      this.form.setControl(control, fb.array(preset[control] || []));
+    }
   }
 
   openSavePresetModal(presets: PresetObject): void {

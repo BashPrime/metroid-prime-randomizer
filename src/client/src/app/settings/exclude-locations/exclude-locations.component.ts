@@ -5,11 +5,11 @@ import { PicklistFormComponent } from 'src/app/components/common/picklist-form.c
 import { RandomizerService } from 'src/app/services/randomizer.service';
 
 @Component({
-  selector: 'app-disabled-locations',
-  templateUrl: './disabled-locations.component.html',
-  styleUrls: ['./disabled-locations.component.scss']
+  selector: 'app-exclude-locations',
+  templateUrl: './exclude-locations.component.html',
+  styleUrls: ['./exclude-locations.component.scss']
 })
-export class DisabledLocationsComponent extends PicklistFormComponent implements OnInit {
+export class ExcludeLocationsComponent extends PicklistFormComponent implements OnInit {
   @Input() protected form: FormArray;
 
   // Constants
@@ -28,7 +28,7 @@ export class DisabledLocationsComponent extends PicklistFormComponent implements
   protected initialize(): void {
     const settings = this.randomizerService.DEFAULT_SETTINGS;
 
-    for (let key of Object.keys(settings.disabledLocations)) {
+    for (let key of Object.keys(settings.excludeLocations)) {
       const location = {
         label: key,
         value: key

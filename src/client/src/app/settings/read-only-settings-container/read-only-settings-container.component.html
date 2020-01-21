@@ -9,15 +9,15 @@
       <app-list-settings [form]="getForm().get('rules')" [useColumns]="true"></app-list-settings>
     </div>
     <div class="column">
-      <h1 class="title has-bottom-border">Disabled Locations</h1>
-      <div class="content" *ngIf="getForm().get('disabledLocations').value.length">
+      <h1 class="title has-bottom-border">Exclude Locations</h1>
+      <div class="content" *ngIf="getForm().get('excludeLocations').value.length">
         <ul>
-          <li *ngFor="let item of getForm().get('disabledLocations').value">
+          <li *ngFor="let item of getForm().get('excludeLocations').value">
             {{ item }}
           </li>
         </ul>
       </div>
-      <div class="field" *ngIf="!getForm().get('disabledLocations').value.length">
+      <div class="field" *ngIf="!getForm().get('excludeLocations').value.length">
         <p>(none)</p>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { PrimeLocation } from '../../enums/primeLocation';
 import { SettingsFlags, SettingsFlagsArgs } from '../settingsFlags';
 import { getPaddedBitStringFromSettingsString } from '../../utilities';
 
-export class DisabledLocations extends SettingsFlags {
+export class ExcludeLocations extends SettingsFlags {
   [PrimeLocation.LANDING_SITE] = false;
   [PrimeLocation.ALCOVE] = false;
   [PrimeLocation.FRIGATE_CRASH_SITE] = false;
@@ -108,9 +108,9 @@ export class DisabledLocations extends SettingsFlags {
     super(args);
   }
 
-  static fromSettingsString(settingsString: string): DisabledLocations {
+  static fromSettingsString(settingsString: string): ExcludeLocations {
     const settings: SettingsFlagsArgs = {};
-    const keys = new DisabledLocations().getSettingsKeys();
+    const keys = new ExcludeLocations().getSettingsKeys();
     const bitString = getPaddedBitStringFromSettingsString(settingsString, keys.length);
 
     let index = 0;
@@ -120,7 +120,7 @@ export class DisabledLocations extends SettingsFlags {
       index += 1;
     }
 
-    return new DisabledLocations(settings);
+    return new ExcludeLocations(settings);
   }
 }
 

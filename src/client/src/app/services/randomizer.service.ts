@@ -38,7 +38,7 @@ export class RandomizerService {
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction]
       }),
-      disabledLocations: fb.array([]),
+      excludeLocations: fb.array([]),
       tricks: fb.array([])
     });
   }
