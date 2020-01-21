@@ -5,25 +5,36 @@ import 'mocha';
 
 describe('PrimeRandomizerSettings', () => {
   it('should return a settings instance', () => {
-    const settings = new PrimeRandomizerSettings({});
+    const settings = new PrimeRandomizerSettings();
     expect(settings).to.be.an.instanceof(PrimeRandomizerSettings);
   });
 
   it('should export settings to settings string', () => {
-    const settings = new PrimeRandomizerSettings({});
-    const expected = '2jc-0';
-    const result = settings.getSettingsString();
+    const settings = new PrimeRandomizerSettings({
+      spoiler: true,
+      skipFrigate: false,
+      skipHudPopups: false,
+      hideItemModels: true,
+      excludeLocations: {
+        ['Alcove']: true
+      },
+      tricks: {
+        alcoveNoItems: true
+      }
+    });
+    const expected = '3MK-UQ3UEU2I5SNC9D47UV4-4ZSOW';
+    const result = settings.toSettingsString();
 
     expect(result).to.equal(expected);
   });
 
-  it('should import settings successfully', () => {
-    const expected = new PrimeRandomizerSettings({spoiler: false, goal: 'all-bosses'});
-    const settingsString = expected.getSettingsString();
+  it('should import settings from setting string successfully', () => {
+    const expected = new PrimeRandomizerSettings({ spoiler: false, goal: 'all-bosses', excludeLocations: { ['Landing Site']: true } });
+    const settingsString = expected.toSettingsString();
     const result = PrimeRandomizerSettings.fromSettingsString(settingsString);
 
     expect(result).to.deep.equal(expected);
-    expect(result.getSettingsString()).to.equal(expected.getSettingsString());
+    expect(result.toSettingsString()).to.equal(expected.toSettingsString());
   });
 
   it('discreteNumberSelection should return full range of given numbers', () => {

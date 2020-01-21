@@ -27,12 +27,12 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Magmoor Lava Lake': (items: PrimeItemCollection) => items.canLayBombs(),
         'Magmoor Warrior Shrine': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const wsReqs = settings.allowedTricks.warriorShrineWithoutBoost || (items.canBoost() && items.canLayBombs());
+          const wsReqs = settings.tricks.warriorShrineWithoutBoost || (items.canBoost() && items.canLayBombs());
           return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Magmoor Fiery Shores': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
         'Phendrana Shorelines': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return canBoost || items.canLayBombs();
         }
       }
@@ -63,12 +63,12 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {},
       exits: {
         'Magmoor Fiery Shores': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleMorphReq = settings.allowedTricks.fieryShoresAccessWithoutMorphGrapple || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM));
+          const grappleMorphReq = settings.tricks.fieryShoresAccessWithoutMorphGrapple || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM));
           return grappleMorphReq && items.hasSuit(settings);
         },
 
         'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.allowedTricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
+          const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
           return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM);
         },
         'Tallon Root Cave': () => true
@@ -81,7 +81,7 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Magmoor Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleSpiderReqs = settings.allowedTricks.plasmaProcessingWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
+          const grappleSpiderReqs = settings.tricks.plasmaProcessingWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
           return grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM);
         },
         'Phendrana Transport Magmoor South': () => true,

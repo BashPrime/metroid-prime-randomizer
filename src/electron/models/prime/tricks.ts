@@ -1,7 +1,7 @@
 import { SettingsFlags, SettingsFlagsArgs } from '../settingsFlags';
 import { getPaddedBitStringFromSettingsString } from '../../utilities';
 
-export class AllowedTricks extends SettingsFlags {
+export class Tricks extends SettingsFlags {
   alcoveNoItems = false;
   arborChamberWithoutPlasma = false;
   boostThroughBombTunnels = false;
@@ -28,12 +28,20 @@ export class AllowedTricks extends SettingsFlags {
   wateryHallUnderwaterFlaahgraSkip = false;
 
   constructor(args?: SettingsFlagsArgs) {
-    super(args);
+    super();
+
+    if (args) {
+      this.setSettings(args);
+    }
   }
 
-  static fromSettingsString(settingsString: string): AllowedTricks {
+  setSettings(args: SettingsFlagsArgs): void {
+    Object.assign(this, args);
+  }
+
+  static fromSettingsString(settingsString: string): Tricks {
     const settings: SettingsFlagsArgs = {};
-    const keys = new AllowedTricks().getSettingsKeys();
+    const keys = new Tricks().getSettingsKeys();
     const bitString = getPaddedBitStringFromSettingsString(settingsString, keys.length);
 
     let index = 0;
@@ -43,7 +51,7 @@ export class AllowedTricks extends SettingsFlags {
       index += 1;
     }
 
-    return new AllowedTricks(settings);
+    return new Tricks(settings);
   }
 }
 

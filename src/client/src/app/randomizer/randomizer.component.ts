@@ -49,8 +49,4 @@ export class RandomizerComponent implements OnInit {
   isTabIdSelected(tabId: number): boolean {
     return tabId === this.selectedTabId;
   }
-
-  generateSeed(): void {
-    this.generatorService.generateSeed();
-  }
 }

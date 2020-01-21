@@ -10,7 +10,7 @@
       "goalArtifacts": 12,
       "artifactLocationHints": true,
       "heatProtection": "any-suit",
-      "suitDamageProtection": "default"
+      "suitDamageReduction": "default"
     },
     "excludeLocations": [],
     "tricks": []

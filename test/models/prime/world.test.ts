@@ -5,7 +5,7 @@ import 'mocha';
 
 describe('PrimeWorld', () => {
   it('should return a PrimeWorld instance', () => {
-    const settings = new PrimeRandomizerSettings({});
+    const settings = new PrimeRandomizerSettings();
     const world = new PrimeWorld(settings);
     expect(world).to.be.an.instanceof(PrimeWorld);
   });

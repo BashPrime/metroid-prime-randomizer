@@ -4,14 +4,14 @@ import * as crypto from 'crypto';
 import { RandomizerSettings, RandomizerSettingsArgs } from '../randomizerSettings';
 import { Checkbox, SelectOption, SettingsChoice, discreteNumberSelection } from '../option';
 import { OptionType } from '../../enums/optionType';
-import { AllowedTricks } from './allowedTricks';
+import { Tricks } from './tricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
 import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
 
 const SETTINGS_STRING_DELIMITER = '-';
 
-interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
+export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
   spoiler?: boolean;
   skipFrigate?: boolean;
@@ -23,47 +23,54 @@ interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   heatProtection?: string;
   suitDamageReduction?: string;
   excludeLocations?: SettingsFlagsArgs;
-  allowedTricks?: SettingsFlagsArgs;
+  tricks?: SettingsFlagsArgs;
 }
 
 export class PrimeRandomizerSettings extends RandomizerSettings {
   seed: string;
-  spoiler: boolean;
-  skipFrigate: boolean;
-  skipHudPopups: boolean;
-  hideItemModels: boolean;
-  goal: string;
-  goalArtifacts: number;
-  artifactLocationHints: boolean;
-  heatProtection: string;
-  suitDamageReduction: string;
-  excludeLocations: ExcludeLocations;
-  allowedTricks: AllowedTricks;
+  spoiler: boolean = false;
+  skipFrigate: boolean = true;
+  skipHudPopups: boolean = true;
+  hideItemModels: boolean = false;
+  goal: string = 'artifact-collection';
+  goalArtifacts: number = 12;
+  artifactLocationHints: boolean = true;
+  heatProtection: string = 'any-suit';
+  suitDamageReduction: string = 'default';
+  excludeLocations: ExcludeLocations = new ExcludeLocations();
+  tricks: Tricks = new Tricks();
 
-  constructor(args: PrimeRandomizerSettingsArgs) {
-    super(args);
-    this.excludeLocations = new ExcludeLocations(args.excludeLocations);
-    this.allowedTricks = new AllowedTricks(args.allowedTricks);
+  constructor(args?: PrimeRandomizerSettingsArgs) {
+    super();
+
+    // Overload if args are supplied
+    if (args) {
+      // Overload general settings
+      Object.assign(this, args);
+
+      // Overload locations and tricks
+      this.excludeLocations = new ExcludeLocations(args.excludeLocations);
+      this.tricks = new Tricks(args.tricks);
+    }
   }
 
   getNumericSeed(): number {
-    const stringToBeHashed = this.getSettingsString() + this.seed;
+    if (!this.seed) {
+      throw new Error('Cannot get numeric seed. Settings seed is undefined or null (' + this.seed + ')');
+    }
+
+    const stringToBeHashed = this.toSettingsString() + this.seed;
     const sha256Hash = crypto.createHash('sha256').update(stringToBeHashed).digest('hex');
 
     return Utilities.parseSafeIntegerFromSha256(sha256Hash);
   }
 
-  getSettingsString(): string {
+  toSettingsString(): string {
     let bits = '';
     const sharedSettings = settings.filter(setting => setting.shared);
 
     for (const setting of sharedSettings) {
       let settingValue = this[setting.name];
-
-      // Convert value to string to ensure it is found in select option
-      // if (setting.type === OptionType.SELECT && typeof(settingValue) === 'number') {
-      //   settingValue = settingValue.toString();
-      // }
 
       switch (setting.type) {
         case OptionType.BOOLEAN:
@@ -76,24 +83,11 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       }
     }
 
-    // Get bitstring from allowed tricks
-    let allowedBits = '';
-    for (let key of Object.keys(this.allowedTricks)) {
-      allowedBits += this.allowedTricks[key] ? '1' : '0';
-    }
-
-    return bigInt(bits, 2).toString(36) + SETTINGS_STRING_DELIMITER + this.allowedTricks.toSettingsString().toUpperCase();
-  }
-
-  protected assignDefaultSettings(args: RandomizerSettingsArgs): void {
-    // Get only settings metadata for arguments that weren't provided
-    const argKeys = Object.keys(args);
-    const defaultSettings = settings.filter(setting => !argKeys.includes(setting.name));
-
-    // Assign default value to missing fields
-    for (let setting of defaultSettings) {
-      this[setting.name] = setting.default;
-    }
+    return bigInt(bits, 2).toString(36).toUpperCase()
+      + SETTINGS_STRING_DELIMITER
+      + this.excludeLocations.toSettingsString()
+      + SETTINGS_STRING_DELIMITER
+      + this.tricks.toSettingsString();
   }
 
   static fromSettingsString(settingsString: string): PrimeRandomizerSettings {
@@ -104,13 +98,18 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     const settingsStringSections = settingsString.split(SETTINGS_STRING_DELIMITER);
 
+    // Settings string must have 3 sections:
+    // Settings, excluded locations, allowed tricks
+    if (settingsStringSections.length < 3) {
+      return null;
+    }
+
     // Get general settings first
     const settings = new PrimeRandomizerSettings(getGeneralSettingsFromSettingsString(settingsStringSections[0]));
-
-    // Get allowed tricks if they are provided
-    if (settingsStringSections.length >= 2) {
-      settings.allowedTricks = AllowedTricks.fromSettingsString(settingsStringSections[1]);
-    }
+    // Next, get excluded locations
+    settings.excludeLocations = ExcludeLocations.fromSettingsString(settingsStringSections[1]);
+    // Last, get tricks
+    settings.tricks = Tricks.fromSettingsString(settingsStringSections[2]);
 
     return settings;
   }
@@ -141,21 +140,6 @@ function getGeneralSettingsFromSettingsString(settingsString): object {
   }
 
   return newSettings;
-}
-
-function getAllowedTricksFromSettingString(settingsString: string): AllowedTricks {
-  const newAllowedTricks = {};
-  const allowedTrickKeys = Object.keys(new PrimeRandomizerSettings({}).allowedTricks);
-  const bitString = Utilities.getPaddedBitStringFromSettingsString(settingsString, allowedTrickKeys.length);
-
-  let index = 0;
-  for (const key of allowedTrickKeys) {
-    const currentBit = bitString.substr(index, 1);
-    newAllowedTricks[key] = currentBit === '1' ? true : false;
-    index += 1;
-  }
-
-  return new AllowedTricks(newAllowedTricks);
 }
 
 function getTotalSharedSettingsBitWidth(): number {

@@ -15,7 +15,7 @@ export function tallonOverworld(): RegionObject[] {
       exits: {
         'Tallon Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const normalReqs = items.canBoost() && items.canLayBombs();
-          return settings.allowedTricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tallon Crash Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
@@ -39,7 +39,7 @@ export function tallonOverworld(): RegionObject[] {
       exits: {
         'Tallon North': () => true,
         'Tallon Crashed Frigate': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const thermalReqs = settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT)
             && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
@@ -59,14 +59,14 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon Root Cave',
       locations: {
         [PrimeLocation.ROOT_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
           return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && xrayReqs;
         },
         [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
         [PrimeLocation.ARBOR_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const plasmaReqs = (settings.allowedTricks.arborChamberWithoutPlasma && items.canLayBombs())
+          const plasmaReqs = (settings.tricks.arborChamberWithoutPlasma && items.canLayBombs())
             || items.has(PrimeItem.PLASMA_BEAM);
-          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
           return xrayReqs && plasmaReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM);
         }
       },
@@ -91,7 +91,7 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon South Upper',
       locations: {
         [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR)
+          settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR)
       },
       exits: {
         'Tallon Life Grove': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canLayPowerBombs(),

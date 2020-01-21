@@ -8,7 +8,7 @@ import { version } from '../../../../../package.json';
   providedIn: 'root'
 })
 export class RandomizerService {
-  readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings({});
+  readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings();
   readonly DETAILS = details;
   readonly SETTINGS = settings;
   readonly DEFAULT_PRESET = 'Default / Beginner';

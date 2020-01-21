@@ -105,7 +105,15 @@ export class ExcludeLocations extends SettingsFlags {
   [PrimeLocation.FUNGAL_HALL_ACCESS] = false;
 
   constructor(args?: SettingsFlagsArgs) {
-    super(args);
+    super();
+
+    if (args) {
+      this.setSettings(args);
+    }
+  }
+
+  setSettings(args: SettingsFlagsArgs): void {
+    Object.assign(this, args);
   }
 
   static fromSettingsString(settingsString: string): ExcludeLocations {

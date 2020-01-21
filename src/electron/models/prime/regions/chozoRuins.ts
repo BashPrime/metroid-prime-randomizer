@@ -10,22 +10,22 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo West',
       locations: {
         [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           return sjReqs || items.canBoost();
         },
         [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           return sjReqs || items.has(PrimeItem.GRAPPLE_BEAM)
         },
         [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles(),
         [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.allowedTricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           return sjReqs || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
         },
         [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles(),
         [PrimeLocation.RUINED_GALLERY_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return canBoost || items.canLayBombs();
         },
         [PrimeLocation.HIVE_TOTEM]: () => true, // first expected item in glitchless logic
@@ -43,7 +43,7 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE]: () => true,
         [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.allowedTricks.upperRuinedShrineTowerOfLightFewerAccessReqs
+          const sjReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs
             && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.MORPH_BALL);
           return sjReqs || items.canBoost();
         },
@@ -52,7 +52,7 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         'Chozo Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.allowedTricks.upperRuinedShrineTowerOfLightFewerAccessReqs
+          const accessReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs
             || (items.canLayBombs() && items.canBoost() && items.canSpider());
           return accessReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         }
@@ -62,10 +62,10 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo Tower of Light',
       locations: {
         [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return settings.allowedTricks.climbTowerOfLightNoMissiles || items.hasMissileCount(8)
+          return settings.tricks.climbTowerOfLightNoMissiles || items.hasMissileCount(8)
         },
         [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return settings.allowedTricks.towerChamberNoGravity || items.has(PrimeItem.GRAVITY_SUIT)
+          return settings.tricks.towerChamberNoGravity || items.has(PrimeItem.GRAVITY_SUIT)
         }
       },
       exits: {
@@ -76,7 +76,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo Ruined Fountain',
       locations: {
         [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const flaahgraSkipReq = settings.allowedTricks.ruinedFountainFlaahgraSkip || items.canLayBombs();
+          const flaahgraSkipReq = settings.tricks.ruinedFountainFlaahgraSkip || items.canLayBombs();
           return flaahgraSkipReq && items.canSpider();
         }
       },
@@ -84,7 +84,7 @@ export function chozoRuins(): RegionObject[] {
         'Chozo West': () => true,
         'Chozo Central': (items: PrimeItemCollection) => items.hasMissiles(),
         'Chozo Training Area': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.magmaPoolDash || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.magmaPoolDash || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.hasSuit(settings);
         }
       }
@@ -108,12 +108,12 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.WATERY_HALL_ACCESS]: () => true,
         [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: () => true,
         [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const flaahgraSkipReq = settings.allowedTricks.wateryHallUnderwaterFlaahgraSkip || items.canLayBombs();
+          const flaahgraSkipReq = settings.tricks.wateryHallUnderwaterFlaahgraSkip || items.canLayBombs();
           return flaahgraSkipReq && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         },
         [PrimeLocation.GATHERING_HALL]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.FURNACE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return canBoost || items.canLayBombs();
         }
       },
@@ -122,8 +122,8 @@ export function chozoRuins(): RegionObject[] {
         'Chozo Burn Dome': () => true,
         'Chozo Dynamo': (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs(),
         'Chozo Furnace': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = (settings.allowedTricks.furnaceAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
-          const canBoost = settings.allowedTricks.boostThroughBombTunnels && items.canBoost();
+          const spiderReqs = (settings.tricks.furnaceAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return spiderReqs && (canBoost || items.canLayBombs());
         },
         'Chozo Sunchamber': (items: PrimeItemCollection) => items.canLayBombs()

@@ -5,19 +5,13 @@ export interface SettingsFlagsArgs {
 }
 
 export abstract class SettingsFlags {
-  constructor(args?: SettingsFlagsArgs) {
-    if (args) {
-      this.setSettings(args);
-    }
-  }
+  constructor() { }
 
   getSettingsKeys() {
     return Object.keys(this).filter(key => typeof this[key] === 'boolean');
   }
 
-  setSettings(args: SettingsFlagsArgs): void {
-    Object.assign(this, args);
-  }
+  abstract setSettings(args: SettingsFlagsArgs): void;
 
   toSettingsString(): string {
     let bits = '';
@@ -25,7 +19,7 @@ export abstract class SettingsFlags {
       bits += this[key] ? '1' : '0';
     }
 
-    return bigInt(bits, 2).toString(36);
+    return bigInt(bits, 2).toString(36).toUpperCase();
   }
 }
 

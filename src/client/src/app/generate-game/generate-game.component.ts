@@ -9,6 +9,7 @@ import { RandomizerService } from '../services/randomizer.service';
 import { PresetsService } from '../services/presets.service';
 import { PresetObject } from '../../../../common/models/presetObject';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { GeneratorService } from '../services/generator.service';
 
 @Component({
   selector: 'app-generate-game',
@@ -16,8 +17,8 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  @ViewChild(SavePresetModalComponent, {static: false}) private savePresetModal: SavePresetModalComponent;
-  @ViewChild(RemovePresetModalComponent, {static: false}) private removePresetModal: RemovePresetModalComponent;
+  @ViewChild(SavePresetModalComponent, { static: false }) private savePresetModal: SavePresetModalComponent;
+  @ViewChild(RemovePresetModalComponent, { static: false }) private removePresetModal: RemovePresetModalComponent;
   private presets: PresetObject = {};
   private userPresets: PresetObject;
   private form: FormGroup;
@@ -25,7 +26,7 @@ export class GenerateGameComponent implements OnInit {
   // Constants
   private readonly CUSTOM_PRESET = 'Custom';
 
-  constructor(private randomizerService: RandomizerService, private presetsService: PresetsService) { }
+  constructor(private generatorService: GeneratorService, private randomizerService: RandomizerService, private presetsService: PresetsService) { }
 
   ngOnInit() {
     this.form = this.randomizerService.createForm();
@@ -95,12 +96,19 @@ export class GenerateGameComponent implements OnInit {
 
   applyPresetToForm(preset: RandomizerForm): void {
     const fb = new FormBuilder();
-    this.form.patchValue(preset);
+    const formValue = this.form.value;
 
-    const arrayControls = ['excludeLocations', 'tricks'];
+    // Apply general settings
+    this.form.patchValue({
+      romSettings: preset.romSettings,
+      rules: preset.rules
+    });
 
-    for (let control of arrayControls) {
-      this.form.setControl(control, fb.array(preset[control] || []));
+    // Apply array controls
+    for (let control of Object.keys(preset)) {
+      if (Array.isArray(formValue[control])) {
+        this.form.setControl(control, fb.array(preset[control] || []));
+      }
     }
   }
 
@@ -112,14 +120,18 @@ export class GenerateGameComponent implements OnInit {
     this.removePresetModal.setPresetAndOpen(preset);
   }
 
-  addOrUpdatePreset(name: string) {
+  addOrUpdatePreset(name: string): void {
     const preset = filterProperties(this.form.value, ['preset', 'generationCount']);
     this.presetsService.addOrUpdatePreset(name, preset as RandomizerForm);
   }
 
-  removePreset(name: string) {
+  removePreset(name: string): void {
     this.presetsService.removePreset(name);
-    this.form.patchValue({preset: this.randomizerService.DEFAULT_PRESET});
+    this.form.patchValue({ preset: this.randomizerService.DEFAULT_PRESET });
+  }
+
+  generateSeed(spoiler: boolean) {
+    this.generatorService.generateGame(this.form.value, spoiler);
   }
 
   private buildPresets(presets: PresetObject[]): void {

@@ -10,8 +10,8 @@ export function phazonMines(): RegionObject[] {
       name: 'Mines Upper',
       locations: {
         [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.allowedTricks.mainQuarryItemWithoutSpider || items.canSpider();
-          const thermalReqs = settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          const spiderReqs = settings.tricks.mainQuarryItemWithoutSpider || items.canSpider();
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return spiderReqs && thermalReqs;
         },
         [PrimeLocation.SECURITY_ACCESS_A]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
@@ -54,7 +54,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Mines Ore Processing': () => true,
         'Mines Lower': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.allowedTricks.minesSpiderlessShafts && items.canLayBombs()) || items.canSpider()
+        'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.minesSpiderlessShafts && items.canLayBombs()) || items.canSpider()
         // Don't add Mines Depths as the exit is initially locked
       }
     },
@@ -64,14 +64,14 @@ export function phazonMines(): RegionObject[] {
         [PrimeLocation.VENTILATION_SHAFT]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
         [PrimeLocation.CENTRAL_DYNAMO]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.METROID_QUARANTINE_A]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
           return items.canSpider() && items.canLayPowerBombs() && xrayReqs;
         }
       },
       exits: {
         'Mines Central': (items: PrimeItemCollection) => items.canBoost(),
         'Mines Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const xrayReqs = settings.allowedTricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
           return items.canSpider() && xrayReqs && items.has(PrimeItem.PLASMA_BEAM)
         }
       }

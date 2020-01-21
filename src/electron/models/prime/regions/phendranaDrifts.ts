@@ -91,9 +91,9 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana Quarantine Cave',
       locations: {
         [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          settings.allowedTricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
+          settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
         [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.quarantineMonitorDash || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.quarantineMonitorDash || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.canSpider(); // requiring spider ball for quality of life/softlock protection
         }
       },
@@ -109,7 +109,7 @@ export function phendranaDrifts(): RegionObject[] {
       exits: {
         'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         'Phendrana Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = (settings.allowedTricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
+          const spiderReqs = (settings.tricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
           return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
         },
         'Magmoor Second Half': () => true
@@ -120,20 +120,20 @@ export function phendranaDrifts(): RegionObject[] {
       locations: {
         [PrimeLocation.TRANSPORT_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
         [PrimeLocation.FROST_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.has(PrimeItem.GRAVITY_SUIT);
         },
         [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]: (items: PrimeItemCollection) => true,
         [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.gravityChamberGrappleLedgeRJump || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.gravityChamberGrappleLedgeRJump || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
         },
         [PrimeLocation.STORAGE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM);
         },
         [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.allowedTricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.has(PrimeItem.MORPH_BALL);
         }
       },

@@ -48,8 +48,8 @@
 <hr>
 <section class="section randomizer-footer">
   <div class="buttons are-large is-centered">
-    <button class="button is-generate-button is-success">Generate</button>
-    <button class="button is-generate-button is-info">Generate with Spoilers</button>
+    <button class="button is-generate-button is-success" (click)="generateSeed(false)">Generate</button>
+    <button class="button is-generate-button is-info" (click)="generateSeed(true)">Generate with Spoilers</button>
   </div>
 </section>
 <app-save-preset-modal (onSave)="addOrUpdatePreset($event)"></app-save-preset-modal>
