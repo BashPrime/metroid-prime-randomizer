@@ -4,20 +4,20 @@ module.exports = {
   mode: 'production',
   target: 'electron-main',
   entry: './src/electron/main.ts',
-  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname),
-    filename: 'main.js'
+    filename: 'main.js',
   },
   resolve: {
     extensions: ['.ts', '.js']
   },
   module: {
       rules: [
+          // Handle all .ts or .tsx files with ts-loader
           {
-              test: /\.tsx?$/,
-              use: 'ts-loader',
-              exclude: /node_modules/
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/
           }
       ]
   },
