@@ -130,7 +130,7 @@ export class PrimeWorld extends World {
   /**
   * Returns an encoded layout string to be used for the randomprime patcher.
   */
-  generatePatcherLayout(): string {
+  getPatcherLayout(): string {
     const itemLayout: number[] = [];
     const locations = this.getLocations().toArray().sort((a, b) => {
       const aIndex = patcherSortedLocations.indexOf(a.getName() as PrimeLocation);
@@ -145,6 +145,6 @@ export class PrimeWorld extends World {
       itemLayout.push(location.getItem().getPatcherId());
     }
 
-    return new LayoutString().encode_pickup_layout(itemLayout);
+    return new LayoutString().encode_layout(itemLayout, undefined);
   }
 }
