@@ -132,3 +132,18 @@ export function parseSafeIntegerFromSha256(sha256: string): number {
     return null;
   }
 }
+
+/**
+ * Generates an alphanumeric string of given length
+ * @param length The length of the seed string being generated (default: 10)
+ */
+export function generateAlphanumericString(length: number = 10): string {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let generatedString = '';
+
+  for (let i = 0; i < length; i++) {
+    generatedString += characters[getRandomInt(0, characters.length - 1)];
+  }
+
+  return generatedString;
+}

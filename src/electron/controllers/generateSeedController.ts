@@ -1,16 +1,16 @@
-import { app, ipcMain } from 'electron';
+import { ipcMain } from 'electron';
 
 import { RandomizerForm } from '../../common/models/randomizerForm';
 import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings, PrimeRandomizerSettingsArgs } from '../models/prime/randomizerSettings';
 import { SettingsFlagsArgs } from '../models/settingsFlags';
 
+
 export function initialize() {
   ipcMain.on('generateSeed', (event, form: RandomizerForm, spoiler: boolean) => {
     const args = convertFormToArgs(form);
     args.spoiler = spoiler;
-    args.seed = 'K3N45IC8SJ';
-
+    
     const settings = new PrimeRandomizerSettings(args);
     const world = generateWorld(settings);
 

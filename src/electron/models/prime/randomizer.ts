@@ -5,31 +5,57 @@ import { setEntrances } from '../entranceShuffle';
 import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
 import { MersenneTwister } from '../../mersenneTwister';
+import { generateAlphanumericString } from '../../utilities';
 
 /**
  * Generates a Metroid Prime world with logically shuffled items.
  * @param settings Configuration object for the world generation
  */
 export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
-  const world = new PrimeWorld(settings);
+  let success = false;
+  let world: PrimeWorld;
 
-  // Initialize rng based on hashed seed
-  world.setRng(new MersenneTwister(settings.getNumericSeed()));
+  // If no seed is supplied in the settings, generate a random alphanumeric seed.
+  if (!settings.seed) {
+    settings.seed = generateAlphanumericString();
+    console.log({
+      seed: settings.seed,
+      settings: settings.toSettingsString()
+    });
+  }
 
-  // Set up Prime world regions
-  world.loadRegions();
+  // Initialize rng based on hashed seed, and re-use in case the item distribution fails.
+  const rng = new MersenneTwister(settings.getNumericSeed());
 
-  // Generate item pool based on settings, and add the item pool to the world instance
-  generateItemPool(world);
+  while (!success) {
+    try {
+      world = new PrimeWorld(settings);
 
-  // Set core game rules
-  setRules(world);
+      // Initialize rng based on hashed seed
+      world.setRng(rng);
 
-  // Pass world into entrance shuffle class, using settings to determine entrance shuffle
-  setEntrances(world);
+      // Set up Prime world regions
+      world.loadRegions();
 
-  // Fill the world locations using the item pool.
-  distributeItemsRestrictive(world);
+      // Generate item pool based on settings, and add the item pool to the world instance
+      generateItemPool(world);
 
+      // Set core game rules
+      setRules(world);
+
+      // Pass world into entrance shuffle class, using settings to determine entrance shuffle
+      setEntrances(world);
+
+      // Fill the world locations using the item pool.
+      distributeItemsRestrictive(world);
+
+      // If we get here, the item fill succeeded (no exception thrown)! Flag as successful.
+      success = true;
+      console.log('Complete!\n');
+    } catch (err) {
+      // Handle exception gracefully and try again.
+      console.log('Unbeatable game, trying again');
+    }
+  }
   return world;
 }
