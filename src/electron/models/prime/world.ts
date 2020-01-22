@@ -6,6 +6,9 @@ import { PrimeRandomizerSettings } from './randomizerSettings';
 import { RegionCollection } from '../regionCollection';
 import { PrimeItemCollection } from './itemCollection';
 import { LocationCollection } from '../locationCollection';
+import { LayoutString } from './layoutString';
+import { patcherSortedLocations } from './locations';
+import { PrimeLocation } from '../../enums/primeLocation';
 import { root } from './regions/root';
 import { tallonOverworld } from './regions/tallonOverworld';
 import { chozoRuins } from './regions/chozoRuins';
@@ -122,5 +125,26 @@ export class PrimeWorld extends World {
     } while (newItems.size() > 0);
 
     return myItems;
+  }
+
+  /**
+  * Returns an encoded layout string to be used for the randomprime patcher.
+  */
+  generatePatcherLayout(): string {
+    const itemLayout: number[] = [];
+    const locations = this.getLocations().toArray().sort((a, b) => {
+      const aIndex = patcherSortedLocations.indexOf(a.getName() as PrimeLocation);
+      const bIndex = patcherSortedLocations.indexOf(b.getName() as PrimeLocation);
+
+      if (aIndex < bIndex) return -1;
+      if (aIndex > bIndex) return 1;
+      return 0;
+    });
+
+    for (let location of locations) {
+      itemLayout.push(location.getItem().getPatcherId());
+    }
+
+    return new LayoutString().encode_pickup_layout(itemLayout);
   }
 }

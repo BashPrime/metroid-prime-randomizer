@@ -18,10 +18,6 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
   // If no seed is supplied in the settings, generate a random alphanumeric seed.
   if (!settings.seed) {
     settings.seed = generateAlphanumericString();
-    console.log({
-      seed: settings.seed,
-      settings: settings.toSettingsString()
-    });
   }
 
   // Initialize rng based on hashed seed, and re-use in case the item distribution fails.
@@ -51,10 +47,9 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
       // If we get here, the item fill succeeded (no exception thrown)! Flag as successful.
       success = true;
-      console.log('Complete!\n');
     } catch (err) {
       // Handle exception gracefully and try again.
-      console.log('Unbeatable game, trying again');
+      // Currently not doing anything in the catch block.
     }
   }
   return world;
