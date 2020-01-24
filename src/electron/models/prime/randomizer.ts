@@ -1,7 +1,7 @@
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { PrimeWorld } from './world';
 import { generateItemPool } from './itemPool';
-import { setEntrances } from '../entranceShuffle';
+import { setEntrances } from './entranceShuffle';
 import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
 import { MersenneTwister } from '../../mersenneTwister';

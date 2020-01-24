@@ -14,6 +14,7 @@ const SETTINGS_STRING_DELIMITER = '-';
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
   spoiler?: boolean;
+  elevatorShuffle?: boolean;
   skipFrigate?: boolean;
   skipHudPopups?: boolean;
   hideItemModels?: boolean;
@@ -29,6 +30,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
 export class PrimeRandomizerSettings extends RandomizerSettings {
   seed: string;
   spoiler: boolean = false;
+  elevatorShuffle: boolean = false;
   skipFrigate: boolean = true;
   skipHudPopups: boolean = true;
   hideItemModels: boolean = false;
@@ -186,6 +188,7 @@ export const settings = [
     default: 12
   }),
   new Checkbox({ name: 'artifactLocationHints', shared: true, default: true }),
+  new Checkbox({ name: 'elevatorShuffle', shared: true, default: false }),
   new SelectOption({
     name: 'heatProtection',
     shared: true,
@@ -243,9 +246,13 @@ export const details: OptionDetails = {
     name: 'Show Chozo Artifact location hints in Artifact Temple',
     description: ''
   },
+  elevatorShuffle: {
+    name: 'Elevator Shuffle',
+    description: 'Shuffles all of the elevators bidirectionally.'
+  },
   heatProtection: {
     name: 'Heat Protection',
-    description: ''
+    description: 'Test'
   },
   suitDamageReduction: {
     name: 'Suit Damage Reduction',

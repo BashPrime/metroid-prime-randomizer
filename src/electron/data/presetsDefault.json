@@ -9,6 +9,7 @@
       "goal": "artifact-collection",
       "goalArtifacts": 12,
       "artifactLocationHints": true,
+      "elevatorShuffle": false,
       "heatProtection": "any-suit",
       "suitDamageReduction": "default"
     },

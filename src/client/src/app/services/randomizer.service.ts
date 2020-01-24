@@ -35,6 +35,7 @@ export class RandomizerService {
         goal: [this.DEFAULT_SETTINGS.goal],
         goalArtifacts: [this.DEFAULT_SETTINGS.goalArtifacts],
         artifactLocationHints: [this.DEFAULT_SETTINGS.artifactLocationHints],
+        elevatorShuffle: [this.DEFAULT_SETTINGS.elevatorShuffle],
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction]
       }),

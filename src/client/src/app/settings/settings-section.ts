@@ -15,6 +15,10 @@ export abstract class SettingsSection {
     return this.getDetails(name).name;
   }
 
+  getTooltip(name: string) {
+    return this.getDetails(name).description;
+  }
+
   getChoices(name: string) {
     return this.getSetting(name).choices;
   }
