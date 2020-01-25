@@ -8,6 +8,7 @@ export interface RandomizerForm {
     goal: string;
     goalArtifacts: number;
     artifactLocationHints: boolean;
+    elevatorShuffle: boolean;
     heatProtection: string;
     suitDamageReduction: string;
   };

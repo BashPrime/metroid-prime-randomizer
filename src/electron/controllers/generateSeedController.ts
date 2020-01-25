@@ -4,13 +4,15 @@ import { RandomizerForm } from '../../common/models/randomizerForm';
 import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings, PrimeRandomizerSettingsArgs } from '../models/prime/randomizerSettings';
 import { SettingsFlagsArgs } from '../models/settingsFlags';
+import { PrimeWorld } from '../models/prime/world';
 
+const worlds: GeneratedWorld[] = [];
 
 export function initialize() {
   ipcMain.on('generateSeed', (event, form: RandomizerForm, spoiler: boolean) => {
     const args = convertFormToArgs(form);
     args.spoiler = spoiler;
-    
+
     const settings = new PrimeRandomizerSettings(args);
     const world = generateWorld(settings);
 
@@ -26,6 +28,7 @@ function convertFormToArgs(form: RandomizerForm): PrimeRandomizerSettingsArgs {
     goal: form.rules.goal,
     goalArtifacts: form.rules.goalArtifacts,
     artifactLocationHints: form.rules.artifactLocationHints,
+    elevatorShuffle: form.rules.elevatorShuffle,
     heatProtection: form.rules.heatProtection,
     suitDamageReduction: form.rules.suitDamageReduction,
     excludeLocations: processArrayControl(form.excludeLocations),
@@ -45,4 +48,9 @@ function processArrayControl(control: string[]): SettingsFlagsArgs {
   }
 
   return newControl;
+}
+
+interface GeneratedWorld {
+  name: string;
+  world: PrimeWorld
 }
