@@ -51,6 +51,10 @@ export function setEntrances(world: PrimeWorld): void {
   }
 }
 
+/**
+ * Shuffles the game's elevators bidirectionally.
+ * @param rng Seeded random number generator, typically taken from a PrimeWorld instance
+ */
 function shuffleElevatorsTwoWay(rng: MersenneTwister): Elevator[] {
   const shuffledElevators = [];
   const availableElevators = copyElevatorList(elevatorTableBase);
