@@ -11,7 +11,6 @@ interface Elevator {
   name: string;
   destination: number;
   region: Region;
-  shuffled?: boolean;
 }
 
 enum Region {
@@ -53,12 +52,9 @@ export function setEntrances(world: PrimeWorld): void {
 }
 
 function shuffleElevatorsTwoWay(rng: MersenneTwister): Elevator[] {
-  const allElevators = copyElevatorList(elevatorTableBase).map(elevator => {
-    elevator.shuffled = false;
-    return elevator;
-  });
-  let availableElevators = copyElevatorList(allElevators);
-  const elevatorsByRegion = getElevatorsByRegion();
+  const shuffledElevators = [];
+  const availableElevators = copyElevatorList(elevatorTableBase);
+  const elevatorsByRegion = getElevatorsByRegion(availableElevators);
 
   while (availableElevators.length) {
     // Get the region with the most unshuffled elevators
@@ -75,54 +71,22 @@ function shuffleElevatorsTwoWay(rng: MersenneTwister): Elevator[] {
     // Connect source elevator to target elevator (and vice-versa)
     sourceElevator.destination = targetElevator.id;
     targetElevator.destination = sourceElevator.id;
-    sourceElevator.shuffled = true;
-    targetElevator.shuffled = true;
 
-    // Remove elevators from the available list and from the worlds object
-    availableElevators = availableElevators.filter(elevator => !elevator.shuffled);
-    elevatorsByRegion[sourceElevator.region].filter(elevator => !elevator.shuffled);
-    elevatorsByRegion[targetElevator.region].filter(elevator => !elevator.shuffled);
+    // Push source and target elevator to the shuffled elevators object
+    shuffledElevators.push(sourceElevator);
+    shuffledElevators.push(targetElevator);
+
+    // Remove source and target elevators from the available list and from the worlds object
+    availableElevators.splice(availableElevators.findIndex(elevator => elevator.id === sourceElevator.id), 1);
+    availableElevators.splice(availableElevators.findIndex(elevator => elevator.id === targetElevator.id), 1);
+    elevatorsByRegion[sourceElevator.region].splice(elevatorsByRegion[sourceElevator.region].findIndex(elevator => elevator.id === sourceElevator.id), 1);
+    elevatorsByRegion[targetElevator.region].splice(elevatorsByRegion[targetElevator.region].findIndex(elevator => elevator.id === targetElevator.id), 1);
   }
 
-  return allElevators;
+  return shuffledElevators;
 }
 
-function shuffleElevatorTable(rng: MersenneTwister): Elevator[] {
-  // Add shuffled property for the loop later
-  const elevatorTable = JSON.parse(JSON.stringify(elevatorTableBase)).map(elevator => {
-    elevator.shuffled = false;
-    return elevator;
-  }) as Elevator[];
-  const destinations = elevatorTable.map(elevator => elevator.destination);
-
-  for (let elevator of elevatorTable) {
-    if (!elevator.shuffled) {
-      let destination: number;
-
-      // Don't let the elevator destination be equal to its id
-      do {
-        destination = destinations[getRandomInt(0, destinations.length - 1, rng)];
-      } while (destination === elevator.id);
-
-      // Set the destinations bidirectionally for both this elevator, and its destination)
-      elevator.destination = destination;
-      const otherElevator = elevatorTable.find(elevator => elevator.id === destination);
-      otherElevator.destination = elevator.id;
-
-      // Mark elevators as shuffled
-      elevator.shuffled = true;
-      otherElevator.shuffled = true;
-
-      // Remove destinations from destinations pool
-      destinations.splice(destinations.indexOf(elevator.destination), 1);
-      destinations.splice(destinations.indexOf(elevator.id), 1);
-    }
-  }
-
-  return elevatorTable;
-}
-
-function getElevatorsByRegion(): ElevatorRegions {
+function getElevatorsByRegion(elevators: Elevator[]): ElevatorRegions {
   const regions: ElevatorRegions = {
     [Region.TALLON]: [],
     [Region.CHOZO]: [],
@@ -131,7 +95,7 @@ function getElevatorsByRegion(): ElevatorRegions {
     [Region.MINES]: []
   };
 
-  for (const elevator of elevatorTableBase) {
+  for (const elevator of elevators) {
     regions[elevator.region].push(elevator);
   }
 
@@ -140,8 +104,4 @@ function getElevatorsByRegion(): ElevatorRegions {
 
 function copyElevatorList(list: Elevator[]): Elevator[] {
   return JSON.parse(JSON.stringify(list)) as Elevator[];
-}
-
-function shuffleRandomElevators(world: PrimeWorld): void {
-  const shuffledElevatorTable = shuffleElevatorTable(world.getRng());
 }
