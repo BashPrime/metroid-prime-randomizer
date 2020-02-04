@@ -2,15 +2,15 @@ import { PrimeWorld } from './world';
 import { getRandomInt } from '../../utilities';
 import { MersenneTwister } from '../../mersenneTwister';
 
-interface ElevatorRegions {
-  [key: string]: Elevator[],
-}
-
-interface Elevator {
+export interface Elevator {
   id: number;
   name: string;
   destination: number;
   region: Region;
+}
+
+interface ElevatorRegions {
+  [key: string]: Elevator[],
 }
 
 enum Region {
@@ -21,33 +21,41 @@ enum Region {
   MINES = 'mines'
 }
 
-const elevatorTableBase: Elevator[] = [
+export const elevatorTableBase: Elevator[] = [
+  { id: 0, name: 'Chozo West', destination: 6, region: Region.CHOZO },
+  { id: 1, name: 'Chozo Sun Tower', destination: 14, region: Region.CHOZO },
+  { id: 2, name: 'Chozo Reflecting Pool', destination: 8, region: Region.CHOZO },
+  { id: 3, name: 'Chozo Reflecting Pool', destination: 10, region: Region.CHOZO },
+  { id: 4, name: 'Phendrana Shorelines', destination: 15, region: Region.PHENDRANA },
+  { id: 5, name: 'Phendrana Transport Magmoor South', destination: 18, region: Region.PHENDRANA },
   { id: 6, name: 'Tallon North', destination: 0, region: Region.TALLON },
   { id: 8, name: 'Tallon Overgrown Cavern', destination: 2, region: Region.TALLON },
   { id: 9, name: 'Tallon Root Cave', destination: 16, region: Region.TALLON },
   { id: 10, name: 'Tallon South Upper', destination: 3, region: Region.TALLON },
   { id: 11, name: 'Tallon South Lower', destination: 12, region: Region.TALLON },
-  { id: 0, name: 'Chozo West', destination: 6, region: Region.CHOZO },
-  { id: 1, name: 'Chozo Sun Tower', destination: 14, region: Region.CHOZO },
-  { id: 2, name: 'Chozo Reflecting Pool', destination: 8, region: Region.CHOZO },
-  { id: 3, name: 'Chozo Reflecting Pool', destination: 10, region: Region.CHOZO },
+  { id: 12, name: 'Mines Upper', destination: 11, region: Region.MINES },
+  { id: 13, name: 'Mines Central', destination: 17, region: Region.MINES },
   { id: 14, name: 'Magmoor Lava Lake', destination: 1, region: Region.MAGMOOR },
   { id: 15, name: 'Magmoor First Half', destination: 4, region: Region.MAGMOOR },
   { id: 16, name: 'Magmoor Transport Tallon West', destination: 9, region: Region.MAGMOOR },
   { id: 17, name: 'Magmoor Second Half', destination: 13, region: Region.MAGMOOR },
-  { id: 18, name: 'Magmoor Second Half', destination: 5, region: Region.MAGMOOR },
-  { id: 4, name: 'Phendrana Shorelines', destination: 15, region: Region.PHENDRANA },
-  { id: 5, name: 'Phendrana Transport Magmoor South', destination: 18, region: Region.PHENDRANA },
-  { id: 12, name: 'Mines Upper', destination: 11, region: Region.MINES },
-  { id: 13, name: 'Mines Central', destination: 17, region: Region.MINES }
+  { id: 18, name: 'Magmoor Second Half', destination: 5, region: Region.MAGMOOR }
+];
+
+export const endgameTeleporters: Elevator[] = [
+  { id: 7, name: 'Artifact Temple', destination: 19, region: undefined },
+  { id: 19, name: 'Crater Entry Point', destination: 7, region: undefined }
 ];
 
 export function setEntrances(world: PrimeWorld): void {
   // Set up vanilla entrances and exits
   world.initializeEntrances();
 
+  // Shuffle the elevators and apply them to the world instance (used for the patcher layout encoding)
   if (world.getSettings().elevatorShuffle) {
-    shuffleElevatorsTwoWay(world.getRng());
+    // Get shuffled elevators, and append endgame artifact temple portal to ensure layout string encoding works
+    const shuffledElevators = shuffleElevatorsTwoWay(world.getRng());
+    world.applyElevatorLayout(shuffledElevators);
   }
 }
 

@@ -11,18 +11,20 @@ export class Entrance {
   private parentRegion: Region;
   private connectedRegion: Region;
   private connectedRegionKey: string;
-  public accessRule: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+  private elevator: boolean;
 
   constructor(name: string, parentRegion?: Region) {
     this.name = name;
     this.parentRegion = parentRegion;
   }
 
+  accessRule: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
+
   getName(): string {
     return this.name;
   }
 
-  setName(name: string) {
+  setName(name: string): void {
     this.name = name;
   }
 
@@ -30,7 +32,7 @@ export class Entrance {
     return this.parentRegion;
   }
 
-  setParentRegion(region: Region) {
+  setParentRegion(region: Region): void {
     this.parentRegion = region;
   }
 
@@ -38,16 +40,25 @@ export class Entrance {
     return this.connectedRegion;
   }
 
-  setConnectedRegion(region: Region) {
+  setConnectedRegion(region: Region): void {
     this.connectedRegion = region;
+    this.setConnectedRegionKey(region.getName());
   }
 
   getConnectedRegionKey(): string {
     return this.connectedRegionKey;
   }
 
-  setConnectedRegionKey(key: string) {
+  setConnectedRegionKey(key: string): void {
     this.connectedRegionKey = key;
+  }
+
+  isElevator(): boolean {
+    return this.elevator;
+  }
+
+  setElevator(elevator: boolean): void {
+    this.elevator = elevator;
   }
 
   connect(region: Region): void {
@@ -66,6 +77,25 @@ export class Entrance {
 
     const previouslyConnected = this.connectedRegion;
     this.connectedRegion = null;
+    return previouslyConnected;
+  }
+
+  connectToParent(region: Region): void {
+    this.parentRegion = region;
+
+    // Add region to parent's exits
+    const regionExits = region.getExits();
+    regionExits.push(this);
+    region.setExits(regionExits);
+  }
+
+  disconnectFromParent(): Region {
+    const regionExits = this.parentRegion.getExits();
+    const newExits = regionExits.filter(exit => exit.getName() !== this.getName());
+    this.parentRegion.setExits(newExits);
+
+    const previouslyConnected = this.parentRegion;
+    this.parentRegion = null;
     return previouslyConnected;
   }
 

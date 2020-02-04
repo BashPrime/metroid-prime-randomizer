@@ -62,6 +62,10 @@ export class Region {
     return this.exits;
   }
 
+  getExit(key: string): Entrance {
+    return this.exits.find(exit => exit.getName() === key);
+  }
+
   /**
    * Sets this region's available exits to other regions.
    * @param exits The collection of exits being assigned.
@@ -75,6 +79,10 @@ export class Region {
    */
   getEntrances(): Entrance[] {
     return this.entrances;
+  }
+
+  getEntrance(key: string): Entrance {
+    return this.entrances.find(exit => exit.getName() === key);
   }
 
   /**
