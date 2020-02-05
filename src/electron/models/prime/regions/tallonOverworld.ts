@@ -19,7 +19,7 @@ export function tallonOverworld(): RegionObject[] {
         },
         'Tallon Crash Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo West': () => true
+        'Tallon Transport North': () => true
       }
     },
     {
@@ -51,8 +51,8 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.OVERGROWN_CAVERN]: () => true
       },
       exits: {
-        'Chozo Reflecting Pool': () => true,
-        'Tallon Crash Site': () => true
+        'Tallon Crash Site': () => true,
+        'Tallon Transport East': () => true
       }
     },
     {
@@ -72,7 +72,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Tallon North': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Magmoor Transport Tallon West': () => true
+        'Tallon Transport West': () => true
       }
     },
     {
@@ -95,7 +95,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Tallon Life Grove': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canLayPowerBombs(),
-        'Chozo Reflecting Pool': () => true
+        'Tallon Transport South (Chozo)': () => true
       }
     },
     {
@@ -115,7 +115,42 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Tallon South Upper': (items: PrimeItemCollection) => items.canBoost(),
-        'Mines Upper': () => true
+        'Tallon Transport South (Mines)': () => true
+      }
+    },
+    {
+      name: 'Tallon Transport North',
+      exits: {
+        'Chozo Transport West': () => true,
+        'Tallon North': () => true
+      }
+    },
+    {
+      name: 'Tallon Transport East',
+      exits: {
+        'Chozo Transport East': () => true,
+        'Tallon Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Tallon Transport West',
+      exits: {
+        'Magmoor Transport East': () => true,
+        'Tallon Root Cave': () => true
+      }
+    },
+    {
+      name: 'Tallon Transport South (Chozo)',
+      exits: {
+        'Chozo Transport South': () => true,
+        'Tallon South Upper': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Tallon Transport South (Mines)',
+      exits: {
+        'Mines Transport East': () => true,
+        'Tallon South Lower': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     }
   ];

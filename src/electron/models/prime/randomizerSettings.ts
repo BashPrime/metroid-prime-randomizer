@@ -80,6 +80,11 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
           break;
         case OptionType.SELECT:
           const index = setting.choices.map(choice => choice.value).indexOf(settingValue);
+
+          if (index < 0) {
+            throw new Error('Cannot find index for setting ' + setting.name + ' (value: ' + settingValue + ')');
+          }
+
           bits += Utilities.toPaddedBitString(index, setting.bitWidth);
           break;
       }

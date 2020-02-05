@@ -16,7 +16,7 @@ export function phendranaDrifts(): RegionObject[] {
       exits: {
         'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => canBreakIce(items) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Ice Ruins': (items: PrimeItemCollection) => canBreakIce(items) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Magmoor First Half': () => true
+        'Phendrana Transport North': (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       }
     },
     {
@@ -99,20 +99,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(), // to prevent softlocking
-        'Phendrana Transport Magmoor South': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
-      }
-    },
-    {
-      name: 'Phendrana Transport Magmoor South',
-      locations: {
-      },
-      exits: {
-        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Phendrana Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = (settings.tricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
-          return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
-        },
-        'Magmoor Second Half': () => true
+        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
       }
     },
     {
@@ -138,8 +125,26 @@ export function phendranaDrifts(): RegionObject[] {
         }
       },
       exits: {
-        'Phendrana Transport Magmoor South': (items: PrimeItemCollection) => items.canLayBombs(),
+        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs(),
         'Phendrana Labs Second Half': () => true
+      }
+    },
+    {
+      name: 'Phendrana Transport North',
+      exits: {
+        'Magmoor Transport West': () => true,
+        'Phendrana Shorelines': (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
+      }
+    },
+    {
+      name: 'Phendrana Transport South',
+      exits: {
+        'Magmoor Transport South (Phendrana)': () => true,
+        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Phendrana Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = (settings.tricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
+          return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+        }
       }
     }
   ];

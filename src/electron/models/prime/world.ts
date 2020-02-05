@@ -16,6 +16,7 @@ import { magmoorCaverns } from './regions/magmoorCaverns';
 import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
 import { Elevator, elevatorTableBase, endgameTeleporters } from './entranceShuffle';
+import { ENTRANCE_SEPARATOR } from '../../constants';
 
 /**
  * Logical representation of the Metroid Prime game world.
@@ -73,7 +74,7 @@ export class PrimeWorld extends World {
         const newExits: Entrance[] = [];
 
         for (const exitKey of Object.keys(region.exits)) {
-          const exitName = newRegion.getName() + ' --> ' + exitKey;
+          const exitName = newRegion.getName() + ENTRANCE_SEPARATOR + exitKey;
           const newExit = new Entrance(exitName, newRegion);
           newExit.setConnectedRegionKey(exitKey);
           newExit.accessRule = region.exits[exitKey];
@@ -155,7 +156,6 @@ export class PrimeWorld extends World {
    * @param newLayout The elevator layout to apply to the world.
    */
   applyElevatorLayout(newLayout: Elevator[]): void {
-    const separator = ' --> ';
     const oldLayout: Elevator[] = this.elevatorLayout ? this.elevatorLayout : elevatorTableBase;
 
     const elevators = newLayout.map(elevator => {
@@ -168,10 +168,10 @@ export class PrimeWorld extends World {
 
     for (const elevator of elevators) {
       const sourceRegion = this.getRegionByKey(elevator.name);
-      const currentExit = sourceRegion.getExit(elevator.name + separator + elevator.oldDestination);
+      const currentExit = sourceRegion.getExit(elevator.name + ENTRANCE_SEPARATOR + elevator.oldDestination);
 
       // Build new exit object with new destination region, while keeping the old exit's access rule
-      const newExit = new Entrance(elevator.name + separator + elevator.newDestination, sourceRegion);
+      const newExit = new Entrance(elevator.name + ENTRANCE_SEPARATOR + elevator.newDestination, sourceRegion);
       newExit.accessRule = currentExit.accessRule;
 
       // Disconnect old exit from parent and destination

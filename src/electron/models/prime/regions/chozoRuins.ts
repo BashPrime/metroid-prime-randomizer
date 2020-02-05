@@ -33,9 +33,9 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Chozo Ruined Shrine': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Sun Tower': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Chozo Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Tallon North': () => true
+        'Chozo Transport West': () => true,
+        'Chozo Transport North': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
       }
     },
     {
@@ -50,7 +50,7 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
-        'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Chozo Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const accessReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs
             || (items.canLayBombs() && items.canBoost() && items.canSpider());
@@ -150,14 +150,13 @@ export function chozoRuins(): RegionObject[] {
       }
     },
     {
-      name: 'Chozo Sun Tower',
+      name: 'Chozo Vault',
       locations: {
         [PrimeLocation.VAULT]: (items: PrimeItemCollection) => items.canLayBombs(),
       },
       exits: {
         'Chozo West': () => true,
-        'Chozo Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles(),
-        'Magmoor Lava Lake': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings)
+        'Chozo Transport North': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
       }
     },
     {
@@ -167,8 +166,8 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.SUNCHAMBER_GHOSTS]: () => true // randomprime patches out the vines allowing for quick return visit
       },
       exits: {
-        'Chozo Sun Tower': () => true,
-        'Chozo Central': () => true
+        'Chozo Transport North': () => true,
+        'Chozo Central': (items: PrimeItemCollection) => items.canLayBombs() // probably not needed but doesn't hurt
       }
     },
     {
@@ -212,8 +211,8 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Chozo Hall of the Elders': () => true,
         'Chozo Antechamber': (items: PrimeItemCollection) => items.canBoost(),
-        'Tallon Overgrown Cavern': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
-        'Tallon South Upper': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+        'Chozo Transport East': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
+        'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
@@ -223,6 +222,36 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
+      }
+    },
+    {
+      name: 'Chozo Transport West',
+      exits: {
+        'Tallon Transport North': () => true,
+        'Chozo West': () => true
+      }
+    },
+    {
+      name: 'Chozo Transport North',
+      exits: {
+        'Magmoor Transport North': () => true,
+        'Chozo West': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Chozo Vault': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Chozo Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles()
+      }
+    },
+    {
+      name: 'Chozo Transport East',
+      exits: {
+        'Tallon Transport East': () => true,
+        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Chozo Transport South',
+      exits: {
+        'Tallon Transport South (Chozo)': () => true,
+        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     }
   ];

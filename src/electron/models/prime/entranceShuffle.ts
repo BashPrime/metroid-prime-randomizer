@@ -22,24 +22,24 @@ enum Region {
 }
 
 export const elevatorTableBase: Elevator[] = [
-  { id: 0, name: 'Chozo West', destination: 6, region: Region.CHOZO },
-  { id: 1, name: 'Chozo Sun Tower', destination: 14, region: Region.CHOZO },
-  { id: 2, name: 'Chozo Reflecting Pool', destination: 8, region: Region.CHOZO },
-  { id: 3, name: 'Chozo Reflecting Pool', destination: 10, region: Region.CHOZO },
-  { id: 4, name: 'Phendrana Shorelines', destination: 15, region: Region.PHENDRANA },
-  { id: 5, name: 'Phendrana Transport Magmoor South', destination: 18, region: Region.PHENDRANA },
-  { id: 6, name: 'Tallon North', destination: 0, region: Region.TALLON },
-  { id: 8, name: 'Tallon Overgrown Cavern', destination: 2, region: Region.TALLON },
-  { id: 9, name: 'Tallon Root Cave', destination: 16, region: Region.TALLON },
-  { id: 10, name: 'Tallon South Upper', destination: 3, region: Region.TALLON },
-  { id: 11, name: 'Tallon South Lower', destination: 12, region: Region.TALLON },
-  { id: 12, name: 'Mines Upper', destination: 11, region: Region.MINES },
-  { id: 13, name: 'Mines Central', destination: 17, region: Region.MINES },
-  { id: 14, name: 'Magmoor Lava Lake', destination: 1, region: Region.MAGMOOR },
-  { id: 15, name: 'Magmoor First Half', destination: 4, region: Region.MAGMOOR },
-  { id: 16, name: 'Magmoor Transport Tallon West', destination: 9, region: Region.MAGMOOR },
-  { id: 17, name: 'Magmoor Second Half', destination: 13, region: Region.MAGMOOR },
-  { id: 18, name: 'Magmoor Second Half', destination: 5, region: Region.MAGMOOR }
+  { id: 0, name: 'Chozo Transport West', destination: 6, region: Region.CHOZO },
+  { id: 1, name: 'Chozo Transport North', destination: 14, region: Region.CHOZO },
+  { id: 2, name: 'Chozo Transport East', destination: 8, region: Region.CHOZO },
+  { id: 3, name: 'Chozo Transport South', destination: 10, region: Region.CHOZO },
+  { id: 4, name: 'Phendrana Transport North', destination: 15, region: Region.PHENDRANA },
+  { id: 5, name: 'Phendrana Transport South', destination: 18, region: Region.PHENDRANA },
+  { id: 6, name: 'Tallon Transport North', destination: 0, region: Region.TALLON },
+  { id: 8, name: 'Tallon Transport East', destination: 2, region: Region.TALLON },
+  { id: 9, name: 'Tallon Transport West', destination: 16, region: Region.TALLON },
+  { id: 10, name: 'Tallon Transport South (Chozo)', destination: 3, region: Region.TALLON },
+  { id: 11, name: 'Tallon Transport South (Mines)', destination: 12, region: Region.TALLON },
+  { id: 12, name: 'Mines Transport East', destination: 11, region: Region.MINES },
+  { id: 13, name: 'Mines Transport West', destination: 17, region: Region.MINES },
+  { id: 14, name: 'Magmoor Transport North', destination: 1, region: Region.MAGMOOR },
+  { id: 15, name: 'Magmoor Transport West', destination: 4, region: Region.MAGMOOR },
+  { id: 16, name: 'Magmoor Transport East', destination: 9, region: Region.MAGMOOR },
+  { id: 17, name: 'Magmoor Transport South (Mines)', destination: 13, region: Region.MAGMOOR },
+  { id: 18, name: 'Magmoor Transport South (Phendrana)', destination: 5, region: Region.MAGMOOR }
 ];
 
 export const endgameTeleporters: Elevator[] = [

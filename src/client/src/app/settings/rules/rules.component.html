@@ -1,3 +1,4 @@
+<p>{{ form.value | json }}</p>
 <form [formGroup]="getForm()">
   <div class="columns is-multiline">
     <div class="column is-one-third">
@@ -18,7 +19,7 @@
         <div class="control">
           <div class="select is-small">
             <select formControlName="goalArtifacts" [disableControl]="!isArtifactCollectionSelected()">
-              <option *ngFor="let choice of getChoices('goalArtifacts')" value="{{ choice.value }}">
+              <option *ngFor="let choice of getChoices('goalArtifacts')" [ngValue]="choice.value">
                 {{ choice.name }}
               </option>
             </select>

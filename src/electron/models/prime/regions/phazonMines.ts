@@ -20,7 +20,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Mines Elite Research': () => true,
         'Mines Ore Processing': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
-        'Tallon South Lower': () => true
+        'Mines Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
       }
     },
     {
@@ -54,7 +54,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Mines Ore Processing': () => true,
         'Mines Lower': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.minesSpiderlessShafts && items.canLayBombs()) || items.canSpider()
+        'Mines Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canLayBombs() && (settings.tricks.minesSpiderlessShafts || items.canSpider())
         // Don't add Mines Depths as the exit is initially locked
       }
     },
@@ -90,6 +90,20 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Mines Lower': () => true,
         'Mines Central': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.XRAY_VISOR)
+      }
+    },
+    {
+      name: 'Mines Transport East',
+      exits: {
+        'Tallon Transport South (Mines)': () => true,
+        'Mines Upper': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+      }
+    },
+    {
+      name: 'Mines Transport West',
+      exits: {
+        'Magmoor Transport South (Mines)': () => true,
+        'Mines Central': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     }
   ];
