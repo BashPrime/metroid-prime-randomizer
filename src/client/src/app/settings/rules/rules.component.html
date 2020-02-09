@@ -18,7 +18,7 @@
         <label class="label is-small">{{ getDisplayName('goalArtifacts') }}</label>
         <div class="control">
           <div class="select is-small">
-            <select formControlName="goalArtifacts" [disableControl]="!isArtifactCollectionSelected()">
+            <select formControlName="goalArtifacts">
               <option *ngFor="let choice of getChoices('goalArtifacts')" [ngValue]="choice.value">
                 {{ choice.name }}
               </option>
