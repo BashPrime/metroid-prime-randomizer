@@ -147,3 +147,32 @@ export function generateAlphanumericString(length: number = 10): string {
 
   return generatedString;
 }
+
+/**
+ * Filters out fields from the given object and returns the filtered object.
+ * @param obj The object to filter properties out of
+ * @param remove Array of keys to remove from the base object
+ */
+export function filterProperties(obj: object, remove: string[]): object {
+  const raw = JSON.parse(JSON.stringify(obj));
+
+  return Object.keys(raw)
+    .filter(key => !remove.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = raw[key];
+      return obj;
+    }, {});
+}
+
+/**
+ * Sorts the properties in a given object and returns the sorted object.
+ * @param obj The provided object to be sorted
+ */
+export function sortObjectByProperties(obj: object): object {
+  const sorted = {};
+  Object.keys(obj).sort().forEach(key => {
+    sorted[key] = obj[key];
+  });
+
+  return sorted;
+}

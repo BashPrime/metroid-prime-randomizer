@@ -97,6 +97,31 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       + this.tricks.toSettingsString();
   }
 
+  /**
+   * Returns prettified version of this settings object, with more readable property keys.
+   * @param excludedKeys Array of keys to filter out of the returned object
+   */
+  prettify(excludedKeys?: string[]) {
+    const prettified = {};
+
+    const filtered = Utilities.filterProperties(this, ['excludeLocations', 'tricks', ...excludedKeys]);
+
+    for (let key of Object.keys(filtered)) {
+      // Try to get prettified setting name, if applicable
+      const newKey = details[key] ? details[key].name : key;
+      // Try to get prettified value, otherwise use current value
+      prettified[newKey] = getSetting(key) ? getSetting(key).choices.find(choice => choice.value === filtered[key]).name : filtered[key];
+    }
+
+    // Add excluded tricks and tricks as arrays instead of objects
+    Object.assign(prettified, {
+      ['Exclude Locations']: this.excludeLocations.toArray(),
+      ['Tricks']: this.tricks.toArray()
+    });
+
+    return Utilities.sortObjectByProperties(prettified);
+  }
+
   static fromSettingsString(settingsString: string): PrimeRandomizerSettings {
     // Return null if settings string is empty
     if (!settingsString) {

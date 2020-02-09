@@ -4,39 +4,46 @@ import { version } from '../../../../package.json';
 import { primeLocations } from './locations';
 
 export class Spoiler {
-  info: {
-    version: string;
-    seed: string;
-    hash: string[];
+  ['Info']: {
+    ['Version']: string;
+    ['Seed']: string;
+    ['Settings String']: string;
+    ['Seed Hash']: string[];
   };
-  startingLocation: string;
-  startingItems: { [key: string]: number };
-  elevators: { [key: string]: string };
-  locations: PrimeLocations;
-  walkthrough: { [key: string]: string }[];
+  ['Settings']: object;
+  ['Starting Location']: string;
+  ['Starting Items']: { [key: string]: number };
+  ['Elevators']: { [key: string]: string };
+  ['Locations']: PrimeLocations;
+  ['Walkthrough']: { [key: string]: string }[];
 
   static generateFromWorld(world: PrimeWorld): Spoiler {
     const spoiler = new Spoiler();
 
     // Set spoiler info
-    spoiler.info = {
-      version: version,
-      seed: world.getSettings().seed,
-      hash: []
+    spoiler['Info'] = {
+      ['Version']: version,
+      ['Seed']: world.getSettings().seed,
+      ['Settings String']: world.getSettings().toSettingsString(),
+      ['Seed Hash']: []
     };
 
+    // Set settings
+    // Blacklisting the exclude locations and allowed tricks objects as we'll be using arrays to show disabled/enabled fields.
+    spoiler['Settings'] = world.getSettings().prettify(['seed', 'spoiler']);
+
     // Set starting location
-    spoiler.startingLocation = 'Landing Site';
+    spoiler['Starting Location'] = 'Landing Site';
 
     // Set starting items
-    spoiler.startingItems = {};
+    spoiler['Starting Items'] = {};
 
     // Set elevator layout
     const elevatorLayout = world.getElevatorLayout() ? world.getElevatorLayout() : elevatorTableBase;
-    spoiler.elevators = getElevatorsMap(elevatorLayout);
+    spoiler['Elevators'] = getElevatorsMap(elevatorLayout);
 
     // Set locations
-    spoiler.locations = {
+    spoiler['Locations'] = {
       ['Tallon Overworld']: {},
       ['Chozo Ruins']: {},
       ['Magmoor Caverns']: {},
@@ -46,11 +53,11 @@ export class Spoiler {
 
     for (let location of world.getLocations().toArray()) {
       const matchedRegion = primeLocations.find(location2 => location2.name === location.getName()).region;
-      spoiler.locations[matchedRegion][location.getName()] = location.getItem().getName();
+      spoiler['Locations'][matchedRegion][location.getName()] = location.getItem().getName();
     }
 
     // Get the seed walkthrough
-    spoiler.walkthrough = [];
+    spoiler['Walkthrough'] = [];
 
     return spoiler;
   }

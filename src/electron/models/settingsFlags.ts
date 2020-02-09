@@ -21,6 +21,18 @@ export abstract class SettingsFlags {
 
     return bigInt(bits, 2).toString(36).toUpperCase();
   }
+
+  toArray(): string[] {
+    const array = [];
+
+    for (const key of this.getSettingsKeys()) {
+      if (this[key] === true) {
+        array.push(key)
+      }
+    }
+
+    return array;
+  }
 }
 
 
