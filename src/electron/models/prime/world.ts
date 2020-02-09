@@ -7,7 +7,7 @@ import { RegionCollection } from '../regionCollection';
 import { PrimeItemCollection } from './itemCollection';
 import { LocationCollection } from '../locationCollection';
 import { LayoutString } from './layoutString';
-import { patcherSortedLocations } from './locations';
+import { primeLocations } from './locations';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { root } from './regions/root';
 import { tallonOverworld } from './regions/tallonOverworld';
@@ -193,9 +193,10 @@ export class PrimeWorld extends World {
   getRandomprimePatcherLayoutString(): string {
     const itemLayout: number[] = [];
     let elevatorLayout: number[] = undefined; // If undefined, encode_layout() uses default elevator layout
+    const patcherLocations = primeLocations.map(location => location.name);
     const locations = this.getLocations().toArray().sort((a, b) => {
-      const aIndex = patcherSortedLocations.indexOf(a.getName() as PrimeLocation);
-      const bIndex = patcherSortedLocations.indexOf(b.getName() as PrimeLocation);
+      const aIndex = patcherLocations.indexOf(a.getName() as PrimeLocation);
+      const bIndex = patcherLocations.indexOf(b.getName() as PrimeLocation);
 
       if (aIndex < bIndex) return -1;
       else if (aIndex > bIndex) return 1;

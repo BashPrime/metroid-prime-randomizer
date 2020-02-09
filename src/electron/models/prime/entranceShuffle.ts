@@ -98,6 +98,17 @@ function shuffleElevatorsTwoWay(rng: MersenneTwister): Elevator[] {
   return shuffledElevators;
 }
 
+export function getElevatorsMap(elevators: Elevator[]): { [key: string]: string } {
+  const map: { [key: string]: string } = {};
+
+  for (let elevator of elevators) {
+    const destination = elevators.find(elevator2 => elevator2.id === elevator.destination);
+    map[elevator.name] = destination.name;
+  }
+
+  return map;
+}
+
 function getElevatorsByRegion(elevators: Elevator[]): ElevatorRegions {
   const regions: ElevatorRegions = {
     [Region.TALLON]: [],
