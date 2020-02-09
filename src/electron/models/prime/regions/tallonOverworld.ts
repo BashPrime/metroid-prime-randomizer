@@ -9,17 +9,26 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Tallon North',
       locations: {
-        [PrimeLocation.LANDING_SITE]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        [PrimeLocation.ARTIFACT_TEMPLE]: (items: PrimeItemCollection) => items.hasMissiles()
+        [PrimeLocation.LANDING_SITE]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
         'Tallon Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const normalReqs = items.canBoost() && items.canLayBombs();
           return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
+        'Tallon Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles(),
         'Tallon Crash Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Tallon Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
         'Tallon Transport North': () => true
+      }
+    },
+    {
+      name: 'Tallon Artifact Temple',
+      locations: {
+        [PrimeLocation.ARTIFACT_TEMPLE]: () => true
+      },
+      exits: {
+        'Tallon North': (items: PrimeItemCollection) => items.hasMissiles()
       }
     },
     {

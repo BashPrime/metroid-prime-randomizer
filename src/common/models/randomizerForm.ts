@@ -11,6 +11,7 @@ export interface RandomizerForm {
     elevatorShuffle: boolean;
     heatProtection: string;
     suitDamageReduction: string;
+    startingArea: number;
   };
   excludeLocations: string[];
   tricks: string[];

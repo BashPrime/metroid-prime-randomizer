@@ -8,6 +8,7 @@ import { Tricks } from './tricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
 import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
+import { startingAreas } from './entranceShuffle';
 
 const SETTINGS_STRING_DELIMITER = '-';
 
@@ -23,6 +24,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   artifactLocationHints?: boolean;
   heatProtection?: string;
   suitDamageReduction?: string;
+  startingArea?: number;
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
 }
@@ -39,6 +41,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   artifactLocationHints: boolean = true;
   heatProtection: string = 'any-suit';
   suitDamageReduction: string = 'default';
+  startingArea: number = 20;
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
 
@@ -248,6 +251,16 @@ export const settings = [
       }
     ],
     default: 'default'
+  }),
+  new SelectOption({
+    name: 'startingArea',
+    shared: true,
+    choices: [
+      ...startingAreas.map(area => {
+        return { name: area.name, value: area.id }
+      })
+    ],
+    default: 20
   })
 ];
 
@@ -286,6 +299,10 @@ export const details: OptionDetails = {
   },
   suitDamageReduction: {
     name: 'Suit Damage Reduction',
+    description: ''
+  },
+  startingArea: {
+    name: 'Starting Area',
     description: ''
   },
   alcoveNoItems: {

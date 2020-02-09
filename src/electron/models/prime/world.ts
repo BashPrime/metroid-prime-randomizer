@@ -15,7 +15,7 @@ import { chozoRuins } from './regions/chozoRuins';
 import { magmoorCaverns } from './regions/magmoorCaverns';
 import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
-import { Elevator, elevatorTableBase, endgameTeleporters } from './entranceShuffle';
+import { Elevator, elevatorTableBase, endgameTeleporters, StartingArea, getLandingSiteArea } from './entranceShuffle';
 import { ENTRANCE_SEPARATOR } from '../../constants';
 
 /**
@@ -27,7 +27,13 @@ export class PrimeWorld extends World {
    */
   protected settings: PrimeRandomizerSettings;
   /**
+   * Used for quick/easy reference to the starting area set when generating this world.
+   * Default is always Landing Site.
+   */
+  protected startingArea: StartingArea = getLandingSiteArea();
+  /**
    * The elevator table used when generating this world. Used for convenient/quick reference when generating the patcher layout.
+   * This field is intentionally in an undefined state and considered the default layout by the patcher when undefined.
    */
   protected elevatorLayout: Elevator[] = undefined;
 
@@ -108,6 +114,21 @@ export class PrimeWorld extends World {
   }
 
   /**
+   * Returns the starting area used for this world instance.
+   */
+  getStartingArea(): StartingArea {
+    return this.startingArea;
+  }
+
+  /**
+   * Sets the starting area for this world.
+   * @param startingArea The starting area to set for this world.
+   */
+  setStartingArea(startingArea: StartingArea) {
+    this.startingArea = startingArea;
+  }
+
+  /**
    * Returns the elevator layout used for this world instance.
    */
   getElevatorLayout(): Elevator[] {
@@ -149,6 +170,29 @@ export class PrimeWorld extends World {
     } while (newItems.size() > 0);
 
     return myItems;
+  }
+
+  /**
+   * Changes the starting point of the game to the provided area.
+   * @param area The area we're switching the starting point to.
+   */
+  applyStartingArea(area: StartingArea): void {
+    const rootRegion = this.getRootRegion();
+
+    // Disconnect root region from all exit(s)
+    for (const exit of rootRegion.getExits()) {
+      exit.disconnect();
+      exit.disconnectFromParent();
+    }
+
+    // Create new entrance and connect it to root and the actual region we're starting in
+    const newRootExit = new Entrance(rootRegion.getName() + ENTRANCE_SEPARATOR + area.region, rootRegion);
+    newRootExit.accessRule = () => true;
+    newRootExit.connectToParent(rootRegion);
+    newRootExit.connect(this.getRegionByKey(area.region));
+
+    // Set the starting area field for this world
+    this.startingArea = area;
   }
 
   /**

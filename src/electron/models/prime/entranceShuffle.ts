@@ -1,12 +1,19 @@
 import { PrimeWorld } from './world';
 import { getRandomInt } from '../../utilities';
 import { MersenneTwister } from '../../mersenneTwister';
+import { STARTING_AREA_LANDING_SITE, STARTING_AREA_RANDOM } from '../../constants';
 
 export interface Elevator {
   id: number;
   name: string;
   destination: number;
   region: Region;
+}
+
+export interface StartingArea {
+  id: number;
+  name: string;
+  region: string;
 }
 
 interface ElevatorRegions {
@@ -21,35 +28,86 @@ enum Region {
   MINES = 'mines'
 }
 
+export const startingAreas: StartingArea[] = [
+  // Default
+  { id: 20, name: 'Landing Site', region: 'Tallon North' },
+  { id: -1, name: 'Random', region: undefined },
+  { id: 7, name: 'Artifact Temple', region: 'Tallon Artifact Temple' },
+  // Tallon
+  { id: 6, name: 'Tallon Transport North', region: 'Tallon Transport North' },
+  { id: 8, name: 'Tallon Transport East', region: 'Tallon Transport East' },
+  { id: 9, name: 'Tallon Transport West', region: 'Tallon Transport West' },
+  { id: 10, name: 'Tallon Transport South (Chozo)', region: 'Tallon Transport South (Chozo)' },
+  { id: 11, name: 'Tallon Transport South (Mines)', region: 'Tallon Transport South (Mines)' },
+  // Chozo
+  { id: 0, name: 'Chozo Transport West', region: 'Chozo Transport West' },
+  { id: 1, name: 'Chozo Transport North', region: 'Chozo Transport North' },
+  { id: 2, name: 'Chozo Transport East', region: 'Chozo Transport East' },
+  { id: 3, name: 'Chozo Transport South', region: 'Chozo Transport South' },
+  // Magmoor
+  { id: 14, name: 'Magmoor Transport North', region: 'Magmoor Transport North' },
+  { id: 15, name: 'Magmoor Transport West', region: 'Magmoor Transport West' },
+  { id: 16, name: 'Magmoor Transport East', region: 'Magmoor Transport East' },
+  { id: 17, name: 'Magmoor Transport South (Mines)', region: 'Magmoor Transport South (Mines)' },
+  { id: 18, name: 'Magmoor Transport South (Phendrana)', region: 'Magmoor Transport South (Phendrana)' },
+  // Phendrana
+  { id: 4, name: 'Phendrana Transport North', region: 'Phendrana Transport North' },
+  { id: 5, name: 'Phendrana Transport South', region: 'Phendrana Transport South' },
+  // Mines
+  { id: 12, name: 'Mines Transport East', region: 'Mines Transport East' },
+  { id: 13, name: 'Mines Transport West', region: 'Mines Transport West' }
+  // { id: 19, name: 'Crater Entry Point' } // While a valid randomprime starting location, not using for the randomizer.
+];
+
 export const elevatorTableBase: Elevator[] = [
-  { id: 0, name: 'Chozo Transport West', destination: 6, region: Region.CHOZO },
-  { id: 1, name: 'Chozo Transport North', destination: 14, region: Region.CHOZO },
-  { id: 2, name: 'Chozo Transport East', destination: 8, region: Region.CHOZO },
-  { id: 3, name: 'Chozo Transport South', destination: 10, region: Region.CHOZO },
-  { id: 4, name: 'Phendrana Transport North', destination: 15, region: Region.PHENDRANA },
-  { id: 5, name: 'Phendrana Transport South', destination: 18, region: Region.PHENDRANA },
+  // Tallon
   { id: 6, name: 'Tallon Transport North', destination: 0, region: Region.TALLON },
   { id: 8, name: 'Tallon Transport East', destination: 2, region: Region.TALLON },
   { id: 9, name: 'Tallon Transport West', destination: 16, region: Region.TALLON },
   { id: 10, name: 'Tallon Transport South (Chozo)', destination: 3, region: Region.TALLON },
   { id: 11, name: 'Tallon Transport South (Mines)', destination: 12, region: Region.TALLON },
-  { id: 12, name: 'Mines Transport East', destination: 11, region: Region.MINES },
-  { id: 13, name: 'Mines Transport West', destination: 17, region: Region.MINES },
+  // Chozo
+  { id: 0, name: 'Chozo Transport West', destination: 6, region: Region.CHOZO },
+  { id: 1, name: 'Chozo Transport North', destination: 14, region: Region.CHOZO },
+  { id: 2, name: 'Chozo Transport East', destination: 8, region: Region.CHOZO },
+  { id: 3, name: 'Chozo Transport South', destination: 10, region: Region.CHOZO },
+  // Magmoor
   { id: 14, name: 'Magmoor Transport North', destination: 1, region: Region.MAGMOOR },
   { id: 15, name: 'Magmoor Transport West', destination: 4, region: Region.MAGMOOR },
   { id: 16, name: 'Magmoor Transport East', destination: 9, region: Region.MAGMOOR },
   { id: 17, name: 'Magmoor Transport South (Mines)', destination: 13, region: Region.MAGMOOR },
-  { id: 18, name: 'Magmoor Transport South (Phendrana)', destination: 5, region: Region.MAGMOOR }
+  { id: 18, name: 'Magmoor Transport South (Phendrana)', destination: 5, region: Region.MAGMOOR },
+  // Phendrana
+  { id: 4, name: 'Phendrana Transport North', destination: 15, region: Region.PHENDRANA },
+  { id: 5, name: 'Phendrana Transport South', destination: 18, region: Region.PHENDRANA },
+  // Mines
+  { id: 12, name: 'Mines Transport East', destination: 11, region: Region.MINES },
+  { id: 13, name: 'Mines Transport West', destination: 17, region: Region.MINES }
 ];
 
 export const endgameTeleporters: Elevator[] = [
-  { id: 7, name: 'Artifact Temple', destination: 19, region: undefined },
+  { id: 7, name: 'Artifact Temple', destination: 19, region: Region.TALLON },
   { id: 19, name: 'Crater Entry Point', destination: 7, region: undefined }
 ];
 
 export function setEntrances(world: PrimeWorld): void {
   // Set up vanilla entrances and exits
   world.initializeEntrances();
+
+  // Set the starting location (if needed)
+  if (world.getSettings().startingArea !== STARTING_AREA_LANDING_SITE) {
+    // Shuffle the starting point if the random option is used
+    const startId = world.getSettings().startingArea === STARTING_AREA_RANDOM
+      ? startingAreas[getRandomInt(0, startingAreas.length - 1, world.getRng())].id
+      : world.getSettings().startingArea;
+
+    const startingArea = startingAreas.find(area => area.id === startId);
+
+    // Landing site could have been chosen randomly, only run if it wasn't chosen
+    if (startingArea.id !== STARTING_AREA_LANDING_SITE) {
+      world.applyStartingArea(startingArea);
+    }
+  }
 
   // Shuffle the elevators and apply them to the world instance (used for the patcher layout encoding)
   if (world.getSettings().elevatorShuffle) {
@@ -107,6 +165,10 @@ export function getElevatorsMap(elevators: Elevator[]): { [key: string]: string 
   }
 
   return map;
+}
+
+export function getLandingSiteArea(): StartingArea {
+  return startingAreas.find(area => area.id === STARTING_AREA_LANDING_SITE);
 }
 
 function getElevatorsByRegion(elevators: Elevator[]): ElevatorRegions {

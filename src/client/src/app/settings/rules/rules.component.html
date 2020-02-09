@@ -72,5 +72,19 @@
         </div>
       </div>
     </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('startingArea') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="startingArea">
+              <option *ngFor="let choice of getChoices('startingArea')" [ngValue]="choice.value">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </form>

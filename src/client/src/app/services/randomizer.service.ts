@@ -37,7 +37,8 @@ export class RandomizerService {
         artifactLocationHints: [this.DEFAULT_SETTINGS.artifactLocationHints],
         elevatorShuffle: [this.DEFAULT_SETTINGS.elevatorShuffle],
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
-        suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction]
+        suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction],
+        startingArea: [this.DEFAULT_SETTINGS.startingArea]
       }),
       excludeLocations: fb.array([]),
       tricks: fb.array([])

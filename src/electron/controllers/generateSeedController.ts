@@ -31,6 +31,7 @@ function convertFormToArgs(form: RandomizerForm): PrimeRandomizerSettingsArgs {
     elevatorShuffle: form.rules.elevatorShuffle,
     heatProtection: form.rules.heatProtection,
     suitDamageReduction: form.rules.suitDamageReduction,
+    startingArea: form.rules.startingArea,
     excludeLocations: processArrayControl(form.excludeLocations),
     tricks: processArrayControl(form.tricks)
   };

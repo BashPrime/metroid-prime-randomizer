@@ -1,5 +1,5 @@
 import { PrimeWorld } from './world';
-import { elevatorTableBase, getElevatorsMap } from './entranceShuffle';
+import { elevatorTableBase, getElevatorsMap, startingAreas } from './entranceShuffle';
 import { version } from '../../../../package.json';
 import { primeLocations } from './locations';
 
@@ -8,11 +8,12 @@ export class Spoiler {
     ['Version']: string;
     ['Seed']: string;
     ['Settings String']: string;
+    ['Patcher Layout String']: string;
     ['Seed Hash']: string[];
   };
   ['Settings']: object;
-  ['Starting Location']: string;
-  ['Starting Items']: { [key: string]: number };
+  ['Starting Area']: string;
+  // ['Starting Items']: { [key: string]: number };
   ['Elevators']: { [key: string]: string };
   ['Locations']: PrimeLocations;
   ['Walkthrough']: { [key: string]: string }[];
@@ -25,6 +26,7 @@ export class Spoiler {
       ['Version']: version,
       ['Seed']: world.getSettings().seed,
       ['Settings String']: world.getSettings().toSettingsString(),
+      ['Patcher Layout String']: world.getRandomprimePatcherLayoutString(),
       ['Seed Hash']: []
     };
 
@@ -32,13 +34,14 @@ export class Spoiler {
     // Blacklisting the exclude locations and allowed tricks objects as we'll be using arrays to show disabled/enabled fields.
     spoiler['Settings'] = world.getSettings().prettify(['seed', 'spoiler']);
 
-    // Set starting location
-    spoiler['Starting Location'] = 'Landing Site';
+    // Set starting area
+    spoiler['Starting Area'] = world.getStartingArea().name;
 
     // Set starting items
-    spoiler['Starting Items'] = {};
+    // spoiler['Starting Items'] = {};
 
     // Set elevator layout
+    // Because we can use undefined elevator layouts for the patcher to quickly set the default layout, refer to the base table when undefined.
     const elevatorLayout = world.getElevatorLayout() ? world.getElevatorLayout() : elevatorTableBase;
     spoiler['Elevators'] = getElevatorsMap(elevatorLayout);
 
