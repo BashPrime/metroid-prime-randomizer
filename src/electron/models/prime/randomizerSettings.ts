@@ -116,7 +116,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     // Add excluded tricks and tricks as arrays instead of objects
     Object.assign(prettified, {
       ['Exclude Locations']: this.excludeLocations.toArray(),
-      ['Tricks']: this.tricks.toArray()
+      ['Tricks']: this.tricks.toArray().map(item => details[item] ? details[item].name : item)
     });
 
     return Utilities.sortObjectByProperties(prettified);
