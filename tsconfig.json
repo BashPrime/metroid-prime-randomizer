@@ -12,7 +12,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "types": [
+      "webpack-env"
+    ]
   },
   "include": [
     "src/electron/**/*.ts",

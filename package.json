@@ -94,6 +94,7 @@
     "@types/jasminewd2": "^2.0.8",
     "@types/mocha": "^5.2.7",
     "@types/node": "~8.9.4",
+    "@types/webpack-env": "^1.15.1",
     "chai": "^4.2.0",
     "codelyzer": "^5.2.1",
     "conventional-changelog-cli": "2.0.11",

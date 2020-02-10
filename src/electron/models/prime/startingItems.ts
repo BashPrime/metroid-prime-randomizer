@@ -36,6 +36,11 @@ export function toRandomprimeFormat(startingItems: Item[]): number {
 
     // Special cases for missiles and power bombs
     switch (item.name) {
+      // Scan visor isn't shuffled in the item pool yet, so make sure it gets added
+      case PrimeItem.SCAN_VISOR: {
+        value = 1;
+        break;
+      }
       // Each missile is worth 5
       case PrimeItem.MISSILE: {
         const missileCoefficient = 5;
