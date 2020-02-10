@@ -1,5 +1,5 @@
 import { PrimeWorld } from './world';
-import { elevatorTableBase, getElevatorsMap, startingAreas } from './entranceShuffle';
+import { elevatorTableBase, getElevatorsMap } from './entranceShuffle';
 import { version } from '../../../../package.json';
 import { primeLocations } from './locations';
 

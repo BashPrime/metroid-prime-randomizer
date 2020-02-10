@@ -260,9 +260,8 @@ export class PrimeWorld extends World {
         return 0;
       }).map(elevator => elevator.destination);
 
-      // Starting location is the last index of the elevator layout array
-      // Until the form control gets added, use default value (Landing Site - 20) for now
-      elevatorLayout.push(20);
+      // Starting area is the last index of the elevator layout array
+      elevatorLayout.push(this.startingArea.id);
     }
 
     return new LayoutString().encode_layout(itemLayout, elevatorLayout);

@@ -2,7 +2,7 @@ import * as bigInt from 'big-integer';
 import * as crypto from 'crypto';
 
 import { RandomizerSettings, RandomizerSettingsArgs } from '../randomizerSettings';
-import { Checkbox, SelectOption, SettingsChoice, discreteNumberSelection } from '../option';
+import { Checkbox, SelectOption, discreteNumberSelection } from '../option';
 import { OptionType } from '../../enums/optionType';
 import { Tricks } from './tricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
