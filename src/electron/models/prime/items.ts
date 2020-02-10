@@ -63,5 +63,6 @@ export const primeItems: ItemMap = {
   [PrimeItem.ARTIFACT_OF_WARRIOR]: new Item(PrimeItem.ARTIFACT_OF_WARRIOR, ItemType.ARTIFACT, 31),
   [PrimeItem.ARTIFACT_OF_NEWBORN]: new Item(PrimeItem.ARTIFACT_OF_NEWBORN, ItemType.ARTIFACT, 32),
   [PrimeItem.ARTIFACT_OF_NATURE]: new Item(PrimeItem.ARTIFACT_OF_NATURE, ItemType.ARTIFACT, 33),
-  [PrimeItem.ARTIFACT_OF_STRENGTH]: new Item(PrimeItem.ARTIFACT_OF_STRENGTH, ItemType.ARTIFACT, 34)
+  [PrimeItem.ARTIFACT_OF_STRENGTH]: new Item(PrimeItem.ARTIFACT_OF_STRENGTH, ItemType.ARTIFACT, 34),
+  [PrimeItem.NOTHING]: new Item(PrimeItem.NOTHING, ItemType.EXPANSION, 35)
 };

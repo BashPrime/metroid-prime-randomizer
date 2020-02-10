@@ -2,6 +2,7 @@
  * Enumerates the Metroid Prime items to ease on development.
  */
 export enum PrimeItem {
+  MISSILE = 'Missile', // mainly for randomprime patcher
   MISSILE_EXPANSION = 'Missile Expansion',
   ENERGY_TANK = 'Energy Tank',
   POWER_BOMB_EXPANSION = 'Power Bomb Expansion',
@@ -24,6 +25,7 @@ export enum PrimeItem {
   VARIA_SUIT = 'Varia Suit',
   GRAVITY_SUIT = 'Gravity Suit',
   PHAZON_SUIT = 'Phazon Suit',
+  SCAN_VISOR = 'Scan Visor',
   THERMAL_VISOR = 'Thermal Visor',
   XRAY_VISOR = 'X-Ray Visor',
   ARTIFACT_OF_TRUTH = 'Artifact of Truth',
@@ -37,5 +39,6 @@ export enum PrimeItem {
   ARTIFACT_OF_SUN = 'Artifact of Sun',
   ARTIFACT_OF_WORLD = 'Artifact of World',
   ARTIFACT_OF_SPIRIT = 'Artifact of Spirit',
-  ARTIFACT_OF_NEWBORN = 'Artifact of Newborn'
+  ARTIFACT_OF_NEWBORN = 'Artifact of Newborn',
+  NOTHING = 'Nothing'
 }
