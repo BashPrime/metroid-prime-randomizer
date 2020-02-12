@@ -80,6 +80,7 @@
     "primeng": "^9.0.0-rc.2",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "uuid": "^3.4.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -94,6 +95,7 @@
     "@types/jasminewd2": "^2.0.8",
     "@types/mocha": "^5.2.7",
     "@types/node": "~8.9.4",
+    "@types/uuid": "^3.4.7",
     "@types/webpack-env": "^1.15.1",
     "chai": "^4.2.0",
     "codelyzer": "^5.2.1",

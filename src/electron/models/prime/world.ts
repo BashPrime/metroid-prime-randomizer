@@ -1,3 +1,5 @@
+import * as crypto from 'crypto';
+
 import { World } from '../world';
 import { Region } from '../region';
 import { Location } from '../location';
@@ -17,6 +19,10 @@ import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
 import { Elevator, elevatorTableBase, endgameTeleporters, StartingArea, getLandingSiteArea } from './entranceShuffle';
 import { ENTRANCE_SEPARATOR } from '../../constants';
+import { MersenneTwister } from '../../mersenneTwister';
+import * as Utilities from '../../utilities';
+import * as namesJson from '../../data/names.json';
+
 
 /**
  * Logical representation of the Metroid Prime game world.
@@ -265,5 +271,23 @@ export class PrimeWorld extends World {
     }
 
     return new LayoutString().encode_layout(itemLayout, elevatorLayout);
+  }
+
+  /**
+   * Generates a string array representation of the world's layout sha256, with user-friendly words.
+   * @param length The length of the generated hash array
+   */
+  getLayoutHash(length = 4): string[] {
+    const layoutHash: string [] = [];
+    // Using the randomprime layout sha256 hash as the seed for easier debugging/verification
+    const sha256 = crypto.createHash('sha256').update(this.getRandomprimePatcherLayoutString()).digest('hex');
+    const rng = new MersenneTwister(Utilities.parseSafeIntegerFromSha256(sha256));
+
+    for (let i = 0; i < length; i++) {
+      const index = Utilities.getRandomInt(0, namesJson.length, rng);
+      layoutHash.push(namesJson[index]);
+    }
+
+    return layoutHash;
   }
 }

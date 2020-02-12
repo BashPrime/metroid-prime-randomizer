@@ -1,10 +1,6 @@
 import randomPrimePatcher from '../../randomprime';
 import { PrimeWorld } from './world';
 
-type RandomPrime = {
-  patchRandomizedGame: (json: string, cb: any) => void;
-}
-
 export interface PatcherConfiguration {
   input_iso: string;
   output_iso: string;
