@@ -12,7 +12,7 @@ export function defineControllers() {
     randomizer: randomizerController.initialize(),
     generateSeed: generateSeedController.initialize(),
     save_settings: saveSettingsController.initialize(),
-    seed: seedHistoryController.initialize(),
+    seedHistory: seedHistoryController.initialize(),
     presets: presetsController.initialize()
   };
 }

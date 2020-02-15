@@ -2,61 +2,36 @@ import { app, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { GeneratedSeed } from '../../common/models/generatedSeed';
-import { PrimeGeneratedSeed } from '../models/prime/generatedSeed';
+import { SeedHistory } from '../models/prime/seedHistory';
 
-let seeds: SeedHistory;
-const seedHistoryPath = path.join(app.getPath('userData'), 'seeds.json');
-
-interface SeedHistory {
-  [id: string]: PrimeGeneratedSeed
-}
+export const seedHistory: SeedHistory = new SeedHistory();
+const seedHistoryPath: string = path.join(app.getPath('userData'), 'seeds.json');
+let historyFileHasBeenRead: boolean = false;
 
 export function initialize() {
   // Request from renderer to get the seed history
   ipcMain.on('getSeedHistory', (event) => {
-    if (!seeds) {
-      readSeedHistoryFile(seedHistory => {
-        Object.assign(seeds, seedHistory);
+    if (!historyFileHasBeenRead) {
+      readFromSeedHistoryFile(historyJson => {
+        if (historyJson) {
+          seedHistory.setSeedHistory(JSON.parse(historyJson));
+        }
+        historyFileHasBeenRead = true;
       });
     }
 
-    event.sender.send('getSeedHistoryResponse', getClientSeedArray());
+    event.sender.send('getSeedHistoryResponse', seedHistory.getPrunedSeedHistory());
   });
 }
 
 export function writeSeedHistoryToFile(): void {
-  if (Object.keys(seeds).length > 0) {
-    const formattedSeeds = getClientSeedObject();
-    fs.writeFile(seedHistoryPath, JSON.stringify(formattedSeeds, null, '\t'), 'utf8', null);
+  if (seedHistory.size() > 0) {
+    fs.writeFile(seedHistoryPath, seedHistory.toJson(), 'utf8', null);
   }
 }
 
-function readSeedHistoryFile(callback): void {
+function readFromSeedHistoryFile(callback: (json: string) => void): void {
   fs.readFile(seedHistoryPath, 'utf8', (err, seedHistoryJson) => {
-    let seedHistoryData: SeedHistory = {};
-
-    if (!err) {
-      const rawData = JSON.parse(seedHistoryJson);
-      for (const id of Object.keys(rawData)) {
-        seedHistoryData[id] = PrimeGeneratedSeed.fromClientObject(rawData[id]);
-      }
-    }
-
-    callback(seedHistoryData);
+    callback(seedHistoryJson);
   });
-}
-
-function getClientSeedObject(): { [id: string]: GeneratedSeed } {
-  const formattedSeeds = {};
-
-  Object.entries(seeds).forEach(([id, seed]) => {
-    formattedSeeds[id] = seed.toClientObject();
-  });
-
-  return formattedSeeds;
-}
-
-function getClientSeedArray(): GeneratedSeed[] {
-  return Object.entries(seeds).map(([id, seed]) => seed.toClientObject());
 }
