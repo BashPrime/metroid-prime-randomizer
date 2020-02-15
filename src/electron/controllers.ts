@@ -1,7 +1,7 @@
 import * as randomizerController from './controllers/randomizerController';
 import * as generateSeedController from './controllers/generateSeedController';
 import * as saveSettingsController from './controllers/saveSettingsController';
-import * as seedController from './controllers/seedController';
+import * as seedHistoryController from './controllers/seedHistoryController';
 import * as presetsController from './controllers/presetsController';
 
 /**
@@ -12,7 +12,7 @@ export function defineControllers() {
     randomizer: randomizerController.initialize(),
     generateSeed: generateSeedController.initialize(),
     save_settings: saveSettingsController.initialize(),
-    seed: seedController.initialize(),
+    seed: seedHistoryController.initialize(),
     presets: presetsController.initialize()
   };
 }
