@@ -5,10 +5,20 @@ import { RandomizerForm } from '../../common/models/randomizerForm';
 import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings, PrimeRandomizerSettingsArgs } from '../models/prime/randomizerSettings';
 import { SettingsFlagsArgs } from '../models/settingsFlags';
+import { allPresets } from './presetsController';
 
 export function initialize() {
   ipcMain.on('generateSeed', (event, form: RandomizerForm, spoiler: boolean) => {
-    const args = convertFormToArgs(form);
+    console.log(allPresets);
+    let args: PrimeRandomizerSettingsArgs;
+    const preset = (form as any).preset;
+    // If a preset was provided, don't use the form controls. Use the preset itself instead.
+    if (preset !== 'Custom') {
+      args = convertFormToArgs(allPresets[preset]);
+    } else {
+      args = convertFormToArgs(form);
+    }
+
     args.spoiler = spoiler;
 
     const settings = new PrimeRandomizerSettings(args);

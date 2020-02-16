@@ -4,6 +4,8 @@ import * as path from 'path';
 
 import * as presetsDefaultJson from '../data/presetsDefault.json';
 
+/** Stores all default and user-saved presets for quick reference. */
+export const allPresets = {};
 const userPresetsPath = path.join(app.getPath('userData'), 'presets.json');
 
 export function initialize() {
@@ -14,6 +16,9 @@ export function initialize() {
     for (let key of Object.keys(adjustedDefaults)) {
       adjustedDefaults[key].protected = true;
     }
+
+    // Add to allPresets object
+    Object.assign(allPresets, adjustedDefaults);
 
     const response: PresetsResponse = {
       err: null,
@@ -36,6 +41,8 @@ export function initialize() {
         } as PresetsResponse);
       } else {
         readUserPresetsFile(response => {
+          // Add to allPresets object
+          Object.assign(allPresets, response.presets);
           event.sender.send(userPresetsResponse, response);
         });
       }
@@ -50,6 +57,7 @@ export function initialize() {
 
       // Set preset object, regardless of whether it's new or not
       presets[key] = preset;
+      allPresets[key] = preset;
 
       // Write to file and return response
       writeUserPresetsFile(presets, response => {
@@ -69,6 +77,7 @@ export function initialize() {
       } else {
         const presets = JSON.parse(filePresets);
         delete presets[key];
+        delete allPresets[key];
 
         writeUserPresetsFile(presets, response => {
           event.sender.send('removeUserPresetResponse', response);
