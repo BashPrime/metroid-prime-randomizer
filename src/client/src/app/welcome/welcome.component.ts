@@ -21,15 +21,15 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  openExternalUrl(url: string) {
+  openExternalUrl(url: string): void {
     this.electronService.shell.openExternal(url);
   }
 
-  goToGenerateGame() {
+  goToGenerateGame(): void {
     this.tabService.selectTab(this.generateGameTab);
   }
 
-  openModal() {
-    this.modal.setOpen(true);
+  openImportModal(): void {
+    this.modal.openModal();
   }
 }

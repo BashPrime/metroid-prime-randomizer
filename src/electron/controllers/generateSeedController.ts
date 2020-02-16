@@ -20,15 +20,31 @@ export function initialize() {
 
     args.spoiler = spoiler;
 
-    const settings = new PrimeRandomizerSettings(args);
-
     // Generate the seed and add it to the seeds history
-    const world = generateWorld(settings);
-    const newSeedId = seedHistory.addSeedFromWorld(world);
+    const settings = new PrimeRandomizerSettings(args);
+    const newSeedId = generateSeed(settings);
 
     // Send client-friendly seed information back to the UI
     event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
   });
+
+  ipcMain.on('importSeed', (event, seed: string, settingsString: string) => {
+    try {
+      const settings = PrimeRandomizerSettings.fromSettingsString(settingsString);
+      settings.seed = seed;
+      const newSeedId = generateSeed(settings);
+
+      // Send client-friendly seed information back to the UI
+      event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
+    } catch (err) {
+      event.sender.send('generateSeedError', err);
+    }
+  });
+}
+
+function generateSeed(settings: PrimeRandomizerSettings): string {
+  const world = generateWorld(settings);
+  return seedHistory.addSeedFromWorld(world);
 }
 
 function convertFormToArgs(form: RandomizerForm): PrimeRandomizerSettingsArgs {

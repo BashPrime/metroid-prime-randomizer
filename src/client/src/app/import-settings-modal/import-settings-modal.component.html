@@ -22,7 +22,7 @@
       </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success">Import</button>
+      <button class="button is-success" (click)="onSubmit(getForm().value)">Import</button>
       <button class="button" (click)="setOpen(false)">Cancel</button>
     </footer>
   </div>

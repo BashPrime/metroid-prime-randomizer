@@ -11,7 +11,8 @@
       "artifactLocationHints": true,
       "elevatorShuffle": false,
       "heatProtection": "any-suit",
-      "suitDamageReduction": "default"
+      "suitDamageReduction": "default",
+      "startingArea": 20
     },
     "excludeLocations": [],
     "tricks": []
