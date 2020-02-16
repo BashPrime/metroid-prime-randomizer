@@ -284,7 +284,7 @@ export class PrimeWorld extends World {
     const rng = new MersenneTwister(Utilities.parseSafeIntegerFromSha256(sha256));
 
     for (let i = 0; i < length; i++) {
-      const index = Utilities.getRandomInt(0, namesJson.length, rng);
+      const index = Utilities.getRandomInt(0, namesJson.length - 1, rng);
       layoutHash.push(namesJson[index]);
     }
 
