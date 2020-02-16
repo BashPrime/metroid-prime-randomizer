@@ -9,7 +9,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SeedHistoryComponent } from './seed-history/seed-history.component';
-import { RomGenerationComponent } from './rom-generation/rom-generation.component';
 import { RandomizerComponent } from './randomizer/randomizer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { GenerateGameComponent } from './generate-game/generate-game.component';
@@ -25,13 +24,13 @@ import { ReadOnlySettingsContainerComponent } from './settings/read-only-setting
 import { ListSettingsComponent } from './settings/list-settings/list-settings.component';
 import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
 import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
+import { GameDetailsComponent } from './game-details/game-details.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SeedHistoryComponent,
-    RomGenerationComponent,
     RandomizerComponent,
     RulesComponent,
     WelcomeComponent,
@@ -46,7 +45,8 @@ import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-
     ReadOnlySettingsContainerComponent,
     ListSettingsComponent,
     CustomizeSettingsContainerComponent,
-    ExcludeLocationsComponent
+    ExcludeLocationsComponent,
+    GameDetailsComponent,
   ],
   imports: [
     BrowserModule,

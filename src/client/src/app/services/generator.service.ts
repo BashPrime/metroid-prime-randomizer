@@ -1,16 +1,21 @@
 import { Injectable, NgZone } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './electron.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratorService {
+  private generatedSeed$ = new BehaviorSubject<GeneratedSeed>(undefined);
+  _generatedSeed = this.generatedSeed$.asObservable();
+
   constructor(private ngZone: NgZone, private electronService: ElectronService) {
     this.electronService.ipcRenderer.on('generateSeedResponse', (event, generatedSeed) => {
       this.ngZone.run(() => {
-        console.log(generatedSeed);
+        this.generatedSeed$.next(generatedSeed);
       });
     });
 

@@ -15,11 +15,13 @@ import { Tab } from '../../../../common/models/tab';
 export class RandomizerComponent implements OnInit {
   readonly tabIds = {
     welcome: 0,
-    generateGame: 1
+    generateGame: 1,
+    gameDetails: 2
   };
   private tabs: Tab[] = [
     { id: this.tabIds.welcome, name: 'Welcome' },
-    { id: this.tabIds.generateGame, name: 'Generate Game' }
+    { id: this.tabIds.generateGame, name: 'Generate Game' },
+    { id: this.tabIds.gameDetails, name: 'Game Details', hidden: true }
   ];
   private selectedTabId: number = this.tabIds.welcome;
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -29,10 +31,19 @@ export class RandomizerComponent implements OnInit {
   ngOnInit() {
     // Subscribe to selected tab subject in application service
     this.tabService._selectedTabId
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(tabId => {
-      this.selectedTabId = tabId;
-    });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(tabId => {
+        this.selectedTabId = tabId;
+      });
+
+    // Enable game details tab when a seed gets generated
+    this.generatorService._generatedSeed
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(seed => {
+        if (seed) {
+          this.setTabHidden(this.tabIds.gameDetails, false);
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -42,6 +53,10 @@ export class RandomizerComponent implements OnInit {
 
   getTabs(): Tab[] {
     return this.tabs;
+  }
+
+  getVisibleTabs(): Tab[] {
+    return this.tabs.filter(tab => !tab.hidden);
   }
 
   getSelectedTabId(): number {
@@ -58,5 +73,9 @@ export class RandomizerComponent implements OnInit {
 
   isTabIdSelected(tabId: number): boolean {
     return tabId === this.selectedTabId;
+  }
+
+  setTabHidden(id: number, hidden: boolean): void {
+    this.tabs.find(tab => tab.id === id).hidden = hidden;
   }
 }

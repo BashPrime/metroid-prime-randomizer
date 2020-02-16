@@ -2,7 +2,7 @@
   <div class="randomizer-header">
     <div class="tabs is-centered">
       <ul>
-        <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+        <li *ngFor="let tab of getVisibleTabs()" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
           <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
         </li>
       </ul>
@@ -10,6 +10,7 @@
   </div>
   <app-welcome *ngIf="isTabIdSelected(tabIds.welcome)"></app-welcome>
   <app-generate-game *ngIf="isTabIdSelected(tabIds.generateGame)"></app-generate-game>
+  <app-game-details *ngIf="isTabIdSelected(tabIds.gameDetails)"></app-game-details>
   <footer class="footer">
     v{{ getAppVersion() }} &copy; BashPrime, Syncathetic, Pwootage
   </footer>
