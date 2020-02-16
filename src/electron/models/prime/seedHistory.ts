@@ -58,8 +58,8 @@ export class SeedHistory {
     return this.seedHistory[id];
   }
 
-  /**
-   * Generates a seed object using a given PrimeWorld.
+    /**
+   * Generates a seed object using a given PrimeWorld, and returns its ID.
    * @param world The world to be imported.
    */
   addSeedFromWorld(world: PrimeWorld): string {
