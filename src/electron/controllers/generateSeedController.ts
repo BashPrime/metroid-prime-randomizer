@@ -23,20 +23,15 @@ export function initialize() {
 }
 
 function convertFormToArgs(form: RandomizerForm): PrimeRandomizerSettingsArgs {
-  return {
-    skipFrigate: form.romSettings.skipFrigate,
-    skipHudPopups: form.romSettings.skipHudPopups,
-    hideItemModels: form.romSettings.hideItemModels,
-    goal: form.rules.goal,
-    goalArtifacts: form.rules.goalArtifacts,
-    artifactLocationHints: form.rules.artifactLocationHints,
-    elevatorShuffle: form.rules.elevatorShuffle,
-    heatProtection: form.rules.heatProtection,
-    suitDamageReduction: form.rules.suitDamageReduction,
-    startingArea: form.rules.startingArea,
+  const args: PrimeRandomizerSettingsArgs = {};
+  Object.assign(args, form.romSettings);
+  Object.assign(args, form.rules);
+  Object.assign(args, {
     excludeLocations: processArrayControl(form.excludeLocations),
     tricks: processArrayControl(form.tricks)
-  };
+  });
+
+  return args;
 }
 
 /**
