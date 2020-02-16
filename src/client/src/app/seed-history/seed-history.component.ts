@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { SeedService } from '../services/seed.service';
 import { GeneratedSeed } from '../../../../common/models/generatedSeed';
@@ -11,19 +13,23 @@ import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 })
 export class SeedHistoryComponent implements OnInit {
   isLoaded = false;
-  seeds: GeneratedSeed[];
+  seedHistory: GeneratedSeed[];
   faChevronLeft = faChevronLeft;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private seedService: SeedService) { }
 
   ngOnInit() {
-    this.seedService.seedHistory$.subscribe(seedHistory => {
-      this.seeds = seedHistory;
+    this.seedService._seedHistory
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(seedHistory => {
+      this.seedHistory = seedHistory;
       this.isLoaded = true;
     });
   }
 
-  setUpRomGeneration(seed: GeneratedSeed) {
-    this.seedService.setUpRomGeneration(seed);
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

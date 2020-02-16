@@ -14,10 +14,6 @@ export class RomGenerationComponent implements OnInit {
   constructor(private seedService: SeedService) { }
 
   ngOnInit() {
-    this.seedService.generatedSeed$.subscribe(seed => {
-      this.seed = seed;
-      this.isLoaded = true;
-    });
   }
 
 }
