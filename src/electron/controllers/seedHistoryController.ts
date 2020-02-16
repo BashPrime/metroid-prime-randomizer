@@ -1,4 +1,6 @@
 import { app, ipcMain } from 'electron';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -6,27 +8,33 @@ import { SeedHistory } from '../models/prime/seedHistory';
 
 export const seedHistory: SeedHistory = new SeedHistory();
 const seedHistoryPath: string = path.join(app.getPath('userData'), 'seeds.json');
-let historyFileHasBeenRead: boolean = false;
+const historyFileRead$ = new BehaviorSubject<boolean>(false);
 
 export function initialize() {
-  // Request from renderer to get the seed history
-  ipcMain.on('getSeedHistory', (event) => {
-    if (!historyFileHasBeenRead) {
-      readFromSeedHistoryFile(historyJson => {
-        if (historyJson) {
-          seedHistory.setSeedHistory(JSON.parse(historyJson));
-        }
-        historyFileHasBeenRead = true;
-      });
+  // Get the seed history from seeds.json first
+  readFromSeedHistoryFile(historyJson => {
+    if (historyJson) {
+      seedHistory.setSeedHistoryFromJson(historyJson);
     }
 
-    event.sender.send('getSeedHistoryResponse', seedHistory.getPrunedSeedHistory());
+    historyFileRead$.next(true);
+  });
+
+  // Request from renderer to get the seed history
+  ipcMain.on('getSeedHistory', (event) => {
+    historyFileRead$.asObservable().pipe(take(1)).subscribe(fileRead => {
+      if (fileRead) {
+        event.sender.send('getSeedHistoryResponse', seedHistory.getPrunedSeedHistory());
+      }
+    });
   });
 }
 
 export function writeSeedHistoryToFile(): void {
   if (seedHistory.size() > 0) {
-    fs.writeFile(seedHistoryPath, seedHistory.toJson(), 'utf8', null);
+    fs.writeFile(seedHistoryPath, seedHistory.toJson(), 'utf8', err => {
+      if (err) throw err;
+    });
   }
 }
 

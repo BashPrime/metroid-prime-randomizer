@@ -6,7 +6,7 @@ import * as Utilities from './utilities';
 import menuTemplate from './menu';
 import { defineControllers } from './controllers';
 import { writeSettingsFile } from './controllers/saveSettingsController';
-import { writeSeedHistoryToFile } from './controllers/seedController';
+import { writeSeedHistoryToFile } from './controllers/seedHistoryController';
 
 let win: Electron.BrowserWindow;
 const serve = Utilities.isServe();
