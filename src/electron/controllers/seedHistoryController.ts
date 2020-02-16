@@ -12,13 +12,7 @@ const historyFileRead$ = new BehaviorSubject<boolean>(false);
 
 export function initialize() {
   // Get the seed history from seeds.json first
-  readFromSeedHistoryFile(historyJson => {
-    if (historyJson) {
-      seedHistory.setSeedHistoryFromJson(historyJson);
-    }
-
-    historyFileRead$.next(true);
-  });
+  readFromSeedHistoryFile();
 
   // Request from renderer to get the seed history
   ipcMain.on('getSeedHistory', (event) => {
@@ -38,8 +32,12 @@ export function writeSeedHistoryToFile(): void {
   }
 }
 
-function readFromSeedHistoryFile(callback: (json: string) => void): void {
+function readFromSeedHistoryFile(): void {
   fs.readFile(seedHistoryPath, 'utf8', (err, seedHistoryJson) => {
-    callback(seedHistoryJson);
+    if (seedHistoryJson) {
+      seedHistory.setSeedHistoryFromJson(seedHistoryJson);
+    }
+
+    historyFileRead$.next(true);
   });
 }

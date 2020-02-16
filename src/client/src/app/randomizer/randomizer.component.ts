@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { GeneratorService } from '../services/generator.service';
@@ -20,14 +22,22 @@ export class RandomizerComponent implements OnInit {
     { id: this.tabIds.generateGame, name: 'Generate Game' }
   ];
   private selectedTabId: number = this.tabIds.welcome;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private randomizerService: RandomizerService, private tabService: TabService, private generatorService: GeneratorService) { }
 
   ngOnInit() {
     // Subscribe to selected tab subject in application service
-    this.tabService.selectedTabId$.subscribe(tabId => {
+    this.tabService._selectedTabId
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(tabId => {
       this.selectedTabId = tabId;
     });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   getTabs(): Tab[] {

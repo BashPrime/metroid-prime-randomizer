@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TabService {
-  selectedTabId$ = new Subject<number>();
+  private selectedTabId$ = new Subject<number>();
+  _selectedTabId = this.selectedTabId$.asObservable();
 
   constructor() { }
 

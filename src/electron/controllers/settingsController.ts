@@ -1,20 +1,24 @@
 import { app, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
+import { RandomizerForm } from '../../common/models/randomizerForm';
+
+let settings: RandomizerForm;
+const settingsFileRead$ = new BehaviorSubject<boolean>(false);
 const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-let settings: any;
 
 export function initialize() {
+  readFromSettingsFile();
+
   // Request from renderer to get settings file from main process
   ipcMain.on('getSettings', (event) => {
-    readFromSettingsFile(settingsJson => {
-      const fetchedSettings = {};
-      if (settingsJson) {
-        Object.assign(fetchedSettings, JSON.parse(settingsJson));
+    settingsFileRead$.asObservable().pipe(take(1)).subscribe(fileRead => {
+      if (fileRead) {
+        event.sender.send('getSettingsResponse', settings);
       }
-
-      event.sender.send('getSettingsResponse', fetchedSettings);
     });
   });
 
@@ -31,8 +35,12 @@ export function writeSettingsToFile() {
   }
 }
 
-function readFromSettingsFile(callback: (json: string) => void): void {
-  fs.readFile(settingsPath, 'utf8', (err, seedHistoryJson) => {
-    callback(seedHistoryJson);
+function readFromSettingsFile(): void {
+  fs.readFile(settingsPath, 'utf8', (err, settingsJson) => {
+    if (settingsJson) {
+      settings = JSON.parse(settingsJson);
+    }
+
+    settingsFileRead$.next(true);
   });
 }

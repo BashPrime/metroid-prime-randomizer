@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { combineLatest } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { filterProperties } from '../utilities';
 import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
@@ -10,6 +11,7 @@ import { PresetsService } from '../services/presets.service';
 import { PresetObject } from '../../../../common/models/presetObject';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
 import { GeneratorService } from '../services/generator.service';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-generate-game',
@@ -22,25 +24,46 @@ export class GenerateGameComponent implements OnInit {
   private presets: PresetObject = {};
   private userPresets: PresetObject;
   private form: FormGroup;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   // Constants
   private readonly CUSTOM_PRESET = 'Custom';
 
-  constructor(private generatorService: GeneratorService, private randomizerService: RandomizerService, private presetsService: PresetsService) { }
+  constructor(
+    private generatorService: GeneratorService,
+    private randomizerService: RandomizerService,
+    private presetsService: PresetsService,
+    private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.form = this.randomizerService.createForm();
     this.presetsService.getAllPresets();
+    this.settingsService.getSettings();
     this.onValueChanges();
 
     // Only subscribe when both presets propagate new values
-    combineLatest(this.presetsService.defaultPresets$, this.presetsService.userPresets$)
+    combineLatest(this.presetsService._defaultPresets, this.presetsService._userPresets)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(([defaultPresets, userPresets]) => {
         if (defaultPresets && userPresets) {
           this.userPresets = userPresets;
           this.buildPresets([defaultPresets, userPresets]);
         }
       });
+
+    // Subscribe to settings if any defined settings are retrieved from settings.json
+    this.settingsService._settings
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(settings => {
+        if (settings) {
+          this.applyFormChanges(settings);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   getForm(): FormGroup {
@@ -87,27 +110,33 @@ export class GenerateGameComponent implements OnInit {
 
   // Watch for changes on specific controls
   onValueChanges(): void {
-    this.form.get('preset').valueChanges.subscribe(value => {
-      if (!this.isCustomPreset()) {
-        this.applyPresetToForm(this.presets[value]);
-      }
-    })
+    this.form.valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(value => {
+        this.settingsService.applySettings(value);
+      });
+
+    this.form.get('preset').valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(value => {
+        if (!this.isCustomPreset()) {
+          this.applyFormChanges(this.presets[value], ['preset', 'generationCount']);
+        }
+      });
   }
 
-  applyPresetToForm(preset: RandomizerForm): void {
+  applyFormChanges(newValue: RandomizerForm, excludeControls: string[] = []): void {
     const fb = new FormBuilder();
-    const formValue = this.form.value;
 
-    // Apply general settings
-    this.form.patchValue({
-      romSettings: preset.romSettings,
-      rules: preset.rules
-    });
-
-    // Apply array controls
-    for (let control of Object.keys(preset)) {
-      if (Array.isArray(formValue[control])) {
-        this.form.setControl(control, fb.array(preset[control] || []));
+    for (let control in filterProperties(newValue, excludeControls)) {
+      // Make sure form has the control! (primarly for protected field)
+      if (this.form.get(control)) {
+        // Special handling for array controls
+        if (Array.isArray(newValue[control])) {
+          this.form.setControl(control, fb.array(newValue[control] || []));
+        } else {
+          this.form.get(control).patchValue(newValue[control]);
+        }
       }
     }
   }

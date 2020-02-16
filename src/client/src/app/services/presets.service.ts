@@ -10,8 +10,10 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
   providedIn: 'root'
 })
 export class PresetsService {
-  defaultPresets$ = new BehaviorSubject<PresetObject>(undefined);
-  userPresets$ = new BehaviorSubject<PresetObject>(undefined);
+  private defaultPresets$ = new BehaviorSubject<PresetObject>(undefined);
+  private userPresets$ = new BehaviorSubject<PresetObject>(undefined);
+  _defaultPresets = this.defaultPresets$.asObservable();
+  _userPresets = this.userPresets$.asObservable();
 
   constructor(private ngZone: NgZone, private electronService: ElectronService) {
     this.getAllPresets();
