@@ -5,7 +5,7 @@ import * as url from 'url';
 import * as Utilities from './utilities';
 import menuTemplate from './menu';
 import { defineControllers } from './controllers';
-import { writeSettingsFile } from './controllers/saveSettingsController';
+import { writeSettingsToFile } from './controllers/settingsController';
 import { writeSeedHistoryToFile } from './controllers/seedHistoryController';
 
 let win: Electron.BrowserWindow;
@@ -49,7 +49,7 @@ function createWindow() {
     // when you should delete the corresponding element.
 
     // Write settings file, seed history file if changes have been made.
-    writeSettingsFile();
+    writeSettingsToFile();
     writeSeedHistoryToFile();
 
     win = null;

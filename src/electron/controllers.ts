@@ -1,6 +1,6 @@
 import * as randomizerController from './controllers/randomizerController';
 import * as generateSeedController from './controllers/generateSeedController';
-import * as saveSettingsController from './controllers/saveSettingsController';
+import * as settingsController from './controllers/settingsController';
 import * as seedHistoryController from './controllers/seedHistoryController';
 import * as presetsController from './controllers/presetsController';
 
@@ -11,7 +11,7 @@ export function defineControllers() {
   return {
     randomizer: randomizerController.initialize(),
     generateSeed: generateSeedController.initialize(),
-    save_settings: saveSettingsController.initialize(),
+    settings: settingsController.initialize(),
     seedHistory: seedHistoryController.initialize(),
     presets: presetsController.initialize()
   };
