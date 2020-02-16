@@ -21,6 +21,7 @@ import { SettingsService } from '../services/settings.service';
 export class GenerateGameComponent implements OnInit {
   @ViewChild(SavePresetModalComponent, { static: false }) private savePresetModal: SavePresetModalComponent;
   @ViewChild(RemovePresetModalComponent, { static: false }) private removePresetModal: RemovePresetModalComponent;
+  private loaded: boolean = false;
   private presets: PresetObject = {};
   private userPresets: PresetObject;
   private form: FormGroup;
@@ -41,22 +42,20 @@ export class GenerateGameComponent implements OnInit {
     this.settingsService.getSettings();
     this.onValueChanges();
 
-    // Only subscribe when both presets propagate new values
-    combineLatest(this.presetsService._defaultPresets, this.presetsService._userPresets)
+    // Subscribe when all of these observables emit
+    combineLatest(this.presetsService._defaultPresets, this.presetsService._userPresets, this.settingsService._settings)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(([defaultPresets, userPresets]) => {
+      .subscribe(([defaultPresets, userPresets, settings]) => {
         if (defaultPresets && userPresets) {
           this.userPresets = userPresets;
           this.buildPresets([defaultPresets, userPresets]);
-        }
-      });
 
-    // Subscribe to settings if any defined settings are retrieved from settings.json
-    this.settingsService._settings
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(settings => {
-        if (settings) {
-          this.applyFormChanges(settings);
+          // Were defined settings retrieved from settings.json?
+          if (settings) {
+            this.applyFormChanges(settings);
+          }
+
+          this.loaded = true;
         }
       });
   }
@@ -64,6 +63,10 @@ export class GenerateGameComponent implements OnInit {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  isLoaded(): boolean {
+    return this.loaded;
   }
 
   getForm(): FormGroup {

@@ -35,11 +35,10 @@ html, body {
 .loading-indicator {
   position: relative;
   pointer-events: none;
+  width: 100%;
   &:after {
       @include loader;
-      position: absolute;
-      top: calc(50% - 2.5em);
-      left: calc(50% - 2.5em);
+      margin: 0 auto;
       width: 5rem;
       height: 5rem;
   }

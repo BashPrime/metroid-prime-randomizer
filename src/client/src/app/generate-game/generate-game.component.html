@@ -1,48 +1,54 @@
 <div class="app-wrapper-content">
   <section class="section randomizer-content">
-    <form [formGroup]="getForm()">
-      <div class="columns">
-        <div class="column is-one-half">
-          <label class="label is-small">Choose a Preset</label>
-          <div class="field has-addons">
-            <div class="control is-expanded">
-              <div class="select is-fullwidth is-small">
-                <select formControlName="preset">
-                  <option *ngFor="let preset of getPresetsDropdown()" [value]="preset">{{ preset }}</option>
-                </select>
+    <div *ngIf="isLoaded() then loaded; else loading"></div>
+    <ng-template #loaded>
+      <form [formGroup]="getForm()">
+        <div class="columns">
+          <div class="column is-one-half">
+            <label class="label is-small">Choose a Preset</label>
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <div class="select is-fullwidth is-small">
+                  <select formControlName="preset">
+                    <option *ngFor="let preset of getPresetsDropdown()" [value]="preset">{{ preset }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="buttons are-small">
+                <button class="button is-link" (click)="setCustomPreset()" *ngIf="!isCustomPreset()">Customize</button>
+                <button class="button is-success" (click)="openSavePresetModal(getUserPresets())"
+                  *ngIf="isCustomPreset()">Save</button>
+                <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())"
+                  *ngIf="isUserPreset()">Remove</button>
               </div>
             </div>
           </div>
-          <div class="field">
-            <div class="buttons are-small">
-              <button class="button is-link" (click)="setCustomPreset()" *ngIf="!isCustomPreset()">Customize</button>
-              <button class="button is-success" (click)="openSavePresetModal(getUserPresets())"
-                *ngIf="isCustomPreset()">Save</button>
-              <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())"
-                *ngIf="isUserPreset()">Remove</button>
-            </div>
-          </div>
-        </div>
-        <div class="column is-one-half">
-          <div class="field">
-            <label class="label is-small">Number of Seeds to Generate</label>
-            <div class="control">
-              <input class="input is-small" type="number" formControlName="generationCount">
-              <div *ngIf="form.get('generationCount').errors">
-                <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
-                <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
-                <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number
-                  between 1 and 99.</p>
+          <div class="column is-one-half">
+            <div class="field">
+              <label class="label is-small">Number of Seeds to Generate</label>
+              <div class="control">
+                <input class="input is-small" type="number" formControlName="generationCount">
+                <div *ngIf="form.get('generationCount').errors">
+                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
+                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
+                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number
+                    between 1 and 99.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()">
-      </app-customize-settings-container>
-      <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()">
-      </app-read-only-settings-container>
-    </form>
+        <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()">
+        </app-customize-settings-container>
+        <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()">
+        </app-read-only-settings-container>
+      </form>
+    </ng-template>
+    <ng-template #loading>
+      <div class="loading-indicator"></div>
+    </ng-template>
   </section>
 </div>
 <hr>
