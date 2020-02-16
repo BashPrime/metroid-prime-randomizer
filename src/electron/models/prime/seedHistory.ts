@@ -2,7 +2,6 @@ import * as uuid from 'uuid';
 
 import { GeneratedSeed } from '../../../common/models/generatedSeed';
 import { PrimeWorld } from './world';
-import * as Utilities from '../../utilities';
 
 interface SeedObject {
   seed: GeneratedSeed,
@@ -58,10 +57,10 @@ export class SeedHistory {
     return this.seedHistory[id];
   }
 
-    /**
-   * Generates a seed object using a given PrimeWorld, and returns its ID.
-   * @param world The world to be imported.
-   */
+  /**
+ * Generates a seed object using a given PrimeWorld, and returns its ID.
+ * @param world The world to be imported.
+ */
   addSeedFromWorld(world: PrimeWorld): string {
     let newId: string;
 
@@ -110,6 +109,17 @@ export class SeedHistory {
    */
   toJson(): string {
     return JSON.stringify(this.getPrunedSeedHistory(), null, '\t');
+  }
+
+  /**
+   * Returns an array of the generated seeds.
+   */
+  toGeneratedSeedArray(): GeneratedSeed[] {
+    return this.size()
+      ? Object.entries(this.seedHistory).map(([id, seedObject]) => {
+        return seedObject.seed;
+      })
+      : [];
   }
 
   /**

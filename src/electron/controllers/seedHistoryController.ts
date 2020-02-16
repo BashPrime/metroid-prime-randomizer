@@ -18,7 +18,7 @@ export function initialize() {
   ipcMain.on('getSeedHistory', (event) => {
     historyFileRead$.asObservable().pipe(take(1)).subscribe(fileRead => {
       if (fileRead) {
-        event.sender.send('getSeedHistoryResponse', seedHistory.getPrunedSeedHistory());
+        event.sender.send('getSeedHistoryResponse', seedHistory.toGeneratedSeedArray());
       }
     });
   });
