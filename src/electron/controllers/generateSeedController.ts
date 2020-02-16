@@ -9,7 +9,6 @@ import { allPresets } from './presetsController';
 
 export function initialize() {
   ipcMain.on('generateSeed', (event, form: RandomizerForm, spoiler: boolean) => {
-    console.log(allPresets);
     let args: PrimeRandomizerSettingsArgs;
     const preset = (form as any).preset;
     // If a preset was provided, don't use the form controls. Use the preset itself instead.
