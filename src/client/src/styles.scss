@@ -77,6 +77,11 @@ input[type=number] {
   margin-left: -1em;
 }
 
+.is-vertically-centered {
+  display: flex;
+  align-items: center;
+}
+
 // Toast notification overrides
 .toast-container .notification {
   position: relative;

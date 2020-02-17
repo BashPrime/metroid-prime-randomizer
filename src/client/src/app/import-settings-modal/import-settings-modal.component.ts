@@ -5,8 +5,7 @@ import { ModalComponent } from '../components/common/modal.component';
 import { GeneratorService } from '../services/generator.service';
 
 interface ImportForm {
-  seed: string;
-  settingsString: string;
+  permalink: string;
 }
 
 @Component({
@@ -36,16 +35,19 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
 
   onSubmit(formValue: ImportForm) {
     if (this.form.valid) {
-      this.generatorService.importSeed(formValue.seed, formValue.settingsString);
+      this.generatorService.importPermalink(formValue.permalink);
       this.setOpen(false);
     }
+  }
+
+  get permalink() {
+    return this.form.get('permalink');
   }
 
   private initForm(): void {
     const fb = new FormBuilder();
     this.form = fb.group({
-      seed: ['', [Validators.required]],
-      settingsString: ['', [Validators.required]]
+      permalink: ['', Validators.required]
     });
   }
 }

@@ -2,21 +2,18 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Import Seed</p>
+      <p class="modal-card-title">Import Permalink</p>
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
       <form [formGroup]="getForm()">
-        <label class="label">Seed</label>
+        <label class="label">Permalink</label>
         <div class="field">
           <div class="control">
-            <input class="input is-small" type="text" formControlName="seed">
-          </div>
-        </div>
-        <label class="label">Settings String</label>
-        <div class="field">
-          <div class="control">
-            <input class="input is-small" type="text" formControlName="settingsString">
+            <input class="input is-small" type="text" formControlName="permalink">
+            <div *ngIf="permalink.invalid && (permalink.dirty || permalink.touched)">
+              <p class="help is-danger" *ngIf="permalink.errors.required">This field is required.</p>
+            </div>
           </div>
         </div>
       </form>

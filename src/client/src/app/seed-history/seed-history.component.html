@@ -2,7 +2,7 @@
   <div *ngIf="isLoaded then loaded; else loading"></div>
   <ng-template #loaded>
     <p *ngIf="!seedHistory">No seeds were found.</p>
-    <div *ngFor="let seed of seedHistory | orderBy:seed.createdDate" class="seed">
+    <div *ngFor="let seed of seedHistory" class="seed">
       <a>
         <p>
           <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
