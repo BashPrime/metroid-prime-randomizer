@@ -26,6 +26,7 @@ import { ListSettingsComponent } from './settings/list-settings/list-settings.co
 import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
 import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
 import { GameDetailsComponent } from './game-details/game-details.component';
+import { GeneratingSeedModalComponent } from './generating-seed-modal/generating-seed-modal.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { GameDetailsComponent } from './game-details/game-details.component';
     CustomizeSettingsContainerComponent,
     ExcludeLocationsComponent,
     GameDetailsComponent,
+    GeneratingSeedModalComponent,
   ],
   imports: [
     BrowserModule,
