@@ -26,6 +26,9 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
 
   openModal(): void {
     this.initForm();
+    navigator.clipboard.readText().then(clipboardText => {
+      this.form.patchValue({ permalink: clipboardText });
+    });
     this.setOpen(true);
   }
 

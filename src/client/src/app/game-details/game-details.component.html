@@ -4,7 +4,7 @@
       <p class="title is-5">Permalink</p>
       <p class="subtitle is-6 is-vertically-centered">
         <span style="margin-right: 0.5rem;">{{ getPermalink() }}</span>
-        <button class="button is-info is-small">Copy</button>
+        <button ngxClipboard [cbContent]="getPermalink()" class="button is-info is-small">Copy</button>
       </p>
     </div>
     <div class="control">

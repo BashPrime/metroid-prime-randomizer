@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastrModule } from 'ngx-toastr';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -69,7 +70,8 @@ import { GeneratingSeedModalComponent } from './generating-seed-modal/generating
         warning: 'is-warning'
       },
       positionClass: 'toast-bottom-right'
-    })
+    }),
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
