@@ -1,19 +1,28 @@
-<section class="section">
-  <!-- <div class="field is-grouped">
-    <div class="control">
-      <p class="title is-5">Permalink</p>
-      <p class="subtitle is-6 is-vertically-centered">
-        <span style="margin-right: 0.5rem;">{{ getPermalink(getCurrentSeed()) }}</span>
-        <button ngxClipboard [cbContent]="getPermalink(getCurrentSeed())" class="button is-info is-small">Copy</button>
-      </p>
+<div class="app-wrapper-content">
+  <section class="section">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="box">
+          <div class="seed-details" *ngFor="let seed of getSeeds()">
+            <div class="field">
+              <p class="title is-6">Permalink</p>
+              <p class="subtitle is-6 is-vertically-centered">
+                <span style="margin-right: 0.5rem;">{{ getPermalink(seed) }}</span>
+                <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
+              </p>
+            </div>
+            <div class="field">
+              <p class="title is-6">Seed Hash</p>
+              <p class="subtitle is-6">
+                <span *ngFor="let hashEntry of seed.seedHash" class="hashEntry">{{ hashEntry }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <p>Form goes here</p>
+      </div>
     </div>
-    <div class="control">
-    </div>
-  </div>
-  <div class="field">
-    <p class="title is-5">Seed Hash</p>
-    <p class="subtitle is-6">
-      <span *ngFor="let hashEntry of getCurrentSeed().seedHash" class="hashEntry">{{ hashEntry }}</span>
-    </p>
-  </div> -->
-</section>
+  </section>
+</div>

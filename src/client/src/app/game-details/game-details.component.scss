@@ -1,7 +1,35 @@
+.seed-details {
+  padding: 1rem;
+  border-bottom: 1px solid #8c9b9d;
+}
+
+.seed-details:first-child {
+  padding-top: 0;
+}
+
+.seed-details:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 .hashEntry {
   margin-right: 0.5rem;
 }
 
 .hashEntry:last-child {
   margin-right: 0;
+}
+
+.box {
+  background-color: #101010;
+  border: 2px solid #404040;
+}
+
+// Dataview styling
+:host {
+  ::ng-deep .ui-dataview .ui-dataview-content {
+    background-color: #101010;
+    color: #efefef;
+    border-color: #404040;
+  }
 }
