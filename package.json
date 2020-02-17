@@ -74,7 +74,7 @@
     "bulmaswatch": "^0.7.5",
     "compare-versions": "^3.4.0",
     "napi-thread-safe-callback": "^0.0.1",
-    "ngx-clipboard": "^11.1.1",
+    "ngx-clipboard": "^12.3.1",
     "ngx-toastr": "^12.0.0",
     "node-addon-api": "1.5.0",
     "primeicons": "^2.0.0",
