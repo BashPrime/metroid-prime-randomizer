@@ -6,8 +6,8 @@
     </header>
     <section class="modal-card-body">
       <div class="content">
-        <p>Filling the world...</p>
-        <progress class="progress is-info"></progress>
+        <p>Generated {{ current }} / {{ total}} worlds.</p>
+        <progress class="progress is-link" [attr.value]="getProgressValue()" max="100"></progress>
       </div>
     </section>
   </div>

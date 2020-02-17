@@ -12,17 +12,17 @@ import * as Utilities from '../utilities';
   styleUrls: ['./game-details.component.scss']
 })
 export class GameDetailsComponent implements OnInit {
-  private seed: GeneratedSeed;
+  private seeds: GeneratedSeed[];
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private generatorService: GeneratorService) { }
 
   ngOnInit() {
     // Get generated seed from service
-    this.generatorService._generatedSeed
+    this.generatorService._generatedSeeds
     .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(seed => {
-      this.seed = seed;
+    .subscribe(seeds => {
+      this.seeds = seeds;
     });
   }
 
@@ -31,11 +31,11 @@ export class GameDetailsComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
 
-  getSeed(): GeneratedSeed {
-    return this.seed;
+  getSeeds(): GeneratedSeed[] {
+    return this.seeds;
   }
 
-  getPermalink(): string {
-    return Utilities.generatePermalink(this.seed.seed, this.seed.settingsString);
+  getPermalink(seed: GeneratedSeed): string {
+    return Utilities.generatePermalink(seed.seed, seed.settingsString);
   }
 }

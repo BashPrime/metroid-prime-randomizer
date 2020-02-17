@@ -1,4 +1,5 @@
 export interface RandomizerForm {
+  generationCount?: number;
   romSettings: {
     skipFrigate: boolean;
     skipHudPopups: boolean;

@@ -37,10 +37,10 @@ export class RandomizerComponent implements OnInit {
       });
 
     // Enable game details tab when a seed gets generated
-    this.generatorService._generatedSeed
+    this.generatorService._generatedSeeds
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(seed => {
-        if (seed) {
+      .subscribe(seeds => {
+        if (seeds) {
           this.setTabHidden(this.tabIds.gameDetails, false);
           this.setSelectedTabId(this.tabIds.gameDetails);
         }
