@@ -7,6 +7,7 @@
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/themes/nova-dark/theme.css';
 @import '~primeng/resources/primeng.min.css';
+@import '~ngx-toastr/toastr';
 
 html {
   overflow: auto;
@@ -74,4 +75,14 @@ input[type=number] {
 
 .is-checkradio[type=checkbox]+label:first-of-type {
   margin-left: -1em;
+}
+
+// Toast notification overrides
+.toast-container .notification {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 15px 15px 15px 50px;
+  width: 300px;
+  pointer-events: auto;
 }

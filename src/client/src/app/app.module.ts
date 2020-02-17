@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +57,17 @@ import { GameDetailsComponent } from './game-details/game-details.component';
     AppRoutingModule,
     FontAwesomeModule,
     PickListModule,
-    TooltipModule
+    TooltipModule,
+    ToastrModule.forRoot({
+      toastClass: 'notification',
+      iconClasses: {
+        error: 'is-danger',
+        info: 'is-info',
+        success: 'is-success',
+        warning: 'is-warning'
+      },
+      positionClass: 'toast-bottom-right'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

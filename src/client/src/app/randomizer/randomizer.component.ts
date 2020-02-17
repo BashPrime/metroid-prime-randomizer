@@ -42,6 +42,7 @@ export class RandomizerComponent implements OnInit {
       .subscribe(seed => {
         if (seed) {
           this.setTabHidden(this.tabIds.gameDetails, false);
+          this.setSelectedTabId(this.tabIds.gameDetails);
         }
       });
   }
