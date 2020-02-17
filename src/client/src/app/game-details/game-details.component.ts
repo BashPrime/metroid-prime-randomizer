@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { GeneratorService } from '../services/generator.service';
 import { GeneratedSeed } from '../../../../common/models/generatedSeed';
+import * as Utilities from '../utilities';
 
 @Component({
   selector: 'app-game-details',
@@ -25,7 +26,16 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   getSeed(): GeneratedSeed {
     return this.seed;
+  }
+
+  getPermalink(): string {
+    return Utilities.generatePermalink(this.seed.seed, this.seed.settingsString);
   }
 }
