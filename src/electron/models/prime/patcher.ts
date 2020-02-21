@@ -1,5 +1,4 @@
 import randomPrimePatcher from '../../randomprime';
-import { PrimeWorld } from './world';
 
 export interface PatcherConfiguration {
   input_iso: string;
@@ -18,11 +17,9 @@ export interface PatcherConfiguration {
   main_menu_message: string;
 }
 
-export function runPatcher(world: PrimeWorld): void {
-  const config = {};
-
+export function runRandomprimePatcher(config: PatcherConfiguration, callback: (message: string) => void): void {
   randomPrimePatcher.patchRandomizedGame(JSON.stringify(config), message => {
-    console.log(message);
+    callback(message);
   });
 }
 

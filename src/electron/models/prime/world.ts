@@ -18,7 +18,7 @@ import { magmoorCaverns } from './regions/magmoorCaverns';
 import { phendranaDrifts } from './regions/phendranaDrifts';
 import { phazonMines } from './regions/phazonMines';
 import { Elevator, elevatorTableBase, endgameTeleporters, StartingArea, getLandingSiteArea } from './entranceShuffle';
-import { ENTRANCE_SEPARATOR } from '../../constants';
+import { ENTRANCE_SEPARATOR } from '../../../common/constants';
 import { MersenneTwister } from '../../mersenneTwister';
 import * as Utilities from '../../utilities';
 import * as namesJson from '../../data/names.json';

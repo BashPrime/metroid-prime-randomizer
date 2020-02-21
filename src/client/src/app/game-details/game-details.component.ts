@@ -5,10 +5,12 @@ import { takeUntil } from 'rxjs/operators';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
 
+import * as Utilities from '../utilities';
 import { GeneratorService } from '../services/generator.service';
 import { GeneratedSeed } from '../../../../common/models/generatedSeed';
-import * as Utilities from '../utilities';
 import { ElectronService } from '../services/electron.service';
+import { PatcherService } from '../services/patcher.service';
+import { PatchForm } from '../../../../common/models/patchForm';
 
 @Component({
   selector: 'app-game-details',
@@ -20,13 +22,10 @@ export class GameDetailsComponent implements OnInit {
   private form: FormGroup;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  // Constants
-  readonly LIST_STYLE = { height: '100%' };
-
-
   constructor(
     private electronService: ElectronService,
     private generatorService: GeneratorService,
+    private patcherService: PatcherService,
     private clipboardService: ClipboardService,
     private toastrService: ToastrService) { }
 
@@ -80,7 +79,7 @@ export class GameDetailsComponent implements OnInit {
   selectBaseIso(): void {
     this.electronService.dialog.showOpenDialog({
       filters: [
-        { name: 'GC ISO Files', extensions: ['iso', 'gcm'] },
+        { name: 'GameCube ISO Files', extensions: ['iso', 'gcm'] },
         { name: 'All Files', extensions: ['*'] }
       ],
       properties: ['openFile']
@@ -113,5 +112,15 @@ export class GameDetailsComponent implements OnInit {
         this.form.controls.outputFolder.setValue(result.filePaths[0]);
       }
     });
+  }
+
+  saveIso(seed: GeneratedSeed, form: PatchForm): void {
+    if (this.form.valid) {
+      this.patcherService.patchIso(seed, form);
+    }
+  }
+
+  saveSpoiler(seed: GeneratedSeed): void {
+
   }
 }

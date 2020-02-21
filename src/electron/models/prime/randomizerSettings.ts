@@ -9,8 +9,7 @@ import { SettingsFlagsArgs } from '../settingsFlags';
 import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
 import { startingAreas } from './entranceShuffle';
-
-const SETTINGS_STRING_DELIMITER = '-';
+import { PERMALINK_SEPARATOR, SETTINGS_STRING_DELIMITER } from '../../../common/constants';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -70,6 +69,9 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     return Utilities.parseSafeIntegerFromSha256(sha256Hash);
   }
 
+  /**
+   * Generates base36 representation of the settings.
+   */
   toSettingsString(): string {
     let bits = '';
     const sharedSettings = settings.filter(setting => setting.shared);
@@ -98,6 +100,17 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       + this.excludeLocations.toSettingsString()
       + SETTINGS_STRING_DELIMITER
       + this.tricks.toSettingsString();
+  }
+
+  /**
+   * Generates base64 permalink of the seed and settings string. Returns null if the seed is not defined.
+   */
+  toPermalink(): string {
+    if (!this.seed) {
+      return null;
+    }
+
+    return Buffer.from(this.seed + PERMALINK_SEPARATOR + this.toSettingsString()).toString('base64');
   }
 
   /**

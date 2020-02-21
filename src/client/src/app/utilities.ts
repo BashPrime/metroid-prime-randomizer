@@ -1,4 +1,4 @@
-const PERMALINK_SEPARATOR = ' ';
+import { PERMALINK_SEPARATOR } from '../../../common/constants';
 
 export function filterProperties(obj: object, remove: string[]): object {
   const raw = JSON.parse(JSON.stringify(obj));

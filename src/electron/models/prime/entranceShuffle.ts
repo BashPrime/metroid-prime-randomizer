@@ -1,7 +1,7 @@
 import { PrimeWorld } from './world';
 import { getRandomInt } from '../../utilities';
 import { MersenneTwister } from '../../mersenneTwister';
-import { STARTING_AREA_LANDING_SITE, STARTING_AREA_RANDOM } from '../../constants';
+import { STARTING_AREA_LANDING_SITE, STARTING_AREA_RANDOM } from '../../../common/constants';
 
 export interface Elevator {
   id: number;
