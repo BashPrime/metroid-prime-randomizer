@@ -3,25 +3,90 @@
     <div class="columns">
       <div class="column is-half">
         <div class="box">
-          <div class="seed-details" *ngFor="let seed of getSeeds()">
+          <div class="seed-details" *ngFor="let seed of getSeeds(); let i = index">
+            <p class="title is-5">Seed #{{ i + 1 }}</p>
             <div class="field">
-              <p class="title is-6">Permalink</p>
-              <p class="subtitle is-6 is-vertically-centered">
-                <span style="margin-right: 0.5rem;">{{ getPermalink(seed) }}</span>
-                <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
-              </p>
+              <label class="label">Permalink</label>
+              <div class="control">
+                <!-- <p>{{ getPermalink(seed) }}</p>
+                <button class="button is-info is-small"
+                (click)="copyPermalink(getPermalink(seed))">Copy</button> -->
+
+                <div class="level">
+                  <div class="level-left">
+                    <p class="level-item">{{ getPermalink(seed) }}</p>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="field">
-              <p class="title is-6">Seed Hash</p>
-              <p class="subtitle is-6">
-                <span *ngFor="let hashEntry of seed.seedHash" class="hashEntry">{{ hashEntry }}</span>
-              </p>
+              <label class="label">Seed Hash</label>
+              <div class="control">
+                <div class="hash-container">
+                  <p class="hash-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <div class="buttons are-small" *ngIf="hasMultipleSeeds()">
+                  <button class="button is-success">Save ISO</button>
+                  <button class="button is-link">Save Spoiler</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="column is-half">
-        <p>Form goes here</p>
+        <form [formGroup]="getForm()">
+          <label class="label is-required">Base ISO</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="baseIso">
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectBaseIso()">
+                Choose File
+              </button>
+            </div>
+          </div>
+          <label class="label">Output Folder</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="outputFolder">
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectOutputFolder()">
+                Choose Folder
+              </button>
+            </div>
+          </div>
+          <label class="label">Trilogy ISO (for Flaahgra Music Patch)</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="trilogyIso">
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectTrilogyIso()">
+                Choose File
+              </button>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <div class="buttons">
+                <button class="button is-success">Save ISO{{ hasMultipleSeeds() ? 's' : null }}</button>
+                <button class="button is-link">Save Spoiler{{ hasMultipleSeeds() ? 's' : null }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </section>

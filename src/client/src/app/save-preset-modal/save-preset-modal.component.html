@@ -8,7 +8,7 @@
     <section class="modal-card-body has-text-left">
       <form [formGroup]="getForm()">
         <div class="field">
-          <label class="label">Preset Name</label>
+          <label class="label is-required">Preset Name</label>
           <div class="control">
             <input class="input" type="text" formControlName="preset">
             <div *ngIf="preset.invalid && (preset.dirty || preset.touched)">

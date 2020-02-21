@@ -33,3 +33,23 @@
     border-color: #404040;
   }
 }
+
+.hash-container {
+  display: flex;
+
+  .hash-item {
+    flex: 1;
+  }
+}
+
+// Fix level-let so permalink doesn't overflow container
+.level {
+  .level-left {
+    max-width: 80%;
+
+    .level-item {
+      max-width: 100%;
+      word-break: break-word;
+    }
+  }
+}

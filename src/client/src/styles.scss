@@ -91,3 +91,12 @@ input[type=number] {
   width: 300px;
   pointer-events: auto;
 }
+
+.toast-container {
+  bottom: 45px;
+}
+
+.label.is-required:after {
+  content: ' *';
+  color: red;
+}

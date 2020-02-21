@@ -27,7 +27,7 @@ import { ListSettingsComponent } from './settings/list-settings/list-settings.co
 import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
 import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
 import { GameDetailsComponent } from './game-details/game-details.component';
-import { GeneratingSeedModalComponent } from './generating-seed-modal/generating-seed-modal.component';
+import { ProgressModalComponent } from './progress-modal/progress-modal.component';
 
 
 @NgModule({
@@ -50,7 +50,7 @@ import { GeneratingSeedModalComponent } from './generating-seed-modal/generating
     CustomizeSettingsContainerComponent,
     ExcludeLocationsComponent,
     GameDetailsComponent,
-    GeneratingSeedModalComponent,
+    ProgressModalComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +69,8 @@ import { GeneratingSeedModalComponent } from './generating-seed-modal/generating
         success: 'is-success',
         warning: 'is-warning'
       },
-      positionClass: 'toast-bottom-right'
+      positionClass: 'toast-bottom-right',
+      closeButton: true
     }),
     ClipboardModule
   ],

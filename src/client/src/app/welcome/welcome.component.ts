@@ -10,7 +10,7 @@ import { ImportSettingsModalComponent } from '../import-settings-modal/import-se
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  @ViewChild(ImportSettingsModalComponent, {static: false}) private modal: ImportSettingsModalComponent;
+  @ViewChild(ImportSettingsModalComponent, {static: false}) private importPermalinkModal: ImportSettingsModalComponent;
 
   // Constants
   readonly faqLink = 'https://randomizer.metroidpime.run/randomizer/prime/article/faq';
@@ -29,7 +29,7 @@ export class WelcomeComponent implements OnInit {
     this.tabService.selectTab(this.generateGameTab);
   }
 
-  openImportModal(): void {
-    this.modal.openModal();
+  openImportPermalinkModal(): void {
+    this.importPermalinkModal.openModal();
   }
 }
