@@ -111,7 +111,7 @@ export class GenerateGameComponent implements OnInit {
     return !(this.isProtectedPreset() || this.isCustomPreset());
   }
 
-  // Watch for changes on specific controls
+  // Watch for changes on the form, specific controls
   onValueChanges(): void {
     this.form.valueChanges
       .pipe(takeUntil(this.ngUnsubscribe))

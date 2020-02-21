@@ -11,6 +11,7 @@ import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 import { ElectronService } from '../services/electron.service';
 import { PatcherService } from '../services/patcher.service';
 import { PatchForm } from '../../../../common/models/patchForm';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-game-details',
@@ -24,6 +25,7 @@ export class GameDetailsComponent implements OnInit {
 
   constructor(
     private electronService: ElectronService,
+    private settingsService: SettingsService,
     private generatorService: GeneratorService,
     private patcherService: PatcherService,
     private clipboardService: ClipboardService,
@@ -31,13 +33,23 @@ export class GameDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.settingsService.getPatchSettings();
 
     // Get generated seed from service
     this.generatorService._generatedSeeds
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(seeds => {
-        this.seeds = seeds;
+      .subscribe(seeds => this.seeds = seeds);
+
+    // Get saved settings if they exist
+    this.settingsService._patchSettings
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(settings => {
+        if (settings) {
+          this.form.patchValue(settings);
+        }
       });
+
+    this.onValueChanges();
   }
 
   ngOnDestroy() {
@@ -122,5 +134,13 @@ export class GameDetailsComponent implements OnInit {
 
   saveSpoiler(seed: GeneratedSeed): void {
 
+  }
+
+  onValueChanges(): void {
+    this.form.valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(value => {
+        this.settingsService.applyPatchSettings(value);
+      })
   }
 }
