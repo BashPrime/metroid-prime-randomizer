@@ -42,7 +42,8 @@ export class GeneratorService {
           // Update progress modal
           const currentProgressBars = this.progressService.progressBars$.getValue();
           Object.assign(currentProgressBars[0], {
-            value: currentGeneration.seeds.length
+            value: currentGeneration.seeds.length,
+            label: (currentGeneration.seeds.length + 1) + ' / ' + currentGeneration.total + ':'
           });
           this.progressService.setMessage('Filling the world...');
           this.progressService.setProgressBars(currentProgressBars);
@@ -89,7 +90,7 @@ export class GeneratorService {
         {
           total: generationCount,
           value: null,
-          label: 'Total:'
+          label: '1 / ' + generationCount + ':'
         }
       ]);
 
