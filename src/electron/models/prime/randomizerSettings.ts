@@ -274,6 +274,25 @@ export const settings = [
       })
     ],
     default: 20
+  }),
+  new SelectOption({
+    name: 'outputType',
+    shared: false,
+    choices: [
+      {
+        name: 'Plain ISO (.iso)',
+        value: 'iso'
+      },
+      {
+        name: 'Compressed ISO (.ciso)',
+        value: 'ciso'
+      },
+      {
+        name: 'Gamecube Zip (.gcz)',
+        value: 'gcz'
+      }
+    ],
+    default: 'iso'
   })
 ];
 

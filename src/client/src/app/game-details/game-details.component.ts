@@ -12,24 +12,34 @@ import { ElectronService } from '../services/electron.service';
 import { PatcherService } from '../services/patcher.service';
 import { PatchForm } from '../../../../common/models/patchForm';
 import { SettingsService } from '../services/settings.service';
+import { SettingsSection } from '../settings/settings-section';
+import { RandomizerService } from '../services/randomizer.service';
 
 @Component({
   selector: 'app-game-details',
   templateUrl: './game-details.component.html',
   styleUrls: ['./game-details.component.scss']
 })
-export class GameDetailsComponent implements OnInit {
+export class GameDetailsComponent extends SettingsSection implements OnInit {
   private seeds: GeneratedSeed[];
   private form: FormGroup;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  // Constants
+  readonly SETTINGS = this.randomizerService.SETTINGS;
+  readonly DETAILS = this.randomizerService.DETAILS;
+
   constructor(
     private electronService: ElectronService,
+    private randomizerService: RandomizerService,
     private settingsService: SettingsService,
     private generatorService: GeneratorService,
     private patcherService: PatcherService,
     private clipboardService: ClipboardService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.initForm();

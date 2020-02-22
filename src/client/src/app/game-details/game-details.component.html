@@ -57,10 +57,10 @@
             <label class="label">Output Type</label>
             <div class="control">
               <div class="select is-small">
-                <select>
-                  <option>.iso</option>
-                  <option>.ciso</option>
-                  <option>.gcz</option>
+                <select formControlName="outputType">
+                  <option *ngFor="let choice of getChoices('outputType')" [ngValue]="choice.value">
+                    {{ choice.name }}
+                  </option>
                 </select>
               </div>
             </div>
