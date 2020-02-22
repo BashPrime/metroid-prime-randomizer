@@ -45,16 +45,17 @@ export class PatcherService {
 
       // Set progress bar modal
       this.progressService.setTitle('Patching ' + seeds.length + ' Seeds');
+      this.progressService.setMessage('Starting patcher.');
       this.progressService.setProgressBars([
         {
           total: 100,
-          current: 0,
-          text: null
+          value: null,
+          label: '1 / ' + seeds.length + ':'
         },
         {
           total: seeds.length * 100,
-          current: 0,
-          text: 'Total'
+          value: null,
+          label: 'Total:'
         }
       ]);
 
@@ -71,10 +72,10 @@ export class PatcherService {
 
     if (message.percent) {
       Object.assign(currentProgressBars[0], {
-        current: message.percent
+        value: message.percent
       });
       Object.assign(currentProgressBars[1], {
-        current: (patchState.patchedSeeds.length * 100) + message.percent,
+        value: (patchState.patchedSeeds.length * 100) + message.percent,
       });
     }
 
@@ -90,9 +91,7 @@ export class PatcherService {
         break;
       }
       default: {
-        Object.assign(currentProgressBars[0], {
-          text: message.msg
-        });
+        this.progressService.setMessage(message.msg);
       }
     }
 
@@ -107,6 +106,15 @@ export class PatcherService {
 
     if (patchState.patchedSeeds.length < patchState.seeds.length) {
       // We're not done patching seeds. Update the patch state and continue patching
+
+      // Update progress bar label
+      const currentProgressBars = this.progressService.progressBars$.getValue();
+      Object.assign(currentProgressBars[0], {
+        label: (patchState.patchedSeeds.length + 1) + ' / ' + patchState.seeds.length + ':',
+        value: 0
+      });
+      this.progressService.setProgressBars(currentProgressBars);
+
       patchState.currentSeed = patchState.seeds[patchState.patchedSeeds.length];
       this.electronService.ipcRenderer.send('patchIso', patchState.currentSeed, patchState.form);
     } else {

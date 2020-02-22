@@ -6,11 +6,6 @@ import { ModalComponent } from '../components/common/modal.component';
 import { ProgressBar } from '../../../../common/models/progressBar';
 import { ProgressService } from '../services/progress.service';
 
-export interface ModalProgressBars {
-  primary: ProgressBar;
-  secondary: ProgressBar;
-}
-
 @Component({
   selector: 'app-progress-modal',
   templateUrl: './progress-modal.component.html',
@@ -20,6 +15,7 @@ export class ProgressModalComponent extends ModalComponent implements OnInit {
   OBJECT_KEYS = Object.keys;
   private progressBars: ProgressBar[];
   private title: string;
+  private message: string;
   private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private progressService: ProgressService) {
@@ -38,6 +34,10 @@ export class ProgressModalComponent extends ModalComponent implements OnInit {
     this.progressService._title
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(title => this.setTitle(title));
+
+      this.progressService._message
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(message => this.setMessage(message));
   }
 
   ngOnDestroy() {
@@ -59,5 +59,13 @@ export class ProgressModalComponent extends ModalComponent implements OnInit {
 
   setTitle(title: string): void {
     this.title = title;
+  }
+
+  getMessage(): string {
+    return this.message;
+  }
+
+  setMessage(message: string): void {
+    this.message = message;
   }
 }

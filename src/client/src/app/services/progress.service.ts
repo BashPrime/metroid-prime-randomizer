@@ -10,9 +10,11 @@ export class ProgressService {
   progressBars$ = new BehaviorSubject<ProgressBar[]>(undefined);
   open$ = new BehaviorSubject<boolean>(false);
   title$ = new BehaviorSubject<string>(undefined);
+  message$ = new BehaviorSubject<string>(undefined);
   _progressBars = this.progressBars$.asObservable();
   _open = this.open$.asObservable();
   _title = this.title$.asObservable();
+  _message = this.message$.asObservable();
 
   constructor() { }
 
@@ -26,5 +28,9 @@ export class ProgressService {
 
   setTitle(title: string): void {
     this.title$.next(title);
+  }
+
+  setMessage(message: string): void {
+    this.message$.next(message);
   }
 }

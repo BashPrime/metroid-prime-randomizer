@@ -1,5 +1,5 @@
 export interface ProgressBar {
   total: number;
-  current: number;
-  text: string;
+  value: number;
+  label: string;
 }
