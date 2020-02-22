@@ -13,6 +13,7 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
   @Output() onSave: EventEmitter<string> = new EventEmitter<string>();
   private presets: PresetObject = {};
   private form: FormGroup;
+  private submitted: boolean = false;
 
   constructor() {
     super();
@@ -24,6 +25,7 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
 
   setPresetsObjectAndOpen(presets: PresetObject) {
     this.presets = presets;
+    this.submitted = false;
     this.initializeForm();
     this.setOpen(true);
   }
@@ -36,7 +38,13 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
     return this.presets;
   }
 
+  isSubmitted(): boolean {
+    return this.submitted;
+  }
+
   onSavePreset(formValue: SavePresetForm): void {
+    this.submitted = true;
+
     if (this.form.valid) {
       this.onSave.emit(formValue.preset);
       this.setOpen(false);

@@ -35,7 +35,7 @@ export function initialize() {
       const newSeedId = generateSeed(settings);
 
       // Send client-friendly seed information back to the UI
-      event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
+      event.sender.send('importSeedResponse', seedHistory.getSeedObject(newSeedId).seed, settings.spoiler);
     } catch (err) {
       event.sender.send('generateSeedError', err);
     }

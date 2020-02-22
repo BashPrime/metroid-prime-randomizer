@@ -23,6 +23,7 @@ import { RandomizerService } from '../services/randomizer.service';
 export class GameDetailsComponent extends SettingsSection implements OnInit {
   private seeds: GeneratedSeed[];
   private form: FormGroup;
+  private submitted: boolean = false;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
   // Constants
@@ -97,6 +98,10 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     return this.generatorService._spoiler;
   }
 
+  isSubmitted(): boolean {
+    return this.submitted;
+  }
+
   copyPermalink(permalink: string): void {
     this.clipboardService.copy(permalink);
     this.toastrService.info('Permalink copied.');
@@ -141,13 +146,15 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
   }
 
   saveIsos(form: PatchForm): void {
+    this.submitted = true;
+
     if (this.form.valid) {
       this.patcherService.patchIsos(this.seeds, form);
     }
   }
 
-  saveSpoiler(seed: GeneratedSeed): void {
-
+  saveSpoilers(form: PatchForm): void {
+    this.patcherService.saveSpoilers(this.seeds, form);
   }
 
   onValueChanges(): void {

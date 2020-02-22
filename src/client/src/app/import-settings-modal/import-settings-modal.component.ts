@@ -15,6 +15,7 @@ interface ImportForm {
 })
 export class ImportSettingsModalComponent extends ModalComponent implements OnInit {
   private form: FormGroup;
+  private submitted: boolean = false;
 
   constructor(private generatorService: GeneratorService) {
     super();
@@ -25,6 +26,7 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
   }
 
   openModal(): void {
+    this.submitted = false;
     this.initForm();
     navigator.clipboard.readText().then(clipboardText => {
       this.form.patchValue({ permalink: clipboardText });
@@ -36,7 +38,13 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
     return this.form;
   }
 
+  isSubmitted(): boolean {
+    return this.submitted;
+  }
+
   onSubmit(formValue: ImportForm) {
+    this.submitted = true;
+
     if (this.form.valid) {
       this.generatorService.importPermalink(formValue.permalink);
       this.setOpen(false);

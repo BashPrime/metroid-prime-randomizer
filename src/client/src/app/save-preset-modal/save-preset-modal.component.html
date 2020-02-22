@@ -11,7 +11,7 @@
           <label class="label is-required">Preset Name</label>
           <div class="control">
             <input class="input" type="text" formControlName="preset">
-            <div *ngIf="preset.invalid && (preset.dirty || preset.touched)">
+            <div *ngIf="isSubmitted() && preset.errors">
               <p class="help is-danger" *ngIf="preset.errors.required">You must enter a preset name.</p>
             </div>
           </div>

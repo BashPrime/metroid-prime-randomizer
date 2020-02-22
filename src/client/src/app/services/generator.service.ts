@@ -45,7 +45,7 @@ export class GeneratorService {
             value: currentGeneration.seeds.length,
             label: (currentGeneration.seeds.length + 1) + ' / ' + currentGeneration.total + ':'
           });
-          this.progressService.setMessage('Filling the world...');
+          this.progressService.setMessage('Generating world...');
           this.progressService.setProgressBars(currentProgressBars);
 
           this.currentGeneration$.next(currentGeneration);
@@ -56,7 +56,7 @@ export class GeneratorService {
           this.progressService.setOpen(false);
           this.generatedSeeds$.next(currentGeneration.seeds);
           this.currentGeneration$.next(undefined);
-          this.toastrService.success(currentGeneration.total + ' ' + seedOrSeeds + ' successfully generated.');
+          this.toastrService.success('Generated ' + currentGeneration.total + ' ' + seedOrSeeds + '.');
         }
       });
     });
@@ -65,6 +65,14 @@ export class GeneratorService {
       this.ngZone.run(() => {
         this.currentGeneration$.next(undefined);
         this.toastrService.error('The seed generation process ran into an error.');
+      });
+    });
+
+    this.electronService.ipcRenderer.on('importSeedResponse', (event, generatedSeed: GeneratedSeed, spoiler: boolean) => {
+      this.ngZone.run(() => {
+        this.spoiler$.next(spoiler);
+        this.generatedSeeds$.next([generatedSeed]);
+        this.toastrService.success('Imported the permalink successfully.');
       });
     });
   }
@@ -84,7 +92,7 @@ export class GeneratorService {
         spoiler: spoiler
       });
 
-      this.progressService.setTitle('Generating ' + generationCount + ' Seeds');
+      this.progressService.setTitle('Generating Seed');
       this.progressService.setMessage('Starting generator.');
       this.progressService.setProgressBars([
         {
@@ -109,15 +117,10 @@ export class GeneratorService {
       try {
         decodedItems = Utilities.parsePermalink(permalink);
       } catch (err) {
-        this.toastrService.error(err);
+        this.toastrService.error(err.message);
       }
 
       if (decodedItems) {
-        this.currentGeneration$.next({
-          total: 1,
-          seeds: []
-        });
-
         this.electronService.ipcRenderer.send('importSeed', decodedItems.seed, decodedItems.settingsString);
       }
     }

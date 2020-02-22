@@ -8,6 +8,7 @@ import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings } from '../models/prime/randomizerSettings';
 import { PrimeWorld } from '../models/prime/world';
 import { PatchForm } from '../../common/models/patchForm';
+import { PatcherMessage } from '../../common/models/patcherMessage';
 import { version } from '../../../package.json';
 
 export const defaultOutputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer', 'Output');
@@ -21,8 +22,8 @@ export function initialize() {
   });
 }
 
-function patchIso(seed: GeneratedSeed, form: PatchForm, callback: (message: string) => void): void {
-  const seedObject = seedHistory.getSeedObject(seed.id);
+export function getWorldFromSeedHistory(id: string): PrimeWorld {
+  const seedObject = seedHistory.getSeedObject(id);
 
   if (!seedObject) {
     throw new Error('Cannot find seed object in the seed history.');
@@ -36,19 +37,32 @@ function patchIso(seed: GeneratedSeed, form: PatchForm, callback: (message: stri
     seedObject.world = generateWorld(settings);
   }
 
-  runRandomprimePatcher(getPatcherConfig(seedObject.world, form), (message: string) => {
+  return seedObject.world;
+}
+
+export function getRandomizerFileNameNoExtension(world: PrimeWorld): string {
+  return 'Prime Randomizer - ' + world.getLayoutHash().toString().replace(/,+/g, ' ');
+}
+
+export function getOutputFolder(form: PatchForm) {
+  return form.outputFolder ? form.outputFolder : defaultOutputFolder;
+}
+
+function patchIso(seed: GeneratedSeed, form: PatchForm, callback: (message: string) => void): void {
+  const world = getWorldFromSeedHistory(seed.id);
+
+  runRandomprimePatcher(getPatcherConfig(world, form), (message: string) => {
     callback(message);
   });
 }
 
 function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfiguration {
   const settings = world.getSettings();
-  const outputFolder = form.outputFolder ? form.outputFolder : defaultOutputFolder;
-  const outputIso = 'Prime Randomizer - ' + world.getLayoutHash().toString().replace(/,+/g, ' ') + '.' + form.outputType;
+  const outputIso = getRandomizerFileNameNoExtension(world) + '.' + form.outputType;
 
   return {
     input_iso: form.baseIso,
-    output_iso: path.join(outputFolder, outputIso),
+    output_iso: path.join(getOutputFolder(form), outputIso),
     layout_string: world.getRandomprimePatcherLayoutString(),
     iso_format: form.outputType,
     skip_frigate: settings.skipFrigate,

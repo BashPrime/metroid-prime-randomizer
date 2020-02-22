@@ -10,7 +10,7 @@
       </div>
       <div class="field" *ngFor="let bar of getProgressBars()">
         <p>{{ bar.label }}</p>
-        <progress class="progress is-link" [attr.value]="bar.value" [attr.max]="bar.total"></progress>
+        <progress class="progress" [ngClass]="bar.class ? bar.class : 'is-link'" [attr.value]="bar.value" [attr.max]="bar.total"></progress>
       </div>
     </section>
   </div>

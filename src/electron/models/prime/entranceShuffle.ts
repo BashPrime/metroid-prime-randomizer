@@ -153,7 +153,18 @@ function shuffleElevatorsTwoWay(rng: MersenneTwister): Elevator[] {
     elevatorsByRegion[targetElevator.region].splice(elevatorsByRegion[targetElevator.region].findIndex(elevator => elevator.id === targetElevator.id), 1);
   }
 
-  return shuffledElevators;
+  // Sort elevators back into base table order (mainly for spoiler output)
+  const baseElevatorIds = elevatorTableBase.map(elevator => elevator.id);
+  const sortedShuffledElevators = shuffledElevators.sort((a, b) => {
+    const indexA = baseElevatorIds.indexOf(a.id);
+    const indexB = baseElevatorIds.indexOf(b.id);
+
+    if (indexA < indexB) return -1;
+    else if (indexA > indexB) return 1;
+    return 0;
+  });
+
+  return sortedShuffledElevators;
 }
 
 export function getElevatorsMap(elevators: Elevator[]): { [key: string]: string } {
@@ -180,6 +191,7 @@ function getElevatorsByRegion(elevators: Elevator[]): ElevatorRegions {
     [Region.MINES]: []
   };
 
+  // Iterate by base table order
   for (const elevator of elevators) {
     regions[elevator.region].push(elevator);
   }
