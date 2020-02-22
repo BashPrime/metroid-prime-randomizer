@@ -3,6 +3,14 @@ import { elevatorTableBase, getElevatorsMap } from './entranceShuffle';
 import { version } from '../../../../package.json';
 import { primeLocations } from './locations';
 
+interface PrimeLocations {
+  ['Tallon Overworld']: { [key: string]: string };
+  ['Chozo Ruins']: { [key: string]: string };
+  ['Magmoor Caverns']: { [key: string]: string };
+  ['Phendrana Drifts']: { [key: string]: string };
+  ['Phazon Mines']: { [key: string]: string };
+}
+
 export class Spoiler {
   ['Info']: {
     ['Version']: string;
@@ -67,11 +75,3 @@ export class Spoiler {
     return spoiler;
   }
 }
-
-type PrimeLocations = {
-  ['Tallon Overworld']: { [key: string]: string },
-  ['Chozo Ruins']: { [key: string]: string },
-  ['Magmoor Caverns']: { [key: string]: string },
-  ['Phendrana Drifts']: { [key: string]: string },
-  ['Phazon Mines']: { [key: string]: string }
-};
