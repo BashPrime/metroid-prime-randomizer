@@ -1,6 +1,8 @@
+@import '~bulma/sass/utilities/mixins';
+
 .seed-details {
   padding: 1rem;
-  border-bottom: 1px solid #8c9b9d;
+  border-bottom: 1px solid #282f2f;
 }
 
 .seed-details:first-child {
@@ -12,46 +14,16 @@
   padding-bottom: 0;
 }
 
-.hashEntry {
-  margin-right: 0.5rem;
-}
-
-.hashEntry:last-child {
-  margin-right: 0;
-}
-
 .box {
   background-color: #101010;
   border: 2px solid #404040;
 }
 
-// Dataview styling
-:host {
-  ::ng-deep .ui-dataview .ui-dataview-content {
-    background-color: #101010;
-    color: #efefef;
-    border-color: #404040;
-  }
-}
+// Don't let permalink overflow container on size >= tablet
+.is-permalink {
+  word-break: break-word;
 
-.hash-container {
-  display: flex;
-
-  .hash-item {
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-// Fix level-let so permalink doesn't overflow container
-.level {
-  .level-left {
+  @include from ($tablet) {
     max-width: 80%;
-
-    .level-item {
-      max-width: 100%;
-      word-break: break-word;
-    }
   }
 }

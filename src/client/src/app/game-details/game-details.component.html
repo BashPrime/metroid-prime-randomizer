@@ -4,37 +4,16 @@
       <div class="column is-half">
         <div class="box">
           <div class="seed-details" *ngFor="let seed of getSeeds(); let i = index">
-            <p class="title is-4">Seed #{{ i + 1 }}</p>
-            <div class="field">
-              <label class="label">Permalink</label>
-              <div class="control">
-                <div class="level">
-                  <div class="level-left">
-                    <p class="level-item">{{ getPermalink(seed) }}</p>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
-                    </div>
-                  </div>
-                </div>
+            <p class="heading">Permalink</p>
+            <div class="level">
+              <p class="level-item is-permalink">{{ getPermalink(seed) }}</p>
+              <div class="level-item">
+                <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
               </div>
             </div>
-            <div class="field">
-              <label class="label">Seed Hash</label>
-              <div class="control">
-                <div class="level">
-                  <p class="level-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <div class="buttons are-small">
-                  <button class="button is-success" (click)="saveIso(seed, getForm().value)">Save ISO</button>
-                  <button class="button is-link">Save Spoiler</button>
-                </div>
-              </div>
+            <p class="heading">Seed Hash</p>
+            <div class="level">
+              <p class="level-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
             </div>
           </div>
         </div>
@@ -74,7 +53,20 @@
               </button>
             </div>
           </div>
-          <div class="field" *ngIf="hasMultipleSeeds()">
+          <div class="field">
+            <label class="label">Output Type</label>
+            <div class="control">
+              <div class="select is-small">
+                <select>
+                  <option>.iso</option>
+                  <option>.ciso</option>
+                  <option>.gcz</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="field">
             <div class="control">
               <div class="buttons">
                 <button class="button is-success">Save ISO{{ hasMultipleSeeds() ? 's' : null }}</button>
