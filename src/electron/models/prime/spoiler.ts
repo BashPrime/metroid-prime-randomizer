@@ -8,6 +8,7 @@ export class Spoiler {
     ['Version']: string;
     ['Seed']: string;
     ['Settings String']: string;
+    ['Permalink']: string;
     ['Patcher Layout String']: string;
     ['Seed Hash']: string[];
   };
@@ -26,8 +27,9 @@ export class Spoiler {
       ['Version']: version,
       ['Seed']: world.getSettings().seed,
       ['Settings String']: world.getSettings().toSettingsString(),
+      ['Permalink']: world.getSettings().toPermalink(),
       ['Patcher Layout String']: world.getRandomprimePatcherLayoutString(),
-      ['Seed Hash']: []
+      ['Seed Hash']: world.getLayoutHash()
     };
 
     // Set settings
