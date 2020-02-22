@@ -40,13 +40,12 @@ export class GeneratorService {
           // We're not done generating seeds. Update the generation state and generate another seed
 
           // Update progress modal
-          this.progressService.setProgressBars([
-            {
-              total: currentGeneration.total,
-              current: currentGeneration.seeds.length,
-              text: 'Generated ' + currentGeneration.seeds.length + ' / ' + currentGeneration.total + ' worlds.'
-            }
-          ]);
+          const currentProgressBars = this.progressService.progressBars$.getValue();
+          Object.assign(currentProgressBars[0], {
+            value: currentGeneration.seeds.length
+          });
+          this.progressService.setMessage('Filling the world...');
+          this.progressService.setProgressBars(currentProgressBars);
 
           this.currentGeneration$.next(currentGeneration);
           this.electronService.ipcRenderer.send('generateSeed', currentGeneration.form, currentGeneration.spoiler);
@@ -85,11 +84,12 @@ export class GeneratorService {
       });
 
       this.progressService.setTitle('Generating ' + generationCount + ' Seeds');
+      this.progressService.setMessage('Starting generator.');
       this.progressService.setProgressBars([
         {
           total: generationCount,
-          current: 0,
-          text: null
+          value: null,
+          label: 'Total:'
         }
       ]);
 
