@@ -21,8 +21,10 @@ interface GenerationState {
 export class GeneratorService {
   private generatedSeeds$ = new BehaviorSubject<GeneratedSeed[]>(undefined);
   private currentGeneration$ = new BehaviorSubject<GenerationState>(undefined);
+  private spoiler$ = new BehaviorSubject<boolean>(false);
   _generatedSeeds = this.generatedSeeds$.asObservable();
   _currentGeneration = this.currentGeneration$.asObservable();
+  _spoiler = this.spoiler$.asObservable();
 
   constructor(
     private ngZone: NgZone,
@@ -35,6 +37,8 @@ export class GeneratorService {
         currentGeneration.seeds.push(generatedSeed);
 
         if (currentGeneration.seeds.length < currentGeneration.total) {
+          // We're not done generating seeds. Update the generation state and generate another seed
+
           // Update progress modal
           this.progressService.setProgressBars([
             {
@@ -44,7 +48,6 @@ export class GeneratorService {
             }
           ]);
 
-          // We're not done generating seeds, generate another
           this.currentGeneration$.next(currentGeneration);
           this.electronService.ipcRenderer.send('generateSeed', currentGeneration.form, currentGeneration.spoiler);
         } else {
@@ -67,6 +70,9 @@ export class GeneratorService {
   }
 
   generateGame(form: RandomizerForm, spoiler: boolean): void {
+    // Set spoiler flag
+    this.spoiler$.next(spoiler);
+
     // Don't run if a seed is currently being generated
     if (!this.currentGeneration$.value) {
       const generationCount = form.generationCount ? form.generationCount : 1;
@@ -86,8 +92,8 @@ export class GeneratorService {
           text: null
         }
       ]);
-      this.progressService.setOpen(true);
 
+      this.progressService.setOpen(true);
       this.electronService.ipcRenderer.send('generateSeed', form, spoiler);
     }
   }

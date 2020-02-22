@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
@@ -93,6 +93,10 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     return this.seeds && this.seeds.length > 1;
   }
 
+  isSpoilerEnabled(): Observable<boolean> {
+    return this.generatorService._spoiler;
+  }
+
   copyPermalink(permalink: string): void {
     this.clipboardService.copy(permalink);
     this.toastrService.info('Permalink copied.');
@@ -136,9 +140,9 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     });
   }
 
-  saveIso(seed: GeneratedSeed, form: PatchForm): void {
+  saveIsos(form: PatchForm): void {
     if (this.form.valid) {
-      this.patcherService.patchIso(seed, form);
+      this.patcherService.patchIsos(this.seeds, form);
     }
   }
 

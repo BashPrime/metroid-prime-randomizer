@@ -7,9 +7,9 @@ import { ProgressBar } from '../../../../common/models/progressBar';
   providedIn: 'root'
 })
 export class ProgressService {
-  private progressBars$ = new BehaviorSubject<ProgressBar[]>(undefined);
-  private open$ = new BehaviorSubject<boolean>(false);
-  private title$ = new BehaviorSubject<string>(undefined);
+  progressBars$ = new BehaviorSubject<ProgressBar[]>(undefined);
+  open$ = new BehaviorSubject<boolean>(false);
+  title$ = new BehaviorSubject<string>(undefined);
   _progressBars = this.progressBars$.asObservable();
   _open = this.open$.asObservable();
   _title = this.title$.asObservable();
