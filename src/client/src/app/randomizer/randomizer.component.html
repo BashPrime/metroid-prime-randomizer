@@ -1,0 +1,18 @@
+<div class="app-wrapper">
+  <div class="randomizer-header">
+    <div class="tabs is-centered">
+      <ul>
+        <li *ngFor="let tab of getVisibleTabs()" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+          <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <app-welcome *ngIf="isTabIdSelected(tabIds.welcome)" class="fullheight-wrapper"></app-welcome>
+  <app-generate-game *ngIf="isTabIdSelected(tabIds.generateGame)" class="fullheight-wrapper"></app-generate-game>
+  <app-game-details *ngIf="isTabIdSelected(tabIds.gameDetails)" class="fullheight-wrapper"></app-game-details>
+  <footer class="footer">
+    v{{ getAppVersion() }} &copy; BashPrime, Syncathetic, Pwootage
+  </footer>
+</div>
+<app-progress-modal></app-progress-modal>

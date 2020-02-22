@@ -1,54 +1,36 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Electron: Main",
-            "program": "${workspaceFolder}/main.ts",
-            "preLaunchTask": "electron-build",
-            "outputCapture": "std",
-            "outFiles": [
-                "${workspaceFolder}/main.js",
-                "${workspaceFolder}/common/**/*.js"
-            ],
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-            "windows": {
-                "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
-            },
-            "runtimeArgs": [
-                "--remote-debugging-port=9223",
-                ".",
-                "--serve"
-            ]
-        },
-        {
-            "name": "Electron: Renderer",
-            "type": "chrome",
-            "request": "launch",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-            "windows": {
-              "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
-            },
-            "runtimeArgs": [
-              "${workspaceFolder}/main.js",
-              "--remote-debugging-port=9222"
-            ],
-            "webRoot": "${workspaceFolder}"
-          },
-          {
-            "type": "node",
-            "request": "launch",
-            "name": "Mocha All",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args": [
-                "-r",
-                "ts-node/register",
-                "test/**/*.test.ts"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Electron: Main",
+      "protocol": "inspector",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "runtimeArgs": [
+        "--remote-debugging-port=9223",
+        ".",
+        "--serve"
+      ],
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "sourceMaps": true,
+      "console": "integratedTerminal",
+      "preLaunchTask": "electron-build"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha All",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--require",
+        "ts-node/register",
+        "test/**/*.test.ts"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+  ]
 }

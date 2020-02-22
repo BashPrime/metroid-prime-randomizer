@@ -1,29 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "importHelpers": true,
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
-      "es2017",
-      "es2016",
-      "es2015",
-      "dom"
+      "es2018"
+    ],
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "pretty": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
+    "types": [
+      "webpack-env"
     ]
   },
   "include": [
-    "main.ts",
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
+    "src/electron/**/*.ts",
+    "test/**/*.test.ts"
   ]
 }

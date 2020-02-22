@@ -1,0 +1,18 @@
+<div class="section">
+  <div *ngIf="isLoaded then loaded; else loading"></div>
+  <ng-template #loaded>
+    <p *ngIf="!seedHistory">No seeds were found.</p>
+    <div *ngFor="let seed of seedHistory" class="seed">
+      <a>
+        <p>
+          <span *ngFor="let hashItem of seed.seedHash" class="title is-4 hashItem">{{ hashItem }}</span>
+          <span class="subtitle is-6">{{ seed.seed }}</span>
+        </p>
+        <p class="subtitle is-6">{{ seed.createdDate | date:'MMMM d y - h:mm a' }}</p>
+      </a>
+    </div>
+  </ng-template>
+  <ng-template #loading>
+    <div class="loading-indicator"></div>
+  </ng-template>
+</div>

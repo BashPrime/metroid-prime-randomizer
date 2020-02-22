@@ -1,0 +1,90 @@
+<form [formGroup]="getForm()">
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('goal') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goal">
+              <option *ngFor="let choice of getChoices('goal')" value="{{ choice.value }}">{{ choice.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('goalArtifacts') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="goalArtifacts">
+              <option *ngFor="let choice of getChoices('goalArtifacts')" [ngValue]="choice.value">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('artifactLocationHints') }}</label>
+        <div class="control">
+          <input class="is-checkradio" id="artifactLocationHints" type="checkbox" formControlName="artifactLocationHints">
+          <label for="artifactLocationHints"></label>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('elevatorShuffle') }}</label>
+        <div class="control">
+          <input class="is-checkradio" id="elevatorShuffle" type="checkbox" formControlName="elevatorShuffle">
+          <label for="elevatorShuffle"></label>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('heatProtection') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="heatProtection">
+              <option *ngFor="let choice of getChoices('heatProtection')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('suitDamageReduction') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="suitDamageReduction">
+              <option *ngFor="let choice of getChoices('suitDamageReduction')" value="{{ choice.value }}">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('startingArea') }}</label>
+        <div class="control">
+          <div class="select is-small">
+            <select formControlName="startingArea">
+              <option *ngFor="let choice of getChoices('startingArea')" [ngValue]="choice.value">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
