@@ -70,7 +70,7 @@ export class Spoiler {
     }
 
     // Get the seed walkthrough
-    spoiler['Walkthrough'] = [];
+    spoiler['Walkthrough'] = world.getWalkthrough();
 
     return spoiler;
   }

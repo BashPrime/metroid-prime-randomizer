@@ -22,6 +22,7 @@ import { ENTRANCE_SEPARATOR } from '../../../common/constants';
 import { MersenneTwister } from '../../mersenneTwister';
 import * as Utilities from '../../utilities';
 import * as namesJson from '../../data/names.json';
+import { ItemType, ItemPriority } from './items';
 
 
 /**
@@ -156,7 +157,7 @@ export class PrimeWorld extends World {
   collectItems(collectedItems?: PrimeItemCollection): PrimeItemCollection {
     let myItems = collectedItems !== undefined ? collectedItems : new PrimeItemCollection([]);
 
-    // Get all available item locations
+    // Get all item locations filled with items
     const filledItemLocations = this.getLocations().filter(location => location.hasItem());
     let newItems = new PrimeItemCollection([]);
 
@@ -176,6 +177,89 @@ export class PrimeWorld extends World {
     } while (newItems.size() > 0);
 
     return myItems;
+  }
+
+  /**
+   * Traverses the game world and returns the order of items collected.
+   *
+   * This function is similar to collectItems(), but instead explores the world and returns the order of items it obtains.
+   */
+  getWalkthrough(): { [key: string]: string }[] {
+    const walkthrough = [];
+    let myItems = new PrimeItemCollection([]);
+    let myLocations = new LocationCollection([]);
+    let newLocations = new LocationCollection([]);
+
+    // Get all item locations filled with items
+    const filledItemLocations = this.getLocations().filter(location => location.hasItem());
+
+    do {
+      const itemLocationSphere = {};
+
+      // Get reachable regions using current items
+      this.searchRegions(myItems);
+
+      // Get all locations we can reach with our current items
+      const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
+        return location.canFill(myItems, this.settings);
+      }));
+
+      // Update myItems state (this includes any items previously reached)
+      myItems = new PrimeItemCollection(searchLocations.getItems().toArray());
+
+      // First, get the old (already visited locations) out of the search locations
+      const oldLocations = myLocations.diff(searchLocations);
+      // Next, get the new locations out of the search locations
+      newLocations = searchLocations.diff(myLocations);
+      // Last, to maintain the search state, update myLocations by merging search and oldLocations
+      myLocations = searchLocations.merge(oldLocations);
+
+      /*
+       * In terms of filling the item sphere, we're interesetd in the new locations
+       *
+       * Our criteria for filling the location sphere is as follows:
+       * - The item has an item priority of Progression or higher
+       *   OR
+       * - The item is an Item or Artifact type
+       */
+      const newLocationsWithSphereItems = newLocations.toArray().filter(location => {
+        // We have already filtered out locations that don't have items, so no need to check hasItem() here
+        const item = location.getItem();
+        let hasHighEnoughItemPriority: boolean;
+        let isCorrectItemType: boolean;
+
+        switch (item.getPriority()) {
+          case ItemPriority.PRIORITY:
+          case ItemPriority.PROGRESSION:
+            hasHighEnoughItemPriority = true;
+            break;
+          default:
+            hasHighEnoughItemPriority = false;
+        }
+
+        switch (item.getType()) {
+          case ItemType.ITEM:
+          case ItemType.ARTIFACT:
+            isCorrectItemType = true;
+            break;
+          default:
+            isCorrectItemType = false;
+        }
+
+        return hasHighEnoughItemPriority || isCorrectItemType;
+      });
+
+      for (let location of newLocationsWithSphereItems) {
+        itemLocationSphere[location.getName()] = location.getItem().getName();
+      }
+
+      // If the item location sphere has entries in it, push to the walkthrough array
+      if (Object.keys(itemLocationSphere).length) {
+        walkthrough.push(itemLocationSphere);
+      }
+    } while (newLocations.size() > 0);
+
+    return walkthrough;
   }
 
   /**
@@ -278,7 +362,7 @@ export class PrimeWorld extends World {
    * @param length The length of the generated hash array
    */
   getLayoutHash(length = 4): string[] {
-    const layoutHash: string [] = [];
+    const layoutHash: string[] = [];
     // Using the randomprime layout sha256 hash as the seed for easier debugging/verification
     const sha256 = crypto.createHash('sha256').update(this.getRandomprimePatcherLayoutString()).digest('hex');
     const rng = new MersenneTwister(Utilities.parseSafeIntegerFromSha256(sha256));
