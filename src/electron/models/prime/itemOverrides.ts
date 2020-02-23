@@ -6,28 +6,28 @@ import { ItemOverride } from '../../../common/models/randomizerForm';
 import { PrimeItem } from '../../enums/primeItem';
 
 export class ItemOverrides {
-  [PrimeItem.MISSILE_LAUNCHER]: ItemOverride = null;
-  [PrimeItem.WAVE_BEAM]: ItemOverride = null;
-  [PrimeItem.ICE_BEAM]: ItemOverride = null;
-  [PrimeItem.PLASMA_BEAM]: ItemOverride = null;
-  [PrimeItem.CHARGE_BEAM]: ItemOverride = null;
-  [PrimeItem.SPACE_JUMP_BOOTS]: ItemOverride = null;
-  [PrimeItem.SUPER_MISSILE]: ItemOverride = null;
-  [PrimeItem.WAVEBUSTER]: ItemOverride = null;
-  [PrimeItem.ICE_SPREADER]: ItemOverride = null;
-  [PrimeItem.FLAMETHROWER]: ItemOverride = null;
-  [PrimeItem.GRAPPLE_BEAM]: ItemOverride = null;
-  [PrimeItem.MORPH_BALL]: ItemOverride = null;
-  [PrimeItem.BOOST_BALL]: ItemOverride = null;
-  [PrimeItem.SPIDER_BALL]: ItemOverride = null;
-  [PrimeItem.MORPH_BALL_BOMB]: ItemOverride = null;
-  [PrimeItem.POWER_BOMB]: ItemOverride = null;
-  [PrimeItem.VARIA_SUIT]: ItemOverride = null;
-  [PrimeItem.GRAVITY_SUIT]: ItemOverride = null;
-  [PrimeItem.PHAZON_SUIT]: ItemOverride = null;
-  [PrimeItem.SCAN_VISOR]: ItemOverride = null;
-  [PrimeItem.THERMAL_VISOR]: ItemOverride = null;
-  [PrimeItem.XRAY_VISOR]: ItemOverride = null;
+  [PrimeItem.MISSILE_LAUNCHER]: ItemOverride;
+  [PrimeItem.WAVE_BEAM]: ItemOverride;
+  [PrimeItem.ICE_BEAM]: ItemOverride;
+  [PrimeItem.PLASMA_BEAM]: ItemOverride;
+  [PrimeItem.CHARGE_BEAM]: ItemOverride;
+  [PrimeItem.SPACE_JUMP_BOOTS]: ItemOverride;
+  [PrimeItem.SUPER_MISSILE]: ItemOverride;
+  [PrimeItem.WAVEBUSTER]: ItemOverride;
+  [PrimeItem.ICE_SPREADER]: ItemOverride;
+  [PrimeItem.FLAMETHROWER]: ItemOverride;
+  [PrimeItem.GRAPPLE_BEAM]: ItemOverride;
+  [PrimeItem.MORPH_BALL]: ItemOverride;
+  [PrimeItem.BOOST_BALL]: ItemOverride;
+  [PrimeItem.SPIDER_BALL]: ItemOverride;
+  [PrimeItem.MORPH_BALL_BOMB]: ItemOverride;
+  [PrimeItem.POWER_BOMB]: ItemOverride;
+  [PrimeItem.VARIA_SUIT]: ItemOverride;
+  [PrimeItem.GRAVITY_SUIT]: ItemOverride;
+  [PrimeItem.PHAZON_SUIT]: ItemOverride;
+  [PrimeItem.SCAN_VISOR]: ItemOverride;
+  [PrimeItem.THERMAL_VISOR]: ItemOverride;
+  [PrimeItem.XRAY_VISOR]: ItemOverride;
 
   // Constants
   static readonly SHUFFLE_MIN: number = 1;
@@ -102,7 +102,9 @@ export class ItemOverrides {
     const array = [];
 
     for (const key of this.getOverridesKeys()) {
-      array.push(this[key] as ItemOverride);
+      if (this[key]) {
+        array.push(this[key] as ItemOverride);
+      }
     }
 
     return array;
@@ -112,13 +114,16 @@ export class ItemOverrides {
     const prettified = {};
 
     for (let key of this.getOverridesKeys()) {
-      prettified[key] = {
-        ['State']: ItemOverrides.getChoices().find(choice => choice.value === this[key].state).name
-      };
+      // Add to prettified object if the override is defined
+      if (this[key]) {
+        prettified[key] = {
+          ['State']: ItemOverrides.getChoices().find(choice => choice.value === this[key].state).name
+        };
 
-      // Only include shuffle value if the item state is to shuffle
-      if (this[key].state === ItemOverrides.STATES.shuffled) {
-        prettified[key]['Shuffle'] = this[key].shuffle;
+        // Only include shuffle value if the item state is to shuffle
+        if (this[key].state === ItemOverrides.STATES.shuffled) {
+          prettified[key]['Shuffle'] = this[key].shuffle;
+        }
       }
     }
 
