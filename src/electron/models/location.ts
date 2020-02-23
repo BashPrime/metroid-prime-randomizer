@@ -11,7 +11,7 @@ export class Location {
   private name: string;
   private parentRegion: Region;
   private item: Item;
-  private enabled: boolean = true;
+  private excluded: boolean = false;
   private locked: boolean = false;
 
   itemRule: (items: ItemCollection, settings: RandomizerSettings) => boolean;
@@ -48,19 +48,19 @@ export class Location {
     return this.item ? true : false;
   }
 
-  isEnabled(): boolean {
-    return this.enabled;
+  isExcluded(): boolean {
+    return this.excluded;
   }
 
-  setEnabled(enabled: boolean) {
-    this.enabled = enabled;
+  setExcluded(excluded: boolean): void {
+    this.excluded = excluded;
   }
 
   isLocked(): boolean {
     return this.locked;
   }
 
-  setLocked(locked: boolean) {
+  setLocked(locked: boolean): void {
     this.locked = locked;
   }
 

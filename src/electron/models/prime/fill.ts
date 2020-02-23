@@ -19,6 +19,9 @@ export function distributeItemsRestrictive(world: PrimeWorld): void {
     const progressionItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.PROGRESSION);
     const extrasItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.EXTRA);
 
+    // Fill priority items first (if needed)
+    fillRestrictive(world, fillLocations, priorityItemPool);
+
     // Logically fill progressive items to ensure the game can be completed.
     fillRestrictive(world, fillLocations, progressionItemPool);
 

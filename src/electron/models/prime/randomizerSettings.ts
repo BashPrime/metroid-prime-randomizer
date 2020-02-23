@@ -10,6 +10,8 @@ import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
 import { startingAreas } from './entranceShuffle';
 import { PERMALINK_SEPARATOR, SETTINGS_STRING_DELIMITER } from '../../../common/constants';
+import { ItemOverrides } from './itemOverrides';
+import { ItemOverride } from '../../../common/models/randomizerForm';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -24,6 +26,9 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   heatProtection?: string;
   suitDamageReduction?: string;
   startingArea?: number;
+  randomStartingItemsMin?: number;
+  randomStartingItemsMax?: number;
+  itemOverrides?: ItemOverride[];
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
 }
@@ -41,6 +46,9 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   heatProtection: string = 'any-suit';
   suitDamageReduction: string = 'default';
   startingArea: number = 20;
+  randomStartingItemsMin: number = 0;
+  randomStartingItemsMax: number = 0;
+  itemOverrides: ItemOverrides = new ItemOverrides();
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
 
@@ -53,6 +61,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       Object.assign(this, args);
 
       // Overload locations and tricks
+      this.itemOverrides = new ItemOverrides(args.itemOverrides);
       this.excludeLocations = new ExcludeLocations(args.excludeLocations);
       this.tricks = new Tricks(args.tricks);
     }
@@ -97,6 +106,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     return bigInt(bits, 2).toString(36).toUpperCase()
       + SETTINGS_STRING_DELIMITER
+      + this.itemOverrides.toSettingsString()
+      + SETTINGS_STRING_DELIMITER
       + this.excludeLocations.toSettingsString()
       + SETTINGS_STRING_DELIMITER
       + this.tricks.toSettingsString();
@@ -120,7 +131,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   prettify(excludedKeys?: string[]) {
     const prettified = {};
 
-    const filtered = Utilities.filterProperties(this, ['excludeLocations', 'tricks', ...excludedKeys]);
+    const filtered = Utilities.filterProperties(this, ['itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
 
     for (let key of Object.keys(filtered)) {
       // Try to get prettified setting name, if applicable
@@ -131,6 +142,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     // Add excluded tricks and tricks as arrays instead of objects
     Object.assign(prettified, {
+      ['Item Overrides']: this.itemOverrides.prettify(),
       ['Exclude Locations']: this.excludeLocations.toArray(),
       ['Tricks']: this.tricks.toArray().map(item => details[item] ? details[item].name : item)
     });
@@ -146,18 +158,20 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     const settingsStringSections = settingsString.split(SETTINGS_STRING_DELIMITER);
 
-    // Settings string must have 3 sections:
-    // Settings, excluded locations, allowed tricks
-    if (settingsStringSections.length < 3) {
-      return null;
+    // Settings string must have 4 sections:
+    // Settings, item overrides, excluded locations, allowed tricks
+    if (settingsStringSections.length < 4) {
+      throw new Error('Settings string is not a valid format. Expected 4 sections, got ' + settingsStringSections.length);
     }
 
     // Get general settings first
     const settings = new PrimeRandomizerSettings(getGeneralSettingsFromSettingsString(settingsStringSections[0]));
+    // Next, get item overrides
+    settings.itemOverrides = ItemOverrides.fromSettingsString(settingsStringSections[1]);
     // Next, get excluded locations
-    settings.excludeLocations = ExcludeLocations.fromSettingsString(settingsStringSections[1]);
+    settings.excludeLocations = ExcludeLocations.fromSettingsString(settingsStringSections[2]);
     // Last, get tricks
-    settings.tricks = Tricks.fromSettingsString(settingsStringSections[2]);
+    settings.tricks = Tricks.fromSettingsString(settingsStringSections[3]);
 
     return settings;
   }
@@ -276,6 +290,36 @@ export const settings = [
     default: 20
   }),
   new SelectOption({
+    name: 'randomStartingItemsMin',
+    shared: true,
+    choices: [
+      {
+        name: '0',
+        value: 0
+      },
+      ...discreteNumberSelection(1, 25)
+    ],
+    default: 0
+  }),
+  new SelectOption({
+    name: 'randomStartingItemsMax',
+    shared: true,
+    choices: [
+      {
+        name: '0',
+        value: 0
+      },
+      ...discreteNumberSelection(1, 25)
+    ],
+    default: 0
+  }),
+  new SelectOption({
+    name: 'itemOverride',
+    shared: false,
+    choices: ItemOverrides.getChoices(),
+    default: 'shuffled'
+  }),
+  new SelectOption({
     name: 'outputType',
     shared: false,
     choices: [
@@ -336,6 +380,14 @@ export const details: OptionDetails = {
   startingArea: {
     name: 'Starting Area',
     description: ''
+  },
+  randomStartingItemsMin: {
+    name: 'Random Starting Items - Minimum',
+    description: 'You will start the game with at least this many items.'
+  },
+  randomStartingItemsMax: {
+    name: 'Random Starting Items - Maximum',
+    description: 'You will start the game with at most this many items.'
   },
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',

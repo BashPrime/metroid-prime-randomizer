@@ -64,7 +64,8 @@ export class GeneratorService {
     this.electronService.ipcRenderer.on('generateSeedError', (event, err) => {
       this.ngZone.run(() => {
         this.currentGeneration$.next(undefined);
-        this.toastrService.error('The seed generation process ran into an error.');
+        this.progressService.setOpen(false);
+        this.toastrService.error(err);
       });
     });
 

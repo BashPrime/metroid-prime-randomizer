@@ -22,10 +22,15 @@ export function initialize() {
 
     // Generate the seed and add it to the seeds history
     const settings = new PrimeRandomizerSettings(args);
-    const newSeedId = generateSeed(settings);
 
-    // Send client-friendly seed information back to the UI
-    event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
+    try {
+      const newSeedId = generateSeed(settings);
+
+      // Send client-friendly seed information back to the UI
+      event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
+    } catch (err) {
+      event.sender.send('generateSeedError', err.message);
+    }
   });
 
   ipcMain.on('importSeed', (event, seed: string, settingsString: string) => {
@@ -37,7 +42,7 @@ export function initialize() {
       // Send client-friendly seed information back to the UI
       event.sender.send('importSeedResponse', seedHistory.getSeedObject(newSeedId).seed, settings.spoiler);
     } catch (err) {
-      event.sender.send('generateSeedError', err);
+      event.sender.send('generateSeedError', 'Failed to import seed: ' + err.message);
     }
   });
 }

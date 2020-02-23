@@ -23,7 +23,8 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
     let locationToFill: Location;
 
     for (const location of shuffledLocations.toArray()) {
-      if (location.canFill(assumedItems, settings)) {
+      // Only fill if the location isn't excluded and we can fill it
+      if (!location.isExcluded() && location.canFill(assumedItems, settings)) {
         locationToFill = location;
         location.setItem(itemToPlace);
         locations.remove(location);

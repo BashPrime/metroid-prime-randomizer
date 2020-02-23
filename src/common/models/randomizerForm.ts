@@ -25,7 +25,8 @@ export interface RandomizerForm {
   tricks: string[];
 }
 
-interface ItemOverride {
+export interface ItemOverride {
+  itemName: string;
   state: string;
   shuffle: number;
 }

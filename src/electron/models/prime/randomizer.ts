@@ -14,6 +14,8 @@ import { generateAlphanumericString } from '../../utilities';
 export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
   let success = false;
   let world: PrimeWorld;
+  let currentTry = 0;
+  const maxTries = 100;
 
   // If no seed is supplied in the settings, generate a random alphanumeric seed.
   if (!settings.seed) {
@@ -23,7 +25,7 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
   // Initialize rng based on hashed seed, and re-use in case the item distribution fails.
   const rng = new MersenneTwister(settings.getNumericSeed());
 
-  while (!success) {
+  while (!success && currentTry < maxTries) {
     try {
       world = new PrimeWorld(settings);
 
@@ -49,8 +51,13 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
       success = true;
     } catch (err) {
       // Handle exception gracefully and try again.
-      // Currently not doing anything in the catch block.
+      currentTry++;
     }
   }
+
+  if (!success) {
+    throw new Error('Failed to generate a world after ' + maxTries + ' attempts. Your settings may be preventing any seed from being completeable.');
+  }
+
   return world;
 }
