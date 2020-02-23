@@ -21,7 +21,7 @@ function saveSpoiler(seed: GeneratedSeed, form: PatchForm, callback: (err: NodeJ
   if (world.getSettings().spoiler) {
     // World was set with spoiler = true
     const spoiler = Spoiler.generateFromWorld(world);
-    const outputFile = path.join(getOutputFolder(form), getRandomizerFileNameNoExtension(world) + ' - spoiler.txt');
+    const outputFile = path.join(getOutputFolder(form), getRandomizerFileNameNoExtension(world) + ' - Spoiler.json');
 
     fs.writeFile(outputFile, JSON.stringify(spoiler, null, '\t'), 'utf8', err => {
       callback(err);
