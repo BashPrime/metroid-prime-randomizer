@@ -14,6 +14,18 @@ export interface RandomizerForm {
     suitDamageReduction: string;
     startingArea: number;
   };
+  items: {
+    randomStartingItems: {
+      min: number;
+      max: number;
+    };
+    itemOverrides: ItemOverride[];
+  };
   excludeLocations: string[];
   tricks: string[];
+}
+
+interface ItemOverride {
+  state: string;
+  shuffle: number;
 }
