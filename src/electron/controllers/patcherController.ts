@@ -8,8 +8,9 @@ import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings } from '../models/prime/randomizerSettings';
 import { PrimeWorld } from '../models/prime/world';
 import { PatchForm } from '../../common/models/patchForm';
-import { PatcherMessage } from '../../common/models/patcherMessage';
 import { version } from '../../../package.json';
+import { toRandomprimeFormat } from '../models/prime/startingItems';
+import { mapToItemPool } from '../models/prime/itemPool';
 
 export const defaultOutputFolder = path.join(app.getPath('documents'), 'Metroid Prime Randomizer', 'Output');
 
@@ -72,7 +73,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     obfuscate_items: settings.hideItemModels,
     artifact_hint_behavior: settings.artifactLocationHints ? 'all' : 'none',
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
-    starting_items: null,
+    starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
     comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
     main_menu_message: 'Randomizer Version: ' + version
   };
