@@ -2,7 +2,7 @@
 import * as bigInt from 'big-integer';
 
 import * as Utilities from '../../utilities';
-import { ItemOverride } from '../../../common/models/randomizerForm';
+import { ItemOverride } from '../../../common/models/itemOverride';
 import { PrimeItem } from '../../enums/primeItem';
 
 export class ItemOverrides {
@@ -28,10 +28,18 @@ export class ItemOverrides {
   [PrimeItem.SCAN_VISOR]: ItemOverride;
   [PrimeItem.THERMAL_VISOR]: ItemOverride;
   [PrimeItem.XRAY_VISOR]: ItemOverride;
+  [PrimeItem.ENERGY_TANK]: ItemOverride;
+  [PrimeItem.MISSILE_EXPANSION]: ItemOverride;
+  [PrimeItem.POWER_BOMB_EXPANSION]: ItemOverride;
 
   // Constants
-  static readonly SHUFFLE_MIN: number = 1;
-  static readonly SHUFFLE_MAX: number = 10;
+  private readonly expansions: string[] = [
+    PrimeItem.ENERGY_TANK,
+    PrimeItem.MISSILE_EXPANSION,
+    PrimeItem.POWER_BOMB_EXPANSION
+  ];
+  static readonly COUNT_MIN: number = 1;
+  static readonly COUNT_MAX: number = 50;
   static readonly STATES = {
     vanilla: 'vanilla',
     startingItem: 'starting-item',
@@ -67,7 +75,10 @@ export class ItemOverrides {
       PrimeItem.PHAZON_SUIT,
       PrimeItem.SCAN_VISOR,
       PrimeItem.THERMAL_VISOR,
-      PrimeItem.XRAY_VISOR
+      PrimeItem.XRAY_VISOR,
+      PrimeItem.ENERGY_TANK,
+      PrimeItem.MISSILE_EXPANSION,
+      PrimeItem.POWER_BOMB_EXPANSION
     ];
   }
 
@@ -86,8 +97,8 @@ export class ItemOverrides {
 
       if (override) {
         values.active = 1;
-        values.state = ItemOverrides.getChoices().map(choice => choice.value).indexOf(override.state);
-        values.shuffle = override.shuffle;
+        values.state = ItemOverrides.getStates().map(choice => choice.value).indexOf(override.state);
+        values.shuffle = override.count;
       }
 
       bits += Utilities.toPaddedBitString(values.active, bitWidths.active)
@@ -117,12 +128,12 @@ export class ItemOverrides {
       // Add to prettified object if the override is defined
       if (this[key]) {
         prettified[key] = {
-          ['State']: ItemOverrides.getChoices().find(choice => choice.value === this[key].state).name
+          ['State']: ItemOverrides.getStates().find(choice => choice.value === this[key].state).name
         };
 
-        // Only include shuffle value if the item state is to shuffle
-        if (this[key].state === ItemOverrides.STATES.shuffled) {
-          prettified[key]['Shuffle'] = this[key].shuffle;
+        // Only include count value if the item state is an expansion, or set to shuffle
+        if (this[key].isExpansion || this[key].state === ItemOverrides.STATES.shuffled) {
+          prettified[key]['Count'] = this[key].count;
         }
       }
     }
@@ -132,7 +143,19 @@ export class ItemOverrides {
 
   private setUpOverrides(overrides: ItemOverride[]): void {
     for (let override of overrides) {
-      this[override.itemName] = override;
+      this[override.name] = override;
+
+      // Handle if the override is for an expansion type
+      if (this.expansions.includes(override.name)) {
+        this[override.name].isExpansion = true;
+
+        // Vanilla isn't a valid state for expansions. Set to shuffle instead.
+        if (this[override.name].state === ItemOverrides.STATES.vanilla) {
+          this[override.name].state = ItemOverrides.STATES.shuffled;
+        }
+      } else {
+        this[override.name].isExpansion = false;
+      }
     }
   }
 
@@ -162,9 +185,9 @@ export class ItemOverrides {
       // If active bit is set, get at least the state of the override and push it to the array
       if (bits.active === 1) {
         overridesToSet.push({
-          itemName: key,
-          state: ItemOverrides.getChoices()[bits.state].value as string,
-          shuffle: bits.shuffle
+          name: key,
+          state: ItemOverrides.getStates()[bits.state].value as string,
+          count: bits.shuffle
         });
       }
     }
@@ -172,7 +195,7 @@ export class ItemOverrides {
     return new ItemOverrides(overridesToSet);
   }
 
-  static getChoices() {
+  static getStates() {
     return [
       {
         name: 'Vanilla',
@@ -192,8 +215,8 @@ export class ItemOverrides {
   static getBitwidths() {
     return {
       active: 1,
-      state: Math.ceil(Utilities.getBaseLog(ItemOverrides.getChoices().length, 2)),
-      shuffle: Math.ceil(Utilities.getBaseLog(ItemOverrides.SHUFFLE_MAX, 2))
+      state: Math.ceil(Utilities.getBaseLog(ItemOverrides.getStates().length, 2)),
+      shuffle: Math.ceil(Utilities.getBaseLog(ItemOverrides.COUNT_MAX, 2))
     };
   }
 

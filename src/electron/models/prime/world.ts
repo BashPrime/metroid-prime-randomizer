@@ -23,7 +23,7 @@ import { MersenneTwister } from '../../mersenneTwister';
 import * as Utilities from '../../utilities';
 import * as namesJson from '../../data/names.json';
 import { ItemType, ItemPriority } from './items';
-
+import { ItemMap, mapToItemPool } from './itemPool';
 
 /**
  * Logical representation of the Metroid Prime game world.
@@ -43,6 +43,10 @@ export class PrimeWorld extends World {
    * This field is intentionally in an undefined state and considered the default layout by the patcher when undefined.
    */
   protected elevatorLayout: Elevator[] = undefined;
+  /**
+   * The collection of items that will already be in the player's inventory when starting the game.
+   */
+  protected startingItems: ItemMap;
 
   constructor(settings: PrimeRandomizerSettings) {
     super(settings);
@@ -150,12 +154,26 @@ export class PrimeWorld extends World {
     this.elevatorLayout = elevators;
   }
 
+  getStartingItems(): ItemMap {
+    return this.startingItems;
+  }
+
+  setStartingItems(startingItems: ItemMap): void {
+    this.startingItems = startingItems;
+  }
+
   /**
    * Searches the world instance and returns a collection of every logically reachable item that has not been obtained yet.
    * @param collectedItems The assumed item collection the player has already obtained.
    */
   collectItems(collectedItems?: PrimeItemCollection): PrimeItemCollection {
     let myItems = collectedItems !== undefined ? collectedItems : new PrimeItemCollection([]);
+
+    // If the world has starting items, add to myItems
+    if (this.getStartingItems()) {
+      const startingItemsArray = mapToItemPool(this.getStartingItems());
+      myItems = myItems.merge(new PrimeItemCollection(startingItemsArray));
+    }
 
     // Get all item locations filled with items
     const filledItemLocations = this.getLocations().filter(location => location.hasItem());
@@ -184,11 +202,25 @@ export class PrimeWorld extends World {
    *
    * This function is similar to collectItems(), but instead explores the world and returns the order of items it obtains.
    */
-  getWalkthrough(): { [key: string]: string }[] {
-    const walkthrough = [];
+  getPlaythrough(): { [key: string]: string }[] {
+    const playthrough = [];
     let myItems = new PrimeItemCollection([]);
+
+    // Set up starting items and append to myItems if there are any
+    let startingItems: PrimeItemCollection;
+    if (this.getStartingItems()) {
+      startingItems = new PrimeItemCollection(mapToItemPool(this.getStartingItems()));
+      myItems = myItems.merge(startingItems);
+    }
+
     let myLocations = new LocationCollection([]);
     let newLocations = new LocationCollection([]);
+
+    // If the world has starting items, add to myItems
+    if (this.getStartingItems()) {
+      const startingItemsArray = mapToItemPool(this.getStartingItems());
+      myItems.merge(new PrimeItemCollection(startingItemsArray));
+    }
 
     // Get all item locations filled with items
     const filledItemLocations = this.getLocations().filter(location => location.hasItem());
@@ -206,6 +238,11 @@ export class PrimeWorld extends World {
 
       // Update myItems state (this includes any items previously reached)
       myItems = new PrimeItemCollection(searchLocations.getItems().toArray());
+
+      // Don't lose starting items if they exist
+      if (startingItems) {
+        myItems = myItems.merge(startingItems);
+      }
 
       // First, get the old (already visited locations) out of the search locations
       const oldLocations = myLocations.diff(searchLocations);
@@ -253,13 +290,13 @@ export class PrimeWorld extends World {
         itemLocationSphere[location.getName()] = location.getItem().getName();
       }
 
-      // If the item location sphere has entries in it, push to the walkthrough array
+      // If the item location sphere has entries in it, push to the playthrough array
       if (Object.keys(itemLocationSphere).length) {
-        walkthrough.push(itemLocationSphere);
+        playthrough.push(itemLocationSphere);
       }
     } while (newLocations.size() > 0);
 
-    return walkthrough;
+    return playthrough;
   }
 
   /**

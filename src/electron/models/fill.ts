@@ -3,6 +3,7 @@ import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
 import { Location } from './location';
 import { PrimeItemCollection } from './prime/itemCollection';
+import { mapToItemPool } from './prime/itemPool';
 
 export function fillRestrictive(world: World, locations: LocationCollection, itemPool: ItemCollection) {
   const rng = world.getRng();

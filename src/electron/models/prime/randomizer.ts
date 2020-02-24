@@ -1,6 +1,7 @@
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { PrimeWorld } from './world';
 import { generateItemPool } from './itemPool';
+import { setStartingItems } from './startingItems';
 import { setEntrances } from './entranceShuffle';
 import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
@@ -24,6 +25,7 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
   // Initialize rng based on hashed seed, and re-use in case the item distribution fails.
   const rng = new MersenneTwister(settings.getNumericSeed());
+  let lastErrorMessage: string;
 
   while (!success && currentTry < maxTries) {
     try {
@@ -34,6 +36,9 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
       // Set up Prime world regions
       world.loadRegions();
+
+      // Set starting items for the world
+      setStartingItems(world);
 
       // Generate item pool based on settings, and add the item pool to the world instance
       generateItemPool(world);
@@ -49,14 +54,16 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
       // If we get here, the item fill succeeded (no exception thrown)! Flag as successful.
       success = true;
-    } catch (err) {
+    } catch (Error) {
       // Handle exception gracefully and try again.
+      console.log(Error.message);
+      lastErrorMessage = Error.message;
       currentTry++;
     }
   }
 
   if (!success) {
-    throw new Error('Failed to generate a world after ' + maxTries + ' attempts. Your settings may be preventing any seed from being completeable.');
+    throw new Error('Failed to generate a world after ' + maxTries + ' attempts. Last error thrown: ' + lastErrorMessage);
   }
 
   return world;

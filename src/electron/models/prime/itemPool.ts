@@ -7,10 +7,25 @@ import { randomArray } from '../../utilities';
 import { PrimeItemCollection } from './itemCollection';
 import { ItemOverrides } from './itemOverrides';
 
-export type ItemPool = Item[];
-type ItemMap = { [key: string]: number };
+export type ItemMap = { [key: string]: number };
+
+interface ItemPool {
+  [key: string]: ItemPoolObject[];
+}
+
+interface ItemPoolObject {
+  count: number;
+  type: PoolType;
+}
+
+enum PoolType {
+  ALWAYS,
+  JUNK,
+  ARTIFACTS
+}
+
 type ItemsObject = {
-  pool: ItemPool,
+  pool: Item[],
   placedItems: { [key: string]: Item };
 }
 
@@ -56,6 +71,10 @@ const bossLocations = [
   PrimeLocation.ELITE_QUARTERS
 ];
 
+/**
+ * Generates and sets the item pool for a given world.
+ * @param world The world to apply the item pool to.
+ */
 export function generateItemPool(world: PrimeWorld): void {
   const corePoolObj = getPoolCore(world);
   const pool = new PrimeItemCollection(corePoolObj.pool);
@@ -73,7 +92,14 @@ export function generateItemPool(world: PrimeWorld): void {
   }
 }
 
-function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
+/**
+ * Builds an array of Item objects from a key-number pair map.
+ *
+ * @param map The item map to be processed.
+ * @param priority Optional. If provided, all items in the resulting item array
+ * will have their priority set to the given priority.
+ */
+export function mapToItemPool(map: ItemMap, priority?: ItemPriority): Item[] {
   const pool = [];
 
   for (const key of Object.keys(map)) {
@@ -89,47 +115,62 @@ function mapToItemPool(map: ItemMap, priority?: ItemPriority): ItemPool {
 }
 
 /**
- * TOOD
- *
- * Refactor this function.
- *
- * Get the initial item bases, mutate based on item overrides. Do a more general handling of empty items if
- * the item pool is less than 100 items big (replace with nothing items)
- *
- * Improve handling of goal/artifact handling
+ * Gets the core item pool and placed items, applying mutators depending on what settings are provided.
+ * @param world The world instance containing info such as settings and muatators.
  */
 function getPoolCore(world: PrimeWorld): ItemsObject {
+  const itemPool = getItemPoolBase();
   const numberOfLocations = world.getLocations().size();
   const settings = world.getSettings();
   const rng = world.getRng();
 
-  const pool: ItemPool = [];
+  const pool: Item[] = [];
   const placedItems: {
     [key: string]: Item;
   } = {};
 
-  // Get alwaysItems, which we may be modifying later
-  const alwaysItems = getAlwaysItemsBase();
-
-  // Apply item overrides to alwaysItems if needed
+  // Apply item overrides if needed
   for (let override of settings.itemOverrides.toArray()) {
-    // Override the item count depending on the override state
-    alwaysItems[override.itemName] = override.state !== ItemOverrides.STATES.shuffled
-      ? 0 // state is either vanilla or starting item
-      : override.shuffle; // state is shuffle
+    // Override the item count depending on the override state and if it's an expansion
+    // If override is to be shuffled, get the new override count and apply it here.
+    if (override.state === ItemOverrides.STATES.shuffled) {
+      // The initial item pool only has one object entry for each item, so we can safely use index 0.
+      itemPool[override.name][0].count = override.count;
+    }
+    // Handle non-shuffle states
+    // If the override is an expansion, we leave the ammo pickups alone.
+    // If the override is NOT an expansion, there is only one instance of the item. Remove it from the item pool
+    else if (!override.isExpansion) {
+      itemPool[override.name][0].count = 0;
 
-    // If state is vanilla, set the item in its vanilla location and add to placedItems
-    if (override.state === ItemOverrides.STATES.vanilla) {
-      const location = Object.entries(vanillaUpgrades).find(([location, item]) => item === override.itemName)[0];
-      placedItems[location] = primeItems[override.itemName];
+      // If item is vanilla, add it to placedItems under its vanilla location
+      if (override.state === ItemOverrides.STATES.vanilla) {
+        const location = Object.entries(vanillaUpgrades).find(([location, item]) => item === override.name)[0];
+        placedItems[location] = primeItems[override.name];
+      }
     }
   }
 
+  // If there are enough missiles, take some from the junk items pool
+  // and put them in the always items pool to ensure the Tower of Light item can be reached
+  // in a glitchless setting.
+  const towerOfLightExpansions = itemPool[PrimeItem.MISSILE_LAUNCHER][0].count > 0 ? 7 : 8;
+
+  if (itemPool[PrimeItem.MISSILE_EXPANSION][0].count >= towerOfLightExpansions) {
+    itemPool[PrimeItem.MISSILE_EXPANSION].push({ count: towerOfLightExpansions, type: PoolType.ALWAYS });
+    itemPool[PrimeItem.MISSILE_EXPANSION][0].count -= towerOfLightExpansions;
+  }
+
+  const alwaysItems = getItemMapFromItemPool(itemPool, PoolType.ALWAYS);
+  const junkItems = getItemMapFromItemPool(itemPool, PoolType.JUNK);
+  const artifactsItems = getItemMapFromItemPool(itemPool, PoolType.ARTIFACTS);
+
+  // Push the alwaysItems and junkItems to the final item pool
   pool.push(...mapToItemPool(alwaysItems, ItemPriority.PROGRESSION));
-  pool.push(...mapToItemPool(getJunkItemsBase(), ItemPriority.EXTRA));
-  const artifactsPool = mapToItemPool(getArtifactsBase(), ItemPriority.EXTRA);
+  pool.push(...mapToItemPool(junkItems, ItemPriority.EXTRA));
 
   // Handle artifacts for item pool
+  const artifactsPool = mapToItemPool(artifactsItems, ItemPriority.EXTRA);
   switch (settings.goal) {
     case 'artifact-collection': {
       // Get random subset of artifacts if less than the maximum (12)
@@ -156,7 +197,7 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
   const numberOfUnplacedLocations = numberOfLocations - Object.keys(placedItems).length;
   // The item pool should not have more items than the number of unplaced locations
   if (pool.length > numberOfUnplacedLocations) {
-    throw new Error('Cannot set core item pool. There are more items to be placed than there are locations available.');
+    throw new Error('Cannot set core item pool. There are more items to be placed than there are locations available. (' + pool.length + ' items, ' + numberOfUnplacedLocations + ' locations)');
   }
 
   // If the item pool has less than the number of unplaced locations, fill the remainder with "Nothing" items
@@ -169,54 +210,75 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
   return { pool: pool, placedItems: placedItems };
 }
 
-function getAlwaysItemsBase(): ItemMap {
+/**
+ * Returns the default item pool state.
+ *
+ * This pool can be modified through item overrides during the item pool generation.
+ */
+function getItemPoolBase(): ItemPool {
   return {
-    [PrimeItem.MISSILE_LAUNCHER]: 1,
-    [PrimeItem.MISSILE_EXPANSION]: 7, // minimum number of expansions along with missile launcher for Tower of Light glitchless check
-    [PrimeItem.MORPH_BALL]: 1,
-    [PrimeItem.MORPH_BALL_BOMB]: 1,
-    [PrimeItem.BOOST_BALL]: 1,
-    [PrimeItem.SPIDER_BALL]: 1,
-    [PrimeItem.POWER_BOMB]: 1,
-    [PrimeItem.POWER_BOMB_EXPANSION]: 4,
-    [PrimeItem.VARIA_SUIT]: 1,
-    [PrimeItem.GRAVITY_SUIT]: 1,
-    [PrimeItem.PHAZON_SUIT]: 1,
-    [PrimeItem.WAVE_BEAM]: 1,
-    [PrimeItem.ICE_BEAM]: 1,
-    [PrimeItem.PLASMA_BEAM]: 1,
-    [PrimeItem.CHARGE_BEAM]: 1,
-    [PrimeItem.SUPER_MISSILE]: 1,
-    [PrimeItem.THERMAL_VISOR]: 1,
-    [PrimeItem.XRAY_VISOR]: 1,
-    [PrimeItem.SPACE_JUMP_BOOTS]: 1,
-    [PrimeItem.GRAPPLE_BEAM]: 1
+    [PrimeItem.MISSILE_LAUNCHER]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.MORPH_BALL]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.MORPH_BALL_BOMB]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.BOOST_BALL]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.SPIDER_BALL]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.POWER_BOMB]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.POWER_BOMB_EXPANSION]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.VARIA_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.GRAVITY_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.PHAZON_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.WAVE_BEAM]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.ICE_BEAM]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.PLASMA_BEAM]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.CHARGE_BEAM]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.SUPER_MISSILE]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.SCAN_VISOR]: [{ count: 0, type: PoolType.ALWAYS }],
+    [PrimeItem.THERMAL_VISOR]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.XRAY_VISOR]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.SPACE_JUMP_BOOTS]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.GRAPPLE_BEAM]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.ENERGY_TANK]: [{ count: 14, type: PoolType.ALWAYS }],
+    // Expansions and junk beam combos
+    [PrimeItem.MISSILE_EXPANSION]: [
+      // Initial state for missile expansions.
+      // If there are enough missiles, some will be taken out and put into the
+      // always pool for the Tower of Light glitchless item check.
+      { count: 49, type: PoolType.JUNK }
+    ],
+    [PrimeItem.WAVEBUSTER]: [{ count: 1, type: PoolType.JUNK }],
+    [PrimeItem.ICE_SPREADER]: [{ count: 1, type: PoolType.JUNK }],
+    [PrimeItem.FLAMETHROWER]: [{ count: 1, type: PoolType.JUNK }],
+    // Artifacts
+    [PrimeItem.ARTIFACT_OF_TRUTH]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_STRENGTH]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_ELDER]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_WILD]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_LIFEGIVER]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_WARRIOR]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_CHOZO]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_NATURE]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_SUN]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_WORLD]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_SPIRIT]: [{ count: 1, type: PoolType.ARTIFACTS }],
+    [PrimeItem.ARTIFACT_OF_NEWBORN]: [{ count: 1, type: PoolType.ARTIFACTS }],
   };
 }
 
-function getJunkItemsBase(): ItemMap {
-  return {
-    [PrimeItem.ENERGY_TANK]: 14,
-    [PrimeItem.MISSILE_EXPANSION]: 42,
-    [PrimeItem.WAVEBUSTER]: 1,
-    [PrimeItem.ICE_SPREADER]: 1,
-    [PrimeItem.FLAMETHROWER]: 1
-  };
-}
+/**
+ * Populates and returns an ItemMap object from the given item pool, and filters by the given pool type.
+ *
+ * @param pool The item pool to be processed.
+ * @param type The pool type to filter by.
+ */
+function getItemMapFromItemPool(pool: ItemPool, type: PoolType) {
+  const itemMap: ItemMap = {};
+  for (let [key, objectArray] of Object.entries(pool)) {
+    const poolObject = objectArray.find(item => item.type === type);
 
-function getArtifactsBase(): ItemMap {
-  return {
-    [PrimeItem.ARTIFACT_OF_TRUTH]: 1,
-    [PrimeItem.ARTIFACT_OF_STRENGTH]: 1,
-    [PrimeItem.ARTIFACT_OF_ELDER]: 1,
-    [PrimeItem.ARTIFACT_OF_WILD]: 1,
-    [PrimeItem.ARTIFACT_OF_LIFEGIVER]: 1,
-    [PrimeItem.ARTIFACT_OF_WARRIOR]: 1,
-    [PrimeItem.ARTIFACT_OF_CHOZO]: 1,
-    [PrimeItem.ARTIFACT_OF_NATURE]: 1,
-    [PrimeItem.ARTIFACT_OF_SUN]: 1,
-    [PrimeItem.ARTIFACT_OF_WORLD]: 1,
-    [PrimeItem.ARTIFACT_OF_SPIRIT]: 1,
-    [PrimeItem.ARTIFACT_OF_NEWBORN]: 1
-  };
+    if (poolObject) {
+      itemMap[key] = poolObject.count;
+    }
+  }
+
+  return itemMap;
 }

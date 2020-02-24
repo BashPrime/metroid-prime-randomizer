@@ -211,7 +211,7 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Chozo Hall of the Elders': () => true,
         'Chozo Antechamber': (items: PrimeItemCollection) => items.canBoost(),
-        'Chozo Transport East': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
+        'Chozo Transport East': (items: PrimeItemCollection) => items.hasMissiles() && items.canBoost(),
         'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM)
       }
     },
@@ -244,7 +244,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Chozo Transport East',
       exits: {
         'Tallon Transport East': () => true,
-        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
+        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs()
       }
     },
     {

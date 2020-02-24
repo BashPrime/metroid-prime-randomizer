@@ -1,3 +1,5 @@
+import { ItemOverride } from './itemOverride';
+
 export interface RandomizerForm {
   generationCount?: number;
   romSettings: {
@@ -23,10 +25,4 @@ export interface RandomizerForm {
   };
   excludeLocations: string[];
   tricks: string[];
-}
-
-export interface ItemOverride {
-  itemName: string;
-  state: string;
-  shuffle: number;
 }

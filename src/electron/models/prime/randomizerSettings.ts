@@ -11,7 +11,7 @@ import * as Utilities from '../../utilities';
 import { startingAreas } from './entranceShuffle';
 import { PERMALINK_SEPARATOR, SETTINGS_STRING_DELIMITER } from '../../../common/constants';
 import { ItemOverrides } from './itemOverrides';
-import { ItemOverride } from '../../../common/models/randomizerForm';
+import { ItemOverride } from '../../../common/models/itemOverride';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -316,7 +316,7 @@ export const settings = [
   new SelectOption({
     name: 'itemOverride',
     shared: false,
-    choices: ItemOverrides.getChoices(),
+    choices: ItemOverrides.getStates(),
     default: 'shuffled'
   }),
   new SelectOption({

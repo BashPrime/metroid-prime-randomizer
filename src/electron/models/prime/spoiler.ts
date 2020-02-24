@@ -22,10 +22,10 @@ export class Spoiler {
   };
   ['Settings']: object;
   ['Starting Area']: string;
-  // ['Starting Items']: { [key: string]: number };
+  ['Starting Items']: { [key: string]: number };
   ['Elevators']: { [key: string]: string };
   ['Locations']: PrimeLocations;
-  ['Walkthrough']: { [key: string]: string }[];
+  ['Playthrough']: { [key: string]: string }[];
 
   static generateFromWorld(world: PrimeWorld): Spoiler {
     const spoiler = new Spoiler();
@@ -48,7 +48,7 @@ export class Spoiler {
     spoiler['Starting Area'] = world.getStartingArea().name;
 
     // Set starting items
-    // spoiler['Starting Items'] = {};
+    spoiler['Starting Items'] = world.getStartingItems();
 
     // Set elevator layout
     // Because we can use undefined elevator layouts for the patcher to quickly set the default layout, refer to the base table when undefined.
@@ -69,8 +69,8 @@ export class Spoiler {
       spoiler['Locations'][matchedRegion][location.getName()] = location.getItem().getName();
     }
 
-    // Get the seed walkthrough
-    spoiler['Walkthrough'] = world.getWalkthrough();
+    // Get the seed playthrough
+    spoiler['Playthrough'] = world.getPlaythrough();
 
     return spoiler;
   }
