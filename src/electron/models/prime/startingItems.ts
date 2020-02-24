@@ -16,7 +16,7 @@ interface StartingItems {
 }
 
 /**
- * Reference of items containing randomPrime and starting item information.
+ * Reference of items containing starting item information pertaining to the randomizer logic and the randomprime patcher.
  *
  * The un-excluded items in this list are intentionally ordered to match how the
  * randomprime patcher handles the starting items bitstring.
@@ -25,7 +25,7 @@ const items: StartingItems = {
   [PrimeItem.SCAN_VISOR]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.MISSILE]: { bitWidth: 8, maximum: 0, randomPrimeOnly: true },
   [PrimeItem.ENERGY_TANK]: { bitWidth: 4, maximum: 14 },
-  [PrimeItem.POWER_BOMB]: { bitWidth: 3, maximum: 1 },
+  [PrimeItem.POWER_BOMB]: { bitWidth: 4, maximum: 1 },
   [PrimeItem.WAVE_BEAM]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.ICE_BEAM]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.PLASMA_BEAM]: { bitWidth: 1, maximum: 1 },
@@ -43,9 +43,8 @@ const items: StartingItems = {
   [PrimeItem.GRAPPLE_BEAM]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.SUPER_MISSILE]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.WAVEBUSTER]: { bitWidth: 1, maximum: 1 },
-  // Ice Spreader and Flamethrower are not included, limitation of the patcher
-  [PrimeItem.ICE_SPREADER]: { bitWidth: 1, maximum: 1, exclude: true },
-  [PrimeItem.FLAMETHROWER]: { bitWidth: 1, maximum: 1, exclude: true },
+  [PrimeItem.ICE_SPREADER]: { bitWidth: 1, maximum: 1 },
+  [PrimeItem.FLAMETHROWER]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.MISSILE_LAUNCHER]: { bitWidth: 0, maximum: 1, exclude: true },
   [PrimeItem.MISSILE_EXPANSION]: { bitWidth: 0, maximum: 49, exclude: true },
   [PrimeItem.POWER_BOMB_EXPANSION]: { bitWidth: 0, maximum: 4, exclude: true }
