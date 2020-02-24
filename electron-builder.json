@@ -6,24 +6,23 @@
   "files": [
     "main.js",
     "dist",
-    "icon.png",
     "build/Release/randomprime.node",
     "!node_modules"
   ],
   "win": {
-    "icon": "dist",
+    "icon": "icon.png",
     "target": [
       "nsis", "zip"
     ]
   },
   "mac": {
-    "icon": "dist",
+    "icon": "icon.png",
     "target": [
       "dmg", "zip"
     ]
   },
   "linux": {
-    "icon": "dist",
+    "icon": "icon.png",
     "target": [
       "AppImage", "tar.gz"
     ]
