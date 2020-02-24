@@ -1,9 +1,13 @@
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   target: 'electron-main',
   entry: './src/electron/main.ts',
+  optimization: {
+    minimizer: [new UglifyJsPlugin()]
+  },
   output: {
     path: path.resolve(__dirname),
     filename: 'main.js',

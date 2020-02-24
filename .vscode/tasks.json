@@ -7,6 +7,11 @@
       "label": "electron-build",
       "type": "npm",
       "script": "electron:build"
+    },
+    {
+      "label": "electron-build-prod",
+      "type": "npm",
+      "script": "electron:build:prod"
     }
   ]
 }
