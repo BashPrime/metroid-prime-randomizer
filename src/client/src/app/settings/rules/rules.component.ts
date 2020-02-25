@@ -13,13 +13,10 @@ export class RulesComponent extends SettingsSection implements OnInit {
   @Input() private form: FormGroup;
 
   // Constants
-  readonly OBJECT_KEYS = Object.keys;
-  readonly SETTINGS = this.randomizerService.SETTINGS;
-  readonly DETAILS = this.randomizerService.DETAILS;
   private readonly ARTIFACT_COLLECTION = 'artifact-collection';
 
-  constructor(private randomizerService: RandomizerService) {
-    super();
+  constructor(protected randomizerService: RandomizerService) {
+    super(randomizerService);
   }
 
   ngOnInit() {

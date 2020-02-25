@@ -2,6 +2,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 
 import { SettingsSection } from 'src/app/settings/settings-section';
+import { RandomizerService } from 'src/app/services/randomizer.service';
 
 export abstract class PicklistFormComponent extends SettingsSection {
   protected abstract form: FormArray;
@@ -14,8 +15,8 @@ export abstract class PicklistFormComponent extends SettingsSection {
   // Constants
   readonly GLOBAL_STYLE = { height: '100%' };
 
-  constructor() {
-    super();
+  constructor(protected randomizerService: RandomizerService) {
+    super(randomizerService);
   }
 
   ngOnInit() {

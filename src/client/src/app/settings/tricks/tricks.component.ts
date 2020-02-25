@@ -12,13 +12,8 @@ import { PicklistFormComponent } from 'src/app/components/common/picklist-form.c
 export class TricksComponent extends PicklistFormComponent implements OnInit {
   @Input() protected form: FormArray;
 
-  // Constants
-  readonly GLOBAL_STYLE = { height: '100%' };
-  readonly SETTINGS = undefined;
-  readonly DETAILS = this.randomizerService.DETAILS;
-
-  constructor(private randomizerService: RandomizerService) {
-    super();
+  constructor(protected randomizerService: RandomizerService) {
+    super(randomizerService);
   }
 
   ngOnInit() {

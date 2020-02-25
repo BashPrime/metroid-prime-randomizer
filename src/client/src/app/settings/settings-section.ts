@@ -1,7 +1,11 @@
+import { RandomizerService } from '../services/randomizer.service';
+
 export abstract class SettingsSection {
-  abstract SETTINGS;
-  abstract DETAILS;
   readonly OBJECT_KEYS = Object.keys;
+  readonly SETTINGS = this.randomizerService.SETTINGS;
+  readonly DETAILS = this.randomizerService.DETAILS;
+
+  constructor(protected randomizerService: RandomizerService) { }
 
   getSetting(name: string) {
     return this.SETTINGS.find(setting => setting.name === name);

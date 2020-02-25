@@ -14,11 +14,9 @@ export class ExcludeLocationsComponent extends PicklistFormComponent implements 
 
   // Constants
   readonly GLOBAL_STYLE = { height: '100%' };
-  readonly SETTINGS = undefined;
-  readonly DETAILS = this.randomizerService.DETAILS;
 
-  constructor(private randomizerService: RandomizerService) {
-    super();
+  constructor(protected randomizerService: RandomizerService) {
+    super(randomizerService);
   }
 
   ngOnInit() {

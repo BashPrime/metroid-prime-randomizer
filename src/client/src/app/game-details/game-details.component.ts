@@ -26,20 +26,16 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
   private submitted: boolean = false;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  // Constants
-  readonly SETTINGS = this.randomizerService.SETTINGS;
-  readonly DETAILS = this.randomizerService.DETAILS;
-
   constructor(
+    protected randomizerService: RandomizerService,
     private electronService: ElectronService,
-    private randomizerService: RandomizerService,
     private settingsService: SettingsService,
     private generatorService: GeneratorService,
     private patcherService: PatcherService,
     private clipboardService: ClipboardService,
     private toastrService: ToastrService
   ) {
-    super();
+    super(randomizerService);
   }
 
   ngOnInit() {

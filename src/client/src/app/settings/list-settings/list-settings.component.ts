@@ -12,12 +12,9 @@ import { SettingsSection } from '../settings-section';
 export class ListSettingsComponent extends SettingsSection implements OnInit {
   @Input() useColumns: boolean;
   @Input() form: FormGroup;
-  readonly OBJECT_KEYS = Object.keys;
-  readonly SETTINGS = this.randomizerService.SETTINGS;
-  readonly DETAILS = this.randomizerService.DETAILS;
 
-  constructor(private randomizerService: RandomizerService) {
-    super();
+  constructor(protected randomizerService: RandomizerService) {
+    super(randomizerService);
   }
 
   ngOnInit() {
