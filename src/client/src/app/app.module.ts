@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
+import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -28,6 +29,7 @@ import { CustomizeSettingsContainerComponent } from './settings/customize-settin
 import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
 import { GameDetailsComponent } from './game-details/game-details.component';
 import { ProgressModalComponent } from './progress-modal/progress-modal.component';
+import { ItemOverridesComponent } from './item-overrides/item-overrides.component';
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { ProgressModalComponent } from './progress-modal/progress-modal.componen
     CustomizeSettingsContainerComponent,
     ExcludeLocationsComponent,
     GameDetailsComponent,
-    ProgressModalComponent
+    ProgressModalComponent,
+    ItemOverridesComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { ProgressModalComponent } from './progress-modal/progress-modal.componen
       positionClass: 'toast-bottom-right',
       closeButton: true
     }),
-    ClipboardModule
+    ClipboardModule,
+    DataViewModule
   ],
   providers: [],
   bootstrap: [AppComponent]

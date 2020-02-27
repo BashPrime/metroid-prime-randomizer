@@ -30,17 +30,9 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('artifactLocationHints') }}</label>
         <div class="control">
-          <input class="is-checkradio" id="artifactLocationHints" type="checkbox" formControlName="artifactLocationHints">
+          <input class="is-checkradio" id="artifactLocationHints" type="checkbox"
+            formControlName="artifactLocationHints">
           <label for="artifactLocationHints"></label>
-        </div>
-      </div>
-    </div>
-    <div class="column is-one-third">
-      <div class="field">
-        <label class="label is-small">{{ getDisplayName('elevatorShuffle') }}</label>
-        <div class="control">
-          <input class="is-checkradio" id="elevatorShuffle" type="checkbox" formControlName="elevatorShuffle">
-          <label for="elevatorShuffle"></label>
         </div>
       </div>
     </div>
@@ -72,7 +64,19 @@
         </div>
       </div>
     </div>
-    <div class="column is-one-third">
+  </div>
+  <hr>
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('elevatorShuffle') }}</label>
+        <div class="control">
+          <input class="is-checkradio" id="elevatorShuffle" type="checkbox" formControlName="elevatorShuffle">
+          <label for="elevatorShuffle"></label>
+        </div>
+      </div>
+    </div>
+    <div class="column">
       <div class="field">
         <label class="label is-small">{{ getDisplayName('startingArea') }}</label>
         <div class="control">
@@ -82,6 +86,23 @@
                 {{ choice.name }}
               </option>
             </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div formGroupName="randomizedStartingItems">
+        <label class="label is-small">Randomized Starting Items</label>
+        <div class="field is-spaced-field is-inline-block-tablet">
+          <label class="label is-small">Minimum</label>
+          <div class="control">
+            <input class="input has-width-auto is-small" formControlName="minimum">
+          </div>
+        </div>
+        <div class="field is-spaced-field is-inline-block-tablet">
+          <label class="label is-small">Maximum</label>
+          <div class="control">
+            <input class="input has-width-auto is-small" formControlName="maximum">
           </div>
         </div>
       </div>

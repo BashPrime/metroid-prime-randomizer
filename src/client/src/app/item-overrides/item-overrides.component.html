@@ -1,0 +1,43 @@
+<p-dataView [value]="getForm().controls">
+  <p-header>
+    <div class="select is-small" style="margin-right: 0.5rem;" *ngIf="getAvailableItems().length">
+      <select [(ngModel)]="selectedAvailableItem">
+        <option *ngFor="let item of getAvailableItems()" [ngValue]="item">{{ item.name }}</option>
+      </select>
+    </div>
+    <button class="button is-info is-small" [disabled]="!getAvailableItems().length"
+      (click)="addFormItem()">Add</button>
+  </p-header>
+  <ng-template let-override let-i="rowIndex" pTemplate="listItem">
+    <div class="item-override">
+      <form [formGroup]="getForm().controls[i]">
+        <div class="field is-spaced-field is-inline-block-tablet">
+          <label class="label is-small">Item Name</label>
+          <div class="control">
+            <p>{{ getForm().controls[i].value.name }}</p>
+          </div>
+        </div>
+        <div class="field is-spaced-field is-inline-block-tablet">
+          <label class="label is-small">State</label>
+          <div class="control">
+            <div class="select is-small">
+              <select formControlName="state">
+                <option *ngFor="let choice of getChoices('itemOverride')" [ngValue]="choice.value">{{ choice.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field is-spaced-field is-inline-block-tablet">
+          <label class="label is-small">Count</label>
+          <div class="control">
+            <input class="input has-width-auto is-small" type="number" formControlName="count">
+          </div>
+        </div>
+        <div class="field is-inline-block-tablet is-pulled-right">
+          <button class="button is-danger is-small" (click)="removeFormItem(i)">Remove</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dataView>

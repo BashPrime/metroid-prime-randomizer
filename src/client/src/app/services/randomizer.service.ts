@@ -38,8 +38,13 @@ export class RandomizerService {
         elevatorShuffle: [this.DEFAULT_SETTINGS.elevatorShuffle],
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction],
-        startingArea: [this.DEFAULT_SETTINGS.startingArea]
+        startingArea: [this.DEFAULT_SETTINGS.startingArea],
+        randomizedStartingItems: fb.group({
+          minimum: [this.DEFAULT_SETTINGS.randomStartingItemsMin, [Validators.min(0), Validators.max(25)]],
+          maximum: [this.DEFAULT_SETTINGS.randomStartingItemsMax, [Validators.min(0), Validators.max(25)]]
+        })
       }),
+      itemOverrides: fb.array([]),
       excludeLocations: fb.array([]),
       tricks: fb.array([])
     });

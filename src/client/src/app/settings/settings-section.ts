@@ -26,4 +26,9 @@ export abstract class SettingsSection {
   getChoices(name: string) {
     return this.getSetting(name).choices;
   }
+
+  getChoiceName(name: string, value: string) {
+    // Using == because the value can be a number.
+    return this.getChoices(name).find(choice => choice.value == value).name;
+  }
 }

@@ -15,14 +15,12 @@ export interface RandomizerForm {
     heatProtection: string;
     suitDamageReduction: string;
     startingArea: number;
-  };
-  items: {
     randomStartingItems: {
       min: number;
       max: number;
     };
-    itemOverrides: ItemOverride[];
   };
+  itemOverrides: ItemOverride[];
   excludeLocations: string[];
   tricks: string[];
 }

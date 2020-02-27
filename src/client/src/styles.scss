@@ -100,3 +100,16 @@ input[type=number] {
   content: ' *';
   color: red;
 }
+
+.has-width-auto {
+  width: auto;
+}
+
+// Horizontal spacing for inline-block fields
+.field.is-spaced-field {
+  margin-right: 1rem;
+}
+
+.field.spaced-field:last-child {
+  margin-right: initial;
+}
