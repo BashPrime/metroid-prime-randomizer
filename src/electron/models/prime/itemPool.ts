@@ -223,7 +223,7 @@ function getItemPoolBase(): ItemPool {
     [PrimeItem.BOOST_BALL]: [{ count: 1, type: PoolType.ALWAYS }],
     [PrimeItem.SPIDER_BALL]: [{ count: 1, type: PoolType.ALWAYS }],
     [PrimeItem.POWER_BOMB]: [{ count: 1, type: PoolType.ALWAYS }],
-    [PrimeItem.POWER_BOMB_EXPANSION]: [{ count: 1, type: PoolType.ALWAYS }],
+    [PrimeItem.POWER_BOMB_EXPANSION]: [{ count: 4, type: PoolType.ALWAYS }],
     [PrimeItem.VARIA_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],
     [PrimeItem.GRAVITY_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],
     [PrimeItem.PHAZON_SUIT]: [{ count: 1, type: PoolType.ALWAYS }],

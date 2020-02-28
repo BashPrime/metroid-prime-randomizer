@@ -136,7 +136,19 @@ export class GenerateGameComponent implements OnInit {
       if (this.form.get(control)) {
         // Special handling for array controls
         if (Array.isArray(newValue[control])) {
-          this.form.setControl(control, fb.array(newValue[control] || []));
+          // If array values are objects, make them form groups
+          if (newValue[control].length && typeof newValue[control] === 'object') {
+            const formArray = fb.array([]);
+
+            for (let item of newValue[control]) {
+              formArray.push(fb.group(item));
+            }
+
+            this.form.setControl(control, formArray);
+          } else {
+            // Primitives
+            this.form.setControl(control, fb.array(newValue[control] || []));
+          }
         } else {
           this.form.get(control).patchValue(newValue[control]);
         }

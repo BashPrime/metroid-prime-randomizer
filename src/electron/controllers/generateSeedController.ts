@@ -61,6 +61,8 @@ function convertFormToArgs(form: RandomizerForm): PrimeRandomizerSettingsArgs {
     tricks: processArrayControl(form.tricks)
   });
 
+  args.itemOverrides = form.itemOverrides;
+
   return args;
 }
 
