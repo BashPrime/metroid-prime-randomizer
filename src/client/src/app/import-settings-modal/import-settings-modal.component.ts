@@ -14,7 +14,7 @@ interface ImportForm {
   styleUrls: ['./import-settings-modal.component.scss']
 })
 export class ImportSettingsModalComponent extends ModalComponent implements OnInit {
-  private form: FormGroup;
+  private formGroup: FormGroup;
   private submitted: boolean = false;
 
   constructor(private generatorService: GeneratorService) {
@@ -29,13 +29,13 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
     this.submitted = false;
     this.initForm();
     navigator.clipboard.readText().then(clipboardText => {
-      this.form.patchValue({ permalink: clipboardText });
+      this.formGroup.patchValue({ permalink: clipboardText });
     });
     this.setOpen(true);
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.formGroup;
   }
 
   isSubmitted(): boolean {
@@ -45,19 +45,19 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
   onSubmit(formValue: ImportForm) {
     this.submitted = true;
 
-    if (this.form.valid) {
+    if (this.formGroup.valid) {
       this.generatorService.importPermalink(formValue.permalink);
       this.setOpen(false);
     }
   }
 
   get permalink() {
-    return this.form.get('permalink');
+    return this.formGroup.get('permalink');
   }
 
   private initForm(): void {
     const fb = new FormBuilder();
-    this.form = fb.group({
+    this.formGroup = fb.group({
       permalink: ['', Validators.required]
     });
   }

@@ -19,13 +19,13 @@
         </div>
       </div>
       <div class="column is-half">
-        <form [formGroup]="getForm()">
+        <form [formGroup]="getFormGroup()">
           <label class="label is-required">Base ISO</label>
           <div class="field is-grouped">
             <div class="control is-expanded">
               <input class="input is-small" type="text" formControlName="baseIso">
-              <div *ngIf="isSubmitted() && getForm().controls.baseIso.errors">
-                <p class="help is-danger" *ngIf="getForm().controls.baseIso.errors.required">A base Metroid Prime .iso
+              <div *ngIf="isSubmitted() && getFormGroup().controls.baseIso.errors">
+                <p class="help is-danger" *ngIf="getFormGroup().controls.baseIso.errors.required">A base Metroid Prime .iso
                   file is required.</p>
               </div>
             </div>
@@ -73,9 +73,9 @@
           <div class="field">
             <div class="control">
               <div class="buttons">
-                <button class="button is-success" (click)="saveIsos(getForm().value)">Save
+                <button class="button is-success" (click)="saveIsos(getFormGroup().value)">Save
                   ISO{{ hasMultipleSeeds() ? 's' : null }}</button>
-                <button class="button is-link" (click)="saveSpoilers(getForm().value)"
+                <button class="button is-link" (click)="saveSpoilers(getFormGroup().value)"
                   *ngIf="isSpoilerEnabled() | async">Save
                   Spoiler{{ hasMultipleSeeds() ? 's' : null }}</button>
               </div>

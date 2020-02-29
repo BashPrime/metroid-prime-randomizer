@@ -266,8 +266,8 @@ export class PrimeWorld extends World {
         let isCorrectItemType: boolean;
 
         switch (item.getPriority()) {
-          case ItemPriority.PRIORITY:
           case ItemPriority.PROGRESSION:
+          case ItemPriority.ARTIFACTS:
             hasHighEnoughItemPriority = true;
             break;
           default:

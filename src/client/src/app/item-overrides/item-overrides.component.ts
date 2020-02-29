@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ControlContainer } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { SettingsSection } from '../settings/settings-section';
@@ -19,9 +19,8 @@ interface Item {
   styleUrls: ['./item-overrides.component.scss']
 })
 export class ItemOverridesComponent extends SettingsSection implements OnInit {
-  @Input() protected formArray: FormArray;
   selectedAvailableItem: Item;
-  private form: FormGroup;
+  private formArray: FormArray;
   private fb: FormBuilder = new FormBuilder();
   private items: Item[] = [
     { name: PrimeItem.MISSILE_LAUNCHER, maximum: 1 },
@@ -51,19 +50,21 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     { name: PrimeItem.POWER_BOMB_EXPANSION, maximum: 4 , isExpansion: true }
   ];
 
-  constructor(protected randomizerService: RandomizerService) {
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      itemOverrides: this.formArray
-    });
+    this.formArray = this.controlContainer.control.get('itemOverrides') as FormArray;
     this.assignFirstAvailableItem();
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.controlContainer.control as FormGroup;
+  }
+
+  getFormArray(): FormArray {
+    return this.formArray;
   }
 
   addFormItem(): void {

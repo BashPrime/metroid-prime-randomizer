@@ -104,7 +104,7 @@ export function mapToItemPool(map: ItemMap, priority?: ItemPriority): Item[] {
 
   for (const key of Object.keys(map)) {
     const item = primeItems[key].copy();
-    if (priority) {
+    if (priority || priority === ItemPriority.PROGRESSION) {
       item.setPriority(priority);
     }
 
@@ -170,7 +170,7 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
   pool.push(...mapToItemPool(junkItems, ItemPriority.EXTRA));
 
   // Handle artifacts for item pool
-  const artifactsPool = mapToItemPool(artifactsItems, ItemPriority.EXTRA);
+  const artifactsPool = mapToItemPool(artifactsItems, ItemPriority.ARTIFACTS);
   switch (settings.goal) {
     case 'artifact-collection': {
       // Get random subset of artifacts if less than the maximum (12)

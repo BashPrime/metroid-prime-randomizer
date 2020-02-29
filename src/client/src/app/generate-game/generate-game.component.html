@@ -2,7 +2,7 @@
   <section class="section randomizer-content">
     <div *ngIf="isLoaded() then loaded; else loading"></div>
     <ng-template #loaded>
-      <form [formGroup]="getForm()">
+      <form [formGroup]="getFormGroup()">
         <div class="columns">
           <div class="column is-one-half">
             <label class="label is-small">Choose a Preset</label>
@@ -40,9 +40,9 @@
             </div>
           </div>
         </div>
-        <app-customize-settings-container [form]="getForm()" *ngIf="isCustomPreset()">
+        <app-customize-settings-container *ngIf="isCustomPreset()">
         </app-customize-settings-container>
-        <app-read-only-settings-container [form]="getForm()" *ngIf="!isCustomPreset()">
+        <app-read-only-settings-container *ngIf="!isCustomPreset()">
         </app-read-only-settings-container>
       </form>
     </ng-template>

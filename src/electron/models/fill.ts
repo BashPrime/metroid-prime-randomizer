@@ -25,7 +25,7 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
 
     for (const location of shuffledLocations.toArray()) {
       // Only fill if the location isn't excluded and we can fill it
-      if (!location.isExcluded() && location.canFill(assumedItems, settings)) {
+      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings)) {
         locationToFill = location;
         location.setItem(itemToPlace);
         locations.remove(location);
@@ -44,13 +44,23 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
   }
 };
 
-export function fillFast(world: World, locations: LocationCollection, itemPool: ItemCollection) {
+export function fillFast(world: World, locations: LocationCollection, itemPool: ItemCollection, allowExcludedLocations?: boolean) {
   const rng = world.getRng();
   const shuffledLocations = locations.shuffle(rng);
 
-  while (itemPool.size() > 0 && shuffledLocations.size() > 0) {
-    const spotToFill = shuffledLocations.pop();
+  for (let locationToFill of shuffledLocations.toArray()) {
+    // Move on to the next location if the location already has an item, or is excluded and we're not allowing them
+    if (locationToFill.hasItem() || (!allowExcludedLocations && locationToFill.isExcluded())) {
+      continue;
+    }
+
     const itemToPlace = itemPool.pop();
-    spotToFill.setItem(itemToPlace);
+
+    // Exit the loop if there are no items left
+    if (!itemToPlace) {
+      break;
+    }
+
+    locationToFill.setItem(itemToPlace);
   }
 };

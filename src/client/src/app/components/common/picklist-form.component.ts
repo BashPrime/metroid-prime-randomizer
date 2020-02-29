@@ -5,11 +5,11 @@ import { SettingsSection } from 'src/app/settings/settings-section';
 import { RandomizerService } from 'src/app/services/randomizer.service';
 
 export abstract class PicklistFormComponent extends SettingsSection {
-  protected abstract form: FormArray;
   items: PickList = {
     available: [],
     selected: []
   };
+  protected abstract formArray: FormArray;
   private fb = new FormBuilder();
 
   // Constants
@@ -27,7 +27,7 @@ export abstract class PicklistFormComponent extends SettingsSection {
     const items = (event.items as SelectItem[]).map(item => item.value);
 
     for (let item of items) {
-      this.form.push(this.fb.control(item));
+      this.formArray.push(this.fb.control(item));
     }
   }
 
@@ -35,8 +35,8 @@ export abstract class PicklistFormComponent extends SettingsSection {
     const items = (event.items as SelectItem[]).map(item => item.value);
 
     for (let item of items) {
-      const formValue = this.form.value;
-      this.form.removeAt(formValue.indexOf(item));
+      const formValue = this.formArray.value;
+      this.formArray.removeAt(formValue.indexOf(item));
     }
   }
 

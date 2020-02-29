@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ControlContainer } from '@angular/forms';
 
 import { RandomizerService } from 'src/app/services/randomizer.service';
 import { SettingsSection } from '../settings-section';
@@ -10,16 +10,16 @@ import { SettingsSection } from '../settings-section';
   styleUrls: ['./rom-settings.component.scss']
 })
 export class RomSettingsComponent extends SettingsSection implements OnInit {
-  @Input() private form: FormGroup;
-
-  constructor(protected randomizerService: RandomizerService) {
+  private formGroup: FormGroup;
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
+    this.formGroup = this.controlContainer.control.get('romSettings') as FormGroup;
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.formGroup;
   }
 }

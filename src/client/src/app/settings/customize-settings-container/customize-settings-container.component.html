@@ -5,11 +5,11 @@
     </li>
   </ul>
 </div>
-<div class="settings-container">
-  <app-rom-settings [form]="form.get('romSettings')" *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
-  <app-rules [form]="form.get('rules')" *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
-  <app-item-overrides [formArray]="form.get('itemOverrides')" *ngIf="isTabIdSelected(tabIds.itemOverrides)"></app-item-overrides>
-  <app-exclude-locations [form]="form.get('excludeLocations')" *ngIf="isTabIdSelected(tabIds.excludeLocations)"></app-exclude-locations>
-  <app-tricks [form]="form.get('tricks')" *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
+<div class="settings-container" [formGroup]="getFormGroup()">
+  <app-rom-settings *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
+  <app-rules *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+  <app-item-overrides *ngIf="isTabIdSelected(tabIds.itemOverrides)"></app-item-overrides>
+  <app-exclude-locations *ngIf="isTabIdSelected(tabIds.excludeLocations)"></app-exclude-locations>
+  <app-tricks *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
 </div>
 

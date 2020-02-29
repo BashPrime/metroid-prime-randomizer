@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, ControlContainer } from '@angular/forms';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from 'src/app/services/randomizer.service';
@@ -10,16 +10,17 @@ import { RandomizerService } from 'src/app/services/randomizer.service';
   styleUrls: ['./read-only-settings-container.component.scss']
 })
 export class ReadOnlySettingsContainerComponent extends SettingsSection implements OnInit {
-  @Input() private form: FormGroup;
+  private formGroup: FormGroup;
 
-  constructor(protected randomizerService: RandomizerService) {
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
+    this.formGroup = this.controlContainer.control as FormGroup;
   }
 
-  getForm() {
-    return this.form;
+  getFormGroup() {
+    return this.formGroup;
   }
 }

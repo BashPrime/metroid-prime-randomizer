@@ -1,36 +1,36 @@
-<form [formGroup]="getForm()">
+<form [formGroup]="getFormGroup()">
   <div class="columns">
     <div class="column">
       <h1 class="title has-bottom-border">ROM Settings</h1>
-      <app-list-settings [form]="getForm().get('romSettings')" [useColumns]="true"></app-list-settings>
+      <app-list-settings [form]="getFormGroup().get('romSettings')" [useColumns]="true"></app-list-settings>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Rules</h1>
-      <app-list-settings [form]="getForm().get('rules')" [useColumns]="true"></app-list-settings>
+      <app-list-settings [form]="getFormGroup().get('rules')" [useColumns]="true"></app-list-settings>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Exclude Locations</h1>
-      <div class="content" *ngIf="getForm().get('excludeLocations').value.length">
+      <div class="content" *ngIf="getFormGroup().get('excludeLocations').value.length">
         <ul>
-          <li *ngFor="let item of getForm().get('excludeLocations').value">
+          <li *ngFor="let item of getFormGroup().get('excludeLocations').value">
             {{ item }}
           </li>
         </ul>
       </div>
-      <div class="field" *ngIf="!getForm().get('excludeLocations').value.length">
+      <div class="field" *ngIf="!getFormGroup().get('excludeLocations').value.length">
         <p>(none)</p>
       </div>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Tricks</h1>
-      <div class="content" *ngIf="getForm().get('tricks').value.length">
+      <div class="content" *ngIf="getFormGroup().get('tricks').value.length">
         <ul>
-          <li *ngFor="let item of getForm().get('tricks').value">
+          <li *ngFor="let item of getFormGroup().get('tricks').value">
             {{ getDisplayName(item) }}
           </li>
         </ul>
       </div>
-      <div class="field" *ngIf="!getForm().get('tricks').value.length">
+      <div class="field" *ngIf="!getFormGroup().get('tricks').value.length">
         <p>(none)</p>
       </div>
     </div>

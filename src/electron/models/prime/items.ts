@@ -19,8 +19,8 @@ export enum ItemType {
  * Determines the precedence of items being placed.
  */
 export enum ItemPriority {
-  PRIORITY,
   PROGRESSION,
+  ARTIFACTS,
   EXTRA
 };
 

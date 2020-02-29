@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, ControlContainer } from '@angular/forms';
 
 import { PicklistFormComponent } from 'src/app/components/common/picklist-form.component';
 import { RandomizerService } from 'src/app/services/randomizer.service';
@@ -10,16 +10,17 @@ import { RandomizerService } from 'src/app/services/randomizer.service';
   styleUrls: ['./exclude-locations.component.scss']
 })
 export class ExcludeLocationsComponent extends PicklistFormComponent implements OnInit {
-  @Input() protected form: FormArray;
+  protected formArray: FormArray;
 
   // Constants
   readonly GLOBAL_STYLE = { height: '100%' };
 
-  constructor(protected randomizerService: RandomizerService) {
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
+    this.formArray = this.controlContainer.control.get('excludeLocations') as FormArray;
     this.initialize();
   }
 
@@ -33,7 +34,7 @@ export class ExcludeLocationsComponent extends PicklistFormComponent implements 
       };
 
       // If form contains value on init, push to selected locations. Else, push to available locations.
-      if (this.form.value.includes(location.value)) {
+      if (this.formArray.value.includes(location.value)) {
         this.items.selected.push(location);
       } else {
         this.items.available.push(location);

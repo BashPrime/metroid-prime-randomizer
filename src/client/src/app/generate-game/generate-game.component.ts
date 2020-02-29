@@ -69,7 +69,7 @@ export class GenerateGameComponent implements OnInit {
     return this.loaded;
   }
 
-  getForm(): FormGroup {
+  getFormGroup(): FormGroup {
     return this.form;
   }
 
@@ -137,7 +137,7 @@ export class GenerateGameComponent implements OnInit {
         // Special handling for array controls
         if (Array.isArray(newValue[control])) {
           // If array values are objects, make them form groups
-          if (newValue[control].length && typeof newValue[control] === 'object') {
+          if (newValue[control].length && typeof newValue[control][0] === 'object') {
             const formArray = fb.array([]);
 
             for (let item of newValue[control]) {

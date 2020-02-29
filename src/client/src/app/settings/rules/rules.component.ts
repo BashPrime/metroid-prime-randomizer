@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, ControlContainer } from '@angular/forms';
 
 import { RandomizerService } from 'src/app/services/randomizer.service';
 import { SettingsSection } from '../settings-section';
@@ -10,23 +10,24 @@ import { SettingsSection } from '../settings-section';
   styleUrls: ['./rules.component.scss']
 })
 export class RulesComponent extends SettingsSection implements OnInit {
-  @Input() private form: FormGroup;
+  private formGroup: FormGroup;
 
   // Constants
   private readonly ARTIFACT_COLLECTION = 'artifact-collection';
 
-  constructor(protected randomizerService: RandomizerService) {
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
+    this.formGroup = this.controlContainer.control.get('rules') as FormGroup;
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.formGroup;
   }
 
   isArtifactCollectionSelected(): boolean {
-    return this.form.get('goal').value === this.ARTIFACT_COLLECTION;
+    return this.formGroup.get('goal').value === this.ARTIFACT_COLLECTION;
   }
 }

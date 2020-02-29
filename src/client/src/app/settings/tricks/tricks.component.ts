@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, ControlContainer } from '@angular/forms';
 
 import { RandomizerService } from '../../services/randomizer.service';
 import { PicklistFormComponent } from 'src/app/components/common/picklist-form.component';
@@ -10,13 +10,14 @@ import { PicklistFormComponent } from 'src/app/components/common/picklist-form.c
   styleUrls: ['./tricks.component.scss']
 })
 export class TricksComponent extends PicklistFormComponent implements OnInit {
-  @Input() protected form: FormArray;
+  protected formArray: FormArray;
 
-  constructor(protected randomizerService: RandomizerService) {
+  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
+    this.formArray = this.controlContainer.control.get('tricks') as FormArray;
     this.initialize();
   }
 
@@ -34,7 +35,7 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
         };
 
         // If form contains value on init, push to selected tricks. Else, push to available tricks.
-        if (this.form.value.includes(trick.value)) {
+        if (this.formArray.value.includes(trick.value)) {
           this.items.selected.push(trick);
         } else {
           this.items.available.push(trick);

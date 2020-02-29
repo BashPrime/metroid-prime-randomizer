@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ControlContainer } from '@angular/forms';
 
 import { Tab } from '../../../../../common/models/tab';
 
@@ -9,8 +9,8 @@ import { Tab } from '../../../../../common/models/tab';
   styleUrls: ['./customize-settings-container.component.scss']
 })
 export class CustomizeSettingsContainerComponent implements OnInit {
-  @Input() private form: FormGroup;
   @Input() disabled: boolean;
+
   readonly tabIds = {
     rom: 0,
     rules: 1,
@@ -27,13 +27,13 @@ export class CustomizeSettingsContainerComponent implements OnInit {
   ];
   private selectedTabId = this.tabIds.rom;
 
-  constructor() { }
+  constructor(private controlContainer: ControlContainer) { }
 
   ngOnInit() {
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.controlContainer.control as FormGroup;
   }
 
   setSelectedTabId(tabId: number) {

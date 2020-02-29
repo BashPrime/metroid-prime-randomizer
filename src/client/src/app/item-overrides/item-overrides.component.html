@@ -1,5 +1,5 @@
-<form [formGroup]="getForm()">
-  <p-dataView [value]="getForm().controls.itemOverrides.controls" formArrayName="itemOverrides">
+<div [formGroup]="getFormGroup()">
+  <p-dataView [value]="getFormArray().controls" formArrayName="itemOverrides">
     <p-header>
       <div class="select is-small" style="margin-right: 0.5rem;" *ngIf="getAvailableItems().length">
         <select [(ngModel)]="selectedAvailableItem" [ngModelOptions]="{standalone: true}">
@@ -8,7 +8,7 @@
       </div>
       <button class="button is-success is-small" [disabled]="!getAvailableItems().length"
         (click)="addFormItem()">Add</button>
-      <button class="button is-danger is-small is-pulled-right" [disabled]="!getForm().controls.itemOverrides.length"
+      <button class="button is-danger is-small is-pulled-right" [disabled]="!getFormArray().length"
         (click)="removeAllItems()">Remove All</button>
     </p-header>
     <ng-template let-override let-i="rowIndex" pTemplate="listItem">
@@ -35,12 +35,6 @@
           <label class="label is-small">Count</label>
           <div class="control">
             <input class="input has-width-auto is-small" type="number" formControlName="count">
-            <div *ngIf="getForm().controls.itemOverrides.controls[i].controls.count.errors">
-              <p class="help is-danger" *ngIf="getForm().controls.itemOverrides.controls[i].controls.count.errors.min">
-                Minimum count is 0.</p>
-              <p class="help is-danger" *ngIf="getForm().controls.itemOverrides.controls[i].controls.count.errors.max">
-                Maximum count is {{ getItem(override.value.name).maximum }}.</p>
-            </div>
           </div>
         </div>
         <div class="field">
@@ -51,4 +45,4 @@
       </div>
     </ng-template>
   </p-dataView>
-</form>
+</div>

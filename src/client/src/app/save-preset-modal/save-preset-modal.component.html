@@ -6,7 +6,7 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <form [formGroup]="getForm()">
+      <form [formGroup]="getFormGroup()">
         <div class="field">
           <label class="label is-required">Preset Name</label>
           <div class="control">
@@ -32,7 +32,7 @@
       </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" (click)="onSavePreset(getForm().value)">Save</button>
+      <button class="button is-success" (click)="onSavePreset(getFormGroup().value)">Save</button>
       <button class="button" (click)="setOpen(false)">Cancel</button>
     </footer>
   </div>

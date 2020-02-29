@@ -15,16 +15,22 @@ export function distributeItemsRestrictive(world: PrimeWorld): void {
     // Get unfilled item locations
     let fillLocations = world.getLocations().filter((location: Location) => !location.hasItem());
 
-    const priorityItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.PRIORITY);
     const progressionItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.PROGRESSION);
+    const artifactsItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.ARTIFACTS);
     const extrasItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.EXTRA);
-
-    // Fill priority items first (if needed)
-    fillRestrictive(world, fillLocations, priorityItemPool);
 
     // Logically fill progressive items to ensure the game can be completed.
     fillRestrictive(world, fillLocations, progressionItemPool);
 
+    // Filter out filled locations
+    fillLocations = world.getLocations().filter((location: Location) => !location.hasItem());
+
+    // Progression items are filled, artifacts can be filled fast among non-excluded locations
+    fillFast(world, fillLocations, artifactsItemPool);
+
+    // Filter out filled locations
+    fillLocations = world.getLocations().filter((location: Location) => !location.hasItem());
+
     // Fill extras/remaining junk items last. No logic needed as the progression items are placed by now.
-    fillFast(world, fillLocations, extrasItemPool);
+    fillFast(world, fillLocations, extrasItemPool, true);
 }

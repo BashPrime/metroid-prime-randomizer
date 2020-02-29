@@ -6,7 +6,7 @@
       <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
     </header>
     <section class="modal-card-body has-text-left">
-      <form [formGroup]="getForm()">
+      <form [formGroup]="getFormGroup()">
         <label class="label is-required">Permalink</label>
         <div class="field">
           <div class="control">
@@ -19,7 +19,7 @@
       </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" (click)="onSubmit(getForm().value)">Import</button>
+      <button class="button is-success" (click)="onSubmit(getFormGroup().value)">Import</button>
       <button class="button" (click)="setOpen(false)">Cancel</button>
     </footer>
   </div>

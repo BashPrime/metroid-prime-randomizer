@@ -22,7 +22,7 @@ import { RandomizerService } from '../services/randomizer.service';
 })
 export class GameDetailsComponent extends SettingsSection implements OnInit {
   private seeds: GeneratedSeed[];
-  private form: FormGroup;
+  private formGroup: FormGroup;
   private submitted: boolean = false;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -52,7 +52,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(settings => {
         if (settings) {
-          this.form.patchValue(settings);
+          this.formGroup.patchValue(settings);
         }
       });
 
@@ -66,7 +66,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
 
   initForm(): void {
     const fb = new FormBuilder();
-    this.form = fb.group({
+    this.formGroup = fb.group({
       baseIso: ['', [Validators.required]],
       outputFolder: ['', Validators.required],
       trilogyIso: [''],
@@ -74,8 +74,8 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     })
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.formGroup;
   }
 
   getSeeds(): GeneratedSeed[] {
@@ -112,7 +112,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
       properties: ['openFile']
     }).then(result => {
       if (!result.canceled) {
-        this.form.controls.baseIso.setValue(result.filePaths[0]);
+        this.formGroup.controls.baseIso.setValue(result.filePaths[0]);
       }
     });
   }
@@ -126,7 +126,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
       properties: ['openFile']
     }).then(result => {
       if (!result.canceled) {
-        this.form.controls.trilogyIso.setValue(result.filePaths[0]);
+        this.formGroup.controls.trilogyIso.setValue(result.filePaths[0]);
       }
     });
   }
@@ -136,7 +136,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
       properties: ['openDirectory']
     }).then(result => {
       if (!result.canceled) {
-        this.form.controls.outputFolder.setValue(result.filePaths[0]);
+        this.formGroup.controls.outputFolder.setValue(result.filePaths[0]);
       }
     });
   }
@@ -144,7 +144,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
   saveIsos(form: PatchForm): void {
     this.submitted = true;
 
-    if (this.form.valid) {
+    if (this.formGroup.valid) {
       this.patcherService.patchIsos(this.seeds, form);
     }
   }
@@ -154,7 +154,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
   }
 
   onValueChanges(): void {
-    this.form.valueChanges
+    this.formGroup.valueChanges
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(value => {
         this.settingsService.applyPatchSettings(value);

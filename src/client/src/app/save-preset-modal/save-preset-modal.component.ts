@@ -12,7 +12,7 @@ import { PresetObject } from '../../../../common/models/presetObject';
 export class SavePresetModalComponent extends ModalComponent implements OnInit {
   @Output() onSave: EventEmitter<string> = new EventEmitter<string>();
   private presets: PresetObject = {};
-  private form: FormGroup;
+  private formGroup: FormGroup;
   private submitted: boolean = false;
 
   constructor() {
@@ -30,8 +30,8 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
     this.setOpen(true);
   }
 
-  getForm(): FormGroup {
-    return this.form;
+  getFormGroup(): FormGroup {
+    return this.formGroup;
   }
 
   getPresets(): PresetObject {
@@ -45,7 +45,7 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
   onSavePreset(formValue: SavePresetForm): void {
     this.submitted = true;
 
-    if (this.form.valid) {
+    if (this.formGroup.valid) {
       this.onSave.emit(formValue.preset);
       this.setOpen(false);
     }
@@ -56,17 +56,17 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
   }
 
   onPresetsDropdownChange(event) {
-    this.form.patchValue({ preset: event.target.value });
-    this.form.get('preset').markAsDirty();
+    this.formGroup.patchValue({ preset: event.target.value });
+    this.formGroup.get('preset').markAsDirty();
   }
 
   get preset() {
-    return this.form.get('preset');
+    return this.formGroup.get('preset');
   }
 
   private initializeForm(): void {
     const fb = new FormBuilder();
-    this.form = fb.group({
+    this.formGroup = fb.group({
       preset: ['', [Validators.required]]
     });
   }
