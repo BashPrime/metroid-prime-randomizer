@@ -1,4 +1,5 @@
 import { ItemOverride } from './itemOverride';
+import { RandomStartingItems } from './randomStartingItems';
 
 export interface RandomizerForm {
   generationCount?: number;
@@ -15,10 +16,7 @@ export interface RandomizerForm {
     heatProtection: string;
     suitDamageReduction: string;
     startingArea: number;
-    randomStartingItems: {
-      min: number;
-      max: number;
-    };
+    randomStartingItems: RandomStartingItems;
   };
   itemOverrides: ItemOverride[];
   excludeLocations: string[];

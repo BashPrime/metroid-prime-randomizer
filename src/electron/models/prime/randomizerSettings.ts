@@ -2,7 +2,7 @@ import * as bigInt from 'big-integer';
 import * as crypto from 'crypto';
 
 import { RandomizerSettings, RandomizerSettingsArgs } from '../randomizerSettings';
-import { Checkbox, SelectOption, discreteNumberSelection } from '../option';
+import { Checkbox, SelectOption, discreteNumberSelection, ObjectOption, NumberOption } from '../option';
 import { OptionType } from '../../enums/optionType';
 import { Tricks } from './tricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
@@ -10,6 +10,7 @@ import { ExcludeLocations } from './excludeLocations';
 import * as Utilities from '../../utilities';
 import { startingAreas } from './entranceShuffle';
 import { PERMALINK_SEPARATOR, SETTINGS_STRING_DELIMITER } from '../../../common/constants';
+import { RandomStartingItems } from '../../../common/models/randomStartingItems';
 import { ItemOverrides } from './itemOverrides';
 import { ItemOverride } from '../../../common/models/itemOverride';
 
@@ -26,8 +27,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   heatProtection?: string;
   suitDamageReduction?: string;
   startingArea?: number;
-  randomStartingItemsMin?: number;
-  randomStartingItemsMax?: number;
+  randomStartingItems?: RandomStartingItems;
   itemOverrides?: ItemOverride[];
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
@@ -46,8 +46,10 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   heatProtection: string = 'any-suit';
   suitDamageReduction: string = 'default';
   startingArea: number = 20;
-  randomStartingItemsMin: number = 0;
-  randomStartingItemsMax: number = 0;
+  randomStartingItems: RandomStartingItems = {
+    minimum: 0,
+    maximum: 0
+  };
   itemOverrides: ItemOverrides = new ItemOverrides();
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
@@ -87,21 +89,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     for (const setting of sharedSettings) {
       let settingValue = this[setting.name];
-
-      switch (setting.type) {
-        case OptionType.BOOLEAN:
-          bits += settingValue ? '1' : '0';
-          break;
-        case OptionType.SELECT:
-          const index = setting.choices.map(choice => choice.value).indexOf(settingValue);
-
-          if (index < 0) {
-            throw new Error('Cannot find index for setting ' + setting.name + ' (value: ' + settingValue + ')');
-          }
-
-          bits += Utilities.toPaddedBitString(index, setting.bitWidth);
-          break;
-      }
+      bits += getBitstringFromOption(settingValue, setting);
     }
 
     return bigInt(bits, 2).toString(36).toUpperCase()
@@ -177,7 +165,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   }
 }
 
-export function getSetting(name: string): Checkbox | SelectOption {
+export function getSetting(name: string): Checkbox | SelectOption | NumberOption | ObjectOption {
   return settings.find(setting => setting.name === name);
 }
 
@@ -187,21 +175,60 @@ function getGeneralSettingsFromSettingsString(settingsString): object {
 
   let index = 0;
   for (const setting of settings.filter(setting => setting.shared)) {
-    const bitWidth = setting.bitWidth;
-    const currentBits = bitString.substr(index, bitWidth);
-
-    switch (setting.type) {
-      case OptionType.BOOLEAN:
-        newSettings[setting.name] = parseInt(currentBits, 2) === 1 ? true : false;
-        break;
-      case OptionType.SELECT:
-        newSettings[setting.name] = setting.choices[parseInt(currentBits, 2)].value;
-        break;
-    }
-    index += bitWidth;
+    newSettings[setting.name] = parseOptionFromBitstring(bitString.substr(index, setting.bitWidth), setting);
+    index += setting.bitWidth;
   }
 
   return newSettings;
+}
+
+function getBitstringFromOption(value: any, option: Checkbox | SelectOption | NumberOption | ObjectOption): string {
+  switch (option.type) {
+    case OptionType.BOOLEAN:
+      return value ? '1' : '0';
+    case OptionType.SELECT:
+      const index = option.choices.map(choice => choice.value).indexOf(value);
+
+      if (index < 0) {
+        throw new Error('Cannot find index for setting ' + option.name + ' (value: ' + value + ')');
+      }
+
+      return Utilities.toPaddedBitString(index, option.bitWidth);
+    case OptionType.NUMBER:
+      return Utilities.toPaddedBitString(value, option.bitWidth);
+    case OptionType.OBJECT:
+      let bits = '';
+      for (let [key, nestedOption] of Object.entries(option)) {
+        bits += getBitstringFromOption(value[key], nestedOption);
+      }
+      return bits;
+    default:
+      return null;
+  }
+}
+
+function parseOptionFromBitstring(bitString: string, option: Checkbox | SelectOption | NumberOption | ObjectOption): string | number | boolean | object {
+  switch (option.type) {
+    case OptionType.BOOLEAN:
+      return parseInt(bitString, 2) === 1 ? true : false;
+    case OptionType.SELECT:
+      return option.choices[parseInt(bitString, 2)].value;
+    case OptionType.NUMBER:
+      return parseInt(bitString, 2);
+    case OptionType.OBJECT:
+      const obj = {};
+      let offset = 0;
+
+      for (let [key, nestedOption] of Object.entries(option)) {
+        const subBits = bitString.substr(offset, nestedOption.bitWidth);
+        obj[key] = parseOptionFromBitstring(subBits, nestedOption);
+        offset += nestedOption.bitWidth;
+      }
+
+      return obj;
+    default:
+      return null;
+  }
 }
 
 function getTotalSharedSettingsBitWidth(): number {
@@ -289,29 +316,25 @@ export const settings = [
     ],
     default: 20
   }),
-  new SelectOption({
-    name: 'randomStartingItemsMin',
+  new ObjectOption({
+    name: 'randomStartingItems',
     shared: true,
-    choices: [
-      {
-        name: '0',
-        value: 0
-      },
-      ...discreteNumberSelection(1, 25)
-    ],
-    default: 0
-  }),
-  new SelectOption({
-    name: 'randomStartingItemsMax',
-    shared: true,
-    choices: [
-      {
-        name: '0',
-        value: 0
-      },
-      ...discreteNumberSelection(1, 25)
-    ],
-    default: 0
+    options: {
+      minimum: new NumberOption({
+        name: 'minimum',
+        shared: false,
+        minimum: 0,
+        maximum: 25,
+        default: 0
+      }),
+      maximum: new NumberOption({
+        name: 'maximum',
+        shared: false,
+        minimum: 0,
+        maximum: 25,
+        default: 0
+      })
+    }
   }),
   new SelectOption({
     name: 'itemOverride',

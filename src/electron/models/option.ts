@@ -30,6 +30,23 @@ interface SelectOptionArgs {
   tooltip?: string;
 }
 
+interface NumberOptionArgs {
+  name: string;
+  shared: boolean;
+  minimum: number;
+  maximum: number;
+  default?: number | string;
+  tooltip?: string;
+}
+
+interface ObjectOptionArgs {
+  name: string;
+  options: { [key: string]: Option };
+  shared: boolean;
+  default?: { [key: string]: number | string };
+  tooltip?: string;
+}
+
 export class Option {
     name: string;
     type: OptionType;
@@ -45,7 +62,7 @@ export class Option {
       this.bitWidth = this.calculateBitWidth();
     }
 
-    private calculateBitWidth() {
+    protected calculateBitWidth() {
       const numChoices = this.choices.length;
       if (numChoices > 0) {
         return Math.ceil(Utilities.getBaseLog(numChoices, 2));
@@ -89,6 +106,57 @@ export class SelectOption extends Option {
       default: args.default,
       tooltip: args.tooltip
     } as OptionArgs);
+  }
+}
+
+export class NumberOption extends Option {
+  minimum: number;
+  maximum: number;
+
+  constructor(args: NumberOptionArgs) {
+    super({
+      name: args.name,
+      type: OptionType.NUMBER,
+      shared: args.shared,
+      default: args.default,
+      tooltip: args.tooltip
+    } as OptionArgs);
+
+    this.minimum = args.minimum;
+    this.maximum = args.maximum;
+  }
+
+  protected calculateBitWidth() {
+    if (this.maximum) {
+      return Math.ceil(Utilities.getBaseLog(this.maximum, 2));
+    }
+
+    return 0;
+  }
+}
+
+export class ObjectOption extends Option {
+  options: { [key: string]: Option };
+
+  constructor(args: ObjectOptionArgs) {
+    super({
+      name: args.name,
+      type: OptionType.OBJECT,
+      shared: args.shared,
+      tooltip: args.tooltip
+    } as OptionArgs);
+
+    Object.assign(this.options, args.options);
+  }
+
+  protected calculateBitWidth() {
+    let bitWidth = 0;
+
+    for (let [key, option] of Object.entries(this.options)) {
+      bitWidth += option.bitWidth;
+    }
+
+    return bitWidth;
   }
 }
 
