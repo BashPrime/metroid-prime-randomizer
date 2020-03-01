@@ -39,9 +39,6 @@
             <label class="label is-small">Count</label>
             <div class="control">
               <input class="input is-small" type="number" formControlName="count">
-              <div *ngIf="getFormArray().controls[i].controls.count.errors">
-                <p class="help is-danger" *ngIf="getFormArray().controls[i].controls.count.errors.min">Minimum count is 0.</p>
-              </div>
             </div>
           </div>
         </div>

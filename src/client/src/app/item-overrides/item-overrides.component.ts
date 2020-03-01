@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, ControlContainer } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ControlContainer } from '@angular/forms';
 
 import { RandomizerService } from '../services/randomizer.service';
 import { SettingsSection } from '../settings/settings-section';

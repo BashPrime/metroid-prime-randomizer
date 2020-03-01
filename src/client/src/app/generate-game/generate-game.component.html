@@ -30,10 +30,10 @@
               <label class="label is-small">Number of Seeds to Generate</label>
               <div class="control">
                 <input class="input is-small" type="number" formControlName="generationCount">
-                <div *ngIf="form.get('generationCount').errors">
-                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.min">Minimum count is 1.</p>
-                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.max">Maximum count is 99.</p>
-                  <p class="help is-danger" *ngIf="form.get('generationCount').errors.required">You must enter a number
+                <div *ngIf="getFormGroup().controls.generationCount.errors">
+                  <p class="help is-danger" *ngIf="getFormGroup().controls.generationCount.errors.min">Minimum count is 1.</p>
+                  <p class="help is-danger" *ngIf="getFormGroup().controls.generationCount.errors.max">Maximum count is 99.</p>
+                  <p class="help is-danger" *ngIf="getFormGroup().controls.generationCount.errors.required">You must enter a number
                     between 1 and 99.</p>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, ControlContainer } from '@angular/forms';
+import { FormGroup, ControlContainer, FormArray } from '@angular/forms';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from 'src/app/services/randomizer.service';
@@ -22,6 +22,10 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
 
   getFormGroup() {
     return this.formGroup;
+  }
+
+  getFormArray(name: string) {
+    return this.formGroup.get(name) as FormArray;
   }
 
   getValue(name: string, section: string) {
