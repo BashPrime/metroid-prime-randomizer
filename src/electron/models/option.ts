@@ -10,6 +10,9 @@ interface OptionArgs {
   name: string;
   type: OptionType;
   shared: boolean;
+  minimum?: number;
+  maximum?: number;
+  options?: { [key: string]: Option };
   choices?: SettingsChoice[];
   default?: number | string | boolean;
   tooltip?: string;
@@ -52,6 +55,9 @@ export class Option {
     type: OptionType;
     bitWidth: number;
     shared: boolean;
+    minimum: number;
+    maximum: number;
+    options: { [key: string]: Option };
     choices: SettingsChoice[];
     default: number | string | boolean;
     tooltip: string;
@@ -110,23 +116,19 @@ export class SelectOption extends Option {
 }
 
 export class NumberOption extends Option {
-  minimum: number;
-  maximum: number;
-
   constructor(args: NumberOptionArgs) {
     super({
       name: args.name,
       type: OptionType.NUMBER,
       shared: args.shared,
+      minimum: args.minimum,
+      maximum: args.maximum,
       default: args.default,
       tooltip: args.tooltip
     } as OptionArgs);
-
-    this.minimum = args.minimum;
-    this.maximum = args.maximum;
   }
 
-  protected calculateBitWidth() {
+  protected calculateBitWidth(): number {
     if (this.maximum) {
       return Math.ceil(Utilities.getBaseLog(this.maximum, 2));
     }
@@ -136,20 +138,17 @@ export class NumberOption extends Option {
 }
 
 export class ObjectOption extends Option {
-  options: { [key: string]: Option };
-
   constructor(args: ObjectOptionArgs) {
     super({
       name: args.name,
       type: OptionType.OBJECT,
+      options: args.options,
       shared: args.shared,
       tooltip: args.tooltip
     } as OptionArgs);
-
-    Object.assign(this.options, args.options);
   }
 
-  protected calculateBitWidth() {
+  protected calculateBitWidth(): number {
     let bitWidth = 0;
 
     for (let [key, option] of Object.entries(this.options)) {

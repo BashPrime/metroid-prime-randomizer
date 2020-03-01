@@ -119,7 +119,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   prettify(excludedKeys?: string[]) {
     const prettified = {};
 
-    const filtered = Utilities.filterProperties(this, ['itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
+    const filtered = Utilities.filterProperties(this, ['randomStartingItems', 'itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
 
     for (let key of Object.keys(filtered)) {
       // Try to get prettified setting name, if applicable
@@ -130,6 +130,10 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     // Add excluded tricks and tricks as arrays instead of objects
     Object.assign(prettified, {
+      ['Random Starting Items']: {
+        ['Minimum']: this.randomStartingItems.minimum,
+        ['Maximum']: this.randomStartingItems.maximum
+      },
       ['Item Overrides']: this.itemOverrides.prettify(),
       ['Exclude Locations']: this.excludeLocations.toArray(),
       ['Tricks']: this.tricks.toArray().map(item => details[item] ? details[item].name : item)
@@ -198,7 +202,7 @@ function getBitstringFromOption(value: any, option: Checkbox | SelectOption | Nu
       return Utilities.toPaddedBitString(value, option.bitWidth);
     case OptionType.OBJECT:
       let bits = '';
-      for (let [key, nestedOption] of Object.entries(option)) {
+      for (let [key, nestedOption] of Object.entries(option.options)) {
         bits += getBitstringFromOption(value[key], nestedOption);
       }
       return bits;
@@ -219,7 +223,7 @@ function parseOptionFromBitstring(bitString: string, option: Checkbox | SelectOp
       const obj = {};
       let offset = 0;
 
-      for (let [key, nestedOption] of Object.entries(option)) {
+      for (let [key, nestedOption] of Object.entries(option.options)) {
         const subBits = bitString.substr(offset, nestedOption.bitWidth);
         obj[key] = parseOptionFromBitstring(subBits, nestedOption);
         offset += nestedOption.bitWidth;
@@ -403,14 +407,6 @@ export const details: OptionDetails = {
   startingArea: {
     name: 'Starting Area',
     description: ''
-  },
-  randomStartingItemsMin: {
-    name: 'Random Starting Items - Minimum',
-    description: 'You will start the game with at least this many items.'
-  },
-  randomStartingItemsMax: {
-    name: 'Random Starting Items - Maximum',
-    description: 'You will start the game with at most this many items.'
   },
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',

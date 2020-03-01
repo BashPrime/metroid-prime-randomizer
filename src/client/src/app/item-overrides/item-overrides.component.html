@@ -1,48 +1,54 @@
 <div [formGroup]="getFormGroup()">
-  <p-dataView [value]="getFormArray().controls" formArrayName="itemOverrides">
-    <p-header>
+  <div class="field is-grouped">
+    <div class="control">
       <div class="select is-small" style="margin-right: 0.5rem;" *ngIf="getAvailableItems().length">
         <select [(ngModel)]="selectedAvailableItem" [ngModelOptions]="{standalone: true}">
           <option *ngFor="let item of getAvailableItems()" [ngValue]="item">{{ item.name }}</option>
         </select>
       </div>
-      <button class="button is-success is-small" [disabled]="!getAvailableItems().length"
-        (click)="addFormItem()">Add</button>
-      <button class="button is-danger is-small is-pulled-right" [disabled]="!getFormArray().length"
-        (click)="removeAllItems()">Remove All</button>
-    </p-header>
-    <ng-template let-override let-i="rowIndex" pTemplate="listItem">
-      <div class="item-override" [formGroupName]="i">
-        <div class="field">
-          <!-- <label class="label is-small">Item Name</label> -->
-          <div class="control">
-            <p>{{ override.value.name }}</p>
+    </div>
+    <div class="control">
+      <div class="buttons are-small">
+        <button class="button is-success" [disabled]="!getAvailableItems().length" (click)="addFormItem()">Add</button>
+        <button class="button is-danger" [disabled]="!getFormArray().length" (click)="removeAllItems()">Remove
+          All</button>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-multiline" formArrayName="itemOverrides">
+    <div class="column is-one-quarter" *ngFor="let override of getFormArray().controls; let i = index"
+      [formGroupName]="i">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">{{ override.value.name }}</p>
+        </header>
+        <div class="card-content">
+          <div class="field">
+            <label class="label is-small">State</label>
+            <div class="control">
+              <div class="select is-fullwidth is-small">
+                <select formControlName="state">
+                  <option *ngFor="let choice of getConditionalChoices(override.value.name)" [ngValue]="choice.value">
+                    {{ choice.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="field">
-          <label class="label is-small">State</label>
-          <div class="control">
-            <div class="select is-small">
-              <select formControlName="state">
-                <option *ngFor="let choice of getConditionalChoices(override.value.name)" [ngValue]="choice.value">
-                  {{ choice.name }}
-                </option>
-              </select>
+          <div class="field" *ngIf="isCountEnabled(override.value)">
+            <label class="label is-small">Count</label>
+            <div class="control">
+              <input class="input is-small" type="number" formControlName="count">
+              <div *ngIf="getFormArray().controls[i].controls.count.errors">
+                <p class="help is-danger" *ngIf="getFormArray().controls[i].controls.count.errors.min">Minimum count is 0.</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="field" *ngIf="isCountEnabled(override.value)">
-          <label class="label is-small">Count</label>
-          <div class="control">
-            <input class="input has-width-auto is-small" type="number" formControlName="count">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button class="button is-danger is-small" (click)="removeFormItem(i)">Remove</button>
-          </div>
-        </div>
+        <footer class="card-footer">
+          <a class="card-footer-item has-text-danger" (click)="removeFormItem(i)">Remove</a>
+        </footer>
       </div>
-    </ng-template>
-  </p-dataView>
+    </div>
+  </div>
 </div>

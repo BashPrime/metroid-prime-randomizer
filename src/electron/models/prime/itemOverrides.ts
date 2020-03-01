@@ -153,6 +153,9 @@ export class ItemOverrides {
         if (this[override.name].state === ItemOverrides.STATES.vanilla) {
           this[override.name].state = ItemOverrides.STATES.shuffled;
         }
+      } else if (override.name === PrimeItem.SCAN_VISOR && override.state === ItemOverrides.STATES.vanilla) {
+        // No vanilla location for scan visor, set it to a starting item instead
+        this[override.name].state = ItemOverrides.STATES.startingItem;
       } else {
         this[override.name].isExpansion = false;
       }

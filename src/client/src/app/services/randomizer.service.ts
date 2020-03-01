@@ -39,7 +39,7 @@ export class RandomizerService {
         heatProtection: [this.DEFAULT_SETTINGS.heatProtection],
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction],
         startingArea: [this.DEFAULT_SETTINGS.startingArea],
-        randomizedStartingItems: fb.group({
+        randomStartingItems: fb.group({
           minimum: [this.DEFAULT_SETTINGS.randomStartingItems.minimum, [Validators.min(0), Validators.max(25)]],
           maximum: [this.DEFAULT_SETTINGS.randomStartingItems.maximum, [Validators.min(0), Validators.max(25)]]
         })

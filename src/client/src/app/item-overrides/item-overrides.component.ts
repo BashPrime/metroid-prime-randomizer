@@ -11,6 +11,7 @@ interface Item {
   name: string;
   maximum: number;
   isExpansion?: boolean;
+  exclude?: string[];
 }
 
 @Component({
@@ -39,15 +40,15 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     { name: PrimeItem.GRAVITY_SUIT, maximum: 1 },
     { name: PrimeItem.PHAZON_SUIT, maximum: 1 },
     { name: PrimeItem.GRAPPLE_BEAM, maximum: 1 },
-    { name: PrimeItem.SCAN_VISOR, maximum: 1 },
+    { name: PrimeItem.SCAN_VISOR, maximum: 1, exclude: [ItemOverrides.STATES.vanilla] },
     { name: PrimeItem.THERMAL_VISOR, maximum: 1 },
     { name: PrimeItem.XRAY_VISOR, maximum: 1 },
     { name: PrimeItem.WAVEBUSTER, maximum: 1 },
     { name: PrimeItem.ICE_SPREADER, maximum: 1 },
     { name: PrimeItem.FLAMETHROWER, maximum: 1 },
-    { name: PrimeItem.ENERGY_TANK, maximum: 14, isExpansion: true },
-    { name: PrimeItem.MISSILE_EXPANSION, maximum: 49, isExpansion: true },
-    { name: PrimeItem.POWER_BOMB_EXPANSION, maximum: 4 , isExpansion: true }
+    { name: PrimeItem.ENERGY_TANK, maximum: 14, isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] },
+    { name: PrimeItem.MISSILE_EXPANSION, maximum: 49, isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] },
+    { name: PrimeItem.POWER_BOMB_EXPANSION, maximum: 4 , isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] }
   ];
 
   constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
@@ -109,9 +110,9 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     const item = this.getItem(itemName);
     const choices = this.getChoices('itemOverride');
 
-    // If item is an expansion, vanilla choice isn't used
-    if (item.isExpansion) {
-      return choices.filter(choice => choice.value !== ItemOverrides.STATES.vanilla);
+    // Filter out excluded state choices if exclude property exists
+    if (item.exclude) {
+      return choices.filter(choice => !item.exclude.includes(choice.value as string));
     }
 
     return choices;
