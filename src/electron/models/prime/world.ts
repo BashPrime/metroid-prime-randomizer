@@ -319,7 +319,7 @@ export class PrimeWorld extends World {
     newRootExit.connect(this.getRegionByKey(area.region));
 
     // Set the starting area field for this world
-    this.startingArea = area;
+    this.setStartingArea(area);
   }
 
   /**
@@ -379,17 +379,16 @@ export class PrimeWorld extends World {
       itemLayout.push(location.getItem().getPatcherId());
     }
 
-    // If elevators field exists, build array and use for the layout encode function
-    if (this.elevatorLayout) {
-      elevatorLayout = this.elevatorLayout.concat(endgameTeleporters).sort((a, b) => {
-        if (a.id < b.id) return -1;
-        else if (a.id > b.id) return 1;
-        return 0;
-      }).map(elevator => elevator.destination);
+    // Handle elevators array for the layout encode function
+    const elevators = this.elevatorLayout ? this.elevatorLayout : elevatorTableBase;
+    elevatorLayout = elevators.concat(endgameTeleporters).sort((a, b) => {
+      if (a.id < b.id) return -1;
+      else if (a.id > b.id) return 1;
+      return 0;
+    }).map(elevator => elevator.destination);
 
-      // Starting area is the last index of the elevator layout array
-      elevatorLayout.push(this.startingArea.id);
-    }
+    // Starting area is the last index of the elevator layout array
+    elevatorLayout.push(this.startingArea.id);
 
     return new LayoutString().encode_layout(itemLayout, elevatorLayout);
   }
