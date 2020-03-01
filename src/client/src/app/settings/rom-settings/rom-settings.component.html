@@ -3,19 +3,22 @@
     <div class="column is-one-third">
       <div class="field">
         <input class="is-checkradio" id="skipFrigate" type="checkbox" formControlName="skipFrigate">
-        <label for="skipFrigate">{{ getDisplayName('skipFrigate') }}</label>
+        <label for="skipFrigate"
+          [pTooltip]="DETAILS.skipFrigate.description">{{ getDisplayName('skipFrigate') }}</label>
       </div>
     </div>
     <div class="column is-one-third">
       <div class="field">
         <input class="is-checkradio" id="skipHudPopups" type="checkbox" formControlName="skipHudPopups">
-        <label for="skipHudPopups">{{ getDisplayName('skipHudPopups') }}</label>
+        <label for="skipHudPopups"
+          [pTooltip]="DETAILS.skipHudPopups.description">{{ getDisplayName('skipHudPopups') }}</label>
       </div>
     </div>
     <div class="column is-one-third">
       <div class="field">
         <input class="is-checkradio" id="hideItemModels" type="checkbox" formControlName="hideItemModels">
-        <label for="hideItemModels">{{ getDisplayName('hideItemModels') }}</label>
+        <label for="hideItemModels"
+          [pTooltip]="DETAILS.hideItemModels.description">{{ getDisplayName('hideItemModels') }}</label>
       </div>
     </div>
   </div>

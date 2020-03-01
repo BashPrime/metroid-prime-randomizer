@@ -4,7 +4,7 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('goal') }}</label>
         <div class="control">
-          <div class="select is-small">
+          <div class="select is-small" [pTooltip]="DETAILS.goal.description" tooltipStyleClass="is-wide-tooltip">
             <select formControlName="goal">
               <option *ngFor="let choice of getChoices('goal')" value="{{ choice.value }}">{{ choice.name }}</option>
             </select>
@@ -16,7 +16,7 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('goalArtifacts') }}</label>
         <div class="control">
-          <div class="select is-small">
+          <div class="select is-small" [pTooltip]="DETAILS.goalArtifacts.description">
             <select formControlName="goalArtifacts">
               <option *ngFor="let choice of getChoices('goalArtifacts')" [ngValue]="choice.value">
                 {{ choice.name }}
@@ -32,7 +32,8 @@
         <div class="control">
           <input class="is-checkradio" id="artifactLocationHints" type="checkbox"
             formControlName="artifactLocationHints">
-          <label for="artifactLocationHints"></label>
+          <label for="artifactLocationHints" [pTooltip]="DETAILS.artifactLocationHints.description"
+            tooltipStyleClass="is-wide-tooltip"></label>
         </div>
       </div>
     </div>
@@ -40,7 +41,8 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('heatProtection') }}</label>
         <div class="control">
-          <div class="select is-small">
+          <div class="select is-small" [pTooltip]="DETAILS.heatProtection.description"
+            tooltipStyleClass="is-wide-tooltip">
             <select formControlName="heatProtection">
               <option *ngFor="let choice of getChoices('heatProtection')" value="{{ choice.value }}">
                 {{ choice.name }}
@@ -54,7 +56,8 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('suitDamageReduction') }}</label>
         <div class="control">
-          <div class="select is-small">
+          <div class="select is-small" [pTooltip]="DETAILS.suitDamageReduction.description"
+            tooltipStyleClass="is-wide-tooltip">
             <select formControlName="suitDamageReduction">
               <option *ngFor="let choice of getChoices('suitDamageReduction')" value="{{ choice.value }}">
                 {{ choice.name }}
@@ -72,7 +75,7 @@
         <label class="label is-small">{{ getDisplayName('elevatorShuffle') }}</label>
         <div class="control">
           <input class="is-checkradio" id="elevatorShuffle" type="checkbox" formControlName="elevatorShuffle">
-          <label for="elevatorShuffle"></label>
+          <label for="elevatorShuffle" [pTooltip]="DETAILS.elevatorShuffle.description"></label>
         </div>
       </div>
     </div>
@@ -80,7 +83,8 @@
       <div class="field">
         <label class="label is-small">{{ getDisplayName('startingArea') }}</label>
         <div class="control">
-          <div class="select is-small">
+          <div class="select is-small" [pTooltip]="DETAILS.startingArea.description"
+            tooltipStyleClass="is-wide-tooltip">
             <select formControlName="startingArea">
               <option *ngFor="let choice of getChoices('startingArea')" [ngValue]="choice.value">
                 {{ choice.name }}
@@ -92,17 +96,20 @@
     </div>
     <div class="column">
       <div formGroupName="randomStartingItems">
-        <label class="label is-small">Randomized Starting Items</label>
+        <label class="label is-small" [pTooltip]="DETAILS.randomStartingItems.description">Randomized Starting
+          Items</label>
         <div class="field is-spaced-field is-inline-block-tablet">
           <label class="label is-small">Minimum</label>
           <div class="control">
-            <input class="input has-width-auto is-small" type="number" formControlName="minimum">
+            <input class="input has-width-auto is-small" type="number" formControlName="minimum"
+              [pTooltip]="DETAILS.randomStartingItems.items.minimum.description">
           </div>
         </div>
         <div class="field is-spaced-field is-inline-block-tablet">
           <label class="label is-small">Maximum</label>
           <div class="control">
-            <input class="input has-width-auto is-small" type="number" formControlName="maximum">
+            <input class="input has-width-auto is-small" type="number" formControlName="maximum"
+              [pTooltip]="DETAILS.randomStartingItems.items.maximum.description">
           </div>
         </div>
       </div>

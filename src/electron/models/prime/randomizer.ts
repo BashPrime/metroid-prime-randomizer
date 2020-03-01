@@ -56,7 +56,6 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
       success = true;
     } catch (Error) {
       // Handle exception gracefully and try again.
-      console.log(Error.message);
       lastErrorMessage = Error.message;
       currentTry++;
     }

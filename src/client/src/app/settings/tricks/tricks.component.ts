@@ -25,7 +25,7 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
     const settings = this.randomizerService.DEFAULT_SETTINGS;
 
     for (let key of Object.keys(settings.tricks)) {
-      const trickDetails = this.randomizerService.DETAILS[key];
+      const trickDetails = this.DETAILS[key];
 
       if (trickDetails) {
         const trick = {

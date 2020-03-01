@@ -2,7 +2,7 @@
   [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Disabled'" [targetHeader]="'Enabled'"
   (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
   <ng-template let-item pTemplate="listItem">
-    <div [pTooltip]="item.tooltip">
+    <div [pTooltip]="item.tooltip" tooltipStyleClass="is-wide-tooltip">
       {{ item.label }}
     </div>
   </ng-template>

@@ -13,6 +13,7 @@ import { PERMALINK_SEPARATOR, SETTINGS_STRING_DELIMITER } from '../../../common/
 import { RandomStartingItems } from '../../../common/models/randomStartingItems';
 import { ItemOverrides } from './itemOverrides';
 import { ItemOverride } from '../../../common/models/itemOverride';
+import { details } from '../../../common/data/settingsDetails';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -366,95 +367,3 @@ export const settings = [
     default: 'iso'
   })
 ];
-
-export const details: OptionDetails = {
-  skipFrigate: {
-    name: 'Skip the Space Pirate Frigate',
-    description: ''
-  },
-  skipHudPopups: {
-    name: 'Skip Item Acquisition Popups',
-    description: ''
-  },
-  hideItemModels: {
-    name: 'Hide Item Models',
-    description: ''
-  },
-  goal: {
-    name: 'Goal',
-    description: ''
-  },
-  goalArtifacts: {
-    name: 'Number of Chozo Artifacts',
-    description: ''
-  },
-  artifactLocationHints: {
-    name: 'Show Chozo Artifact location hints in Artifact Temple',
-    description: ''
-  },
-  elevatorShuffle: {
-    name: 'Elevator Shuffle',
-    description: 'Shuffles all of the elevators bidirectionally.'
-  },
-  heatProtection: {
-    name: 'Heat Protection',
-    description: 'Test'
-  },
-  suitDamageReduction: {
-    name: 'Suit Damage Reduction',
-    description: ''
-  },
-  startingArea: {
-    name: 'Starting Area',
-    description: ''
-  },
-  alcoveNoItems: {
-    name: 'Alcove with No Additional Items',
-    description: `It's possible to reach the Alcove without any items by performing a dash jump from Samus's ship to the upper ledge.
-
-    This can be done with a scan dash off the Red Starburst (1.00 only), or by locking onto a Seedling in Temple Hall.`
-  },
-  arborChamberWithoutPlasma: {
-    name: 'Arbor Chamber without Plasma Beam',
-    description: `Arbor Chamber can be entered through the ceiling by going out of bounds.`
-  },
-  boostThroughBombTunnels: {
-    name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
-    description: `In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
-
-    This trick is difficult and not recommended for beginners.`
-  },
-  climbTowerOfLightNoMissiles: {
-    name: 'Climb Tower of Light without Missiles',
-    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`
-  },
-  crossTwinFiresTunnelWithoutSpider: {
-    name: 'Cross Twin Fires Tunnel without Spider Ball',
-    description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`
-  },
-  mainPlazaItemsOnlySpaceJump: {
-    name: 'Main Plaza Items with only Space Jump',
-    description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`
-  },
-  towerChamberNoGravity: {
-    name: 'Tower Chamber without Gravity Suit',
-    description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`
-  },
-  upperRuinedShrineTowerOfLightFewerAccessReqs: {
-    name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
-    description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`
-  },
-  warriorShrineWithoutBoost: {
-    name: 'Warrior Shrine without Boost Ball',
-    description: `Can space jump to the upper ledge in Monitor Station via R jump or dash.`
-  }
-};
-
-interface OptionDetails {
-  [key: string]: OptionDetail;
-}
-
-interface OptionDetail {
-  name: string;
-  description: string;
-}

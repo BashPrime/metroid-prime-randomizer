@@ -1,9 +1,10 @@
 import { RandomizerService } from '../services/randomizer.service';
+import { details } from '../../../../common/data/settingsDetails';
 
 export abstract class SettingsSection {
   readonly OBJECT_KEYS = Object.keys;
   readonly SETTINGS = this.randomizerService.SETTINGS;
-  readonly DETAILS = this.randomizerService.DETAILS;
+  readonly DETAILS = details;
 
   constructor(protected randomizerService: RandomizerService) { }
 

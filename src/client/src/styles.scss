@@ -113,3 +113,7 @@ input[type=number] {
 .field.spaced-field:last-child {
   margin-right: initial;
 }
+
+.ui-tooltip.is-wide-tooltip {
+  max-width: 25em;
+}

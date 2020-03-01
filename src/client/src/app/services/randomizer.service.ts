@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PrimeRandomizerSettings, details, settings } from '../../../../electron/models/prime/randomizerSettings';
+import { PrimeRandomizerSettings, settings } from '../../../../electron/models/prime/randomizerSettings';
 
 import { version } from '../../../../../package.json';
 
@@ -9,7 +9,6 @@ import { version } from '../../../../../package.json';
 })
 export class RandomizerService {
   readonly DEFAULT_SETTINGS = new PrimeRandomizerSettings();
-  readonly DETAILS = details;
   readonly SETTINGS = settings;
   readonly DEFAULT_PRESET = 'Default / Beginner';
   readonly APP_VERSION = version;
