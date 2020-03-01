@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
-import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -75,8 +74,7 @@ import { ItemOverridesComponent } from './item-overrides/item-overrides.componen
       positionClass: 'toast-bottom-right',
       closeButton: true
     }),
-    ClipboardModule,
-    DataViewModule
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
