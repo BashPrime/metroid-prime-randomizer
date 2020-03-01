@@ -2,35 +2,94 @@
   <div class="columns">
     <div class="column">
       <h1 class="title has-bottom-border">ROM Settings</h1>
-      <app-list-settings [form]="getFormGroup().get('romSettings')" [useColumns]="true"></app-list-settings>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('skipFrigate') }}</p>
+        <p>{{ getValue('skipFrigate', 'romSettings') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('skipHudPopups') }}</p>
+        <p>{{ getValue('skipHudPopups', 'romSettings') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('hideItemModels') }}</p>
+        <p>{{ getValue('hideItemModels', 'romSettings') }}</p>
+      </div>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Rules</h1>
-      <app-list-settings [form]="getFormGroup().get('rules')" [useColumns]="true"></app-list-settings>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('goal') }}</p>
+        <p>{{ getValue('goal', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('goalArtifacts') }}</p>
+        <p>{{ getValue('goalArtifacts', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('artifactLocationHints') }}</p>
+        <p>{{ getValue('artifactLocationHints', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('elevatorShuffle') }}</p>
+        <p>{{ getValue('elevatorShuffle', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('heatProtection') }}</p>
+        <p>{{ getValue('heatProtection', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('suitDamageReduction') }}</p>
+        <p>{{ getValue('suitDamageReduction', 'rules') }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ getDisplayName('startingArea') }}</p>
+        <p>{{ getValue('startingArea', 'rules') }}</p>
+      </div>
+      <p class="heading">{{ getDisplayName('randomStartingItems') }}</p>
+      <div class="field">
+        <p class="heading">{{ DETAILS.randomStartingItems.items.minimum.name }}</p>
+        <p>{{ getFormGroup().controls.rules.controls.randomStartingItems.value.minimum }}</p>
+      </div>
+      <div class="field">
+        <p class="heading">{{ DETAILS.randomStartingItems.items.maximum.name }}</p>
+        <p>{{ getFormGroup().controls.rules.controls.randomStartingItems.value.maximum }}</p>
+      </div>
+    </div>
+    <div class="column">
+      <h1 class="title has-bottom-border">Item Overrides</h1>
+      <div *ngIf="getFormGroup().controls.itemOverrides.length">
+        <div class="field" *ngFor="let override of getFormGroup().controls.itemOverrides.controls">
+          <p class="heading">{{ override.value.name }}</p>
+          <p>{{ getChoiceName('itemOverride', override.value.state) }} ({{ override.value.count }})</p>
+        </div>
+      </div>
+      <div class="field" *ngIf="!getFormGroup().controls.itemOverrides.length">
+        <p>(none)</p>
+      </div>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Exclude Locations</h1>
-      <div class="content" *ngIf="getFormGroup().get('excludeLocations').value.length">
+      <div class="content" *ngIf="getFormGroup().controls.excludeLocations.length">
         <ul>
-          <li *ngFor="let item of getFormGroup().get('excludeLocations').value">
+          <li *ngFor="let item of getFormGroup().controls.excludeLocations.value">
             {{ item }}
           </li>
         </ul>
       </div>
-      <div class="field" *ngIf="!getFormGroup().get('excludeLocations').value.length">
+      <div class="field" *ngIf="!getFormGroup().controls.excludeLocations.length">
         <p>(none)</p>
       </div>
     </div>
     <div class="column">
       <h1 class="title has-bottom-border">Tricks</h1>
-      <div class="content" *ngIf="getFormGroup().get('tricks').value.length">
+      <div class="content" *ngIf="getFormGroup().controls.tricks.length">
         <ul>
-          <li *ngFor="let item of getFormGroup().get('tricks').value">
+          <li *ngFor="let item of getFormGroup().controls.tricks.value">
             {{ getDisplayName(item) }}
           </li>
         </ul>
       </div>
-      <div class="field" *ngIf="!getFormGroup().get('tricks').value.length">
+      <div class="field" *ngIf="!getFormGroup().controls.tricks.length">
         <p>(none)</p>
       </div>
     </div>

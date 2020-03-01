@@ -12,7 +12,7 @@ const historyFileRead$ = new BehaviorSubject<boolean>(false);
 
 export function initialize() {
   // Get the seed history from seeds.json first
-  readFromSeedHistoryFile();
+  // readFromSeedHistoryFile();
 
   // Request from renderer to get the seed history
   ipcMain.on('getSeedHistory', (event) => {

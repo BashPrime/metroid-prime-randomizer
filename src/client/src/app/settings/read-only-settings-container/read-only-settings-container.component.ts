@@ -23,4 +23,9 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
   getFormGroup() {
     return this.formGroup;
   }
+
+  getValue(name: string, section: string) {
+    const value = this.formGroup.get(section).get(name).value;
+    return this.getChoiceName(name, value);
+  }
 }

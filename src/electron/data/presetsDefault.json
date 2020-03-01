@@ -1,5 +1,28 @@
 {
-  "Beginner": {
+  "Default": {
+    "romSettings": {
+      "skipFrigate": true,
+      "skipHudPopups": true,
+      "hideItemModels": false
+    },
+    "rules": {
+      "goal": "artifact-collection",
+      "goalArtifacts": 12,
+      "artifactLocationHints": true,
+      "elevatorShuffle": false,
+      "heatProtection": "any-suit",
+      "suitDamageReduction": "default",
+      "startingArea": 20,
+      "randomizedStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      }
+    },
+    "itemOverrides": [],
+    "excludeLocations": [],
+    "tricks": []
+  },
+  "Beginner Friendly": {
     "romSettings": {
       "skipFrigate": true,
       "skipHudPopups": true,

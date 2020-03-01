@@ -50,7 +50,7 @@ function createWindow() {
 
     // Write settings file, seed history file if changes have been made.
     writeSettingsFiles();
-    writeSeedHistoryToFile();
+    // writeSeedHistoryToFile();
 
     win = null;
   });

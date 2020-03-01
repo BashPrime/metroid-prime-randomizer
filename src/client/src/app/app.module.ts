@@ -23,7 +23,6 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { SavePresetModalComponent } from './save-preset-modal/save-preset-modal.component';
 import { RemovePresetModalComponent } from './remove-preset-modal/remove-preset-modal.component';
 import { ReadOnlySettingsContainerComponent } from './settings/read-only-settings-container/read-only-settings-container.component';
-import { ListSettingsComponent } from './settings/list-settings/list-settings.component';
 import { CustomizeSettingsContainerComponent } from './settings/customize-settings-container/customize-settings-container.component';
 import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-locations.component';
 import { GameDetailsComponent } from './game-details/game-details.component';
@@ -47,7 +46,6 @@ import { ItemOverridesComponent } from './item-overrides/item-overrides.componen
     SavePresetModalComponent,
     RemovePresetModalComponent,
     ReadOnlySettingsContainerComponent,
-    ListSettingsComponent,
     CustomizeSettingsContainerComponent,
     ExcludeLocationsComponent,
     GameDetailsComponent,
