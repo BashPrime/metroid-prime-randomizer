@@ -5,6 +5,7 @@
   },
   "files": [
     "main.js",
+    "main.js.LICENSE.txt",
     "dist",
     "build/Release/randomprime.node",
     "!node_modules"

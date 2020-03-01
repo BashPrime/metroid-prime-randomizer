@@ -7,6 +7,7 @@
 /app-builds
 /release
 main.js
+main.js.LICENSE.txt
 src/**/*.js
 *.js.map
 common/**/*.js
@@ -51,9 +52,3 @@ package-lock.json
 # System Files
 .DS_Store
 Thumbs.db
-
-# Image assets
-/src/assets/banners/
-
-# Randomizer output
-/output

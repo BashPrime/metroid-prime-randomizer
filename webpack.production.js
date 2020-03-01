@@ -1,12 +1,13 @@
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   target: 'electron-main',
   entry: './src/electron/main.ts',
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   output: {
     path: path.resolve(__dirname),
