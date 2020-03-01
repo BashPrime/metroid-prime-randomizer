@@ -1,5 +1,5 @@
 {
-  "Default / Beginner": {
+  "Beginner": {
     "romSettings": {
       "skipFrigate": true,
       "skipHudPopups": true,
@@ -7,13 +7,34 @@
     },
     "rules": {
       "goal": "artifact-collection",
-      "goalArtifacts": 12,
+      "goalArtifacts": 6,
       "artifactLocationHints": true,
       "elevatorShuffle": false,
       "heatProtection": "any-suit",
       "suitDamageReduction": "default",
-      "startingArea": 20
+      "startingArea": 20,
+      "randomizedStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      }
     },
+    "itemOverrides": [
+      {
+        "count": 1,
+        "name": "Morph Ball",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Morph Ball Bomb",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Charge Beam",
+        "state": "starting-item"
+      }
+    ],
     "excludeLocations": [],
     "tricks": []
   }
