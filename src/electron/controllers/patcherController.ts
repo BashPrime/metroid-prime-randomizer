@@ -75,6 +75,22 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
     comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
-    main_menu_message: 'Randomizer Version: ' + version
+    main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version
   };
+}
+
+function seedHashAsString(world: PrimeWorld): string {
+  let hashStr = '';
+  const seedHash = world.getLayoutHash();
+
+  seedHash.forEach((hashItem, index) => {
+    hashStr += hashItem;
+
+    if (index < seedHash.length - 1) {
+      // Set a newline after every hash item in an odd index, else add a space
+      hashStr += index % 2 !== 0 ? '\n' : ' ';
+    }
+  });
+
+  return hashStr;
 }
