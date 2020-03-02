@@ -15,7 +15,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => canBreakIce(items) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Phendrana Ice Ruins': (items: PrimeItemCollection) => canBreakIce(items) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Phendrana Ice Ruins': (items: PrimeItemCollection) => (items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Transport North': (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       }
     },
@@ -35,11 +35,11 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Chozo Ice Temple',
       locations: {
-        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => true,
+        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Phendrana Chapel of the Elders': (items: PrimeItemCollection) => items.canLayBombs(),
-        'Phendrana Shorelines': () => true
+        'Phendrana Chapel of the Elders': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Phendrana Shorelines': (items: PrimeItemCollection) => canBreakIce(items)
       }
     },
     {
@@ -48,7 +48,7 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.CHAPEL_OF_THE_ELDERS]: () => true
       },
       exits: {
-        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.canLayBombs()
       }
     },
     {
@@ -58,8 +58,8 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Phendrana Ice Ruins': () => true,
-        'Phendrana Labs First Half': (items: PrimeItemCollection) => (items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL),
-        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.canFireSuperMissiles()
+        'Phendrana Labs First Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)),
+        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM)
           && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL))
       }
     },
@@ -77,10 +77,10 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Labs Second Half',
       locations: {
-        [PrimeLocation.CONTROL_TOWER]: (items: PrimeItemCollection) => true,
+        [PrimeLocation.CONTROL_TOWER]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM),
         [PrimeLocation.RESEARCH_CORE]: () => true,
-        [PrimeLocation.RESEARCH_LAB_AETHER_TANK]: () => true,
-        [PrimeLocation.RESEARCH_LAB_AETHER_MORPH_TRACK]: () => true
+        [PrimeLocation.RESEARCH_LAB_AETHER_TANK]: (items: PrimeItemCollection) => items.hasMissiles(),
+        [PrimeLocation.RESEARCH_LAB_AETHER_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
         'Phendrana Labs First Half': () => true,
@@ -99,7 +99,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(), // to prevent softlocking
-        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
+        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && (items.canSpider() || items.has(PrimeItem.GRAPPLE_BEAM))
       }
     },
     {
