@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import 'mocha';
 
 describe('Prime Items', () => {
-  it('should contain 36 entries', () => {
-    const numEntries = 36;
+  it('should contain 38 entries', () => {
+    const numEntries = 38;
     expect(Object.keys(primeItems).length).to.equal(numEntries);
   });
 });

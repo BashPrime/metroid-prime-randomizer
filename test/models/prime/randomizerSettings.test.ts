@@ -15,6 +15,13 @@ describe('PrimeRandomizerSettings', () => {
       skipFrigate: false,
       skipHudPopups: false,
       hideItemModels: true,
+      itemOverrides: [
+        {
+          name: 'Morph Ball',
+          state: 'starting-item',
+          count: 0
+        }
+      ],
       excludeLocations: {
         ['Alcove']: true
       },
@@ -22,7 +29,7 @@ describe('PrimeRandomizerSettings', () => {
         alcoveNoItems: true
       }
     });
-    const expected = '3MK-UQ3UEU2I5SNC9D47UV4-4ZSOW';
+    const expected = '53DX4W-2D91XAFQV9MTQVAGICCXOXQF4-UQ3UEU2I5SNC9D47UV4-4ZSOW';
     const result = settings.toSettingsString();
 
     expect(result).to.equal(expected);
