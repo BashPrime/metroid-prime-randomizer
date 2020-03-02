@@ -9,7 +9,7 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Magmoor Lava Lake',
       locations: {
-        [PrimeLocation.LAVA_LAKE]: () => true
+        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection) => items.hasMissiles()
       },
       exits: {
         'Magmoor First Half': (items: PrimeItemCollection) => items.canLayBombs(),
