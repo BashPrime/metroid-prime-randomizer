@@ -46,7 +46,7 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.FRIGATE_CRASH_SITE]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT)
       },
       exits: {
-        'Tallon North': () => true,
+        'Tallon North': (items: PrimeItemCollection) => items.hasMissiles(),
         'Tallon Crashed Frigate': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT)
@@ -57,11 +57,11 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Tallon Overgrown Cavern',
       locations: {
-        [PrimeLocation.OVERGROWN_CAVERN]: () => true
+        [PrimeLocation.OVERGROWN_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM),
       },
       exits: {
-        'Tallon Crash Site': () => true,
-        'Tallon Transport East': () => true
+        'Tallon Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM),
+        'Tallon Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM),
       }
     },
     {
@@ -69,7 +69,7 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.ROOT_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && xrayReqs;
+          return xrayReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM);
         },
         [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
         [PrimeLocation.ARBOR_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -100,22 +100,22 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon South Upper',
       locations: {
         [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR)
+        (settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR)) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Tallon Life Grove': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canLayPowerBombs(),
-        'Tallon Transport South (Chozo)': () => true
+        'Tallon Life Grove': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM),
+        'Tallon Transport South (Chozo)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
       name: 'Tallon Life Grove',
       locations: {
-        [PrimeLocation.LIFE_GROVE_TUNNEL]: () => true,
+        [PrimeLocation.LIFE_GROVE_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.LIFE_GROVE_START]: () => true,
-        [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: () => true
+        [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost()
       },
       exits: {
-        'Tallon South Upper': () => true
+        'Tallon South Upper': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -123,8 +123,13 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
       },
       exits: {
-        'Tallon South Upper': (items: PrimeItemCollection) => items.canBoost(),
-        'Tallon Transport South (Mines)': () => true
+        'Tallon South Upper': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Tallon Crashed Frigate': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+
+          return thermalReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
+        'Tallon Transport South (Mines)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -138,7 +143,7 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon Transport East',
       exits: {
         'Chozo Transport East': () => true,
-        'Tallon Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Tallon Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -152,14 +157,14 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon Transport South (Chozo)',
       exits: {
         'Chozo Transport South': () => true,
-        'Tallon South Upper': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Tallon South Upper': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
       name: 'Tallon Transport South (Mines)',
       exits: {
         'Mines Transport East': () => true,
-        'Tallon South Lower': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Tallon South Lower': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     }
   ];

@@ -6,6 +6,7 @@ import { PrimeRandomizerSettings } from '../randomizerSettings';
 
 export function phendranaDrifts(): RegionObject[] {
   const canBreakIce = (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM) || items.has(PrimeItem.PLASMA_BEAM);
+
   const regions: RegionObject[] = [
     {
       name: 'Phendrana Shorelines',
@@ -35,31 +36,31 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Chozo Ice Temple',
       locations: {
-        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL)
+        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Phendrana Chapel of the Elders': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Phendrana Chapel of the Elders': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Shorelines': (items: PrimeItemCollection) => canBreakIce(items)
       }
     },
     {
       name: 'Phendrana Chapel of the Elders',
       locations: {
-        [PrimeLocation.CHAPEL_OF_THE_ELDERS]: () => true
+        [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection) => items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)
       },
       exits: {
-        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.canLayBombs()
+        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
       }
     },
     {
       name: 'Phendrana Courtyard',
       locations: {
-        [PrimeLocation.RUINED_COURTYARD]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs()
+        [PrimeLocation.RUINED_COURTYARD]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
         'Phendrana Ice Ruins': () => true,
-        'Phendrana Labs First Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)),
-        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM)
+        'Phendrana Labs First Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)),
+        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
           && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL))
       }
     },
@@ -70,8 +71,8 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs()
       },
       exits: {
-        'Phendrana Courtyard': () => true,
-        'Phendrana Labs Second Half': (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs()
+        'Phendrana Courtyard': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Phendrana Labs Second Half': (items: PrimeItemCollection) => items.hasMissiles() && items.canBoost() && items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -83,7 +84,7 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.RESEARCH_LAB_AETHER_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
-        'Phendrana Labs First Half': () => true,
+        'Phendrana Labs First Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Depths': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
@@ -98,8 +99,8 @@ export function phendranaDrifts(): RegionObject[] {
         }
       },
       exits: {
-        'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles(), // to prevent softlocking
-        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && (items.canSpider() || items.has(PrimeItem.GRAPPLE_BEAM))
+        'Phendrana Courtyard': (items: PrimeItemCollection) => items.canSpider() && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM), // to prevent softlocking
+        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && (items.canSpider() || items.has(PrimeItem.GRAPPLE_BEAM))
       }
     },
     {
@@ -108,25 +109,25 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.TRANSPORT_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
         [PrimeLocation.FROST_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReq && items.has(PrimeItem.GRAVITY_SUIT);
+          return grappleReq && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT);
         },
         [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]: (items: PrimeItemCollection) => true,
         [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.gravityChamberGrappleLedgeRJump || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReq && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+          return grappleReq && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         [PrimeLocation.STORAGE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReq && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM);
+          return grappleReq && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.phendranaDepthsGrappleSkips || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReq && items.has(PrimeItem.MORPH_BALL);
+          return grappleReq && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
-        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs(),
-        'Phendrana Labs Second Half': () => true
+        'Phendrana Transport South': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM),
+        'Phendrana Labs Second Half': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -140,10 +141,10 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana Transport South',
       exits: {
         'Magmoor Transport South (Phendrana)': () => true,
-        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Phendrana Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Depths': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (settings.tricks.phendranaDepthsAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
-          return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM);
+          return spiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     }

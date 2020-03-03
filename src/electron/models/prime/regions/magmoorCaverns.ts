@@ -9,7 +9,7 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Magmoor Lava Lake',
       locations: {
-        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection) => items.hasMissiles()
+        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection) => items.hasMissiles() && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))
       },
       exits: {
         'Magmoor First Half': (items: PrimeItemCollection) => items.canLayBombs(),
@@ -44,7 +44,7 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Magmoor First Half': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM),
-        'Magmoor Transport East': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM)
+        'Magmoor Transport East': (items: PrimeItemCollection) => items.canLayBombs() || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM))
       }
     },
     {
@@ -61,19 +61,22 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Magmoor Second Half',
       locations: {
-        [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+        [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return thermalReqs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM);
+        }
       },
       exits: {
         'Magmoor Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleSpiderReqs = settings.tricks.plasmaProcessingWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
-          return grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM);
+          return grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
         },
         'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
           return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM);
         },
-        'Magmoor Transport South (Mines)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM),
-        'Magmoor Transport South (Phendrana)': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Magmoor Transport South (Mines)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM),
+        'Magmoor Transport South (Phendrana)': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -120,14 +123,14 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Magmoor Transport South (Mines)',
       exits: {
         'Mines Transport West': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
       name: 'Magmoor Transport South (Phendrana)',
       exits: {
         'Phendrana Transport South': () => true,
-        'Magmoor Second Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Magmoor Second Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
   ];
