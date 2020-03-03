@@ -49,7 +49,7 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection) => items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)
       },
       exits: {
-        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        'Phendrana Chozo Ice Temple': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
