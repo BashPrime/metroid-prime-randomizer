@@ -48,14 +48,14 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Mines Central',
       locations: {
-        [PrimeLocation.ELITE_CONTROL_ACCESS]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.ELITE_CONTROL_ACCESS]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.PHAZON_PROCESSING_CENTER]: (items: PrimeItemCollection) => items.canSpider() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
         'Mines Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canLayBombs() && (settings.tricks.minesSpiderlessShafts || items.canSpider())
-          && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Mines Lower': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS), // boost for safety/anti-softlock
-        'Mines Transport West': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM)
+          && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Mines Lower': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS), // boost for safety/anti-softlock
+        'Mines Transport West': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
         // Don't add Mines Depths as the exit is initially locked
       }
     },
@@ -103,7 +103,7 @@ export function phazonMines(): RegionObject[] {
       name: 'Mines Transport West',
       exits: {
         'Magmoor Transport South (Mines)': () => true,
-        'Mines Central': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Mines Central': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     }
   ];
