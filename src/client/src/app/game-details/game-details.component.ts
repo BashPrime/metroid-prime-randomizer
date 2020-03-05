@@ -68,7 +68,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     const fb = new FormBuilder();
     this.formGroup = fb.group({
       baseIso: ['', [Validators.required]],
-      outputFolder: ['', Validators.required],
+      outputFolder: [''],
       trilogyIso: [''],
       outputType: ['iso']
     })

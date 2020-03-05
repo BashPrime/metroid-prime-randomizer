@@ -1,5 +1,6 @@
 import { app, ipcMain } from 'electron';
 import * as path from 'path';
+import * as fs from 'fs';
 
 import { PatcherConfiguration, runRandomprimePatcher } from '../models/prime/patcher';
 import { seedHistory } from './seedHistoryController';
@@ -46,6 +47,11 @@ export function getRandomizerFileNameNoExtension(world: PrimeWorld): string {
 }
 
 export function getOutputFolder(form: PatchForm) {
+  // Create default output folder if it doesn't exist
+  if (!form.outputFolder && !fs.existsSync(defaultOutputFolder)) {
+    fs.mkdirSync(defaultOutputFolder, { recursive: true });
+  }
+
   return form.outputFolder ? form.outputFolder : defaultOutputFolder;
 }
 
