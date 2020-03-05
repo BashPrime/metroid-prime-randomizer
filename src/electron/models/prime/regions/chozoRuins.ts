@@ -47,7 +47,11 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Ruined Gallery',
       locations: {
-        [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles()
+        [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles(),
+        [PrimeLocation.RUINED_GALLERY_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
+          return canBoost || items.canLayBombs();
+        }
       },
       exits: {
         'Hive Totem': () => true,
