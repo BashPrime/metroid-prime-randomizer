@@ -1,4 +1,3 @@
-import * as randomizerController from './controllers/randomizerController';
 import * as generateSeedController from './controllers/generateSeedController';
 import * as settingsController from './controllers/settingsController';
 import * as seedHistoryController from './controllers/seedHistoryController';
@@ -11,7 +10,6 @@ import * as spoilerController from './controllers/spoilerController';
  */
 export function defineControllers() {
   return {
-    randomizer: randomizerController.initialize(),
     generateSeed: generateSeedController.initialize(),
     settings: settingsController.initialize(),
     seedHistory: seedHistoryController.initialize(),

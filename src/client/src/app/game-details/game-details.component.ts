@@ -141,6 +141,10 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     });
   }
 
+  openOutputFolder(): void {
+    this.electronService.shell.openItem(this.formGroup.controls.outputFolder.value);
+  }
+
   saveIsos(form: PatchForm): void {
     this.submitted = true;
 
