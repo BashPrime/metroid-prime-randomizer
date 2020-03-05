@@ -71,6 +71,12 @@ const bossLocations = [
   PrimeLocation.ELITE_QUARTERS
 ];
 
+const expansions: string[] = [
+  PrimeItem.ENERGY_TANK,
+  PrimeItem.MISSILE_EXPANSION,
+  PrimeItem.POWER_BOMB_EXPANSION
+];
+
 /**
  * Generates and sets the item pool for a given world.
  * @param world The world to apply the item pool to.
@@ -139,15 +145,22 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
     }
     // Handle non-shuffle states
     // If the override is an expansion, we leave the ammo pickups alone.
-    // If the override is NOT an expansion, there is only one instance of the item. Remove it from the item pool
-    else if (!override.isExpansion) {
+    // If the override is NOT an expansion, there is only one instance of the item. Remove it from the item pool if it's vanilla
+    // Starting items will be handled in the next loop
+    else if (!override.isExpansion && override.state === ItemOverrides.STATES.vanilla) {
       itemPool[override.name][0].count = 0;
 
-      // If item is vanilla, add it to placedItems under its vanilla location
-      if (override.state === ItemOverrides.STATES.vanilla) {
-        const location = Object.entries(vanillaUpgrades).find(([location, item]) => item === override.name)[0];
-        placedItems[location] = primeItems[override.name];
-      }
+      // add the vanilla item to placedItems under its vanilla location
+      const location = Object.entries(vanillaUpgrades).find(([location, item]) => item === override.name)[0];
+      placedItems[location] = primeItems[override.name];
+    }
+  }
+
+  // Handle the starting items
+  for (let [key, count] of Object.entries(world.getStartingItems())) {
+    // Keep the expansions in the item pool. Only remove the upgrades.
+    if (!expansions.includes(key)) {
+      itemPool[key][0].count = 0;
     }
   }
 
