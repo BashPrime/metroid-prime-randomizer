@@ -7,251 +7,328 @@ import { PrimeRandomizerSettings } from '../randomizerSettings';
 export function chozoRuins(): RegionObject[] {
   const regions: RegionObject[] = [
     {
-      name: 'Chozo West',
+      name: 'Main Plaza',
       locations: {
-        [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return sjReqs || items.canBoost();
-        },
-        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return sjReqs || items.has(PrimeItem.GRAPPLE_BEAM)
-        },
-        [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles(),
-        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return sjReqs || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
-        },
-        [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs(),
-        [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles(),
-        [PrimeLocation.RUINED_GALLERY_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
-          return canBoost || items.canLayBombs();
-        },
-        [PrimeLocation.HIVE_TOTEM]: () => true,
-        [PrimeLocation.TRANSPORT_ACCESS_NORTH]: (items: PrimeItemCollection) => items.hasMissiles()
+        [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost() || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.mainPlazaItemsOnlySpaceJump || items.has(PrimeItem.GRAPPLE_BEAM))
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Chozo Ruined Shrine': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Transport West': () => true,
-        'Chozo Transport North': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
+        'Ruined Nursery': () => true,
+        'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjOnlyReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return sjOnlyReqs || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
+        },
+        'Chozo Transport West': () => true
       }
     },
     {
-      name: 'Chozo Ruined Shrine',
+      name: 'Main Plaza Locked Door Ledge',
+      locations: {
+        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: () => true
+      },
+      exits: {
+        'Main Plaza': () => true
+        // Vault door is locked
+      }
+    },
+    {
+      name: 'Ruined Nursery',
+      locations: {
+        [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs()
+      },
+      exits: {
+        'Ruined Gallery': () => true,
+        'Main Plaza': () => true
+      }
+    },
+    {
+      name: 'Ruined Gallery',
+      locations: {
+        [PrimeLocation.RUINED_GALLERY_MISSILE_WALL]: (items: PrimeItemCollection) => items.hasMissiles()
+      },
+      exits: {
+        'Hive Totem': () => true,
+        'Ruined Nursery': () => true
+      }
+    },
+    {
+      name: 'Hive Totem',
+      locations: {
+        [PrimeLocation.HIVE_TOTEM]: () => true,
+      },
+      exits: {
+        'Transport Access North': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Ruined Gallery': () => true
+      }
+    },
+    {
+      name: 'Transport Access North',
+      locations: {
+        [PrimeLocation.TRANSPORT_ACCESS_NORTH]: () => true
+      },
+      exits: {
+        'Chozo Transport North': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Hive Totem': (items: PrimeItemCollection) => items.hasMissiles()
+      }
+    },
+    {
+      name: 'Vault',
+      locations: {
+        [PrimeLocation.VAULT]: (items: PrimeItemCollection) => items.canLayBombs()
+      },
+      exits: {
+        'Main Plaza Locked Door Ledge': () => true,
+        'Chozo Transport North': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+      }
+    },
+    {
+      name: 'Ruined Shrine (Outer)',
+      locations: {
+        [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost()
+      },
+      exits: {
+        'Ruined Shrine (Pit)': () => true,
+        'Tower of Light': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM),
+        'Main Plaza': (items: PrimeItemCollection) => items.hasMissiles()
+      }
+    },
+    {
+      name: 'Ruined Shrine (Pit)',
       locations: {
         [PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE]: () => true,
-        [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs
-            && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.MORPH_BALL);
-          return sjReqs || items.canBoost();
-        },
-        [PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
+        [PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs()
       },
       exits: {
-        'Chozo West': (items: PrimeItemCollection) => items.hasMissiles() && (items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS)),
-        'Chozo Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs
-            || (items.canLayBombs() && items.canBoost() && items.canSpider());
-          return accessReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        }
+        'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
-      name: 'Chozo Tower of Light',
+      name: 'Tower of Light',
       locations: {
-        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return settings.tricks.climbTowerOfLightNoMissiles || items.hasMissileCount(8)
-        },
-        [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return (settings.tricks.towerChamberNoGravity || items.has(PrimeItem.GRAVITY_SUIT)) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        }
+        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection) => items.hasMissileCount(8) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Chozo Ruined Shrine': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
       }
     },
     {
-      name: 'Chozo Ruined Fountain',
+      name: 'Ruined Fountain',
       locations: {
-        [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const flaahgraSkipReq = settings.tricks.ruinedFountainFlaahgraSkip || items.canLayBombs();
-          return flaahgraSkipReq && items.canSpider();
-        }
+        [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider()
       },
       exits: {
-        'Chozo West': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Central': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Training Area': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReq = settings.tricks.magmaPoolDash || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReq && items.hasSuit(settings);
-        }
+        'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings),
+        'Main Plaza': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       }
     },
     {
-      name: 'Chozo Training Area',
+      name: 'Magma Pool',
       locations: {
-        [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings) && items.canLayPowerBombs(),
-        [PrimeLocation.TRAINING_CHAMBER_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
-        [PrimeLocation.TRAINING_CHAMBER]: (items: PrimeItemCollection) =>
-          items.canFireSuperMissiles() && items.canLayBombs() && items.canBoost() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM)
+        [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.GRAPPLE_BEAM)
       },
       exits: {
-        'Chozo Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
-        'Chozo West': (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.canLayBombs()
+        'Training Chamber Access': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.WAVE_BEAM),
+        'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
-      name: 'Chozo Central',
+      name: 'Training Chamber Access',
       locations: {
-        [PrimeLocation.WATERY_HALL_ACCESS]: (items: PrimeItemCollection) => items.hasMissiles(),
-        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: (items: PrimeItemCollection) => items.hasMissiles(),
-        [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const flaahgraSkipReq = settings.tricks.wateryHallUnderwaterFlaahgraSkip || items.canLayBombs();
-          return flaahgraSkipReq && items.hasMissiles() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-        },
-        [PrimeLocation.GATHERING_HALL]: (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        [PrimeLocation.FURNACE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
-          return canBoost || items.canLayBombs();
-        }
+        [PrimeLocation.TRAINING_CHAMBER_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Chozo Ruined Fountain': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Burn Dome': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Dynamo': (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs(),
-        'Chozo Furnace': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = (settings.tricks.furnaceAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL)) || items.canSpider();
-          return spiderReqs && items.canLayBombs();
-        },
-        'Chozo Sunchamber': (items: PrimeItemCollection) => items.canLayBombs()
+        'Training Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings) && items.has(PrimeItem.WAVE_BEAM),
+        'Magma Pool': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
       }
     },
     {
-      name: 'Chozo Burn Dome',
+      name: 'Training Chamber',
       locations: {
-        [PrimeLocation.BURN_DOME_I_DRONE]: () => true,
-        [PrimeLocation.BURN_DOME_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
+        [PrimeLocation.TRAINING_CHAMBER]: (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost() && items.canSpider()
       },
       exits: {
-        'Chozo Central': (items: PrimeItemCollection) => items.canLayBombs()
+        'Training Chamber Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Main Plaza': (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost()
       }
     },
     {
-      name: 'Chozo Dynamo',
-      locations: {
-        [PrimeLocation.DYNAMO_LOWER]: (items: PrimeItemCollection) => items.hasMissiles(),
-        [PrimeLocation.DYNAMO_SPIDER_TRACK]: (items: PrimeItemCollection) => items.canSpider(),
-      },
+      name: 'Arboretum',
       exits: {
-        'Chozo Central': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
+        'Gathering Hall': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Sunchamber': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Ruined Fountain': (items: PrimeItemCollection) => items.hasMissiles()
       }
     },
     {
-      name: 'Chozo Vault',
-      locations: {
-        [PrimeLocation.VAULT]: (items: PrimeItemCollection) => items.canLayBombs(),
-      },
-      exits: {
-        'Chozo West': () => true,
-        'Chozo Transport North': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-      }
-    },
-    {
-      name: 'Chozo Sunchamber',
+      name: 'Sunchamber',
       locations: {
         [PrimeLocation.SUNCHAMBER_FLAAHGRA]: (items: PrimeItemCollection) => items.canLayBombs(),
-        [PrimeLocation.SUNCHAMBER_GHOSTS]: () => true // randomprime patches out the vines allowing for return visit from Arboretum
+        [PrimeLocation.SUNCHAMBER_GHOSTS]: (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles()
       },
       exits: {
-        'Chozo Transport North': () => true,
-        'Chozo Central': (items: PrimeItemCollection) => items.canLayBombs() // probably not needed but doesn't hurt
+        'Chozo Transport North': (items: PrimeItemCollection) => items.canLayBombs(),
+        'Arboretum': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.canSpider()
+          && items.canFireSuperMissiles()
       }
     },
     {
-      name: 'Chozo Furnace',
+      name: 'Gathering Hall',
       locations: {
-        [PrimeLocation.FURNACE_SPIDER_TRACKS]: (items: PrimeItemCollection) => items.canBoost() && items.canSpider()
-          && items.canLayBombs() && items.canLayPowerBombs()
+        [PrimeLocation.GATHERING_HALL]: (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Chozo Central': (items: PrimeItemCollection) => items.canLayBombs(),
-        'Chozo Crossway': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM),
-        'Chozo Hall of the Elders': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Watery Hall Access': () => true,
+        'Energy Core': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Arboretum': (items: PrimeItemCollection) => items.hasMissiles()
       }
     },
     {
-      name: 'Chozo Crossway',
+      name: 'Watery Hall Access',
       locations: {
-        [PrimeLocation.CROSSWAY]: (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canFireSuperMissiles(),
+        [PrimeLocation.WATERY_HALL_ACCESS]: (items: PrimeItemCollection) => items.hasMissiles()
       },
       exits: {
-        'Chozo Furnace': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Hall of the Elders': (items: PrimeItemCollection) => (items.hasMissiles() && items.canBoost()) || items.has(PrimeItem.ICE_BEAM)
+        'Watery Hall': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Gathering Hall': () => true
       }
     },
     {
-      name: 'Chozo Hall of the Elders',
+      name: 'Watery Hall',
       locations: {
-        [PrimeLocation.HALL_OF_THE_ELDERS]: (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
-        [PrimeLocation.ELDER_CHAMBER]: (items: PrimeItemCollection) =>
-          items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: () => true,
+        [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Chozo Furnace': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
-        'Chozo Crossway': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM)
+        'Dynamo': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombsOrPowerBombs(),
+        'Watery Hall Access': (items: PrimeItemCollection) => items.hasMissiles(),
       }
     },
     {
-      name: 'Chozo Reflecting Pool',
+      name: 'Dynamo',
       locations: {
+        [PrimeLocation.DYNAMO_LOWER]: (items: PrimeItemCollection) => items.hasMissiles(),
+        [PrimeLocation.DYNAMO_SPIDER_TRACK]: (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Chozo Hall of the Elders': () => true,
-        'Chozo Antechamber': (items: PrimeItemCollection) => items.hasMissiles() && items.canBoost(),
-        'Chozo Transport East': (items: PrimeItemCollection) => items.hasMissiles() && items.canBoost(),
-        'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+        'Watery Hall': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombsOrPowerBombs(),
       }
     },
     {
-      name: 'Chozo Antechamber',
+      name: 'Energy Core',
+      exits: {
+        'Burn Dome': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs()
+      }
+    },
+    {
+      name: 'Burn Dome',
       locations: {
-        [PrimeLocation.ANTECHAMBER]: () => true
+        [PrimeLocation.BURN_DOME_I_DRONE]: () => true,
+        [PrimeLocation.BURN_DOME_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs()
       },
       exits: {
-        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Energy Core': (items: PrimeItemCollection) => items.canLayBombs()
+      }
+    },
+    {
+      name: 'Furnace (Spider Track and Tunnel)',
+      locations: {
+        [PrimeLocation.FURNACE_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
+      },
+      exits: {
+        'Furance (Main Room)': (items: PrimeItemCollection) => items.canSpider() && items.canLayBombs(),
+        'Energy Core': () => true
+      }
+    },
+    {
+      name: 'Furnace (Main Room)',
+      locations: {
+        [PrimeLocation.FURNACE_SPIDER_TRACKS]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs()
+          && items.canBoost() && items.canSpider()
+      },
+      exits: {
+        'Crossway': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM),
+        'Hall of the Elders': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs()
+      }
+    },
+    {
+      name: 'Crossway',
+      locations: {
+        [PrimeLocation.CROSSWAY]: (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.canFireSuperMissiles()
+      },
+      exits: {
+        'Hall of the Elders': (items: PrimeItemCollection) => (items.canBoost() && items.hasMissiles())
+          || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)),
+        'Furnace (Main Room)': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+      }
+    },
+    {
+      name: 'Hall of the Elders',
+      locations: {
+        [PrimeLocation.HALL_OF_THE_ELDERS]: (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.ELDER_CHAMBER]: (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM)
+          && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+      },
+      exits: {
+        'Reflecting Pool': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Crossway': (items: PrimeItemCollection) => (items.canBoost() && items.hasMissiles())
+          || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)),
+        'Energy Core': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Reflecting Pool',
+      exits: {
+        'Antechamber': (items: PrimeItemCollection) => items.canBoost() && items.hasMissiles(),
+        'Chozo Transport East': (items: PrimeItemCollection) => items.canBoost() && items.hasMissiles() && items.canLayBombs(),
+        'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
+        'Hall of the Elders': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Antechamber',
+      locations: {
+        [PrimeLocation.ANTECHAMBER]: () => true,
+      },
+      exits: {
+        'Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
       name: 'Chozo Transport West',
       exits: {
         'Tallon Transport North': () => true,
-        'Chozo West': () => true
+        'Main Plaza': () => true
       }
     },
     {
       name: 'Chozo Transport North',
       exits: {
         'Magmoor Transport North': () => true,
-        'Chozo West': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
-        'Chozo Vault': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Chozo Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles()
+        'Transport Access North': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Vault': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles()
       }
     },
     {
       name: 'Chozo Transport East',
       exits: {
         'Tallon Transport East': () => true,
-        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs()
+        'Reflecting Pool': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs()
       }
     },
     {
       name: 'Chozo Transport South',
       exits: {
         'Tallon Transport South (Chozo)': () => true,
-        'Chozo Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Reflecting Pool': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     }
   ];

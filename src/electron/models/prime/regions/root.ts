@@ -5,7 +5,7 @@ export function root() {
     {
       name: 'Root',
       exits: {
-        'Tallon North': () => true
+        'Landing Site': () => true
       }
     }
   ];
