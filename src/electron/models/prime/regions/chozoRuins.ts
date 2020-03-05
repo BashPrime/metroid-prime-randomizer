@@ -244,7 +244,7 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.FURNACE_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
-        'Furance (Main Room)': (items: PrimeItemCollection) => items.canSpider() && items.canLayBombs(),
+        'Furnace (Main Room)': (items: PrimeItemCollection) => items.canSpider() && items.canLayBombs(),
         'Energy Core': () => true
       }
     },

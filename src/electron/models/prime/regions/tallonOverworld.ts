@@ -141,7 +141,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Life Grove': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost(),
-        'Great Tree Hall (Upper': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM)
       }
     },
     {

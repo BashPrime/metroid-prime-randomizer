@@ -80,7 +80,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Ice Ruins West': () => true,
-        'Phendrana Labs First Half': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)),
+        'Research Lab Hydra': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)),
         'Quarantine Cave': (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
           && ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL))
       }
