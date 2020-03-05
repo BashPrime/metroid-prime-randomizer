@@ -145,8 +145,8 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.TRAINING_CHAMBER_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Training Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings) && items.has(PrimeItem.WAVE_BEAM),
-        'Magma Pool': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Training Chamber': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings) && items.has(PrimeItem.WAVE_BEAM)
       }
     },
     {
