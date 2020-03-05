@@ -142,7 +142,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
   }
 
   openOutputFolder(): void {
-    this.electronService.shell.openItem(this.formGroup.controls.outputFolder.value);
+    this.electronService.ipcRenderer.send('openOutputFolder', this.formGroup.controls.outputFolder.value);
   }
 
   saveIsos(form: PatchForm): void {

@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { app, ipcMain, shell } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -22,6 +22,10 @@ export function initialize() {
       event.sender.send('patchMessage', JSON.parse(message));
     });
   });
+
+  ipcMain.on('openOutputFolder', (event, outputFolder: string) => {
+    shell.openItem(outputFolder);
+  })
 }
 
 export function getWorldFromSeedHistory(id: string): PrimeWorld {
