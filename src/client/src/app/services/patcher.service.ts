@@ -168,8 +168,9 @@ export class PatcherService {
 
   private handleSpoilerResponse(err: NodeJS.ErrnoException) {
     if (err) {
-      this.toastrService.error('Encountered an error saving spoiler(s): ' + err.message);
+      this.toastrService.error('Encountered an error saving spoiler(s): ' + err.code);
       this.currentPatch$.next(undefined);
+      this.progressService.setOpen(false);
     } else {
       const patchState = this.currentPatch$.getValue();
       patchState.patchedSeeds.push(patchState.currentSeed);
