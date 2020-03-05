@@ -20,6 +20,10 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Triclops Pit',
       locations: {
+        [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return xrayReqs && items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         [PrimeLocation.STORAGE_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {

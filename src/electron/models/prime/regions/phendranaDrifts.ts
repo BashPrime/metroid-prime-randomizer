@@ -124,9 +124,6 @@ export function phendranaDrifts(): RegionObject[] {
     },
     {
       name: 'Control Tower',
-      locations: {
-        [PrimeLocation.CONTROL_TOWER]: (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
-      },
       exits: {
         'Research Lab Aether': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
         'Control Tower (Collapsed Tower)': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
