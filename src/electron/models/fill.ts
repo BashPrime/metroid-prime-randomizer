@@ -25,7 +25,7 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
 
     for (const location of shuffledLocations.toArray()) {
       // Only fill if the location isn't excluded and we can fill it
-      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings)) {
+      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings) && location.canEscape(assumedItems, settings)) {
         locationToFill = location;
         location.setItem(itemToPlace);
         locations.remove(location);

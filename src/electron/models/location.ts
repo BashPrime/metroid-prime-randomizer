@@ -67,4 +67,14 @@ export class Location {
   canFill(items: ItemCollection, settings: RandomizerSettings, noParent?: boolean): boolean {
     return (noParent || this.parentRegion.canReach(items)) && this.itemRule(items, settings);
   }
+
+  canEscape(items: ItemCollection, settings: RandomizerSettings): boolean {
+    for (let exit of this.parentRegion.getExits()) {
+      if (exit.accessRule(items, settings)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
