@@ -136,9 +136,6 @@ export class GenerateGameComponent implements OnInit {
   applyFormChanges(newValue: RandomizerForm, excludeControls: string[] = []): void {
     const fb = new FormBuilder();
 
-    // For any control that aren't passed in, use the default form value instead.
-    this.form = this.randomizerService.createForm();
-
     for (let control in filterProperties(newValue, excludeControls)) {
       // Make sure form has the control! (primarly for protected field)
       if (this.form.get(control)) {
@@ -209,12 +206,12 @@ export class GenerateGameComponent implements OnInit {
 
     // After building presets, if we imported a preset, select it in the form
     this.presetsService._importedPreset
-    .pipe(take(1))
-    .subscribe(preset => {
-      if (preset) {
-        this.setPreset(preset);
-        this.presetsService.clearImportPresetSubject();
-      }
-    });
+      .pipe(take(1))
+      .subscribe(preset => {
+        if (preset) {
+          this.setPreset(preset);
+          this.presetsService.clearImportPresetSubject();
+        }
+      });
   }
 }
