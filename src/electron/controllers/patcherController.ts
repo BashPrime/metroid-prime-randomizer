@@ -72,6 +72,9 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
   const settings = world.getSettings();
   const outputIso = getRandomizerFileNameNoExtension(world) + '.' + form.outputType;
 
+  const startingWithScanVisor: boolean = world.getStartingItems()[PrimeItem.SCAN_VISOR]
+    && world.getStartingItems()[PrimeItem.SCAN_VISOR] > 0;
+
   return {
     input_iso: form.baseIso,
     output_iso: path.join(getOutputFolder(form), outputIso),
@@ -87,7 +90,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
     comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
-    auto_enabled_elevators: world.getStartingItems()[PrimeItem.SCAN_VISOR] === 0 ? true : null
+    auto_enabled_elevators: !startingWithScanVisor
   };
 }
 

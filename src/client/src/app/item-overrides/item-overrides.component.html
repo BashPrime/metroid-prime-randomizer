@@ -23,6 +23,9 @@
           <p class="card-header-title">{{ override.value.name }}</p>
         </header>
         <div class="card-content">
+          <div class="field" *ngIf="getItem(override.value.name).experimental">
+            <p class="has-text-danger">EXPERIMENTAL - You are not guaranteed to finish the game if you change this item's behavior.</p>
+          </div>
           <div class="field">
             <label class="label is-small">State</label>
             <div class="control">

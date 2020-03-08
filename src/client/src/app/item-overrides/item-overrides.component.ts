@@ -12,6 +12,7 @@ interface Item {
   maximum: number;
   isExpansion?: boolean;
   exclude?: string[];
+  experimental?: boolean;
 }
 
 @Component({
@@ -40,7 +41,7 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     { name: PrimeItem.GRAVITY_SUIT, maximum: 1 },
     { name: PrimeItem.PHAZON_SUIT, maximum: 1 },
     { name: PrimeItem.GRAPPLE_BEAM, maximum: 1 },
-    { name: PrimeItem.SCAN_VISOR, maximum: 1, exclude: [ItemOverrides.STATES.vanilla] },
+    { name: PrimeItem.SCAN_VISOR, maximum: 1, exclude: [ItemOverrides.STATES.vanilla], experimental: true },
     { name: PrimeItem.THERMAL_VISOR, maximum: 1 },
     { name: PrimeItem.XRAY_VISOR, maximum: 1 },
     { name: PrimeItem.WAVEBUSTER, maximum: 1 },

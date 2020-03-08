@@ -362,8 +362,8 @@ export class PrimeWorld extends World {
   * Returns an encoded layout string to be used for the randomprime patcher.
   */
   getRandomprimePatcherLayoutString(): string {
-    const itemLayout: number[] = [];
-    let elevatorLayout: number[] = undefined; // If undefined, encode_layout() uses default elevator layout
+    const itemLayout: string[] = [];
+    let elevatorLayout: string[] = undefined; // If undefined, encode_layout() uses default elevator layout
     const patcherLocations = primeLocations.map(location => location.name);
     const locations = this.getLocations().toArray().sort((a, b) => {
       const aIndex = patcherLocations.indexOf(a.getName() as PrimeLocation);
@@ -376,7 +376,7 @@ export class PrimeWorld extends World {
 
     // Build item layout using patcher ID
     for (let location of locations) {
-      itemLayout.push(location.getItem().getPatcherId());
+      itemLayout.push(location.getItem().getPatcherId().toString());
     }
 
     // Handle elevators array for the layout encode function
@@ -385,10 +385,10 @@ export class PrimeWorld extends World {
       if (a.id < b.id) return -1;
       else if (a.id > b.id) return 1;
       return 0;
-    }).map(elevator => elevator.destination);
+    }).map(elevator => elevator.destination.toString());
 
     // Starting area is the last index of the elevator layout array
-    elevatorLayout.push(this.startingArea.id);
+    elevatorLayout.push(this.startingArea.id.toString());
 
     return new LayoutString().encode_layout(itemLayout, elevatorLayout);
   }
