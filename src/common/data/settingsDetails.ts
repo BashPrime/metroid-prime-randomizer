@@ -5,7 +5,16 @@ interface SettingsDetails {
 interface DetailObject {
   name: string;
   description: string;
-  items?: SettingsDetails
+  items?: SettingsDetails,
+  difficulty?: string
+}
+
+export enum Difficulty {
+  TRIVIAL = 'Trivial',
+  EASY = 'Easy',
+  NORMAL = 'Normal',
+  HARD = 'Hard',
+  INSANE = 'Insane'
 }
 
 export const details: SettingsDetails = {
@@ -83,11 +92,13 @@ export const details: SettingsDetails = {
       }
     }
   },
+  // Tricks
   alcoveNoItems: {
     name: 'Alcove with No Additional Items',
     description: `It's possible to reach the Alcove room without any items by performing a dash from Samus's ship to the upper ledge, near the Gully door.
 
-    This can be done with a scan dash off the Red Starburst above the Temple Hall door, or by locking onto a Seedling in Temple Hall and then dashing.`
+    This can be done with a scan dash off the Red Starburst above the Temple Hall door, or by locking onto a Seedling in Temple Hall and then dashing.`,
+    difficulty: Difficulty.EASY
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
@@ -97,31 +108,38 @@ export const details: SettingsDetails = {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
     description: `In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
 
-    This trick is difficult and not recommended for beginners.`
+    This trick is difficult and not recommended for beginners.`,
+    difficulty: Difficulty.HARD
   },
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
-    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`
+    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`,
+    difficulty: Difficulty.EASY
   },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
-    description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`
+    description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`,
+    difficulty: Difficulty.EASY
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
-    description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`
+    description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`,
+    difficulty: Difficulty.TRIVIAL
   },
   towerChamberNoGravity: {
     name: 'Tower Chamber without Gravity Suit',
-    description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`
+    description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`,
+    difficulty: Difficulty.TRIVIAL
   },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
-    description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`
+    description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`,
+    difficulty: Difficulty.EASY,
   },
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',
-    description: `You can space jump to the upper ledge in Monitor Station via R jump or dash.`
+    description: `You can space jump to the upper ledge in Monitor Station via R jump or dash.`,
+    difficulty: Difficulty.EASY
   }
 };
 

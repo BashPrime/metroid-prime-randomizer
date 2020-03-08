@@ -27,19 +27,17 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
     for (let key of Object.keys(settings.tricks)) {
       const trickDetails = this.DETAILS[key];
 
-      if (trickDetails) {
-        const trick = {
-          label: trickDetails.name,
-          value: key,
-          tooltip: trickDetails.description
-        };
+      const trick = {
+        label: trickDetails ? trickDetails.name : key,
+        value: key,
+        tooltip: trickDetails ? trickDetails.description : null
+      };
 
-        // If form contains value on init, push to selected tricks. Else, push to available tricks.
-        if (this.formArray.value.includes(trick.value)) {
-          this.items.selected.push(trick);
-        } else {
-          this.items.available.push(trick);
-        }
+      // If form contains value on init, push to selected tricks. Else, push to available tricks.
+      if (this.formArray.value.includes(trick.value)) {
+        this.items.selected.push(trick);
+      } else {
+        this.items.available.push(trick);
       }
     }
   }
