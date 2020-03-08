@@ -8,6 +8,7 @@ import { GeneratedSeed } from '../../common/models/generatedSeed';
 import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings } from '../models/prime/randomizerSettings';
 import { PrimeWorld } from '../models/prime/world';
+import { PrimeItem } from '../enums/primeItem';
 import { PatchForm } from '../../common/models/patchForm';
 import { version } from '../../../package.json';
 import { toRandomprimeFormat } from '../models/prime/startingItems';
@@ -85,7 +86,8 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
     comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
-    main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version
+    main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
+    auto_enabled_elevators: world.getStartingItems()[PrimeItem.SCAN_VISOR] === 0 ? true : null
   };
 }
 
