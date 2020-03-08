@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject, combineLatest, Subscription } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
 import { filterProperties } from '../utilities';
@@ -52,8 +52,18 @@ export class GenerateGameComponent implements OnInit {
 
           // Were defined settings retrieved from settings.json?
           // Only apply form changes if first time loading
-          if (!this.loaded && settings) {
-            this.applyFormChanges(settings);
+          if (settings) {
+            const preset = (settings as any).preset;
+
+            // If the preset isn't custom, applyFormChanges() will take care of the other settings
+            if (preset) {
+              this.setPreset(preset);
+            }
+
+            // If the preset is custom, we need to apply the settings too
+            if (preset === this.CUSTOM_PRESET) {
+              this.applyFormChanges(settings);
+            }
           }
 
           this.loaded = true;
@@ -120,8 +130,10 @@ export class GenerateGameComponent implements OnInit {
   onValueChanges(): void {
     this.form.valueChanges
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(value => {
-        this.settingsService.applySettings(value);
+      .subscribe(formValue => {
+        if (this.loaded) {
+          this.settingsService.applySettings(formValue);
+        }
       });
 
     this.form.get('preset').valueChanges

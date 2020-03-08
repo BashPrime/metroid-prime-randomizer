@@ -7,63 +7,58 @@ import { take } from 'rxjs/operators';
 import { RandomizerForm } from '../../common/models/randomizerForm';
 import { PatchForm } from '../../common/models/patchForm';
 
-let settings: RandomizerForm;
-let patchSettings: PatchForm;
-
-const settingsFileRead$ = new BehaviorSubject<boolean>(false);
-const patchSettingsFileRead$ = new BehaviorSubject<boolean>(false);
+const settings$ = new BehaviorSubject<RandomizerForm>(undefined);
+const patchSettings$ = new BehaviorSubject<PatchForm>(undefined);
 
 const settingsPath = path.join(app.getPath('userData'), 'settings.json');
 const patchSettingsPath = path.join(app.getPath('userData'), 'patch-settings.json');
 
 export function initialize() {
   readFile(settingsPath, newSettings => {
-    settings = newSettings;
-    settingsFileRead$.next(true);
+    settings$.next(newSettings);
   });
 
   readFile(patchSettingsPath, newPatchSettings => {
-    patchSettings = newPatchSettings;
-    patchSettingsFileRead$.next(true);
+    patchSettings$.next(newPatchSettings);
   });
 
   // Request from renderer to get settings file from main process
   ipcMain.on('getSettings', (event) => {
-    settingsFileRead$.asObservable().pipe(take(1)).subscribe(fileRead => {
-      if (fileRead) {
-        event.sender.send('getSettingsResponse', settings);
+    settings$.asObservable().pipe(take(1)).subscribe(value => {
+      if (value) {
+        event.sender.send('getSettingsResponse', value);
       }
     });
   });
 
   ipcMain.on('getPatchSettings', (event) => {
-    patchSettingsFileRead$.asObservable().pipe(take(1)).subscribe(fileRead => {
-      if (fileRead) {
-        event.sender.send('getPatchSettingsResponse', patchSettings);
+    patchSettings$.asObservable().pipe(take(1)).subscribe(value => {
+      if (value) {
+        event.sender.send('getPatchSettingsResponse', value);
       }
     });
   });
 
   ipcMain.on('applySettings', (event, newSettings: RandomizerForm) => {
-    settings = newSettings;
+    settings$.next(newSettings);
   });
 
   ipcMain.on('applyPatchSettings', (event, newPatchSettings: PatchForm) => {
-    patchSettings = newPatchSettings;
+    patchSettings$.next(newPatchSettings);
   });
 }
 
 export function writeSettingsFiles() {
   // Write general settings if they exist
-  if (settings) {
-    fs.writeFile(settingsPath, JSON.stringify(settings, null, '\t'), 'utf8', err => {
+  if (settings$.getValue()) {
+    fs.writeFile(settingsPath, JSON.stringify(settings$.getValue(), null, '\t'), 'utf8', err => {
       if (err) throw err;
     });
   }
 
   // Write patch settings if they exist
-  if (patchSettings) {
-    fs.writeFile(patchSettingsPath, JSON.stringify(patchSettings, null, '\t'), 'utf8', err => {
+  if (patchSettings$.getValue()) {
+    fs.writeFile(patchSettingsPath, JSON.stringify(patchSettings$.getValue(), null, '\t'), 'utf8', err => {
       if (err) throw err;
     });
   }
