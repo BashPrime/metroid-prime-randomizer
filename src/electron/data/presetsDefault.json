@@ -1,46 +1,29 @@
 {
   "Default": {
+    "excludeLocations": [],
+    "itemOverrides": [],
     "romSettings": {
+      "hideItemModels": false,
       "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
+      "skipHudPopups": true
     },
     "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
       "artifactLocationHints": true,
       "elevatorShuffle": false,
+      "goal": "artifact-collection",
+      "goalArtifacts": 12,
       "heatProtection": "any-suit",
-      "suitDamageReduction": "default",
-      "startingArea": 20,
-      "randomizedStartingItems": {
+      "randomStartingItems": {
         "maximum": 0,
         "minimum": 0
-      }
+      },
+      "startingArea": 20,
+      "suitDamageReduction": "default"
     },
-    "itemOverrides": [],
-    "excludeLocations": [],
     "tricks": []
   },
   "Beginner Friendly": {
-    "romSettings": {
-      "skipFrigate": true,
-      "skipHudPopups": true,
-      "hideItemModels": false
-    },
-    "rules": {
-      "goal": "artifact-collection",
-      "goalArtifacts": 6,
-      "artifactLocationHints": true,
-      "elevatorShuffle": false,
-      "heatProtection": "any-suit",
-      "suitDamageReduction": "default",
-      "startingArea": 20,
-      "randomizedStartingItems": {
-        "maximum": 0,
-        "minimum": 0
-      }
-    },
+    "excludeLocations": [],
     "itemOverrides": [
       {
         "count": 1,
@@ -58,7 +41,24 @@
         "state": "starting-item"
       }
     ],
-    "excludeLocations": [],
+    "romSettings": {
+      "hideItemModels": false,
+      "skipFrigate": true,
+      "skipHudPopups": true
+    },
+    "rules": {
+      "artifactLocationHints": true,
+      "elevatorShuffle": false,
+      "goal": "artifact-collection",
+      "goalArtifacts": 6,
+      "heatProtection": "any-suit",
+      "randomStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      },
+      "startingArea": 20,
+      "suitDamageReduction": "default"
+    },
     "tricks": []
   }
 }
