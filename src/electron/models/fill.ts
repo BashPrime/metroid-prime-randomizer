@@ -19,13 +19,16 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
     // Collect available placed items using the current item pool for accurate dependency checking
     const assumedItems = new PrimeItemCollection(world.collectItems(itemPool).toArray());
 
+    // Using this for "can escape room" checking when potentially placing an item
+    const assumedItemsWithItemToPlace = new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]);
+
     // Shuffle locations collection
     const shuffledLocations = locations.shuffle(rng);
     let locationToFill: Location;
 
     for (const location of shuffledLocations.toArray()) {
       // Only fill if the location isn't excluded and we can fill it
-      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings) && location.canEscape(assumedItems, settings)) {
+      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings) && location.canEscape(assumedItemsWithItemToPlace, settings)) {
         locationToFill = location;
         location.setItem(itemToPlace);
         locations.remove(location);
