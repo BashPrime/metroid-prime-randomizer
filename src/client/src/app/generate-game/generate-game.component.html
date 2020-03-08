@@ -22,6 +22,8 @@
                   *ngIf="isCustomPreset()">Save</button>
                 <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())"
                   *ngIf="isUserPreset()">Remove</button>
+                <button class="button is-info" (click)="importPreset()">Import</button>
+                <button class="button is-info" (click)="exportPreset()" *ngIf="isUserPreset()">Export</button>
               </div>
             </div>
           </div>

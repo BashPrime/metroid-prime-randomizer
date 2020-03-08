@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { filterProperties } from '../utilities';
 import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
@@ -51,7 +51,8 @@ export class GenerateGameComponent implements OnInit {
           this.buildPresets([defaultPresets, userPresets]);
 
           // Were defined settings retrieved from settings.json?
-          if (settings) {
+          // Only apply form changes if first time loading
+          if (!this.loaded && settings) {
             this.applyFormChanges(settings);
           }
 
@@ -93,6 +94,10 @@ export class GenerateGameComponent implements OnInit {
     this.form.patchValue({ preset: this.CUSTOM_PRESET });
   }
 
+  setPreset(key: string): void {
+    this.form.patchValue({ preset: key });
+  }
+
   isCustomPreset(): boolean {
     return this.getPresetValue() === this.CUSTOM_PRESET;
   }
@@ -130,6 +135,9 @@ export class GenerateGameComponent implements OnInit {
 
   applyFormChanges(newValue: RandomizerForm, excludeControls: string[] = []): void {
     const fb = new FormBuilder();
+
+    // For any control that aren't passed in, use the default form value instead.
+    this.form = this.randomizerService.createForm();
 
     for (let control in filterProperties(newValue, excludeControls)) {
       // Make sure form has the control! (primarly for protected field)
@@ -178,6 +186,16 @@ export class GenerateGameComponent implements OnInit {
     this.generatorService.generateGame(this.form.value, spoiler);
   }
 
+  importPreset(): void {
+    this.presetsService.importPreset();
+  }
+
+  exportPreset(): void {
+    if (this.isUserPreset()) {
+      this.presetsService.exportPreset(this.getPresetValue());
+    }
+  }
+
   private buildPresets(presets: PresetObject[]): void {
     this.presets = {};
 
@@ -188,5 +206,15 @@ export class GenerateGameComponent implements OnInit {
         this.presets[key] = preset[key];
       }
     }
+
+    // After building presets, if we imported a preset, select it in the form
+    this.presetsService._importedPreset
+    .pipe(take(1))
+    .subscribe(preset => {
+      if (preset) {
+        this.setPreset(preset);
+        this.presetsService.clearImportPresetSubject();
+      }
+    });
   }
 }

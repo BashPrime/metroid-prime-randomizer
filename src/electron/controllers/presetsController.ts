@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import * as presetsDefaultJson from '../data/presetsDefault.json';
+import { PresetObject } from '../../common/models/presetObject';
+import { RandomizerForm } from '../../common/models/randomizerForm';
 
 /** Stores all default and user-saved presets for quick reference. */
 export const allPresets = {};
@@ -49,7 +51,12 @@ export function initialize() {
     });
   });
 
-  ipcMain.on('updateUserPreset', (event, preset, key) => {
+  ipcMain.on('updateUserPreset', (event, preset: RandomizerForm, key: string) => {
+    // If preset has protected field, delete it
+    if (preset.hasOwnProperty('protected')) {
+      delete (preset as any).protected;
+    }
+
     // Read presets from file
     fs.readFile(userPresetsPath, 'utf8', (err, filePresets) => {
       // If file doesn't exist, create a new object and populate it
@@ -66,7 +73,7 @@ export function initialize() {
     });
   });
 
-  ipcMain.on('removeUserPreset', (event, key) => {
+  ipcMain.on('removeUserPreset', (event, key: string) => {
     // Read presets from file
     fs.readFile(userPresetsPath, 'utf8', (err, filePresets) => {
       if (err) {
@@ -85,6 +92,37 @@ export function initialize() {
       }
     });
   });
+
+  ipcMain.on('importPreset', (event, presetFilePath: string) => {
+    fs.readFile(presetFilePath, 'utf8', (err, presetJson) => {
+      if (err) {
+        event.sender.send('importPresetError', err.code);
+      } else {
+        try {
+          // Preset should only contain one entry
+          const [key, preset] = Object.entries(JSON.parse(presetJson) as PresetObject)[0];
+          event.sender.send('importPresetResponse', key, preset);
+        } catch (err) {
+          const error: Error = err;
+          event.sender.send('importPresetError', error.message);
+        }
+      }
+    });
+  });
+
+  ipcMain.on('exportPreset', (event, key: string, filePath: string) => {
+    let presetToExport: PresetObject;
+
+    if (allPresets[key]){
+      presetToExport = { [key]: allPresets[key] };
+
+      fs.writeFile(filePath, JSON.stringify(presetToExport, null, '\t'), 'utf8', (err) => {
+        event.sender.send('exportPresetResponse', err ? err.code : null);
+      });
+    } else {
+      event.sender.send('exportPresetResponse', 'The preset could not be found.');
+    }
+  });
 }
 
 /**
@@ -102,7 +140,7 @@ function readUserPresetsFile(callback) {
     if (err) {
       response.err = err;
     } else {
-      response.presets = JSON.parse(presets);
+      response.presets = JSON.parse(presets) as PresetObject;
       response.keys = Object.keys(response.presets);
     }
 
