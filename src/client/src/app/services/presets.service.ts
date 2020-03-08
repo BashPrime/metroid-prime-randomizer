@@ -65,11 +65,13 @@ export class PresetsService {
     });
 
     this.electronService.ipcRenderer.on('exportPresetResponse', (event, errMsg: string) => {
-      if (errMsg) {
-        this.toastrService.error('Failed to export preset: ' + errMsg);
-      } else {
-        this.toastrService.success('Successfully exported the preset.');
-      }
+      this.ngZone.run(() => {
+        if (errMsg) {
+          this.toastrService.error('Failed to export preset: ' + errMsg);
+        } else {
+          this.toastrService.success('Successfully exported the preset.');
+        }
+      });
     });
   }
 
