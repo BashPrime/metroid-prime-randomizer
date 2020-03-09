@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, ControlContainer, FormArray } from '@angular/forms';
 
 import { SettingsSection } from '../settings-section';
-import { RandomizerService } from 'src/app/services/randomizer.service';
+import { RandomizerService } from '../../services/randomizer.service';
 
 @Component({
   selector: 'app-read-only-settings-container',
@@ -31,5 +31,9 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
   getValue(name: string, section: string) {
     const value = this.formGroup.get(section).get(name).value;
     return this.getChoiceName(name, value);
+  }
+
+  getTrickName(trick: string): string {
+    return this.getDetails(trick) ? this.getDetails(trick).name : trick;
   }
 }

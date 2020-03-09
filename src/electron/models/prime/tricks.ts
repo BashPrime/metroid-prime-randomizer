@@ -7,7 +7,7 @@ export class Tricks extends SettingsFlags {
   boostThroughBombTunnels = false;
   climbTowerOfLightNoMissiles = false;
   crossTwinFiresTunnelWithoutSpider = false;
-  eliteResearchBoostClip = false;
+  eliteResearchInfiniteBoostClip = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   furnaceAccessWithoutSpider = false;
   gravityChamberGrappleLedgeRJump = false;
@@ -21,6 +21,7 @@ export class Tricks extends SettingsFlags {
   removeThermalReqs = false;
   removeXrayReqs = false;
   ruinedFountainFlaahgraSkip = false;
+  quarantineCaveSpiderSlopeJump
   quarantineMonitorDash = false;
   towerChamberNoGravity = false;
   upperRuinedShrineTowerOfLightFewerAccessReqs = false;

@@ -85,7 +85,7 @@
       <div class="content" *ngIf="getFormArray('tricks').length">
         <ul>
           <li *ngFor="let item of getFormArray('tricks').value">
-            {{ getDisplayName(item) }}
+            {{ getTrickName(item) }}
           </li>
         </ul>
       </div>

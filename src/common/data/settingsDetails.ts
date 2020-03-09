@@ -121,10 +121,52 @@ export const details: SettingsDetails = {
     description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`,
     difficulty: Difficulty.EASY
   },
+  eliteResearchInfiniteBoostClip: {
+    name: 'Infinite Boost clip into Elite Research',
+    description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
+    difficulty: Difficulty.NORMAL
+  },
+  fieryShoresAccessWithoutMorphGrapple: {
+    name: 'Fiery Shores Access Without Morph Ball & Grapple Beam',
+    description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,
+    difficulty: Difficulty.TRIVIAL
+  },
+  furnaceAccessWithoutSpider: {
+    name: 'Furnace access without Spider Ball',
+    description: `You can enter the upper tunnel to reach the rest of Furnace by climbing the side of the Spider Ball track (via jumping), and then morphing at the top.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
     description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  removeThermalReqs: {
+    name: 'Remove Thermal Visor Requirements',
+    description: `You will not be required to have Thermal Visor for power conduits and accessing Thardus.`,
+    difficulty: Difficulty.EASY
+  },
+  removeXrayReqs: {
+    name: 'Remove X-Ray Visor Requirements',
+    description: `You will not be required to have X-Ray Visor when traversing invisible platforms.
+
+    THIS DOES NOT REMOVE the X-Ray Visor requirement for Omega Pirate.`,
+    difficulty: Difficulty.EASY
+  },
+  ruinedFountainFlaahgraSkip: {
+    name: 'Ruined Fountain Flaahgra Skip',
+    description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
+    difficulty: Difficulty.NORMAL
+  },
+  quarantineCaveSpiderSlopeJump: {
+    name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
+    description: `You can exit Quarantine Cave to Ruined Courtyard by slope jumping next to the Spider Ball track.`,
+    difficulty: Difficulty.NORMAL
+  },
+  quarantineMonitorDash: {
+    name: 'Quarantine Monitor Dash',
+    description: `You can skip the Grapple Beam by scan dashing to the Quarantine Monitor platform from the elevator platform.`,
+    difficulty: Difficulty.NORMAL
   },
   towerChamberNoGravity: {
     name: 'Tower Chamber without Gravity Suit',
@@ -139,6 +181,11 @@ export const details: SettingsDetails = {
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',
     description: `You can space jump to the upper ledge in Monitor Station via R jump or dash.`,
+    difficulty: Difficulty.EASY
+  },
+  wateryHallUnderwaterFlaahgraSkip: {
+    name: 'Watery Hall (Underwater) Flaahgra Skip',
+    description: `You can obtain the underwater Watery Hall item before fighting Flaaghra, making it possible for the Morph Ball Bomb to be placed here.`,
     difficulty: Difficulty.EASY
   }
 };
