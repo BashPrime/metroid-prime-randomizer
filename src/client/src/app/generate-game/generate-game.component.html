@@ -44,7 +44,7 @@
         </div>
         <app-customize-settings-container *ngIf="isCustomPreset()">
         </app-customize-settings-container>
-        <app-read-only-settings-container *ngIf="!isCustomPreset()">
+        <app-read-only-settings-container [randomizerForm]="getFormGroup().value" *ngIf="!isCustomPreset()">
         </app-read-only-settings-container>
       </form>
     </ng-template>

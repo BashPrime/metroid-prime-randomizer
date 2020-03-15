@@ -1,101 +1,99 @@
-<form [formGroup]="getFormGroup()">
-  <div class="columns">
-    <div class="column">
-      <h1 class="title has-bottom-border">ROM Settings</h1>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('skipFrigate') }}</p>
-        <p>{{ getValue('skipFrigate', 'romSettings') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('skipHudPopups') }}</p>
-        <p>{{ getValue('skipHudPopups', 'romSettings') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('hideItemModels') }}</p>
-        <p>{{ getValue('hideItemModels', 'romSettings') }}</p>
-      </div>
+<div class="columns">
+  <div class="column">
+    <h1 class="title has-bottom-border">ROM Settings</h1>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('skipFrigate') }}</p>
+      <p>{{ getValue('skipFrigate', 'romSettings') }}</p>
     </div>
-    <div class="column">
-      <h1 class="title has-bottom-border">Rules</h1>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('goal') }}</p>
-        <p>{{ getValue('goal', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('goalArtifacts') }}</p>
-        <p>{{ getValue('goalArtifacts', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('artifactLocationHints') }}</p>
-        <p>{{ getValue('artifactLocationHints', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('elevatorShuffle') }}</p>
-        <p>{{ getValue('elevatorShuffle', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('heatProtection') }}</p>
-        <p>{{ getValue('heatProtection', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('suitDamageReduction') }}</p>
-        <p>{{ getValue('suitDamageReduction', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('pointOfNoReturnItems') }}</p>
-        <p>{{ getValue('pointOfNoReturnItems', 'rules') }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ getDisplayName('startingArea') }}</p>
-        <p>{{ getValue('startingArea', 'rules') }}</p>
-      </div>
-      <p class="heading">{{ getDisplayName('randomStartingItems') }}</p>
-      <div class="field">
-        <p class="heading">{{ DETAILS.randomStartingItems.items.minimum.name }}</p>
-        <p>{{ getFormGroup().get('rules').get('randomStartingItems').value.minimum }}</p>
-      </div>
-      <div class="field">
-        <p class="heading">{{ DETAILS.randomStartingItems.items.maximum.name }}</p>
-        <p>{{ getFormGroup().get('rules').get('randomStartingItems').value.maximum }}</p>
-      </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('skipHudPopups') }}</p>
+      <p>{{ getValue('skipHudPopups', 'romSettings') }}</p>
     </div>
-    <div class="column">
-      <h1 class="title has-bottom-border">Item Overrides</h1>
-      <div *ngIf="getFormArray('itemOverrides').length">
-        <div class="field" *ngFor="let override of getFormArray('itemOverrides').controls">
-          <p class="heading">{{ override.value.name }}</p>
-          <p>{{ getChoiceName('itemOverride', override.value.state) }} ({{ override.value.count }})</p>
-        </div>
-      </div>
-      <div class="field" *ngIf="!getFormArray('itemOverrides').length">
-        <p>(none)</p>
-      </div>
-    </div>
-    <div class="column">
-      <h1 class="title has-bottom-border">Exclude Locations</h1>
-      <div class="content" *ngIf="getFormArray('excludeLocations').length">
-        <ul>
-          <li *ngFor="let item of getFormArray('excludeLocations').value">
-            {{ item }}
-          </li>
-        </ul>
-      </div>
-      <div class="field" *ngIf="!getFormArray('excludeLocations').length">
-        <p>(none)</p>
-      </div>
-    </div>
-    <div class="column">
-      <h1 class="title has-bottom-border">Tricks</h1>
-      <div class="content" *ngIf="getFormArray('tricks').length">
-        <ul>
-          <li *ngFor="let item of getFormArray('tricks').value">
-            {{ getTrickName(item) }}
-          </li>
-        </ul>
-      </div>
-      <div class="field" *ngIf="!getFormArray('tricks').length">
-        <p>(none)</p>
-      </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('hideItemModels') }}</p>
+      <p>{{ getValue('hideItemModels', 'romSettings') }}</p>
     </div>
   </div>
-</form>
+  <div class="column">
+    <h1 class="title has-bottom-border">Rules</h1>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('goal') }}</p>
+      <p>{{ getValue('goal', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('goalArtifacts') }}</p>
+      <p>{{ getValue('goalArtifacts', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('artifactLocationHints') }}</p>
+      <p>{{ getValue('artifactLocationHints', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('elevatorShuffle') }}</p>
+      <p>{{ getValue('elevatorShuffle', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('heatProtection') }}</p>
+      <p>{{ getValue('heatProtection', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('suitDamageReduction') }}</p>
+      <p>{{ getValue('suitDamageReduction', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('pointOfNoReturnItems') }}</p>
+      <p>{{ getValue('pointOfNoReturnItems', 'rules') }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('startingArea') }}</p>
+      <p>{{ getValue('startingArea', 'rules') }}</p>
+    </div>
+    <p class="heading">{{ getDisplayName('randomStartingItems') }}</p>
+    <div class="field">
+      <p class="heading">{{ DETAILS.randomStartingItems.items.minimum.name }}</p>
+      <p>{{ getRandomizerForm().rules.randomStartingItems.minimum }}</p>
+    </div>
+    <div class="field">
+      <p class="heading">{{ DETAILS.randomStartingItems.items.maximum.name }}</p>
+      <p>{{ getRandomizerForm().rules.randomStartingItems.maximum }}</p>
+    </div>
+  </div>
+  <div class="column">
+    <h1 class="title has-bottom-border">Item Overrides</h1>
+    <div *ngIf="getRandomizerForm().itemOverrides.length">
+      <div class="field" *ngFor="let override of getRandomizerForm().itemOverrides">
+        <p class="heading">{{ override.name }}</p>
+        <p>{{ getChoiceName('itemOverride', override.state) }} ({{ override.count }})</p>
+      </div>
+    </div>
+    <div class="field" *ngIf="!getRandomizerForm().itemOverrides.length">
+      <p>(none)</p>
+    </div>
+  </div>
+  <div class="column">
+    <h1 class="title has-bottom-border">Exclude Locations</h1>
+    <div class="content" *ngIf="getRandomizerForm().excludeLocations.length">
+      <ul>
+        <li *ngFor="let item of getRandomizerForm().excludeLocations">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+    <div class="field" *ngIf="!getRandomizerForm().excludeLocations.length">
+      <p>(none)</p>
+    </div>
+  </div>
+  <div class="column">
+    <h1 class="title has-bottom-border">Tricks</h1>
+    <div class="content" *ngIf="getRandomizerForm().tricks.length">
+      <ul>
+        <li *ngFor="let item of getRandomizerForm().tricks">
+          {{ getTrickName(item) }}
+        </li>
+      </ul>
+    </div>
+    <div class="field" *ngIf="!getRandomizerForm().tricks.length">
+      <p>(none)</p>
+    </div>
+  </div>
+</div>

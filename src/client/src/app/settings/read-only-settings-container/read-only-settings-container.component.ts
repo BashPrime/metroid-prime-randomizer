@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormArray } from '@angular/forms';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from '../../services/randomizer.service';
+import { RandomizerForm } from '../../../../../common/models/randomizerForm';
 
 @Component({
   selector: 'app-read-only-settings-container',
@@ -10,26 +11,21 @@ import { RandomizerService } from '../../services/randomizer.service';
   styleUrls: ['./read-only-settings-container.component.scss']
 })
 export class ReadOnlySettingsContainerComponent extends SettingsSection implements OnInit {
-  private formGroup: FormGroup;
+  @Input() private randomizerForm: RandomizerForm;
 
-  constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
+  constructor(protected randomizerService: RandomizerService) {
     super(randomizerService);
   }
 
   ngOnInit() {
-    this.formGroup = this.controlContainer.control as FormGroup;
   }
 
-  getFormGroup() {
-    return this.formGroup;
-  }
-
-  getFormArray(name: string) {
-    return this.formGroup.get(name) as FormArray;
+  getRandomizerForm(): RandomizerForm {
+    return this.randomizerForm;
   }
 
   getValue(name: string, section: string) {
-    const value = this.formGroup.get(section).get(name).value;
+    const value = this.randomizerForm[section][name];
     return this.getChoiceName(name, value);
   }
 
