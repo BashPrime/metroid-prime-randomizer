@@ -2,7 +2,8 @@
   <section class="section">
     <div class="columns">
       <div class="column is-half">
-        <div class="box">
+        <div class="box settings-box">
+          <button class="button is-info is-small" (click)="setModalOpen(true)">View Settings Used</button>
           <div class="seed-details" *ngFor="let seed of getSeeds(); let i = index">
             <p class="heading">Permalink</p>
             <div class="level">
@@ -25,7 +26,8 @@
             <div class="control is-expanded">
               <input class="input is-small" type="text" formControlName="baseIso">
               <div *ngIf="isSubmitted() && getFormGroup().controls.baseIso.errors">
-                <p class="help is-danger" *ngIf="getFormGroup().controls.baseIso.errors.required">A base Metroid Prime .iso
+                <p class="help is-danger" *ngIf="getFormGroup().controls.baseIso.errors.required">A base Metroid Prime
+                  .iso
                   file is required.</p>
               </div>
             </div>
@@ -88,4 +90,19 @@
       </div>
     </div>
   </section>
+</div>
+<div class="modal" [class.is-active]="getModalOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="width: 95%">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Settings Used</p>
+      <button class="delete" aria-label="close" (click)="setModalOpen(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <app-read-only-settings-container [randomizerForm]="getLastSettingsUsed()"></app-read-only-settings-container>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-small" (click)="setModalOpen(false)">Close</button>
+    </footer>
+  </div>
 </div>

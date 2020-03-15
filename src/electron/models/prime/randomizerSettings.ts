@@ -15,6 +15,7 @@ import { RandomStartingItems } from '../../../common/models/randomStartingItems'
 import { ItemOverrides } from './itemOverrides';
 import { ItemOverride } from '../../../common/models/itemOverride';
 import { details } from '../../../common/data/settingsDetails';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -144,6 +145,30 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     });
 
     return Utilities.sortObjectByProperties(prettified);
+  }
+
+  toRandomizerForm(): RandomizerForm {
+    return {
+      romSettings: {
+        skipFrigate: this.skipFrigate,
+        skipHudPopups: this.skipHudPopups,
+        hideItemModels: this.hideItemModels
+      },
+      rules: {
+        goal: this.goal,
+        goalArtifacts: this.goalArtifacts,
+        artifactLocationHints: this.artifactLocationHints,
+        elevatorShuffle: this.elevatorShuffle,
+        heatProtection: this.heatProtection,
+        suitDamageReduction: this.suitDamageReduction,
+        startingArea: this.startingArea,
+        randomStartingItems: this.randomStartingItems,
+        pointOfNoReturnItems: this.pointOfNoReturnItems
+      },
+      itemOverrides: this.itemOverrides.toArray(),
+      excludeLocations: this.excludeLocations.toArray(),
+      tricks: this.tricks.toArray()
+    };
   }
 
   static fromSettingsString(settingsString: string): PrimeRandomizerSettings {

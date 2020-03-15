@@ -14,6 +14,7 @@ import { PatchForm } from '../../../../common/models/patchForm';
 import { SettingsService } from '../services/settings.service';
 import { SettingsSection } from '../settings/settings-section';
 import { RandomizerService } from '../services/randomizer.service';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Component({
   selector: 'app-game-details',
@@ -21,7 +22,9 @@ import { RandomizerService } from '../services/randomizer.service';
   styleUrls: ['./game-details.component.scss']
 })
 export class GameDetailsComponent extends SettingsSection implements OnInit {
+  private modalOpen: boolean = false;
   private seeds: GeneratedSeed[];
+  private lastSettingsUsed: RandomizerForm;
   private formGroup: FormGroup;
   private submitted: boolean = false;
   private ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -46,6 +49,11 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     this.generatorService._generatedSeeds
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(seeds => this.seeds = seeds);
+
+    // Get last settings used
+    this.generatorService._lastSettingsUsed
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(settings => this.lastSettingsUsed = settings);
 
     // Get saved settings if they exist
     this.settingsService._patchSettings
@@ -82,6 +90,10 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     return this.seeds;
   }
 
+  getLastSettingsUsed(): RandomizerForm {
+    return this.lastSettingsUsed;
+  }
+
   getPermalink(seed: GeneratedSeed): string {
     return Utilities.generatePermalink(seed.seed, seed.settingsString);
   }
@@ -96,6 +108,14 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
 
   isSubmitted(): boolean {
     return this.submitted;
+  }
+
+  getModalOpen(): boolean {
+    return this.modalOpen;
+  }
+
+  setModalOpen(open: boolean) {
+    this.modalOpen = open;
   }
 
   copyPermalink(permalink: string): void {

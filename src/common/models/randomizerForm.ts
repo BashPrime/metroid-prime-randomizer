@@ -17,7 +17,7 @@ export interface RandomizerForm {
     suitDamageReduction: string;
     startingArea: number;
     randomStartingItems: RandomStartingItems;
-    pointOfNoReturnitems: string;
+    pointOfNoReturnItems: string;
   };
   itemOverrides: ItemOverride[];
   excludeLocations: string[];

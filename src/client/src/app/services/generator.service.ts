@@ -7,6 +7,7 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
 import { GeneratedSeed } from '../../../../common/models/generatedSeed';
 import * as Utilities from '../utilities';
 import { ProgressService } from './progress.service';
+import { PrimeRandomizerSettings } from '../../../../electron/models/prime/randomizerSettings';
 
 interface GenerationState {
   total: number;
@@ -22,9 +23,11 @@ export class GeneratorService {
   private generatedSeeds$ = new BehaviorSubject<GeneratedSeed[]>(undefined);
   private currentGeneration$ = new BehaviorSubject<GenerationState>(undefined);
   private spoiler$ = new BehaviorSubject<boolean>(false);
+  private lastSettingsUsed$ = new BehaviorSubject<RandomizerForm>(undefined);
   _generatedSeeds = this.generatedSeeds$.asObservable();
   _currentGeneration = this.currentGeneration$.asObservable();
   _spoiler = this.spoiler$.asObservable();
+  _lastSettingsUsed = this.lastSettingsUsed$.asObservable();
 
   constructor(
     private ngZone: NgZone,
@@ -82,6 +85,9 @@ export class GeneratorService {
     // Set spoiler flag
     this.spoiler$.next(spoiler);
 
+    // Set last settings used
+    this.lastSettingsUsed$.next(form);
+
     // Don't run if a seed is currently being generated
     if (!this.currentGeneration$.value) {
       const generationCount = form.generationCount ? form.generationCount : 1;
@@ -122,6 +128,7 @@ export class GeneratorService {
       }
 
       if (decodedItems) {
+        this.lastSettingsUsed$.next(PrimeRandomizerSettings.fromSettingsString(decodedItems.settingsString).toRandomizerForm());
         this.electronService.ipcRenderer.send('importSeed', decodedItems.seed, decodedItems.settingsString);
       }
     }
