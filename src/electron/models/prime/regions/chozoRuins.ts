@@ -1,6 +1,7 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
+import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
@@ -94,7 +95,10 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection) => items.canBoost()
       },
       exits: {
-        'Ruined Shrine (Pit)': () => true,
+        'Ruined Shrine (Pit)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW
+            || (items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS));
+        },
         'Tower of Light': (items: PrimeItemCollection) => items.canBoost() && items.canSpider() && items.has(PrimeItem.WAVE_BEAM),
         'Main Plaza': (items: PrimeItemCollection) => items.hasMissiles()
       }
@@ -224,7 +228,10 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Energy Core',
       exits: {
-        'Burn Dome': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
+        'Burn Dome': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
+          return bombReqs || items.has(PrimeItem.MORPH_BALL);
+        },
         'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs()
       }
     },
@@ -290,7 +297,10 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Reflecting Pool',
       exits: {
-        'Antechamber': (items: PrimeItemCollection) => items.canBoost() && items.hasMissiles(),
+        'Antechamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const iceReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.ICE_BEAM);
+          return iceReqs && items.canBoost() && items.hasMissiles();
+        },
         'Chozo Transport East': (items: PrimeItemCollection) => items.canBoost() && items.hasMissiles() && items.canLayBombs(),
         'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
         'Hall of the Elders': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)

@@ -41,7 +41,8 @@ export class RandomizerService {
         randomStartingItems: fb.group({
           minimum: [this.DEFAULT_SETTINGS.randomStartingItems.minimum, [Validators.min(0), Validators.max(25)]],
           maximum: [this.DEFAULT_SETTINGS.randomStartingItems.maximum, [Validators.min(0), Validators.max(25)]]
-        })
+        }),
+        pointOfNoReturnItems: [this.DEFAULT_SETTINGS.pointOfNoReturnItems]
       }),
       itemOverrides: fb.array([]),
       excludeLocations: fb.array([]),

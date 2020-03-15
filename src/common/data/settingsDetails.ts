@@ -70,6 +70,14 @@ export const details: SettingsDetails = {
     'Progressive': Damage reduction is based on the number of suits you have obtained.
     '1 Suit = 10%, 2 Suits = 20%, 3 Suits = 50%.`
   },
+  pointOfNoReturnItems: {
+    name: 'Point of No Return Items',
+    description: `'Allow All': An item can be placed in any location that also requires that item to escape.
+
+    'Allow Visible': Same as Allow All, but only if you can see the item before crossing the point of no return (ex: vanilla beam rooms).
+    
+    'Do Not Allow': Items cannot be placed in any location that also requires that item to escape.`
+  },
   startingArea: {
     name: 'Starting Area',
     description: `Choose which area to start the game in.

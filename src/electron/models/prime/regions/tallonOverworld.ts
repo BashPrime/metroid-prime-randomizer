@@ -1,6 +1,7 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
+import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
@@ -13,7 +14,8 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const normalReqs = items.canBoost() && items.canLayBombs();
+          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const normalReqs = sjReqs && items.canBoost() && items.canLayBombs(); // sj for blind item check
           return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tallon Canyon': () => true,

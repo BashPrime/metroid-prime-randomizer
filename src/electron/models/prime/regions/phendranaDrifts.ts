@@ -1,6 +1,7 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
+import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
@@ -34,7 +35,10 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Chapel of the Elders',
       locations: {
-        [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection) => items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)
+        [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const waveBeamReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.WAVE_BEAM);
+          return waveBeamReqs && (items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM));
+        }
       },
       exits: {
         'Chozo Ice Temple': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
@@ -126,7 +130,10 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Control Tower',
       exits: {
         'Research Lab Aether': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
-        'Control Tower (Collapsed Tower)': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Control Tower (Collapsed Tower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
+          return bombReqs && items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         'Research Lab Hydra': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
@@ -176,7 +183,10 @@ export function phendranaDrifts(): RegionObject[] {
         [PrimeLocation.TRANSPORT_ACCESS]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM)
       },
       exits: {
-        'Frozen Pike': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Frozen Pike': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
+          return bombReqs && items.has(PrimeItem.WAVE_BEAM);
+        },
         'Phendrana Transport South': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)
       }
     },

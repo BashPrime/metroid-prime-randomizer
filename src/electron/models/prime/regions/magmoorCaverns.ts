@@ -1,6 +1,7 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
+import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 
@@ -51,7 +52,10 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
-        'Fiery Shores (Warrior Shrine Tunnel)': (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        'Fiery Shores (Warrior Shrine Tunnel)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
+          return bombReqs && items.canLayPowerBombs();
+        },
         'Monitor Station': () => true
       }
     },
@@ -102,8 +106,9 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Geothermal Core',
       exits: {
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const plasmaReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.PLASMA_BEAM);
           const grappleSpiderReqs = settings.tricks.plasmaProcessingWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
-          return grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
+          return plasmaReqs && grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
         },
         'Magmoor Workstation': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Twin Fires': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)

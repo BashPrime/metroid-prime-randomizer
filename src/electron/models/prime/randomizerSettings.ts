@@ -4,6 +4,7 @@ import * as crypto from 'crypto';
 import { RandomizerSettings, RandomizerSettingsArgs } from '../randomizerSettings';
 import { Checkbox, SelectOption, discreteNumberSelection, ObjectOption, NumberOption } from '../option';
 import { OptionType } from '../../enums/optionType';
+import { PointOfNoReturnItems } from '../../enums/pointOfNoReturnItems';
 import { Tricks } from './tricks';
 import { SettingsFlagsArgs } from '../settingsFlags';
 import { ExcludeLocations } from './excludeLocations';
@@ -29,6 +30,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   suitDamageReduction?: string;
   startingArea?: number;
   randomStartingItems?: RandomStartingItems;
+  pointOfNoReturnItems?: string;
   itemOverrides?: ItemOverride[];
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
@@ -51,6 +53,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     minimum: 0,
     maximum: 0
   };
+  pointOfNoReturnItems: string = PointOfNoReturnItems.ALLOW_ALL;
   itemOverrides: ItemOverrides = new ItemOverrides();
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
@@ -340,6 +343,25 @@ export const settings = [
         default: 0
       })
     }
+  }),
+  new SelectOption({
+    name: 'pointOfNoReturnItems',
+    shared: true,
+    choices: [
+      {
+        name: 'Allow All',
+        value: PointOfNoReturnItems.ALLOW_ALL
+      },
+      {
+        name: 'Allow Visible',
+        value: PointOfNoReturnItems.ALLOW_VISIBLE
+      },
+      {
+        name: 'Do Not Allow',
+        value: PointOfNoReturnItems.DO_NOT_ALLOW
+      }
+    ],
+    default: PointOfNoReturnItems.ALLOW_ALL
   }),
   new SelectOption({
     name: 'itemOverride',
