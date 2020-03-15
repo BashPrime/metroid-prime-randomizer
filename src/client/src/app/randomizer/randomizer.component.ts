@@ -6,6 +6,7 @@ import { RandomizerService } from '../services/randomizer.service';
 import { GeneratorService } from '../services/generator.service';
 import { TabService } from '../services/tab.service';
 import { Tab } from '../../../../common/models/tab';
+import { UpdateService } from '../services/update.service';
 
 @Component({
   selector: 'app-randomizer',
@@ -26,9 +27,17 @@ export class RandomizerComponent implements OnInit {
   private selectedTabId: number = this.tabIds.welcome;
   private ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private randomizerService: RandomizerService, private tabService: TabService, private generatorService: GeneratorService) { }
+  constructor(
+    private randomizerService: RandomizerService,
+    private tabService: TabService,
+    private generatorService: GeneratorService,
+    private updateService: UpdateService
+  ) { }
 
   ngOnInit() {
+    // Check for updates
+    this.updateService.checkForUpdates();
+
     // Subscribe to selected tab subject in application service
     this.tabService._selectedTabId
       .pipe(takeUntil(this.ngUnsubscribe))
