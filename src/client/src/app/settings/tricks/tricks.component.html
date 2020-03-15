@@ -1,14 +1,16 @@
-<div class="label is-small">Set Difficulty Level</div>
-<div class="field is-grouped">
-  <div class="control">
-    <div class="select is-small">
-      <select [(ngModel)]="selectedFilter">
-        <option [value]="filter" *ngFor="let filter of FILTERS">{{ filter }}</option>
-      </select>
+<div class="field">
+  <div class="label is-small">Set Difficulty Level</div>
+  <div class="field is-grouped">
+    <div class="control">
+      <div class="select is-small">
+        <select [(ngModel)]="selectedFilter">
+          <option [value]="filter" *ngFor="let filter of FILTERS">{{ filter }}</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="control">
-    <button class="button is-info is-small" (click)="setDifficulty(selectedFilter)">Set</button>
+    <div class="control">
+      <button class="button is-info is-small" (click)="setDifficulty(selectedFilter)">Set</button>
+    </div>
   </div>
 </div>
 <p-pickList [source]="items.available" [target]="items.selected" filterBy="label" [style]="GLOBAL_STYLE"

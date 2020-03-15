@@ -22,6 +22,7 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
   protected formArray: FormArray;
 
   // Constants
+  readonly GLOBAL_STYLE = { height: '84%' };
   readonly NONE_FILTER: string = 'None';
   readonly DIFFICULTIES: string[] = [
     Difficulty.TRIVIAL,
