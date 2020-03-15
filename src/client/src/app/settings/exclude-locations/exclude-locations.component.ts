@@ -13,7 +13,7 @@ export class ExcludeLocationsComponent extends PicklistFormComponent implements 
   protected formArray: FormArray;
 
   // Constants
-  readonly GLOBAL_STYLE = { height: '100%' };
+  readonly GLOBAL_STYLE = { height: 'calc(100% - 0.75rem)' };
 
   constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
