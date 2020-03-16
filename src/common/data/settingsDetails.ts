@@ -124,6 +124,11 @@ export const details: SettingsDetails = {
     description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`,
     difficulty: Difficulty.EASY
   },
+  crossMagmaPoolWithoutGrapple: {
+    name: 'Cross Magma Pool without Grapple Beam',
+    description: `You can scan dash off the crate items to cross Magma Pool with only Space Jump.`,
+    difficulty: Difficulty.NORMAL
+  },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
     description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`,
@@ -145,14 +150,41 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.TRIVIAL
   },
   furnaceAccessWithoutSpider: {
-    name: 'Furnace access without Spider Ball',
+    name: 'Furnace Access without Spider Ball',
     description: `You can enter the upper tunnel to reach the rest of Furnace by climbing the side of the Spider Ball track (via jumping), and then morphing at the top.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  gravityChamberLedgeItemWithoutGrapplePlasma: {
+    name: 'Gravity Chamber Ledge Item without Grapple, Plasma Beam',
+    description: `You can R jump to reach the ledge without Grapple and Plasma Beam.`,
+    difficulty: Difficulty.NORMAL
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
     description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  mainQuarryItemWithoutSpider: {
+    name: 'Main Quarry Item without Spider Ball',
+    description: `You can slope jump onto the top of the crane and R jump over to the item.`,
+    difficulty: Difficulty.NORMAL
+  },
+  phendranaTransportSouthToTransportAccessWithoutSpider: {
+    name: 'Phendrana Transport South to Transport Access without Spider Ball',
+    description: `You can Space Jump onto one of the poles and jump onto the top of the spider track to reach the door.`,
+    difficulty: Difficulty.TRIVIAL
+  },
+  plasmaProcessingItemWithoutGrappleSpider: {
+    name: 'Plasma Processing Item without Grapple Beam, Spider Ball',
+    description: `You can R jump or dash to reach the boost spinners, and either slope R jump or abuse standable collision to skip the spider track.`,
+    difficulty: Difficulty.EASY
+  },
+  removePhendranaDepthsGrappleReqs: {
+    name: 'Remove Phendrana Depths Grapple Requirements',
+    description: `Removes Grapple Beam checks for items and access in Frost Cave, Phendrana's Edge, and Hunter Cave.
+    
+    Gravity Chamber Ledge has its own option and is not included here.`,
+    difficulty: Difficulty.EASY
   },
   removeThermalReqs: {
     name: 'Remove Thermal Visor Requirements',
@@ -170,6 +202,11 @@ export const details: SettingsDetails = {
     name: 'Ruined Fountain Flaahgra Skip',
     description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
     difficulty: Difficulty.NORMAL
+  },
+  spiderlessShafts: {
+    name: 'Spiderless Shafts (Phazon Mines)',
+    description: `Elevator Access A and Research Access can be climbed without Spider Ball.`,
+    difficulty: Difficulty.HARD
   },
   quarantineCaveSpiderSlopeJump: {
     name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
