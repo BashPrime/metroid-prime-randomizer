@@ -19,8 +19,8 @@ export function chozoRuins(): RegionObject[] {
         'Ruined Nursery': () => true,
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjOnlyReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return sjOnlyReqs || (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL));
+          const tricksReqs = settings.tricks.mainPlazaItemsOnlySpaceJump || settings.tricks.enableMainPlazaLedgeDoor;
+          return tricksReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Chozo Transport West': () => true
       }
@@ -31,8 +31,8 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: () => true
       },
       exits: {
-        'Main Plaza': () => true
-        // Vault door is locked
+        'Main Plaza': () => true,
+        'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.enableMainPlazaLedgeDoor
       }
     },
     {
