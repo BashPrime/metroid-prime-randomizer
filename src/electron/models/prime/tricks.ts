@@ -8,6 +8,7 @@ export class Tricks extends SettingsFlags {
   climbTowerOfLightNoMissiles = false;
   crossTwinFiresTunnelWithoutSpider = false;
   eliteResearchInfiniteBoostClip = false;
+  enableMainPlazaLedgeDoor = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   furnaceAccessWithoutSpider = false;
   gravityChamberGrappleLedgeRJump = false;

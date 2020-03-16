@@ -134,6 +134,11 @@ export const details: SettingsDetails = {
     description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
     difficulty: Difficulty.NORMAL
   },
+  enableMainPlazaLedgeDoor: {
+    name: 'Enable Main Plaza Ledge Door',
+    description: `This door is normally disabled from the Main Plaza side. This option enables it in the patcher, allowing for additional routing options.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   fieryShoresAccessWithoutMorphGrapple: {
     name: 'Fiery Shores Access Without Morph Ball & Grapple Beam',
     description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,

@@ -15,7 +15,8 @@ export interface PatcherConfiguration {
   starting_items: number;
   comment: string;
   main_menu_message: string;
-  auto_enabled_elevators?: boolean;
+  auto_enabled_elevators: boolean;
+  enable_vault_ledge_door: boolean;
 }
 
 export function runRandomprimePatcher(config: PatcherConfiguration, callback: (message: string) => void): void {
