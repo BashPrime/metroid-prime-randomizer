@@ -75,7 +75,7 @@ export const details: SettingsDetails = {
     description: `'Allow All': An item can be placed in any location that also requires that item to escape.
 
     'Allow Visible': Same as Allow All, but only if you can see the item before crossing the point of no return (ex: vanilla beam rooms).
-    
+
     'Do Not Allow': Items cannot be placed in any location that also requires that item to escape.`
   },
   startingArea: {
@@ -102,7 +102,7 @@ export const details: SettingsDetails = {
   },
   // Tricks
   alcoveNoItems: {
-    name: 'Alcove with No Additional Items',
+    name: 'Alcove with No Items',
     description: `It's possible to reach the Alcove room without any items by performing a dash from Samus's ship to the upper ledge, near the Gully door.
 
     This can be done with a scan dash off the Red Starburst above the Temple Hall door, or by locking onto a Seedling in Temple Hall and then dashing.`,
@@ -110,7 +110,8 @@ export const details: SettingsDetails = {
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
-    description: `Arbor Chamber can be entered through the ceiling by going out of bounds.`
+    description: `Arbor Chamber can be entered through the ceiling by going out of bounds.`,
+    difficulty: Difficulty.NORMAL
   },
   boostThroughBombTunnels: {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
@@ -144,6 +145,16 @@ export const details: SettingsDetails = {
     description: `This door is normally disabled from the Main Plaza side. This option enables it in the patcher, allowing for additional routing options.`,
     difficulty: Difficulty.TRIVIAL
   },
+  exitQuarantineCaveRuinedCourtyardSlopeJump: {
+    name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
+    description: `You can exit Quarantine Cave to Ruined Courtyard by slope jumping next to the Spider Ball track.`,
+    difficulty: Difficulty.NORMAL
+  },
+  fewerCrosswayReqs: {
+    name: 'Fewer Crossway Requirements',
+    description: `When this is enabled, you are only expected to have Space Jump Boots and Morph Ball to obtain the item.`,
+    difficulty: Difficulty.EASY
+  },
   fieryShoresAccessWithoutMorphGrapple: {
     name: 'Fiery Shores Access Without Morph Ball & Grapple Beam',
     description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,
@@ -158,6 +169,16 @@ export const details: SettingsDetails = {
     name: 'Gravity Chamber Ledge Item without Grapple, Plasma Beam',
     description: `You can R jump to reach the ledge without Grapple and Plasma Beam.`,
     difficulty: Difficulty.NORMAL
+  },
+  hallOfTheEldersBombSlotsWithoutSpider: {
+    name: 'Hall of the Elders Bomb Slots without Spider Ball',
+    description: `You can activate the bomb slots by space jumping onto a peg sticking out of the wall, and then to the upper bomb slot, without needing Spider Ball.`,
+    difficulty: Difficulty.TRIVIAL
+  },
+  iceBeamBeforeFlaahgraOobWallcrawl: {
+    name: 'Ice Beam Before Flaahgra Wallcrawl (Out of Bounds)',
+    description: `You can go out of bounds in Gathering Hall and wallcrawl all the way to Reflecting Pool, skipping some items.`,
+    difficulty: Difficulty.HARD
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
@@ -182,7 +203,7 @@ export const details: SettingsDetails = {
   removePhendranaDepthsGrappleReqs: {
     name: 'Remove Phendrana Depths Grapple Requirements',
     description: `Removes Grapple Beam checks for items and access in Frost Cave, Phendrana's Edge, and Hunter Cave.
-    
+
     Gravity Chamber Ledge has its own option and is not included here.`,
     difficulty: Difficulty.EASY
   },
@@ -198,7 +219,7 @@ export const details: SettingsDetails = {
     THIS DOES NOT REMOVE the X-Ray Visor requirement for Omega Pirate.`,
     difficulty: Difficulty.EASY
   },
-  ruinedFountainFlaahgraSkip: {
+  ruinedFountainItemFlaahgraSkip: {
     name: 'Ruined Fountain Flaahgra Skip',
     description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
     difficulty: Difficulty.NORMAL
@@ -207,11 +228,6 @@ export const details: SettingsDetails = {
     name: 'Spiderless Shafts (Phazon Mines)',
     description: `Elevator Access A and Research Access can be climbed without Spider Ball.`,
     difficulty: Difficulty.HARD
-  },
-  quarantineCaveSpiderSlopeJump: {
-    name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
-    description: `You can exit Quarantine Cave to Ruined Courtyard by slope jumping next to the Spider Ball track.`,
-    difficulty: Difficulty.NORMAL
   },
   quarantineMonitorDash: {
     name: 'Quarantine Monitor Dash',
@@ -236,6 +252,11 @@ export const details: SettingsDetails = {
   wateryHallUnderwaterFlaahgraSkip: {
     name: 'Watery Hall (Underwater) Flaahgra Skip',
     description: `You can obtain the underwater Watery Hall item before fighting Flaaghra, making it possible for the Morph Ball Bomb to be placed here.`,
+    difficulty: Difficulty.EASY
+  },
+  wateryHallUnderwaterSlopeJump: {
+    name: 'Watery Hall (Underwater) Slope Jump',
+    description: `You can obtain the underwater Watery Hall item without Gravity Suit by slope jumping underwater.`,
     difficulty: Difficulty.EASY
   }
 };

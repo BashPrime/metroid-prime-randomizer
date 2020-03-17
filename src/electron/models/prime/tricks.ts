@@ -5,14 +5,21 @@ export class Tricks extends SettingsFlags {
   alcoveNoItems = false;
   arborChamberWithoutPlasma = false;
   boostThroughBombTunnels = false;
+  chozoIceTempleItemWithIS = false;
   climbTowerOfLightNoMissiles = false;
   crossMagmaPoolWithoutGrapple = false;
   crossTwinFiresTunnelWithoutSpider = false;
   eliteResearchInfiniteBoostClip = false;
   enableMainPlazaLedgeDoor = false;
+  exitQuarantineCaveRuinedCourtyardSlopeJump = false;
+  fewerCrosswayReqs = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   furnaceAccessWithoutSpider = false;
   gravityChamberLedgeItemWithoutGrapplePlasma = false;
+  hallOfTheEldersBombSlotsWithoutSpider = false;
+  hallOfTheEldersItemsWithIS = false;
+  iceBeamBeforeFlaahgraOobWallcrawl = false;
+  magmaPoolItemWithIS = false;
   mainPlazaItemsOnlySpaceJump = false;
   mainQuarryItemWithoutSpider = false;
   phendranaTransportSouthToTransportAccessWithoutSpider = false;
@@ -20,14 +27,15 @@ export class Tricks extends SettingsFlags {
   removePhendranaDepthsGrappleReqs = false;
   removeThermalReqs = false;
   removeXrayReqs = false;
-  ruinedFountainFlaahgraSkip = false;
+  ruinedFountainItemFlaahgraSkip = false;
   spiderlessShafts = false;
-  quarantineCaveSpiderSlopeJump = false;
   quarantineMonitorDash = false;
   towerChamberNoGravity = false;
   upperRuinedShrineTowerOfLightFewerAccessReqs = false;
+  waveSunOobWallcrawlWithIS = false;
   warriorShrineWithoutBoost = false;
   wateryHallUnderwaterFlaahgraSkip = false;
+  wateryHallUnderwaterSlopeJump = false;
 
   constructor(args?: SettingsFlagsArgs) {
     super();

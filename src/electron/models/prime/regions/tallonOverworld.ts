@@ -47,8 +47,11 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Landing Site': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.THERMAL_VISOR)
-          && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && thermalReqs
+            && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
@@ -94,7 +97,10 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: (items: PrimeItemCollection) => (items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)) && items.has(PrimeItem.GRAVITY_SUIT)
       },
       exits: {
-        'Biohazard Containment': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Biohazard Containment': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return items.has(PrimeItem.GRAVITY_SUIT) && thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        },
         'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
@@ -104,7 +110,10 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.BIOHAZARD_CONTAINMENT]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.GRAVITY_SUIT)
       },
       exits: {
-        'Hydro Access Tunnel': (items: PrimeItemCollection) => items.has(PrimeItem.THERMAL_VISOR) && items.has(PrimeItem.WAVE_BEAM),
+        'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return thermalReqs && items.has(PrimeItem.WAVE_BEAM);
+        },
         'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
@@ -121,7 +130,10 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Great Tree Hall (Upper)',
       locations: {
-        [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection) => items.has(PrimeItem.XRAY_VISOR) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return xrayReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       },
       exits: {
         'Life Grove Tunnel': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),

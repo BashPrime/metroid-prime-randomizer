@@ -40,10 +40,13 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Shore Tunnel': () => true,
         'Warrior Shrine': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const wsReqs = settings.tricks.warriorShrineWithoutBoost || (items.canBoost() && items.canLayBombs());
+          const wsReqs = settings.tricks.warriorShrineWithoutBoost || items.canBoost();
           return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Magmoor Transport West': (items: PrimeItemCollection) => items.canLayBombs()
+        'Magmoor Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
+          return canBoost || items.canLayBombs();
+        }
       },
     },
     {
@@ -99,7 +102,10 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Twin Fires',
       exits: {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canSpider() && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
+          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
@@ -164,7 +170,7 @@ export function magmoorCaverns(): RegionObject[] {
         },
         'Twin Fires': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
-          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM);
+          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     },
