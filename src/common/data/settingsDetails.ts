@@ -100,6 +100,30 @@ export const details: SettingsDetails = {
       }
     }
   },
+  // Game Details
+  baseIso: {
+    name: 'Base ISO',
+    description: `NTSC-U 1.00, 1.01, or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.
+
+    While all three versions are compatible with the default item logic settings, 1.00 is strongly recommended if you plan `
+      + `on removing any restrictions or adding any expected tricks.`,
+  },
+  outputFolder: {
+    name: 'Output Folder',
+    description: `The folder your randomized seeds and spoiler logs will be saved to. (defaults to your Documents/Metroid Prime Randomizer folder)`
+  },
+  trilogyIso: {
+    name: `Trilogy ISO (for Flaahgra music fix)`,
+    description: `NTSC-U Metroid Prime Trilogy ISO or WBFS file.
+
+    This is used to fix the Flaahgra music, which is bugged on the NTSC GameCube versions of Prime.`
+  },
+  outputType: {
+    name: 'Output Type',
+    description: `'Plain ISO': Your plain, regular, uncompressed .iso file type. Works with virtually every loader and emulator.
+    'Compressed ISO': Compresses the ISO, saves on file size. Should work with most loaders and emulators (Nintendont, Dolphin, etc).
+    'GameCube Zip': Another compressed format. Currently, it only works with Dolphin.`
+  },
   // Tricks
   alcoveNoItems: {
     name: 'Alcove with No Items',

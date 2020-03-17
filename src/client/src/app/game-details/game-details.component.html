@@ -24,7 +24,8 @@
           <label class="label is-required">Base ISO</label>
           <div class="field is-grouped">
             <div class="control is-expanded">
-              <input class="input is-small" type="text" formControlName="baseIso">
+              <input class="input is-small" type="text" formControlName="baseIso" [pTooltip]="getTooltip('baseIso')"
+                tooltipStyleClass="is-wide-tooltip">
               <div *ngIf="isSubmitted() && getFormGroup().controls.baseIso.errors">
                 <p class="help is-danger" *ngIf="getFormGroup().controls.baseIso.errors.required">A base Metroid Prime
                   .iso
@@ -40,7 +41,8 @@
           <label class="label">Output Folder</label>
           <div class="field is-grouped">
             <div class="control is-expanded">
-              <input class="input is-small" type="text" formControlName="outputFolder">
+              <input class="input is-small" type="text" formControlName="outputFolder"
+                [pTooltip]="getTooltip('outputFolder')" tooltipStyleClass="is-wide-tooltip">
             </div>
             <div class="control">
               <button class="button is-info is-small" (click)="selectOutputFolder()">
@@ -54,7 +56,8 @@
           <label class="label">Trilogy ISO (for Flaahgra music fix)</label>
           <div class="field is-grouped">
             <div class="control is-expanded">
-              <input class="input is-small" type="text" formControlName="trilogyIso">
+              <input class="input is-small" type="text" formControlName="trilogyIso"
+                [pTooltip]="getTooltip('trilogyIso')">
             </div>
             <div class="control">
               <button class="button is-info is-small" (click)="selectTrilogyIso()">
@@ -65,7 +68,7 @@
           <div class="field">
             <label class="label">Output Type</label>
             <div class="control">
-              <div class="select is-small">
+              <div class="select is-small" [pTooltip]="getTooltip('outputType')" tooltipStyleClass="is-wide-tooltip">
                 <select formControlName="outputType">
                   <option *ngFor="let choice of getChoices('outputType')" [ngValue]="choice.value">
                     {{ choice.name }}
