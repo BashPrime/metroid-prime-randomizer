@@ -13,6 +13,7 @@
       "goal": "artifact-collection",
       "goalArtifacts": 12,
       "heatProtection": "any-suit",
+      "pointOfNoReturnItems": "allow-all",
       "randomStartingItems": {
         "maximum": 0,
         "minimum": 0
@@ -23,42 +24,43 @@
     "tricks": []
   },
   "Beginner Friendly": {
-    "excludeLocations": [],
-    "itemOverrides": [
-      {
-        "count": 1,
-        "name": "Morph Ball",
-        "state": "starting-item"
-      },
-      {
-        "count": 1,
-        "name": "Morph Ball Bomb",
-        "state": "starting-item"
-      },
-      {
-        "count": 1,
-        "name": "Charge Beam",
-        "state": "starting-item"
-      }
-    ],
-    "romSettings": {
-      "hideItemModels": false,
-      "skipFrigate": true,
-      "skipHudPopups": true
-    },
-    "rules": {
-      "artifactLocationHints": true,
-      "elevatorShuffle": false,
-      "goal": "artifact-collection",
-      "goalArtifacts": 6,
-      "heatProtection": "any-suit",
-      "randomStartingItems": {
-        "maximum": 0,
-        "minimum": 0
-      },
-      "startingArea": 20,
-      "suitDamageReduction": "default"
-    },
-    "tricks": []
-  }
+		"excludeLocations": [],
+		"itemOverrides": [
+			{
+				"count": 1,
+				"name": "Morph Ball",
+				"state": "starting-item"
+			},
+			{
+				"count": 1,
+				"name": "Morph Ball Bomb",
+				"state": "starting-item"
+			},
+			{
+				"count": 1,
+				"name": "Charge Beam",
+				"state": "starting-item"
+			}
+		],
+		"romSettings": {
+			"hideItemModels": false,
+			"skipFrigate": true,
+			"skipHudPopups": true
+		},
+		"rules": {
+			"artifactLocationHints": true,
+			"elevatorShuffle": false,
+			"goal": "artifact-collection",
+			"goalArtifacts": 6,
+			"heatProtection": "any-suit",
+			"pointOfNoReturnItems": "do-not-allow",
+			"randomStartingItems": {
+				"maximum": 0,
+				"minimum": 0
+			},
+			"startingArea": 20,
+			"suitDamageReduction": "default"
+		},
+		"tricks": []
+	}
 }
