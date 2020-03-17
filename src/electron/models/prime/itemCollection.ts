@@ -64,6 +64,10 @@ export class PrimeItemCollection extends ItemCollection {
     return this.hasMissiles() && this.has(PrimeItem.CHARGE_BEAM) && this.has(PrimeItem.SUPER_MISSILE);
   }
 
+  canInfiniteSpeed(): boolean {
+    return this.canLayBombs() && this.canBoost();
+  }
+
   canWallcrawl(): boolean {
     return this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }

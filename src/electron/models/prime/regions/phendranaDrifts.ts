@@ -25,7 +25,11 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Chozo Ice Temple',
       locations: {
-        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const infiniteSpeedReqs = (settings.tricks.chozoIceTempleItemWithIS && items.canInfiniteSpeed() && items.has(PrimeItem.WAVE_BEAM))
+            || (settings.tricks.chozoIceTempleItemWithIS && items.canWallcrawl() && items.canInfiniteSpeed());
+          return (items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || infiniteSpeedReqs;
+        }
       },
       exits: {
         'Chapel of the Elders': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
@@ -37,7 +41,8 @@ export function phendranaDrifts(): RegionObject[] {
       locations: {
         [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const waveBeamReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.WAVE_BEAM);
-          return waveBeamReqs && (items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM));
+          const infiniteSpeedReqs = settings.tricks.waveSunOobWallcrawlWithIS && items.hasMissiles() && items.canWallcrawl() && items.canInfiniteSpeed();
+          return waveBeamReqs && ((items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)) || infiniteSpeedReqs);
         }
       },
       exits: {

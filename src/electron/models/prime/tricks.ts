@@ -32,10 +32,10 @@ export class Tricks extends SettingsFlags {
   quarantineMonitorDash = false;
   towerChamberNoGravity = false;
   upperRuinedShrineTowerOfLightFewerAccessReqs = false;
-  waveSunOobWallcrawlWithIS = false;
   warriorShrineWithoutBoost = false;
   wateryHallUnderwaterFlaahgraSkip = false;
   wateryHallUnderwaterSlopeJump = false;
+  waveSunOobWallcrawlWithIS = false;
 
   constructor(args?: SettingsFlagsArgs) {
     super();

@@ -151,8 +151,9 @@ export function chozoRuins(): RegionObject[] {
       name: 'Magma Pool',
       locations: {
         [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const infiniteSpeedReqs = settings.tricks.magmaPoolItemWithIS && items.canInfiniteSpeed();
           const grappleReqs = (settings.tricks.crossMagmaPoolWithoutGrapple && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReqs && items.canLayPowerBombs();
+          return (grappleReqs && items.canLayPowerBombs()) || infiniteSpeedReqs;
         }
       },
       exits: {
@@ -320,13 +321,17 @@ export function chozoRuins(): RegionObject[] {
       name: 'Hall of the Elders',
       locations: {
         [PrimeLocation.HALL_OF_THE_ELDERS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const infiniteSpeedReqs = settings.tricks.hallOfTheEldersItemsWithIS && items.canInfiniteSpeed()
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           const spiderReqs = items.canSpider() || settings.tricks.hallOfTheEldersBombSlotsWithoutSpider;
-          return items.canLayBombs() && spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return (items.canLayBombs() && spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || infiniteSpeedReqs;
         },
         [PrimeLocation.ELDER_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const infiniteSpeedReqs = settings.tricks.hallOfTheEldersItemsWithIS && items.canInfiniteSpeed()
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
           const spiderReqs = items.canSpider() || settings.tricks.hallOfTheEldersBombSlotsWithoutSpider;
-          return items.canLayBombs() && spiderReqs && items.has(PrimeItem.ICE_BEAM)
-            && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return (items.canLayBombs() && spiderReqs && items.has(PrimeItem.ICE_BEAM)
+            && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || infiniteSpeedReqs;
         },
       },
       exits: {

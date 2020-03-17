@@ -117,8 +117,13 @@ export const details: SettingsDetails = {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
     description: `In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
 
-    This trick is difficult and not recommended for beginners.`,
-    difficulty: Difficulty.HARD
+    This trick is very difficult and not recommended for beginners.`,
+    difficulty: Difficulty.INSANE
+  },
+  chozoIceTempleItemWithIS: {
+    name: 'Chozo Ice Temple item with Infinite Speed',
+    description: `Also called Early Sun IS, you can get this item by performing the infinite speed glitch in Chapel of the Elders inbounds.`,
+    difficulty: Difficulty.EASY
   },
   climbTowerOfLightNoMissiles: {
     name: 'Climb Tower of Light without Missiles',
@@ -175,10 +180,22 @@ export const details: SettingsDetails = {
     description: `You can activate the bomb slots by space jumping onto a peg sticking out of the wall, and then to the upper bomb slot, without needing Spider Ball.`,
     difficulty: Difficulty.TRIVIAL
   },
+  hallOfTheEldersItemsWithIS: {
+    name: 'Hall of the Elders items with Infinite Speed',
+    description: `You can use the infinite speed glitch in this room by transitioning to East Furnace Access, then going back into Hall of the Elders and jumping on top of the door while still transitioned in East Furnace Access.
+
+    This will "secretize" Hall of the Elders, (makes the room disappear) while keeping the collision loaded.`,
+    difficulty: Difficulty.NORMAL
+  },
   iceBeamBeforeFlaahgraOobWallcrawl: {
     name: 'Ice Beam Before Flaahgra Wallcrawl (Out of Bounds)',
     description: `You can go out of bounds in Gathering Hall and wallcrawl all the way to Reflecting Pool, skipping some items.`,
     difficulty: Difficulty.HARD
+  },
+  magmaPoolItemWithIS: {
+    name: 'Magma Pool item with Infinite Speed',
+    description: `You can use the infinite speed glitch by wedging yourself between the crates and the wall on the Ruined Fountain side of this room.`,
+    difficulty: Difficulty.EASY
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
@@ -258,6 +275,11 @@ export const details: SettingsDetails = {
     name: 'Watery Hall (Underwater) Slope Jump',
     description: `You can obtain the underwater Watery Hall item without Gravity Suit by slope jumping underwater.`,
     difficulty: Difficulty.EASY
+  },
+  waveSunOobWallcrawlWithIS: {
+    name: 'Wave/Sun Infinite Speed (Out of Bounds)',
+    description: `It's possible to obtain the Chozo Ice Temple and Chapel of the Elders items simultaneously by performing this wallcrawl, then using the infinite speed glitch in Chozo Ice Temple.`,
+    difficulty: Difficulty.HARD
   }
 };
 
