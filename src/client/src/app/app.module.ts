@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PickListModule } from 'primeng/picklist';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { ClipboardModule } from 'ngx-clipboard';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { ExcludeLocationsComponent } from './settings/exclude-locations/exclude-
 import { GameDetailsComponent } from './game-details/game-details.component';
 import { ProgressModalComponent } from './progress-modal/progress-modal.component';
 import { ItemOverridesComponent } from './item-overrides/item-overrides.component';
+import { HelpComponent } from './help/help.component';
 
 
 @NgModule({
@@ -51,7 +53,8 @@ import { ItemOverridesComponent } from './item-overrides/item-overrides.componen
     ExcludeLocationsComponent,
     GameDetailsComponent,
     ProgressModalComponent,
-    ItemOverridesComponent
+    ItemOverridesComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { ItemOverridesComponent } from './item-overrides/item-overrides.componen
       positionClass: 'toast-bottom-right',
       closeButton: true
     }),
-    ClipboardModule
+    ClipboardModule,
+    MarkdownModule.forRoot({ loader: HttpClient })
   ],
   providers: [],
   bootstrap: [AppComponent]

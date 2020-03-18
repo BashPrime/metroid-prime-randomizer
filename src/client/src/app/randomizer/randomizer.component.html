@@ -10,6 +10,7 @@
   </div>
   <app-welcome *ngIf="isTabIdSelected(tabIds.welcome)" class="fullheight-wrapper"></app-welcome>
   <app-generate-game *ngIf="isTabIdSelected(tabIds.generateGame)" class="fullheight-wrapper"></app-generate-game>
+  <app-help *ngIf="isTabIdSelected(tabIds.help)" class="fullheight-wrapper"></app-help>
   <app-game-details *ngIf="isTabIdSelected(tabIds.gameDetails)" class="fullheight-wrapper"></app-game-details>
   <footer class="footer">
     v{{ getAppVersion() }} &copy; BashPrime, Syncathetic, Pwootage

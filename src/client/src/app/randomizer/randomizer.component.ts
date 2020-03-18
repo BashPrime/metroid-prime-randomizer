@@ -17,12 +17,14 @@ export class RandomizerComponent implements OnInit {
   readonly tabIds = {
     welcome: 0,
     generateGame: 1,
-    gameDetails: 2
+    gameDetails: 2,
+    help: 3
   };
   private tabs: Tab[] = [
     { id: this.tabIds.welcome, name: 'Welcome' },
     { id: this.tabIds.generateGame, name: 'Generate Game' },
-    { id: this.tabIds.gameDetails, name: 'Game Details', hidden: true }
+    { id: this.tabIds.gameDetails, name: 'Game Details', hidden: true },
+    { id: this.tabIds.help, name: 'Help' }
   ];
   private selectedTabId: number = this.tabIds.welcome;
   private ngUnsubscribe: Subject<any> = new Subject();
