@@ -42,22 +42,11 @@ export class HelpComponent implements OnInit {
   }
 
   @HostListener('document:click', ['$event'])
-  onClick(event) {
+  interceptAnchorHref(event) {
     const element = event.target;
 
     if (element.tagName === 'A' && element.href) {
       event.preventDefault();
-      this.electronService.shell.openExternal(element.href);
-    }
-  }
-
-  interceptHref(_event) {
-    const tEvent = _event || window.event;
-    const element = tEvent.target || tEvent.srcElement;
-
-
-    if (element.tagName === 'A' && element.href) {
-      tEvent.preventDefault;
       this.electronService.shell.openExternal(element.href);
     }
   }
