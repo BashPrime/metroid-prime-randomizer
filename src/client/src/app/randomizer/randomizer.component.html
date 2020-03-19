@@ -13,7 +13,33 @@
   <app-help *ngIf="isTabIdSelected(tabIds.help)" class="fullheight-wrapper"></app-help>
   <app-game-details *ngIf="isTabIdSelected(tabIds.gameDetails)" class="fullheight-wrapper"></app-game-details>
   <footer class="footer">
-    v{{ getAppVersion() }} &copy; BashPrime, Syncathetic, Pwootage
+    <p class="is-pulled-left">
+      v{{ getAppVersion() }} &copy; BashPrime, Syncathetic, Pwootage
+    </p>
+    <div class="field is-grouped is-pulled-right">
+      <div class="control">
+        <a title="Visit our website" class="icon has-text-link" (click)="openExternalUrl('https://randomizer.metroidprime.run')">
+          <fa-icon [icon]="icons.website" size="lg"></fa-icon>
+        </a>
+      </div>
+      <div class="control">
+        <a title="Join our Discord" class="icon has-text-link" (click)="openExternalUrl('https://discord.gg/WWGcay6')">
+          <fa-icon [icon]="icons.discord" size="lg"></fa-icon>
+        </a>
+      </div>
+      <div class="control">
+        <a title="GitHub" class="icon has-text-link"
+          (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer')">
+          <fa-icon [icon]="icons.github" size="lg"></fa-icon>
+        </a>
+      </div>
+      <div class="control">
+        <a title="Report Issue" class="icon has-text-link"
+          (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer/issues')">
+          <fa-icon [icon]="icons.reportIssue" size="lg"></fa-icon>
+        </a>
+      </div>
+    </div>
   </footer>
 </div>
 <app-progress-modal></app-progress-modal>
