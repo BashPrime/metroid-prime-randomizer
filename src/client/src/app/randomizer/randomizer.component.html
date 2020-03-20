@@ -14,11 +14,12 @@
   <app-game-details *ngIf="isTabIdSelected(tabIds.gameDetails)" class="fullheight-wrapper"></app-game-details>
   <footer class="footer">
     <p class="is-pulled-left">
-      <span class="has-text-weight-bold">v{{ getAppVersion() }}</span> &copy; BashPrime, Syncathetic, Pwootage
+      <span class="has-text-weight-bold">v{{ getAppVersion() }}</span> &mdash; &copy; BashPrime, Syncathetic, Pwootage
     </p>
     <div class="field is-grouped is-pulled-right">
       <div class="control">
-        <a title="Visit our website" class="icon has-text-link" (click)="openExternalUrl('https://randomizer.metroidprime.run')">
+        <a title="Visit our website" class="icon has-text-link"
+          (click)="openExternalUrl('https://randomizer.metroidprime.run')">
           <fa-icon [icon]="icons.website" size="lg"></fa-icon>
         </a>
       </div>
