@@ -138,7 +138,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Ruined Fountain',
       locations: {
         [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const bombsReqs = items.canLayBombs() || settings.tricks.ruinedFountainItemFlaahgraSkip;
+          const bombsReqs = items.canLayBombs() || (settings.tricks.ruinedFountainItemFlaahgraSkip && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           return bombsReqs && items.canSpider();
         }
       },
