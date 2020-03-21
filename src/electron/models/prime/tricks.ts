@@ -9,6 +9,7 @@ export class Tricks extends SettingsFlags {
   climbFrigateCrashSite = false;
   climbObservatoryWithoutBoost = false;
   climbOreProcessingWithoutGrappleSpider = false;
+  climbPhazonProcessingCenterWithoutSpider = false;
   climbRuinedCourtyardWithoutBoostSpider = false;
   climbTowerOfLightNoMissiles = false;
   crossMagmaPoolSuitless = false;
