@@ -31,8 +31,6 @@ export function prefillChozoWithJunk(world: PrimeWorld): void {
   // We are junk filling at most 75% (26) of the Chozo Ruins locations.
   const numberOfLocationsToFill = Utilities.getRandomInt(0, Math.floor(allChozoLocationNames.length * 0.75), rng);
 
-  console.log('Filling ' + numberOfLocationsToFill + ' Chozo locations with junk\n');
-
   // Get the Chozo locations we are going to fill
   const junkChozoLocations = Utilities.randomArray(baseChozoLocations, numberOfLocationsToFill, rng);
 
