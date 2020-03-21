@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { ElectronService } from './electron.service';
@@ -16,12 +16,21 @@ export interface IsoData {
 })
 export class DiagnosticsService {
   private isoData$ = new BehaviorSubject<IsoData>(undefined);
+  private errorParse$ = new Subject<any>();
   _isoData = this.isoData$.asObservable();
+  _errorParse = this.errorParse$.asObservable();
 
   constructor(private ngZone: NgZone, private electronService: ElectronService, private toastrService: ToastrService) {
     this.electronService.ipcRenderer.on('parseIsoResponse', (event, data: IsoData) => {
       this.ngZone.run(() => {
         this.isoData$.next(data);
+      });
+    });
+
+    this.electronService.ipcRenderer.on('parseIsoError', (event, errMsg: string) => {
+      this.ngZone.run(() => {
+        this.errorParse$.next();
+        this.toastrService.error('Verification on your ISO ran into an error: ' + errMsg);
       });
     });
 

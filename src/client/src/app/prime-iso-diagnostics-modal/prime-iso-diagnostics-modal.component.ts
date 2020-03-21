@@ -42,6 +42,12 @@ export class PrimeIsoDiagnosticsModalComponent extends ModalComponent implements
           this.loaded = true;
         }
       });
+
+      this.diagnosticsService._errorParse
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.setOpen(false);
+      });
   }
 
   ngOnDestroy() {
