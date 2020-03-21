@@ -10,9 +10,13 @@
 
     * The randomizer will usually generate a seed without any issues, but with some settings it may fail to do so. If this happens, click one of the Generate buttons again. Unless you change the item overrides in a way that makes the game unable to be completed, the randomizer will generate a seed sooner or later.
 
+![The Game Details page, showing the generated seed information as well as the file patching form.](/assets/help-documents/images/gameDetails.png)
+
 4. Select a Metroid Prime ISO file for your base ISO that the patcher will use.
     
     * You can only use a NTSC-USA Nintendo GameCube version of Metroid Prime.
+    
+    * You can click the **Verify** button to confirm what version of Metroid Prime you are using. If the Game Code and MD5 Hash fields have checkmarks, you're good to go!
 
 5. (Optional) You can choose where to save your randomized seeds and spoiler logs. If left to default, they will be saved in your `Documents/Metroid Prime` folder.
 
@@ -25,5 +29,3 @@
 9. Click **Save ISO** to patch your randomized seeds and save them to the output folder.
 
     * Files are automatically saved using the name `Prime - <Seed Hash>` to the output folder.
-
-![The Game Details page, showing the generated seed information as well as the file patching form.](/assets/help-documents/images/gameDetails.png)
