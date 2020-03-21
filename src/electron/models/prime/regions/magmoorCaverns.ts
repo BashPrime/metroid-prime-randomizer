@@ -76,7 +76,8 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {
         [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return items.canLayPowerBombs() && sjReqs;
+          const bombJumpReqs = settings.tricks.shoreTunnelEscapeWithoutSpaceJump && items.canLayBombs();
+          return items.canLayPowerBombs() && (sjReqs || bombJumpReqs);
         }
       },
       exits: {
@@ -158,8 +159,10 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Phendrana Transport North': () => true,
         'Monitor Station': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 4) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
-          return items.hasSuit(settings) && (canBoost || items.canLayBombs());
+          return (suitReqsMinimum || suitReqs) && (canBoost || items.canLayBombs());
         }
       }
     },
@@ -168,8 +171,10 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Tallon Transport West': () => true,
         'Fiery Shores (Tallon Elevator Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 4) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const grappleMorphReq = settings.tricks.fieryShoresAccessWithoutMorphGrapple || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM));
-          return grappleMorphReq && items.hasSuit(settings);
+          return grappleMorphReq && (suitReqsMinimum || suitReqs);
         },
         'Twin Fires': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();

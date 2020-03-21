@@ -145,8 +145,13 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.INSANE
   },
   chozoIceTempleItemWithIS: {
-    name: 'Chozo Ice Temple item with Infinite Speed',
+    name: 'Chozo Ice Temple Item with Infinite Speed',
     description: `Also called Early Sun IS, you can get this item by performing the infinite speed glitch in Chapel of the Elders inbounds.`,
+    difficulty: Difficulty.EASY
+  },
+  climbFrigateCrashSite: {
+    name: 'Climb Frigate Crash Site',
+    description: `You can Space Jump on standable collision and climb your way to the Overgrown Cavern door.`,
     difficulty: Difficulty.EASY
   },
   climbTowerOfLightNoMissiles: {
@@ -154,15 +159,36 @@ export const details: SettingsDetails = {
     description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`,
     difficulty: Difficulty.EASY
   },
+  crossMagmaPoolSuitless: {
+    name: 'Cross Magma Pool Suitless',
+    description: `Removes the suit requirement to traverse this room and obtain the item in Magma Pool. The item logic will assume you have 2 Energy Tanks.
+
+    This setting automatically assumes you do the scan dash, as you cannot grapple without heat protection.`,
+    difficulty: Difficulty.NORMAL
+  },
   crossMagmaPoolWithoutGrapple: {
     name: 'Cross Magma Pool without Grapple Beam',
-    description: `You can scan dash off the crate items to cross Magma Pool with only Space Jump.`,
+    description: `You can scan dash off the crate items to cross Magma Pool with only Space Jump.
+
+    This logic does not expect you to slope jump out of the lava with Gravity Suit.`,
     difficulty: Difficulty.NORMAL
   },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
     description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`,
     difficulty: Difficulty.EASY
+  },
+  crosswayItemFewerReqs: {
+    name: 'Fewer Crossway Requirements',
+    description: `When this is enabled, you are only expected to have Space Jump Boots and Morph Ball to obtain the item.`,
+    difficulty: Difficulty.EASY
+  },
+  destroyBombCoversWithPowerBombs: {
+    name: 'Destroy Bomb Covers with Power Bombs',
+    description: `Bomb covers can be destroyed with Power Bombs as well as bombs.
+
+    The bombable cover at the top of Arboretum cannot be destroyed with Power Bombs and as such is not factored with this setting.`,
+    difficulty: Difficulty.TRIVIAL
   },
   eliteResearchInfiniteBoostClip: {
     name: 'Infinite Boost clip into Elite Research',
@@ -178,11 +204,6 @@ export const details: SettingsDetails = {
     name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
     description: `You can exit Quarantine Cave to Ruined Courtyard by slope jumping next to the Spider Ball track.`,
     difficulty: Difficulty.NORMAL
-  },
-  fewerCrosswayReqs: {
-    name: 'Fewer Crossway Requirements',
-    description: `When this is enabled, you are only expected to have Space Jump Boots and Morph Ball to obtain the item.`,
-    difficulty: Difficulty.EASY
   },
   fieryShoresAccessWithoutMorphGrapple: {
     name: 'Fiery Shores Access Without Morph Ball & Grapple Beam',
@@ -205,7 +226,7 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.TRIVIAL
   },
   hallOfTheEldersItemsWithIS: {
-    name: 'Hall of the Elders items with Infinite Speed',
+    name: 'Hall of the Elders Items with Infinite Speed',
     description: `You can use the infinite speed glitch in this room by transitioning to East Furnace Access, then going back into Hall of the Elders and jumping on top of the door while still transitioned in East Furnace Access.
 
     This will "secretize" Hall of the Elders, (makes the room disappear) while keeping the collision loaded.`,
@@ -217,7 +238,7 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.HARD
   },
   magmaPoolItemWithIS: {
-    name: 'Magma Pool item with Infinite Speed',
+    name: 'Magma Pool Item with Infinite Speed',
     description: `You can use the infinite speed glitch by wedging yourself between the crates and the wall on the Ruined Fountain side of this room.`,
     difficulty: Difficulty.EASY
   },
@@ -231,6 +252,18 @@ export const details: SettingsDetails = {
     description: `You can slope jump onto the top of the crane and R jump over to the item.`,
     difficulty: Difficulty.NORMAL
   },
+  outOfBoundsWithoutMorphBall: {
+    name: 'Out of Bounds without Morph Ball',
+    description: `Morph Ball and bombs won't be factored in for most out of bounds checks.`,
+    difficulty: Difficulty.INSANE
+  },
+  phazonMiningTunnelItemWithoutPhazonSuit: {
+    name: 'Phazon Mining Tunnel Item without Phazon Suit',
+    description: `You can damage boost to the item and escape with a minimum of 11 Energy Tanks, or by going out of bounds in Fungal Hall A and infinite boosting through the collision.
+
+    This setting will check if you have 12 Energy Tanks and Boost Ball.`,
+    difficulty: Difficulty.HARD
+  },
   phendranaTransportSouthToTransportAccessWithoutSpider: {
     name: 'Phendrana Transport South to Transport Access without Spider Ball',
     description: `You can Space Jump onto one of the poles and jump onto the top of the spider track to reach the door.`,
@@ -240,6 +273,11 @@ export const details: SettingsDetails = {
     name: 'Plasma Processing Item without Grapple Beam, Spider Ball',
     description: `You can R jump or dash to reach the boost spinners, and either slope R jump or abuse standable collision to skip the spider track.`,
     difficulty: Difficulty.EASY
+  },
+  reflectingPoolAccessWithoutWaveBeam: {
+    name: 'Reflecting Pool Access Without Wave Beam',
+    description: `In Hall of the Elders, you can Hyper Bomb Jump (HBJ) to the morph ball track and reach the door to Reflecting Pool Access.`,
+    difficulty: Difficulty.NORMAL
   },
   removePhendranaDepthsGrappleReqs: {
     name: 'Remove Phendrana Depths Grapple Requirements',
@@ -265,9 +303,19 @@ export const details: SettingsDetails = {
     description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
     difficulty: Difficulty.NORMAL
   },
+  shoreTunnelEscapeWithoutSpaceJump: {
+    name: 'Shore Tunnel Escape without Space Jump Boots',
+    description: `You can double bomb jump or slope jump out of the lava pit without the Space Jump Boots.`,
+    difficulty: Difficulty.NORMAL
+  },
   spiderlessShafts: {
     name: 'Spiderless Shafts (Phazon Mines)',
     description: `Elevator Access A and Research Access can be climbed without Spider Ball.`,
+    difficulty: Difficulty.HARD
+  },
+  suitlessMagmoorRun: {
+    name: 'Suitless Magmoor Run',
+    description: `With Space Jump Boots and dashing, you can travel from the Magmoor East to the Magmoor West elevator suitless with 4 Energy Tanks.`,
     difficulty: Difficulty.HARD
   },
   quarantineMonitorDash: {

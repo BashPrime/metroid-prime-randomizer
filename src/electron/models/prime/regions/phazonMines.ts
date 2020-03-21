@@ -67,16 +67,26 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Ore Processing',
       locations: {
-        [PrimeLocation.STORAGE_DEPOT_B]: (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM),
+        [PrimeLocation.STORAGE_DEPOT_B]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = (items.canLayBombs() && items.canSpider()) || settings.tricks.climbOreProcessingWithoutGrappleSpider;
+          return spiderReqs && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
+        },
       },
       exits: {
-        'Main Quarry': (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM)
-          && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM),
+        'Main Quarry': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderGrappleReqs = (items.canLayBombs() && items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM))
+            || settings.tricks.climbOreProcessingWithoutGrappleSpider;
+          return spiderGrappleReqs && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.ICE_BEAM)
+        },
         'Elite Research': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.tricks.spiderlessShafts || items.canSpider();
           return spiderReqs && (settings.tricks.eliteResearchInfiniteBoostClip && items.canBoost()) && items.has(PrimeItem.ICE_BEAM);
         },
-        'Elite Control Access': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM)
+        'Elite Control Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = (items.canLayBombs() && items.canSpider()) || settings.tricks.climbOreProcessingWithoutGrappleSpider;
+          return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
@@ -170,7 +180,10 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Phazon Mining Tunnel',
       locations: {
-        [PrimeLocation.PHAZON_MINING_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.has(PrimeItem.PHAZON_SUIT)
+        [PrimeLocation.PHAZON_MINING_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const phazonReqs = items.has(PrimeItem.PHAZON_SUIT) || (settings.tricks.phazonMiningTunnelItemWithoutPhazonSuit && items.hasCount(PrimeItem.ENERGY_TANK, 13) && items.canBoost());
+          return items.canLayPowerBombs() && items.canLayBombs() && phazonReqs;
+        }
       },
       exits: {
         'Fungal Hall B': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.PLASMA_BEAM),

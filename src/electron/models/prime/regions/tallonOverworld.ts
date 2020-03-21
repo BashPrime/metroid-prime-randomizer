@@ -51,6 +51,11 @@ export function tallonOverworld(): RegionObject[] {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && thermalReqs
             && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
+        // Only an exit if climb frigate crash site is true
+        'Overgrown Cavern': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.tricks.climbFrigateCrashSite && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     },
@@ -66,14 +71,16 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
         [PrimeLocation.ROOT_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM);
+          return xrayReqs && grappleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         [PrimeLocation.ARBOR_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple
           const plasmaReqs = (settings.tricks.arborChamberWithoutPlasma && items.canLayBombs())
             || items.has(PrimeItem.PLASMA_BEAM);
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && plasmaReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM);
+          return xrayReqs && grappleReqs && plasmaReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {

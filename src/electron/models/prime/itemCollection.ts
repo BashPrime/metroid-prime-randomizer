@@ -68,7 +68,8 @@ export class PrimeItemCollection extends ItemCollection {
     return this.canLayBombs() && this.canBoost();
   }
 
-  canWallcrawl(): boolean {
-    return this.canLayBombs() && this.has(PrimeItem.SPACE_JUMP_BOOTS);
+  canWallcrawl(settings: PrimeRandomizerSettings): boolean {
+    const bombReqs = settings.tricks.outOfBoundsWithoutMorphBall || this.canLayBombs();
+    return bombReqs && this.has(PrimeItem.SPACE_JUMP_BOOTS);
   }
 }
