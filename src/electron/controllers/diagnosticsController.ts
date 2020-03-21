@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as crypto from 'crypto';
 
 interface IsoData {
-  errMsg?: string;
   gameCode?: string;
   revision?: number;
   md5Hash?: string;
@@ -11,34 +10,38 @@ interface IsoData {
 
 export function initialize() {
   ipcMain.on('parseIso', (event, isoPath: string) => {
-    fs.readFile(isoPath, (err, data) => {
-      if (err) {
-        event.sender.send('parseIsoError', err.code);
-      } else {
-        event.sender.send('parseIsoResponse', getIsoData(data));
+    let isoData: IsoData;
+    const hash = crypto.createHash('md5');
+    let stream = fs.createReadStream(isoPath);
+
+    stream.on('data', (chunk: Buffer) => {
+      // get isoData values if this is the first chunk
+      if (!isoData) {
+        isoData = {
+          gameCode: chunk.toString('utf8', 0, 6),
+          revision: chunk[7]
+        };
       }
+
+      // Update hash with chunk data
+      hash.update(chunk);
+    });
+
+    // Stream is finished, get hash digest and return
+    stream.on('end', () => {
+      isoData.md5Hash = hash.digest('hex');
+      event.sender.send('parseIsoResponse', isoData);
+    });
+
+    // Error handling
+    stream.on('error', (err: Error) => {
+      event.sender.send('parseIsoError', err.message);
     });
   });
 
-  ipcMain.on('saveIsoData', (event, isoData: IsoData, filePath: string) => {
-    fs.writeFile(filePath, JSON.stringify(isoData, null, '\t'), 'utf8', (err) => {
-      event.sender.send('saveIsoDataResponse', err ? err.code : null);
-    });
+ipcMain.on('saveIsoData', (event, isoData: IsoData, filePath: string) => {
+  fs.writeFile(filePath, JSON.stringify(isoData, null, '\t'), 'utf8', (err) => {
+    event.sender.send('saveIsoDataResponse', err ? err.code : null);
   });
-}
-
-function getIsoData(data: Buffer): IsoData {
-  let isoData: IsoData;
-
-  try {
-    isoData = {
-      gameCode: data.toString('utf8', 0, 6),
-      revision: data[7],
-      md5Hash: crypto.createHash('md5').update(data).digest('hex')
-    };
-  } catch (Error) {
-    isoData = { errMsg: Error.message };
-  }
-
-  return isoData;
+});
 }

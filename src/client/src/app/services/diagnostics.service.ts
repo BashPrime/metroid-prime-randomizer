@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { ElectronService } from './electron.service';
 
 export interface IsoData {
-  errMsg?: string;
   gameCode?: string;
   revision?: number;
   md5Hash?: string;
