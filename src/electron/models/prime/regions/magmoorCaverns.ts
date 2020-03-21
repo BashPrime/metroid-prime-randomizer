@@ -74,7 +74,10 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Shore Tunnel',
       locations: {
-        [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return items.canLayPowerBombs() && sjReqs;
+        }
       },
       exits: {
         'Fiery Shores (Shore Tunnel Side)': () => true,
