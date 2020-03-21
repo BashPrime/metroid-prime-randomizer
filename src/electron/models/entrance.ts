@@ -1,6 +1,6 @@
 import { Region } from './region';
 import { ItemCollection } from './itemCollection';
-import { RandomizerSettings } from './RandomizerSettings';
+import { RandomizerSettings } from './randomizerSettings';
 
 export interface EntranceObject {
   [key: string]: (items?: ItemCollection, settings?: RandomizerSettings) => boolean;
