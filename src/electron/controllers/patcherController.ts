@@ -25,6 +25,11 @@ export function initialize() {
   });
 
   ipcMain.on('openOutputFolder', (event, outputFolder: string) => {
+    // Handle output folder not existing
+    if (!outputFolder && !fs.existsSync(defaultOutputFolder)) {
+      fs.mkdirSync(defaultOutputFolder, { recursive: true });
+    }
+
     // If no output folder is defined, open the default folder
     shell.openItem(outputFolder ? outputFolder : defaultOutputFolder);
   });
