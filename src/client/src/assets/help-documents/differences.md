@@ -1,3 +1,5 @@
+# Differences
+
 This randomizer uses Syncathetic's randomprime patcher, which makes some changes to Metroid Prime for quality of life reasons. Here are the changes that are always applied:
 
 * Missile and power bomb capacities are shown in the HUD.
