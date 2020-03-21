@@ -192,7 +192,13 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
 
   verifyBaseIso(): void {
     const baseIso = this.formGroup.controls.baseIso.value;
-    this.diagnosticsModal.openModal();
-    this.diagnosticsService.verifyIso(baseIso);
+
+    // Run the verification if a base ISO is provided
+    if (baseIso) {
+      this.diagnosticsModal.openModal();
+      this.diagnosticsService.verifyIso(baseIso);
+    } else {
+      this.toastrService.warning('You need to provide a base ISO to verify it!');
+    }
   }
 }
