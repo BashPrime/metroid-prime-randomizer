@@ -1,12 +1,12 @@
 # FAQ
 
-This article addresses the most common questions and issues that new players experience with the randomizer. If you're still having problems after reading this and want help from other people, [please join our Discord server](http://discord.gg/WWGcay6) and post in the [#setup-and-troubleshooting](https://discordapp.com/channels/458432177223368704/586296076424839180/) channel!
+This article addresses the most common questions and issues that new players experience with the randomizer. If you're still having problems after reading this and want help from other people, [please join our Discord server](http://discord.gg/WWGcay6)!
 
 ## I get a black screen whenever I load a game from the main menu.
 
-The most common reason this happens is because you're loading an existing save slot in a seed that has **Skip Frigate** checked. You can confirm this for yourself by opening the main menu and checking if the middle section of your save slot shows `??????` instead of a region, such as `Space Pirate Frigate` or `Tallon Overworld`.
+The most common reason this happens is because you're loading an existing save slot in a seed that has **Skip the Space Pirate Frigate** checked. You can confirm this for yourself by opening the main menu and checking if the middle section of your save slot shows `??????` instead of a region, such as `Space Pirate Frigate` or `Tallon Overworld`.
 
-Every time you play a randomizer seed, you should always start from a brand-new save to ensure that you don't start a game with missing items, broken artifacts, etc.
+Every time you play a randomizer seed, you should always start from a brand-new save slot to ensure that you don't start a game with missing items, broken artifacts, etc. If you have an existing save, make sure you delete it before starting a seed.
 
 ## My seed is broken. Items are missing, artifacts aren't working, I'm starting out with items, etc.
 
