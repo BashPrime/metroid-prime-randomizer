@@ -31,6 +31,7 @@ import { GameDetailsComponent } from './game-details/game-details.component';
 import { ProgressModalComponent } from './progress-modal/progress-modal.component';
 import { ItemOverridesComponent } from './item-overrides/item-overrides.component';
 import { HelpComponent } from './help/help.component';
+import { PrimeIsoDiagnosticsModalComponent } from './prime-iso-diagnostics-modal/prime-iso-diagnostics-modal.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { HelpComponent } from './help/help.component';
     GameDetailsComponent,
     ProgressModalComponent,
     ItemOverridesComponent,
-    HelpComponent
+    HelpComponent,
+    PrimeIsoDiagnosticsModalComponent
   ],
   imports: [
     BrowserModule,

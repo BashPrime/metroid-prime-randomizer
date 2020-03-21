@@ -33,9 +33,10 @@
               </div>
             </div>
             <div class="control">
-              <button class="button is-info is-small" (click)="selectBaseIso()">
-                Choose File
-              </button>
+              <button class="button is-info is-small" (click)="selectBaseIso()">Choose File</button>
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="verifyBaseIso()">Verify</button>
             </div>
           </div>
           <label class="label">Output Folder</label>
@@ -109,3 +110,4 @@
     </footer>
   </div>
 </div>
+<app-prime-iso-diagnostics-modal></app-prime-iso-diagnostics-modal>

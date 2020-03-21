@@ -1,3 +1,4 @@
+import * as diagnosticsController from './controllers/diagnosticsController';
 import * as generateSeedController from './controllers/generateSeedController';
 import * as settingsController from './controllers/settingsController';
 import * as seedHistoryController from './controllers/seedHistoryController';
@@ -10,6 +11,7 @@ import * as spoilerController from './controllers/spoilerController';
  */
 export function defineControllers() {
   return {
+    diagnosticsController: diagnosticsController.initialize(),
     generateSeed: generateSeedController.initialize(),
     settings: settingsController.initialize(),
     seedHistory: seedHistoryController.initialize(),

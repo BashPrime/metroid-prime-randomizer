@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,6 +15,8 @@ import { SettingsService } from '../services/settings.service';
 import { SettingsSection } from '../settings/settings-section';
 import { RandomizerService } from '../services/randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { DiagnosticsService } from '../services/diagnostics.service';
+import { PrimeIsoDiagnosticsModalComponent } from '../prime-iso-diagnostics-modal/prime-iso-diagnostics-modal.component';
 
 @Component({
   selector: 'app-game-details',
@@ -22,6 +24,8 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
   styleUrls: ['./game-details.component.scss']
 })
 export class GameDetailsComponent extends SettingsSection implements OnInit {
+  @ViewChild(PrimeIsoDiagnosticsModalComponent, {static: false}) private diagnosticsModal: PrimeIsoDiagnosticsModalComponent;
+
   private modalOpen: boolean = false;
   private seeds: GeneratedSeed[];
   private lastSettingsUsed: RandomizerForm;
@@ -36,7 +40,8 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     private generatorService: GeneratorService,
     private patcherService: PatcherService,
     private clipboardService: ClipboardService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private diagnosticsService: DiagnosticsService
   ) {
     super(randomizerService);
   }
@@ -183,5 +188,11 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
       .subscribe(value => {
         this.settingsService.applyPatchSettings(value);
       })
+  }
+
+  verifyBaseIso(): void {
+    const baseIso = this.formGroup.controls.baseIso.value;
+    this.diagnosticsModal.openModal();
+    this.diagnosticsService.verifyIso(baseIso);
   }
 }
