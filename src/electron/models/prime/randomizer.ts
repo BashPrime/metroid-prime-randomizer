@@ -3,7 +3,7 @@ import { PrimeWorld } from './world';
 import { generateItemPool } from './itemPool';
 import { setStartingItems } from './startingItems';
 import { setEntrances } from './entranceShuffle';
-import { setRules } from './rules';
+import { setRules, prefillChozoWithJunk } from './rules';
 import { distributeItemsRestrictive } from './fill';
 import { MersenneTwister } from '../../mersenneTwister';
 import { generateAlphanumericString } from '../../utilities';
@@ -48,6 +48,9 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
       // Pass world into entrance shuffle class, using settings to determine entrance shuffle
       setEntrances(world);
+
+      // Pre-fill Chozo Ruins randomly from 0-26 items to balance the logic
+      prefillChozoWithJunk(world);
 
       // Fill the world locations using the item pool.
       distributeItemsRestrictive(world);
