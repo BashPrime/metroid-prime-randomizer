@@ -25,8 +25,9 @@ export function initialize() {
   });
 
   ipcMain.on('openOutputFolder', (event, outputFolder: string) => {
-    shell.openItem(outputFolder);
-  })
+    // If no output folder is defined, open the default folder
+    shell.openItem(outputFolder ? outputFolder : defaultOutputFolder);
+  });
 }
 
 export function getWorldFromSeedHistory(id: string): PrimeWorld {

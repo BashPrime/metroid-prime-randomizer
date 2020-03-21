@@ -320,7 +320,7 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.FURNACE_SPIDER_TRACKS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const powerBombBoostReqs = (items.canLayPowerBombs() && items.canBoost()) || settings.tricks.furnaceSpiderTrackItemFewerReqs;
-          return powerBombBoostReq && items.canLayBombs() && items.canSpider();
+          return powerBombBoostReqs && items.canLayBombs() && items.canSpider();
         }
       },
       exits: {
