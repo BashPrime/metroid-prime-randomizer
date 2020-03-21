@@ -13,6 +13,7 @@ export class WelcomeComponent implements OnInit {
 
   // Constants
   private readonly generateGameTab = 1;
+  private readonly helpTab = 3;
 
   constructor(private tabService: TabService) { }
 
@@ -21,6 +22,10 @@ export class WelcomeComponent implements OnInit {
 
   goToGenerateGame(): void {
     this.tabService.selectTab(this.generateGameTab);
+  }
+
+  goToHelp(): void {
+    this.tabService.selectTab(this.helpTab);
   }
 
   openImportPermalinkModal(): void {
