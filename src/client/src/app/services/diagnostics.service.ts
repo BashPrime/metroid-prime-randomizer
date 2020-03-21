@@ -55,7 +55,7 @@ export class DiagnosticsService {
 
   saveIsoData(isoData: IsoData) {
     this.electronService.dialog.showSaveDialog({
-      title: 'Save ISO Data',
+      title: 'Save ISO Verification Data',
       filters: [
         { name: 'JSON Files', extensions: ['json'] }
       ]
