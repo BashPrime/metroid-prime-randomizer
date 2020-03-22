@@ -11,7 +11,7 @@ export class Tricks extends SettingsFlags {
   climbOreProcessingWithoutGrappleSpider = false;
   climbPhazonProcessingCenterWithoutSpider = false;
   climbRuinedCourtyardWithoutBoostSpider = false;
-  climbTowerOfLightNoMissiles = false;
+  climbTowerOfLightWithoutMissiles = false;
   crossMagmaPoolSuitless = false;
   crossMagmaPoolWithoutGrapple = false;
   crossTwinFiresTunnelWithoutSpider = false;
@@ -22,7 +22,8 @@ export class Tricks extends SettingsFlags {
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   furnaceAccessWithoutSpider = false;
-  furnaceSpiderTrackItemFewerReqs = false;
+  furnaceSpiderTrackItemHBJ = false;
+  furnaceSpiderTrackItemSpaceJumpBombs = false;
   gravityChamberLedgeItemWithoutGrapplePlasma = false;
   hallOfTheEldersBombSlotsWithoutSpider = false;
   hallOfTheEldersItemsWithIS = false;

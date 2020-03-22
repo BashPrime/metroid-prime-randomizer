@@ -159,8 +159,8 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Phendrana Transport North': () => true,
         'Monitor Station': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
-          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 4) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRunMinimal && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 5) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return (suitReqsMinimum || suitReqs) && (canBoost || items.canLayBombs());
         }
@@ -171,8 +171,8 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Tallon Transport West': () => true,
         'Fiery Shores (Tallon Elevator Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
-          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 4) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRunMinimal && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 5) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const grappleMorphReq = settings.tricks.fieryShoresAccessWithoutMorphGrapple || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAPPLE_BEAM));
           return grappleMorphReq && (suitReqsMinimum || suitReqs);
         },

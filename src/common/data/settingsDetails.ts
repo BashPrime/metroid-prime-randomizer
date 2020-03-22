@@ -147,16 +147,38 @@ export const details: SettingsDetails = {
   chozoIceTempleItemWithIS: {
     name: 'Chozo Ice Temple Item with Infinite Speed',
     description: `Also called Early Sun IS, you can get this item by performing the infinite speed glitch in Chapel of the Elders inbounds.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   climbFrigateCrashSite: {
     name: 'Climb Frigate Crash Site',
     description: `You can Space Jump on standable collision and climb your way to the Overgrown Cavern door.`,
     difficulty: Difficulty.EASY
   },
-  climbTowerOfLightNoMissiles: {
+  climbObservatoryWithoutBoost: {
+    name: 'Climb Observatory without Boost Ball',
+    description: `You can dash off the orange panels (scan point) or the space pirates to reach the upper platform, and either R Jump or dash to reach the Control Tower.`,
+    difficulty: Difficulty.EASY
+  },
+  climbOreProcessingWithoutGrappleSpider: {
+    name: 'Climb Ore Processing without Grapple Beam, Spider Ball',
+    description: `You can stand on various collision in the room, such as on the rotating column, to climb to the top of Ore Processing.`,
+    difficulty: Difficulty.EASY
+  },
+  climbPhazonProcessingCenterWithoutSpider: {
+    name: 'Climb Phazon Processing Center without Spider Ball',
+    description: `You can abuse standable collision such as the morph track and the scaffolding to access the top of the room without needing Spider Ball.`,
+    difficulty: Difficulty.EASY
+  },
+  climbRuinedCourtyardWithoutBoostSpider: {
+    name: 'Climb Ruined Courtyard without Boost Ball, Spider Ball',
+    description: `There is standable collision near the lower door that can be used to climb to the top of the room.`,
+    difficulty: Difficulty.EASY
+  },
+  climbTowerOfLightWithoutMissiles: {
     name: 'Climb Tower of Light without Missiles',
-    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.`,
+    description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.
+
+    You still need missiles to reach this room inbounds.`,
     difficulty: Difficulty.EASY
   },
   crossMagmaPoolSuitless: {
@@ -175,11 +197,13 @@ export const details: SettingsDetails = {
   },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
-    description: `Twin Fires Tunnel can be crossed with an R jump, or a scan dash off the spider track from the wall.`,
+    description: `Twin Fires Tunnel can be crossed with an R jump, a scan dash off the spider track from the wall, or by double bomb jumping out of the lava.
+
+    You can also Space Jump out of the lava to the Twin Fires side if you have Gravity Suit.`,
     difficulty: Difficulty.EASY
   },
   crosswayItemFewerReqs: {
-    name: 'Fewer Crossway Requirements',
+    name: 'Crossway Item - Fewer Requirements',
     description: `When this is enabled, you are only expected to have Space Jump Boots and Morph Ball to obtain the item.`,
     difficulty: Difficulty.EASY
   },
@@ -206,14 +230,24 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.NORMAL
   },
   fieryShoresAccessWithoutMorphGrapple: {
-    name: 'Fiery Shores Access Without Morph Ball & Grapple Beam',
+    name: 'Fiery Shores Access Without Morph Ball and Grapple Beam',
     description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,
     difficulty: Difficulty.TRIVIAL
   },
   furnaceAccessWithoutSpider: {
-    name: 'Furnace Access without Spider Ball',
+    name: 'Furnace (Upper Tunnel) without Spider Ball',
     description: `You can enter the upper tunnel to reach the rest of Furnace by climbing the side of the Spider Ball track (via jumping), and then morphing at the top.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  furnaceSpiderTrackItemHBJ: {
+    name: 'Furnace Spider Track Item with Hyper Bomb Jump',
+    description: `You can hyper bomb jump (HBJ) to the first spider track in the room, skipping the need for Boost Ball and Power Bombs.`,
+    difficulty: Difficulty.NORMAL
+  },
+  furnaceSpiderTrackItemSpaceJumpBombs: {
+    name: 'Furnace Spider Track Item with Space Jump Boots, Bombs',
+    description: `You can climb the Furnace and its spider tracks using Space Jump, reach the top of the room, then bomb jump across to the item.`,
+    difficulty: Difficulty.NORMAL
   },
   gravityChamberLedgeItemWithoutGrapplePlasma: {
     name: 'Gravity Chamber Ledge Item without Grapple, Plasma Beam',
@@ -240,7 +274,7 @@ export const details: SettingsDetails = {
   magmaPoolItemWithIS: {
     name: 'Magma Pool Item with Infinite Speed',
     description: `You can use the infinite speed glitch by wedging yourself between the crates and the wall on the Ruined Fountain side of this room.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
@@ -298,6 +332,11 @@ export const details: SettingsDetails = {
     THIS DOES NOT REMOVE the X-Ray Visor requirement for Omega Pirate.`,
     difficulty: Difficulty.EASY
   },
+  rootCaveArborChamberWithoutGrapple: {
+    name: 'Root Cave and Arbor Chamber without Grapple Beam',
+    description: `You can dash off the zoomers to reach the opposite platform without Grapple Beam.`,
+    difficulty: Difficulty.EASY
+  },
   ruinedFountainItemFlaahgraSkip: {
     name: 'Ruined Fountain Flaahgra Skip',
     description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
@@ -315,8 +354,15 @@ export const details: SettingsDetails = {
   },
   suitlessMagmoorRun: {
     name: 'Suitless Magmoor Run',
-    description: `With Space Jump Boots and dashing, you can travel from the Magmoor East to the Magmoor West elevator suitless with 4 Energy Tanks.`,
+    description: `With Space Jump Boots and dashing, you can travel from the Magmoor East to the Magmoor West elevator, suitless, with 5 Energy Tanks and Space Jump.`,
     difficulty: Difficulty.HARD
+  },
+  suitlessMagmoorRunMinimal: {
+    name: 'Suitless Magmoor Run - Minimum Requirements',
+    description: `Same as Suitless Magmoor Run, but expects you to have 3 Energy Tanks.
+
+    This trick is extremely difficult and is not recommended for beginners.`,
+    difficulty: Difficulty.INSANE
   },
   quarantineMonitorDash: {
     name: 'Quarantine Monitor Dash',
@@ -328,8 +374,15 @@ export const details: SettingsDetails = {
     description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`,
     difficulty: Difficulty.TRIVIAL
   },
+  trainingChamberAndAccessOobWallcrawl: {
+    name: 'Reach Training Chamber (and Access) from Out of Bounds',
+    description: `You can wallcrawl out of bounds and ceiling warp into Training Chamber and Training Chamber Access.
+
+    This trick will always expect you to have Morph Ball and bombs.`,
+    difficulty: Difficulty.HARD
+  },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
-    name: 'Upper Ruined Shrine & Tower of Light - Fewer Access Requirements',
+    name: 'Upper Ruined Shrine and Tower of Light - Fewer Access Requirements',
     description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`,
     difficulty: Difficulty.EASY,
   },

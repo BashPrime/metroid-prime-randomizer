@@ -133,7 +133,7 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Tower of Light',
       locations: {
-        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.climbTowerOfLightNoMissiles || items.hasMissileCount(8)) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.TOWER_OF_LIGHT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.climbTowerOfLightWithoutMissiles || items.hasMissileCount(8)) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.TOWER_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.towerChamberNoGravity;
           return gravityReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
@@ -319,8 +319,10 @@ export function chozoRuins(): RegionObject[] {
       name: 'Furnace (Main Room)',
       locations: {
         [PrimeLocation.FURNACE_SPIDER_TRACKS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const powerBombBoostReqs = (items.canLayPowerBombs() && items.canBoost()) || settings.tricks.furnaceSpiderTrackItemFewerReqs;
-          return powerBombBoostReqs && items.canLayBombs() && items.canSpider();
+          const normalReqs = items.canLayPowerBombs() && items.canBoost() && items.canSpider();
+          const hbjReqs = settings.tricks.furnaceSpiderTrackItemHBJ && items.canSpider();
+          const spaceJumpReqs = settings.tricks.furnaceSpiderTrackItemSpaceJumpBombs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return items.canLayBombs() && (normalReqs || hbjReqs || spaceJumpReqs);
         }
       },
       exits: {
