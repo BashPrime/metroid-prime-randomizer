@@ -43,7 +43,11 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Frigate Crash Site',
       locations: {
-        [PrimeLocation.FRIGATE_CRASH_SITE]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT)
+        [PrimeLocation.FRIGATE_CRASH_SITE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const normalReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT);
+          const gravitylessReqs = settings.tricks.frigateCrashSiteItemWithoutGravitySuit && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))
+          return normalReqs || gravitylessReqs;
+        }
       },
       exits: {
         'Landing Site': (items: PrimeItemCollection) => items.hasMissiles(),

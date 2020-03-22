@@ -234,6 +234,11 @@ export const details: SettingsDetails = {
     description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,
     difficulty: Difficulty.TRIVIAL
   },
+  frigateCrashSiteItemWithoutGravitySuit: {
+    name: 'Frigate Crash Site Item without Gravity Suit',
+    description: `You can scan dash, slope jump, or grapple to the underwater ledge where the item is.`,
+    difficulty: Difficulty.EASY
+  },
   furnaceAccessWithoutSpider: {
     name: 'Furnace (Upper Tunnel) without Spider Ball',
     description: `You can enter the upper tunnel to reach the rest of Furnace by climbing the side of the Spider Ball track (via jumping), and then morphing at the top.`,

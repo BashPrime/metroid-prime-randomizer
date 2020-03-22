@@ -21,6 +21,7 @@ export class Tricks extends SettingsFlags {
   enableMainPlazaLedgeDoor = false;
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
+  frigateCrashSiteItemWithoutGravitySuit = false;
   furnaceAccessWithoutSpider = false;
   furnaceSpiderTrackItemHBJ = false;
   furnaceSpiderTrackItemSpaceJumpBombs = false;
