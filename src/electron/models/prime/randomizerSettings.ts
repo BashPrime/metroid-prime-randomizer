@@ -74,12 +74,15 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     }
   }
 
-  getNumericSeed(): number {
+  getNumericSeed(salt?: string): number {
     if (!this.seed) {
       throw new Error('Cannot get numeric seed. Settings seed is undefined or null (' + this.seed + ')');
     }
 
-    const stringToBeHashed = this.toSettingsString() + this.seed;
+    let stringToBeHashed = this.toSettingsString() + this.seed;
+    if (salt) {
+      stringToBeHashed = stringToBeHashed.concat(crypto.createHash('sha256').update(salt).digest('hex'));
+    }
     const sha256Hash = crypto.createHash('sha256').update(stringToBeHashed).digest('hex');
 
     return Utilities.parseSafeIntegerFromSha256(sha256Hash);

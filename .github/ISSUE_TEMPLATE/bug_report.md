@@ -10,3 +10,5 @@ Permalink:
 Description of problem:
 
 Spoiler log (if available):
+
+Verify ISO file (if available):

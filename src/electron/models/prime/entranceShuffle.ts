@@ -30,9 +30,9 @@ enum Region {
 
 export const startingAreas: StartingArea[] = [
   // Default
-  { id: 20, name: 'Landing Site', region: 'Tallon North' },
+  { id: 20, name: 'Landing Site', region: 'Landing Site' },
   { id: -1, name: 'Random', region: undefined },
-  { id: 7, name: 'Artifact Temple', region: 'Tallon Artifact Temple' },
+  { id: 7, name: 'Artifact Temple', region: 'Artifact Temple' },
   // Tallon
   { id: 6, name: 'Tallon Transport North', region: 'Tallon Transport North' },
   { id: 8, name: 'Tallon Transport East', region: 'Tallon Transport East' },

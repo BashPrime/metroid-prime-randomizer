@@ -208,6 +208,7 @@ export function phendranaDrifts(): RegionObject[] {
           const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           const bombReqs = items.canLayBombs() || settings.tricks.climbFrozenPikeWithoutBombs;
           return (bombReqs || canBoost) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
@@ -266,7 +267,7 @@ export function phendranaDrifts(): RegionObject[] {
           return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && grappleReqs
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Phendrana\'s Edge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Phendrana\'s Edge': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {

@@ -37,7 +37,7 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.ARTIFACT_TEMPLE]: () => true
       },
       exits: {
-        'Landing Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+        'Landing Site': (items: PrimeItemCollection) => items.hasMissiles()
       }
     },
     {

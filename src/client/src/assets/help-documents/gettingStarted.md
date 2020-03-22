@@ -4,13 +4,13 @@
 
 2. Choose a preset, or configure the settings you wish to use by clicking the **Customize** button underneath the presets dropdown.
 
-![The Presets dropdown, as well as the Customize button underneath it.](/assets/help-documents/images/presetAndCustomize.png)
+![The Presets dropdown, as well as the Customize button underneath it.](assets/help-documents/images/presetAndCustomize.png)
 
 3. Click **Generate**. If you want the option to save a spoiler log, click **Generate with Spoilers**. When the seed is done generating, you will be taken to the Game Details page.
 
     * The randomizer will usually generate a seed without any issues, but with some settings it may fail to do so. If this happens, click one of the Generate buttons again. Unless you change the item overrides in a way that makes the game unable to be completed, the randomizer will generate a seed sooner or later.
 
-![The Game Details page, showing the generated seed information as well as the file patching form.](/assets/help-documents/images/gameDetails.png)
+![The Game Details page, showing the generated seed information as well as the file patching form.](assets/help-documents/images/gameDetails.png)
 
 4. Select a Metroid Prime ISO file for your base ISO that the patcher will use.
     

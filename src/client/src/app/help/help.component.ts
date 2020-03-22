@@ -15,10 +15,10 @@ interface MenuItem {
 })
 export class HelpComponent implements OnInit {
   readonly menuItems = [
-    { name: 'Getting Started', file: '/assets/help-documents/gettingStarted.md' },
-    { name: 'FAQ', file: '/assets/help-documents/faq.md' },
-    { name: 'Differences', file: '/assets/help-documents/differences.md' },
-    { name: 'Trackers', file: '/assets/help-documents/trackers.md' }
+    { name: 'Getting Started', file: 'assets/help-documents/gettingStarted.md' },
+    { name: 'FAQ', file: 'assets/help-documents/faq.md' },
+    { name: 'Differences', file: 'assets/help-documents/differences.md' },
+    { name: 'Trackers', file: 'assets/help-documents/trackers.md' }
   ];
   private selectedIndex: number;
 
