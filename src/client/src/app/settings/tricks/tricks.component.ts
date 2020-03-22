@@ -81,7 +81,9 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
       const trick: TrickItem = {
         label: trickDetails ? trickDetails.name : key,
         value: key,
-        tooltip: trickDetails ? trickDetails.description : null,
+        tooltip: trickDetails
+        ? `Difficulty: ${trickDetails.difficulty}\n\n${trickDetails.description}`
+        : null,
         difficulty: trickDetails ? trickDetails.difficulty : null
       };
 
