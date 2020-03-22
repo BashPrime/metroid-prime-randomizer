@@ -364,6 +364,13 @@ export const details: SettingsDetails = {
     description: `You can reach the Spider Ball track before defeating Flaahgra by abusing standable terrain, jumping to the track, and morphing.`,
     difficulty: Difficulty.NORMAL
   },
+  ruinedNurseryWithoutBombs: {
+    name: 'Ruined Nursery without Bombs',
+    description: `You can space jump and morph near the item, and enter the tunnel to obtain it without bombs.
+
+    Boost Ball can also be used, but is part of the Boost through Bomb Tunnels trick option instead of this option.`,
+    difficulty: Difficulty.HARD
+  },
   shoreTunnelEscapeWithoutSpaceJump: {
     name: 'Shore Tunnel Escape without Space Jump Boots',
     description: `You can double bomb jump or slope jump out of the lava pit without the Space Jump Boots.`,

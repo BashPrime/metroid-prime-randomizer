@@ -45,7 +45,9 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Ruined Nursery',
       locations: {
-        [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection) => items.canLayBombs()
+        [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return items.canLayBombs() || (settings.tricks.ruinedNurseryWithoutBombs && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+        }
       },
       exits: {
         'Ruined Gallery': () => true,

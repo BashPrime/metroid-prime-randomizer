@@ -45,6 +45,7 @@ export class Tricks extends SettingsFlags {
   removeXrayReqs = false;
   rootCaveArborChamberWithoutGrapple = false;
   ruinedFountainItemFlaahgraSkip = false;
+  ruinedNurseryWithoutBombs = false;
   shoreTunnelEscapeWithoutSpaceJump = false;
   spiderlessShafts = false;
   suitlessMagmoorRun = false;
