@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, ControlContainer, FormArray } from '@angular/forms';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from '../../services/randomizer.service';
 import { RandomizerForm } from '../../../../../common/models/randomizerForm';
+import { ItemOverrides } from '../../../../../electron/models/prime/itemOverrides';
 
 @Component({
   selector: 'app-read-only-settings-container',
@@ -12,6 +12,9 @@ import { RandomizerForm } from '../../../../../common/models/randomizerForm';
 })
 export class ReadOnlySettingsContainerComponent extends SettingsSection implements OnInit {
   @Input() private randomizerForm: RandomizerForm;
+
+  // Constants
+  readonly STATES = ItemOverrides.STATES;
 
   constructor(protected randomizerService: RandomizerService) {
     super(randomizerService);

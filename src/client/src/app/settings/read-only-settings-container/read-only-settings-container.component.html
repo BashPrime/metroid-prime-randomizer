@@ -63,7 +63,7 @@
     <div *ngIf="getRandomizerForm().itemOverrides.length">
       <div class="field" *ngFor="let override of getRandomizerForm().itemOverrides">
         <p class="heading">{{ override.name }}</p>
-        <p>{{ getChoiceName('itemOverride', override.state) }} ({{ override.count }})</p>
+        <p>{{ getChoiceName('itemOverride', override.state) + (override.state === STATES.shuffled ? ' (' + override.count + ')' : '') }}</p>
       </div>
     </div>
     <div class="field" *ngIf="!getRandomizerForm().itemOverrides.length">
