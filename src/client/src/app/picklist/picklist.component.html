@@ -1,0 +1,9 @@
+<p-pickList [source]="source" [target]="target" [metaKeySelection]="false" [responsive]="true" [style]="style"
+  [sourceStyle]="sourceStyle" [targetStyle]="targetStyle" [showSourceControls]="false" [showTargetControls]="false"
+  [sourceHeader]="sourceHeader" [targetHeader]="targetHeader" [disabled]="disabled">
+  <ng-template let-item pTemplate="item">
+    <div [pTooltip]="item.tooltip">
+      {{ item.label }}
+    </div>
+  </ng-template>
+</p-pickList>

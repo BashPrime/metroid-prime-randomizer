@@ -1,0 +1,17 @@
+.seed {
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #7f7f7f;
+
+  .hashItem {
+    margin-right: 0.5rem;
+  }
+
+  .hashItem:last-child {
+    margin-right: 0;
+  }
+}
+
+.seed:last-child {
+  border-bottom: none;
+}

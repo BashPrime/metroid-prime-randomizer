@@ -1,0 +1,220 @@
+import { RegionObject } from '../../region';
+import { PrimeItem } from '../../../enums/primeItem';
+import { PrimeLocation } from '../../../enums/primeLocation';
+import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
+import { PrimeItemCollection } from '../itemCollection';
+import { PrimeRandomizerSettings } from '../randomizerSettings';
+
+export function tallonOverworld(): RegionObject[] {
+  const regions: RegionObject[] = [
+    {
+      name: 'Landing Site',
+      locations: {
+        [PrimeLocation.LANDING_SITE]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+      },
+      exits: {
+        'Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const normalReqs = sjReqs && items.canBoost() && items.canLayBombs(); // sj for blind item check
+          return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
+        'Tallon Canyon': () => true,
+        'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles()
+      }
+    },
+    {
+      name: 'Alcove',
+      locations: {
+        [PrimeLocation.ALCOVE]: () => true
+      },
+      exits: {
+        'Landing Site': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.alcoveNoItems || items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Artifact Temple',
+      locations: {
+        [PrimeLocation.ARTIFACT_TEMPLE]: () => true
+      },
+      exits: {
+        'Landing Site': (items: PrimeItemCollection) => items.hasMissiles()
+      }
+    },
+    {
+      name: 'Frigate Crash Site',
+      locations: {
+        [PrimeLocation.FRIGATE_CRASH_SITE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const normalReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT);
+          const gravitylessReqs = settings.tricks.frigateCrashSiteItemWithoutGravitySuit && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))
+          return normalReqs || gravitylessReqs;
+        }
+      },
+      exits: {
+        'Landing Site': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && thermalReqs
+            && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
+        // Only an exit if climb frigate crash site is true
+        'Overgrown Cavern': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.tricks.climbFrigateCrashSite && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
+      }
+    },
+    {
+      name: 'Tallon Canyon',
+      exits: {
+        'Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Tallon Transport North': () => true
+      }
+    },
+    {
+      name: 'Root Cave',
+      locations: {
+        [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
+        [PrimeLocation.ROOT_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return xrayReqs && grappleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
+        [PrimeLocation.ARBOR_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple
+          const plasmaReqs = (settings.tricks.arborChamberWithoutPlasma && items.canLayBombs())
+            || items.has(PrimeItem.PLASMA_BEAM);
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return xrayReqs && grappleReqs && plasmaReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
+      },
+      exits: {
+        'Tallon Canyon': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Tallon Transport West': () => true
+      }
+    },
+    {
+      name: 'Overgrown Cavern',
+      locations: {
+        [PrimeLocation.OVERGROWN_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
+      },
+      exits: {
+        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM),
+        'Tallon Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Cargo Freight Lift to Deck Gamma',
+      locations: {
+        [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: (items: PrimeItemCollection) => (items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)) && items.has(PrimeItem.GRAVITY_SUIT)
+      },
+      exits: {
+        'Biohazard Containment': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return items.has(PrimeItem.GRAVITY_SUIT) && thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        },
+        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Biohazard Containment',
+      locations: {
+        [PrimeLocation.BIOHAZARD_CONTAINMENT]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.GRAVITY_SUIT)
+      },
+      exits: {
+        'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return thermalReqs && items.has(PrimeItem.WAVE_BEAM);
+        },
+        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Hydro Access Tunnel',
+      locations: {
+        [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
+      },
+      exits: {
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.ICE_BEAM),
+        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs()
+      }
+    },
+    {
+      name: 'Great Tree Hall (Upper)',
+      locations: {
+        [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
+          return xrayReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
+      },
+      exits: {
+        'Life Grove Tunnel': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Tallon Transport South (Chozo)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Great Tree Hall (Lower)',
+      exits: {
+        'Hydro Access Tunnel': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT),
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Tallon Transport South (Mines)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Life Grove Tunnel',
+      locations: {
+        [PrimeLocation.LIFE_GROVE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.canBoost()
+      },
+      exits: {
+        'Life Grove': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost(),
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Life Grove',
+      locations: {
+        [PrimeLocation.LIFE_GROVE_START]: () => true,
+        [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      },
+      exits: {
+        'Life Grove Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Tallon Transport North',
+      exits: {
+        'Chozo Transport West': () => true,
+        'Tallon Canyon': () => true
+      }
+    },
+    {
+      name: 'Tallon Transport East',
+      exits: {
+        'Chozo Transport East': () => true,
+        'Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    },
+    {
+      name: 'Tallon Transport West',
+      exits: {
+        'Magmoor Transport East': () => true,
+        'Root Cave': () => true
+      }
+    },
+    {
+      name: 'Tallon Transport South (Chozo)',
+      exits: {
+        'Chozo Transport South': () => true,
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+      }
+    },
+    {
+      name: 'Tallon Transport South (Mines)',
+      exits: {
+        'Mines Transport East': () => true,
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+      }
+    }
+  ];
+
+  return regions;
+};

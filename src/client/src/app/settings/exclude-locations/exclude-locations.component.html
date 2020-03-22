@@ -1,0 +1,10 @@
+<p-pickList [source]="items.available" [target]="items.selected" filterBy="label" [style]="GLOBAL_STYLE"
+  [sourceStyle]="GLOBAL_STYLE" [targetStyle]="GLOBAL_STYLE" [metaKeySelection]="false" [responsive]="true"
+  [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Allowed'" [targetHeader]="'Excluded'"
+  (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
+  <ng-template let-item pTemplate="listItem">
+    <div [pTooltip]="item.tooltip">
+      {{ item.label }}
+    </div>
+  </ng-template>
+</p-pickList>

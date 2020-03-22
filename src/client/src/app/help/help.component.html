@@ -1,0 +1,20 @@
+<div class="app-wrapper-content">
+  <section class="section">
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <aside class="menu box">
+          <ul class="menu-list">
+            <li *ngFor="let item of menuItems; let i = index" (click)="setSelectedIndex(i)">
+              <a [class.is-active]="getSelectedIndex() === i">{{ item.name }}</a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <div class="content">
+          <markdown [src]="getSelectedItem().file"></markdown>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

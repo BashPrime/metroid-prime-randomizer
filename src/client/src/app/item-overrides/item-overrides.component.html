@@ -1,0 +1,54 @@
+<div [formGroup]="getFormGroup()">
+  <div class="field is-grouped">
+    <div class="control">
+      <div class="select is-small" style="margin-right: 0.5rem;" *ngIf="getAvailableItems().length">
+        <select [(ngModel)]="selectedAvailableItem" [ngModelOptions]="{standalone: true}">
+          <option *ngFor="let item of getAvailableItems()" [ngValue]="item">{{ item.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="control">
+      <div class="buttons are-small">
+        <button class="button is-success" [disabled]="!getAvailableItems().length" (click)="addFormItem()">Add</button>
+        <button class="button is-danger" [disabled]="!getFormArray().length" (click)="removeAllItems()">Remove
+          All</button>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-multiline" formArrayName="itemOverrides">
+    <div class="column is-one-quarter" *ngFor="let override of getFormArray().controls; let i = index"
+      [formGroupName]="i">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">{{ override.value.name }}</p>
+        </header>
+        <div class="card-content">
+          <div class="field" *ngIf="getItem(override.value.name).experimental">
+            <p class="has-text-danger">EXPERIMENTAL - You are not guaranteed to finish the game if you change this item's behavior.</p>
+          </div>
+          <div class="field">
+            <label class="label is-small">State</label>
+            <div class="control">
+              <div class="select is-fullwidth is-small">
+                <select formControlName="state">
+                  <option *ngFor="let choice of getConditionalChoices(override.value.name)" [ngValue]="choice.value">
+                    {{ choice.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field" *ngIf="isCountEnabled(override.value)">
+            <label class="label is-small">Count</label>
+            <div class="control">
+              <input class="input is-small" type="number" formControlName="count">
+            </div>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a class="card-footer-item has-text-danger" (click)="removeFormItem(i)">Remove</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>

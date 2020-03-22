@@ -1,0 +1,26 @@
+<div class="modal" [class.is-active]="getOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Import Permalink</p>
+      <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
+    </header>
+    <section class="modal-card-body has-text-left">
+      <form [formGroup]="getFormGroup()">
+        <label class="label is-required">Permalink</label>
+        <div class="field">
+          <div class="control">
+            <input class="input is-small" type="text" formControlName="permalink">
+            <div *ngIf="isSubmitted() && permalink.errors">
+              <p class="help is-danger" *ngIf="permalink.errors.required">You must enter a permalink.</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="onSubmit(getFormGroup().value)">Import</button>
+      <button class="button" (click)="setOpen(false)">Cancel</button>
+    </footer>
+  </div>
+</div>

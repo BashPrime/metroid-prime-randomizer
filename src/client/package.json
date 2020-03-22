@@ -1,0 +1,10 @@
+{
+  "name": "metroid-prime-randomizer-client",
+  "scripts": {
+    "ng": "ng",
+    "ng:serve": "ng serve",
+    "ng:build": "ng build",
+    "ng:build:prod": "ng build --prod"
+  },
+  "private": true
+}

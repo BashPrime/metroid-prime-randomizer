@@ -1,0 +1,52 @@
+<div class="modal" [class.is-active]="getOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Verify ISO</p>
+      <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <div *ngIf="getOpen() && isLoaded(); then modalLoaded; else loading"></div>
+      <ng-template #modalLoaded>
+        <div class="field">
+          <p class="heading">Game Code</p>
+          <p>
+            {{ gameCode }}
+            <span class="icon" [ngClass]="hasValidGameCode() ? 'has-text-success' : 'has-text-danger'">
+              <fa-icon [icon]="hasValidGameCode() ? ICONS.valid : ICONS.invalid"></fa-icon>
+            </span>
+          </p>
+          <div *ngIf="!hasValidGameCode()">
+            <p class="help is-danger" *ngIf="!gameCodeIsMetroidPrime()">This ISO is not Metroid Prime.</p>
+            <p class="help is-danger" *ngIf="!gameCodeIsNTSC()">This is not a NTSC-USA region ISO.</p>
+          </div>
+        </div>
+        <div class="field">
+          <p class="heading">MD5 Hash</p>
+          <p>
+            {{ md5Hash }}
+            <span class="icon" [ngClass]="hasValidMd5Hash() ? 'has-text-success' : 'has-text-danger'">
+              <fa-icon [icon]="hasValidMd5Hash() ? ICONS.valid : ICONS.invalid" size="sm"></fa-icon>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="heading">Revision</p>
+          <p>{{ revision }}</p>
+        </div>
+      </ng-template>
+      <ng-template #loading>
+        <div class="field">
+          <p class="has-text-centered">Verifying can take a moment. Please wait...</p>
+        </div>
+        <div class="field">
+          <div class="loading-indicator"></div>
+        </div>
+      </ng-template>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="saveIsoData()" *ngIf="isLoaded()">Save</button>
+      <button class="button" (click)="setOpen(false)">Close</button>
+    </footer>
+  </div>
+</div>

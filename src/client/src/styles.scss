@@ -1,0 +1,119 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bulmaswatch/darkly/_variables';
+@import './assets/scss/bulma_overrides';
+@import '~bulma/bulma';
+@import '~bulmaswatch/darkly/_overrides';
+@import '~bulma-checkradio/dist/css/bulma-checkradio.min.css';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/nova-dark/theme.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~ngx-toastr/toastr';
+
+html {
+  overflow: auto;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.section {
+  padding: 1.5rem;
+}
+
+.app-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .app-wrapper-content {
+    flex: 1;
+    overflow: auto;
+  }
+}
+
+.loading-indicator {
+  position: relative;
+  pointer-events: none;
+  width: 100%;
+  &:after {
+      @include loader;
+      margin: 0 auto;
+      width: 5rem;
+      height: 5rem;
+  }
+}
+
+.select select, .textarea, .input {
+  background-color: #101010;
+  color: #efefef;
+  border-color: #404040;
+}
+
+[disabled].input {
+  background-color: #202020;
+  color: #b0b0b0;
+  border-color: #606060;
+}
+
+// Remove spinners from number inputs
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.is-checkradio[type=checkbox] {
+  position: relative;
+}
+
+.is-checkradio[type=checkbox]+label:first-of-type {
+  margin-left: -1em;
+}
+
+.is-vertically-centered {
+  display: flex;
+  align-items: center;
+}
+
+// Toast notification overrides
+.toast-container .notification {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 15px 15px 15px 50px;
+  width: 300px;
+  pointer-events: auto;
+}
+
+.toast-container {
+  bottom: 45px;
+}
+
+.label.is-required:after {
+  content: ' *';
+  color: red;
+}
+
+.has-width-auto {
+  width: auto;
+}
+
+// Horizontal spacing for inline-block fields
+.field.is-spaced-field {
+  margin-right: 1rem;
+}
+
+.field.spaced-field:last-child {
+  margin-right: initial;
+}
+
+.ui-tooltip.is-wide-tooltip {
+  max-width: 25em;
+}

@@ -1,0 +1,15 @@
+<div class="tabs is-boxed is-small">
+  <ul>
+    <li *ngFor="let tab of tabs" [ngClass]="{ 'is-active': isTabIdSelected(tab.id) }">
+      <a (click)="setSelectedTabId(tab.id)">{{ tab.name }}</a>
+    </li>
+  </ul>
+</div>
+<div class="settings-container" [formGroup]="getFormGroup()">
+  <app-rom-settings *ngIf="isTabIdSelected(tabIds.rom)"></app-rom-settings>
+  <app-rules *ngIf="isTabIdSelected(tabIds.rules)"></app-rules>
+  <app-item-overrides *ngIf="isTabIdSelected(tabIds.itemOverrides)"></app-item-overrides>
+  <app-exclude-locations *ngIf="isTabIdSelected(tabIds.excludeLocations)"></app-exclude-locations>
+  <app-tricks *ngIf="isTabIdSelected(tabIds.tricks)"></app-tricks>
+</div>
+

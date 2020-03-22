@@ -1,0 +1,113 @@
+<div class="app-wrapper-content">
+  <section class="section">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="box settings-box">
+          <button class="button is-info is-small" (click)="setModalOpen(true)">View Settings Used</button>
+          <div class="seed-details" *ngFor="let seed of getSeeds(); let i = index">
+            <p class="heading">Permalink</p>
+            <div class="level">
+              <p class="level-item is-permalink">{{ getPermalink(seed) }}</p>
+              <div class="level-item">
+                <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
+              </div>
+            </div>
+            <p class="heading">Seed Hash</p>
+            <div class="level">
+              <p class="level-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <form [formGroup]="getFormGroup()">
+          <label class="label is-required">Base ISO</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="baseIso" [pTooltip]="getTooltip('baseIso')"
+                tooltipStyleClass="is-wide-tooltip">
+              <div *ngIf="isSubmitted() && getFormGroup().controls.baseIso.errors">
+                <p class="help is-danger" *ngIf="getFormGroup().controls.baseIso.errors.required">A base Metroid Prime
+                  .iso
+                  file is required.</p>
+              </div>
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectBaseIso()">Choose File</button>
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="verifyBaseIso()">Verify</button>
+            </div>
+          </div>
+          <label class="label">Output Folder</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="outputFolder"
+                [pTooltip]="getTooltip('outputFolder')" tooltipStyleClass="is-wide-tooltip">
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectOutputFolder()">
+                Choose Folder
+              </button>
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="openOutputFolder()">Open</button>
+            </div>
+          </div>
+          <label class="label">Trilogy ISO (for Flaahgra music fix)</label>
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input class="input is-small" type="text" formControlName="trilogyIso"
+                [pTooltip]="getTooltip('trilogyIso')">
+            </div>
+            <div class="control">
+              <button class="button is-info is-small" (click)="selectTrilogyIso()">
+                Choose File
+              </button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Output Type</label>
+            <div class="control">
+              <div class="select is-small" [pTooltip]="getTooltip('outputType')" tooltipStyleClass="is-wide-tooltip">
+                <select formControlName="outputType">
+                  <option *ngFor="let choice of getChoices('outputType')" [ngValue]="choice.value">
+                    {{ choice.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="field">
+            <div class="control">
+              <div class="buttons">
+                <button class="button is-success" (click)="saveIsos(getFormGroup().value)">Save
+                  ISO{{ hasMultipleSeeds() ? 's' : null }}</button>
+                <button class="button is-link" (click)="saveSpoilers(getFormGroup().value)"
+                  *ngIf="isSpoilerEnabled() | async">Save
+                  Spoiler{{ hasMultipleSeeds() ? 's' : null }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="modal" [class.is-active]="getModalOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="width: 95%">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Settings Used</p>
+      <button class="delete" aria-label="close" (click)="setModalOpen(false)"></button>
+    </header>
+    <section class="modal-card-body">
+      <app-read-only-settings-container [randomizerForm]="getLastSettingsUsed()"></app-read-only-settings-container>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-small" (click)="setModalOpen(false)">Close</button>
+    </footer>
+  </div>
+</div>
+<app-prime-iso-diagnostics-modal></app-prime-iso-diagnostics-modal>

@@ -1,0 +1,25 @@
+<div class="field">
+  <div class="label is-small">Set Difficulty Level</div>
+  <div class="field is-grouped">
+    <div class="control">
+      <div class="select is-small">
+        <select [(ngModel)]="selectedFilter">
+          <option [value]="filter" *ngFor="let filter of FILTERS">{{ filter }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="control">
+      <button class="button is-info is-small" (click)="setDifficulty(selectedFilter)">Set</button>
+    </div>
+  </div>
+</div>
+<p-pickList [source]="items.available" [target]="items.selected" filterBy="label" [style]="GLOBAL_STYLE"
+  [sourceStyle]="GLOBAL_STYLE" [targetStyle]="GLOBAL_STYLE" [metaKeySelection]="false" [responsive]="true"
+  [showSourceControls]="false" [showTargetControls]="false" [sourceHeader]="'Disabled'" [targetHeader]="'Enabled'"
+  (onMoveToTarget)="addItems($event)" (onMoveToSource)="removeItems($event)">
+  <ng-template let-item pTemplate="listItem">
+    <div [pTooltip]="item.tooltip" tooltipStyleClass="is-wide-tooltip">
+      {{ item.label }}
+    </div>
+  </ng-template>
+</p-pickList>
