@@ -106,8 +106,11 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Quarantine Cave',
       locations: {
-        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
+        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const visibleReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          return visibleReqs && thermalReqs;
+        },
         [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.quarantineMonitorDash || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.canSpider(); // requiring spider ball for quality of life/softlock protection
@@ -135,7 +138,10 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Observatory',
       locations: {
-        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = items.canBoost() || settings.tricks.climbObservatoryWithoutBoost;
+          return boostReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       },
       exits: {
         'Control Tower': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -154,7 +160,10 @@ export function phendranaDrifts(): RegionObject[] {
           const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
           return bombReqs && items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Research Lab Hydra': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Observatory': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const visibleReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.canBoost();
+          return visibleReqs && items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {

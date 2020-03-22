@@ -35,6 +35,7 @@ export class Tricks extends SettingsFlags {
   outOfBoundsWithoutMorphBall = false;
   phazonMiningTunnelItemWithoutPhazonSuit = false;
   phendranaTransportSouthToTransportAccessWithoutSpider = false;
+  plasmaProcessingFromMagmoorWorkstationOob = false;
   plasmaProcessingItemWithoutGrappleSpider = false;
   reflectingPoolAccessWithoutWaveBeam = false;
   removePhendranaDepthsGrappleReqs = false;

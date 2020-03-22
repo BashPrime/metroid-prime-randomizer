@@ -144,7 +144,11 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Magmoor Transport South (Phendrana)': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Magmoor Transport South (Mines)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        // OOB only
+        'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return settings.tricks.plasmaProcessingFromMagmoorWorkstationOob && items.canWallcrawl(settings) && items.has(PrimeItem.ICE_BEAM);
+        }
       }
     },
     {

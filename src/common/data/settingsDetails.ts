@@ -308,6 +308,11 @@ export const details: SettingsDetails = {
     description: `You can Space Jump onto one of the poles and jump onto the top of the spider track to reach the door.`,
     difficulty: Difficulty.TRIVIAL
   },
+  plasmaProcessingFromMagmoorWorkstationOob: {
+    name: 'Plasma Processing from Magmoor Workstation (Out of Bounds)',
+    description: `Using the Flying Pirate secret world in Magmoor Workstation, you can wallcrawl to Geothermal Core and go back inbounds in front of the door to Plasma Processing.`,
+    difficulty: Difficulty.HARD
+  },
   plasmaProcessingItemWithoutGrappleSpider: {
     name: 'Plasma Processing Item without Grapple Beam, Spider Ball',
     description: `You can R jump or dash to reach the boost spinners, and either slope R jump or abuse standable collision to skip the spider track.`,
