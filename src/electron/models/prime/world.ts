@@ -233,7 +233,8 @@ export class PrimeWorld extends World {
 
       // Get all locations we can reach with our current items
       const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
-        return location.canFill(myItems, this.settings) && location.canEscape(myItems, this.settings);
+        const escapeItems = new PrimeItemCollection([...myItems.toArray(), location.getItem()]);
+        return location.canFill(myItems, this.settings) && location.canEscape(escapeItems, this.settings);
       }));
 
       // Update myItems state (this includes any items previously reached)
