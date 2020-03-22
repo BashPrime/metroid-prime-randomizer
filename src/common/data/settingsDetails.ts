@@ -58,9 +58,9 @@ export const details: SettingsDetails = {
     description: `'Any Suit': Collecting any of the three suits will prevent heat damage.
     'Varia Only': Only the Varia Suit will prevent heat damage.
 
-    The item logic does take this setting into account. Keep in mind that while all of early Magmoor is superheated,
-    only Twin Fires Tunnel is superheated when going to far Magmoor. This means that you MAY be required to reach far
-    Magmoor or Phendrana Drifts through Phazon Mines to obtain Varia or your first suit upgrade.`
+    The item logic does take this setting into account. Keep in mind that while all of early Magmoor is superheated, `
+    + `only Twin Fires Tunnel is superheated when going to far Magmoor. This means that you MAY be required to reach far `
+    + `Magmoor or Phendrana Drifts through Phazon Mines to obtain Varia or your first suit upgrade.`
   },
   suitDamageReduction: {
     name: 'Suit Damage Reduction',
