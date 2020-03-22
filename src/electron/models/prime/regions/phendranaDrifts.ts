@@ -204,8 +204,10 @@ export function phendranaDrifts(): RegionObject[] {
       exits: {
         'Frost Cave': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Hunter Cave': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Transport Access (Phendrana)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM)
-          && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Transport Access (Phendrana)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
+          const bombReqs = items.canLayBombs() || settings.tricks.climbFrozenPikeWithoutBombs;
+          return (bombReqs || canBoost) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
       }
     },
     {

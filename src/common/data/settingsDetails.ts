@@ -154,6 +154,11 @@ export const details: SettingsDetails = {
     description: `You can Space Jump on standable collision and climb your way to the Overgrown Cavern door.`,
     difficulty: Difficulty.EASY
   },
+  climbFrozenPikeWithoutBombs: {
+    name: 'Climb Frozen Pike without Bombs',
+    description: `To skip the morph ball bomb tunnel, you can R jump or dash to the upper platform on the opposite end of the tunnel.`,
+    difficulty: Difficulty.EASY
+  },
   climbObservatoryWithoutBoost: {
     name: 'Climb Observatory without Boost Ball',
     description: `You can dash off the orange panels (scan point) or the space pirates to reach the upper platform, and either R Jump or dash to reach the Control Tower.`,

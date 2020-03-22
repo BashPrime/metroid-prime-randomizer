@@ -381,7 +381,10 @@ export function chozoRuins(): RegionObject[] {
           const iceReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.ICE_BEAM);
           return iceReqs && items.canBoost() && items.hasMissiles();
         },
-        'Chozo Transport East': (items: PrimeItemCollection) => items.canBoost() && items.hasMissiles() && items.canLayBombs(),
+        'Chozo Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
+          return items.hasMissiles() && (canBoost || items.canLayBombs());
+        },
         'Chozo Transport South': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM),
         'Hall of the Elders': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }

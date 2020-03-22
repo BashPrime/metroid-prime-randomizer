@@ -7,6 +7,7 @@ export class Tricks extends SettingsFlags {
   boostThroughBombTunnels = false;
   chozoIceTempleItemWithIS = false;
   climbFrigateCrashSite = false;
+  climbFrozenPikeWithoutBombs = false;
   climbObservatoryWithoutBoost = false;
   climbOreProcessingWithoutGrappleSpider = false;
   climbPhazonProcessingCenterWithoutSpider = false;
