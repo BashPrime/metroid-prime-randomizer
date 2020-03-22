@@ -107,8 +107,12 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
-          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          if (settings.tricks.crossTwinFiresTunnelSuitless) {
+            return items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          }
+
+          const spiderReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
+          return spiderReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     },
@@ -181,8 +185,12 @@ export function magmoorCaverns(): RegionObject[] {
           return grappleMorphReq && (suitReqsMinimum || suitReqs);
         },
         'Twin Fires': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const accessReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
-          return accessReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          if (settings.tricks.crossTwinFiresTunnelSuitless) {
+            return items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          }
+
+          const spiderReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
+          return spiderReqs && items.hasSuit(settings) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     },

@@ -15,6 +15,7 @@ export class Tricks extends SettingsFlags {
   climbTowerOfLightWithoutMissiles = false;
   crossMagmaPoolSuitless = false;
   crossMagmaPoolWithoutGrapple = false;
+  crossTwinFiresTunnelSuitless = false;
   crossTwinFiresTunnelWithoutSpider = false;
   crosswayItemFewerReqs = false;
   destroyBombCoversWithPowerBombs = false;

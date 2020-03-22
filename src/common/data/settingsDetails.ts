@@ -200,6 +200,13 @@ export const details: SettingsDetails = {
     This logic does not expect you to slope jump out of the lava with Gravity Suit.`,
     difficulty: Difficulty.NORMAL
   },
+  crossTwinFiresTunnelSuitless: {
+    name: 'Cross Twin Fires Tunnel Suitless',
+    description: `Removes the suit requirement when crossing this room. Twin Fires Tunnel is the only room in late Magmoor that is superheated.
+
+    This trick automatically assumes you have 2 Energy Tanks and can cross without Spider Ball, since it cannot be used while you are taking heat damage.`,
+    difficulty: Difficulty.NORMAL
+  },
   crossTwinFiresTunnelWithoutSpider: {
     name: 'Cross Twin Fires Tunnel without Spider Ball',
     description: `Twin Fires Tunnel can be crossed with an R jump, a scan dash off the spider track from the wall, or by double bomb jumping out of the lava.
