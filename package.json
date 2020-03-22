@@ -42,6 +42,7 @@
     "electron:build": "webpack --config ./webpack.development.js",
     "electron:build:prod": "webpack --config ./webpack.production.js",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:build && electron . --serve",
+    "electron:prod": "npm run electron:build:prod && electron .",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && electron-builder build --linux",
     "electron:windows": "npm run build:prod && electron-builder build --windows",
