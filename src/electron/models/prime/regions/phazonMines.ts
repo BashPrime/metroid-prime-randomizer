@@ -189,7 +189,7 @@ export function phazonMines(): RegionObject[] {
       name: 'Phazon Mining Tunnel',
       locations: {
         [PrimeLocation.PHAZON_MINING_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const phazonReqs = items.has(PrimeItem.PHAZON_SUIT) || (settings.tricks.phazonMiningTunnelItemWithoutPhazonSuit && items.hasCount(PrimeItem.ENERGY_TANK, 13) && items.canBoost());
+          const phazonReqs = items.has(PrimeItem.PHAZON_SUIT) || (settings.tricks.phazonMiningTunnelItemWithoutPhazonSuit && items.hasCount(PrimeItem.ENERGY_TANK, 12) && items.canBoost());
           return items.canLayPowerBombs() && items.canLayBombs() && phazonReqs;
         }
       },
