@@ -139,13 +139,13 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Observatory',
       locations: {
         [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost() || settings.tricks.climbObservatoryWithoutBoost;
+          const boostReqs = (items.canBoost() && items.canLayBombs()) || settings.tricks.climbObservatoryWithoutBoost;
           return boostReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
         'Control Tower': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost() || settings.tricks.climbObservatoryWithoutBoost;
+          const boostReqs = (items.canBoost() && items.canLayBombs()) || settings.tricks.climbObservatoryWithoutBoost;
           return items.hasMissiles() && boostReqs && items.has(PrimeItem.WAVE_BEAM)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
@@ -161,7 +161,7 @@ export function phendranaDrifts(): RegionObject[] {
           return bombReqs && items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Observatory': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const visibleReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.canBoost();
+          const visibleReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || (items.canBoost() && items.canLayBombs());
           return visibleReqs && items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
