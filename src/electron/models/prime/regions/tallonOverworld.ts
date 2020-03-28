@@ -154,7 +154,10 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Great Tree Hall (Lower)',
       exits: {
-        'Hydro Access Tunnel': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT),
+        'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.has(PrimeItem.THERMAL_VISOR);
+          return thermalReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+        },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Tallon Transport South (Mines)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
