@@ -108,7 +108,7 @@ export function magmoorCaverns(): RegionObject[] {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.crossTwinFiresTunnelSuitless) {
-            return items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasCount(PrimeItem.ENERGY_TANK, 2);
           }
 
           const spiderReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
@@ -186,7 +186,7 @@ export function magmoorCaverns(): RegionObject[] {
         },
         'Twin Fires': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.crossTwinFiresTunnelSuitless) {
-            return items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasCount(PrimeItem.ENERGY_TANK, 2);
           }
 
           const spiderReqs = settings.tricks.crossTwinFiresTunnelWithoutSpider || items.canSpider();
