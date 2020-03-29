@@ -46,7 +46,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Ruined Nursery',
       locations: {
         [PrimeLocation.RUINED_NURSERY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return items.canLayBombs() || (settings.tricks.ruinedNurseryWithoutBombs && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          return items.canLayBombs() || (settings.tricks.ruinedNurseryWithoutBombs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
         }
       },
       exits: {
