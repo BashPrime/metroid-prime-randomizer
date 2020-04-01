@@ -73,16 +73,24 @@ export function magmoorCaverns(): RegionObject[] {
     },
     {
       name: 'Shore Tunnel',
-      locations: {
-        [PrimeLocation.SHORE_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          const bombJumpReqs = settings.tricks.shoreTunnelEscapeWithoutSpaceJump && items.canLayBombs();
-          return items.canLayPowerBombs() && (sjReqs || bombJumpReqs);
-        }
-      },
+      locations: {},
       exits: {
+        'Shore Tunnel (Lava Pit)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return items.canLayPowerBombs() && sjReqs;
+        },
         'Fiery Shores (Shore Tunnel Side)': () => true,
         'Monitor Station': () => true
+      }
+    },
+    {
+      name: 'Shore Tunnel (Lava Pit)',
+      locations: {
+        [PrimeLocation.SHORE_TUNNEL]: () => true
+      },
+      exits: {
+        'Shore Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
+          items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.tricks.shoreTunnelEscapeWithoutSpaceJump && items.canLayBombs())
       }
     },
     {
