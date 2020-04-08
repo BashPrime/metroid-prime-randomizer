@@ -189,7 +189,7 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Research Core',
       locations: {
-        [PrimeLocation.RESEARCH_CORE]: () => true
+        [PrimeLocation.RESEARCH_CORE]: (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         'Frozen Pike': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
