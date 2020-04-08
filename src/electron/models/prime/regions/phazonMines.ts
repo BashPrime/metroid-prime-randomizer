@@ -17,7 +17,7 @@ export function phazonMines(): RegionObject[] {
         }
       },
       exits: {
-        'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
+        'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SCAN_VISOR),
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
 
