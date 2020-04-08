@@ -17,7 +17,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Chozo Ice Temple': (items: PrimeItemCollection) => canBreakIce(items) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Ice Ruins East': (items: PrimeItemCollection) => (items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Ice Ruins East': (items: PrimeItemCollection) => ((items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS)) && items.has(PrimeItem.SCAN_VISOR),
         'Ice Ruins West': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Transport North': (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       }
