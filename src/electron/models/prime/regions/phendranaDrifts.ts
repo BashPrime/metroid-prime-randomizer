@@ -13,11 +13,11 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana Shorelines',
       locations: {
         [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
-        [PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR),
       },
       exits: {
         'Chozo Ice Temple': (items: PrimeItemCollection) => canBreakIce(items) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Ice Ruins East': (items: PrimeItemCollection) => (items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Ice Ruins East': (items: PrimeItemCollection) => ((items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS)) && items.has(PrimeItem.SCAN_VISOR),
         'Ice Ruins West': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Phendrana Transport North': (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       }
@@ -94,7 +94,7 @@ export function phendranaDrifts(): RegionObject[] {
         'Ice Ruins West': () => true,
         'Research Lab Hydra': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const boostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
-          return boostSpiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return boostSpiderReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         },
         'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
@@ -132,7 +132,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Observatory': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM),
-        'Ruined Courtyard': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Ruined Courtyard': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SCAN_VISOR)
       }
     },
     {
@@ -189,7 +189,7 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Research Core',
       locations: {
-        [PrimeLocation.RESEARCH_CORE]: () => true
+        [PrimeLocation.RESEARCH_CORE]: (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         'Frozen Pike': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),

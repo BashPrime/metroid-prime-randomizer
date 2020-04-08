@@ -150,7 +150,7 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {
         [PrimeLocation.MAGMOOR_WORKSTATION]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return thermalReqs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM);
+          return thermalReqs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {

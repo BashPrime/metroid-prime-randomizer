@@ -13,11 +13,11 @@ export function phazonMines(): RegionObject[] {
         [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.tricks.mainQuarryItemWithoutSpider || items.canSpider();
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return spiderReqs && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return spiderReqs && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
-        'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
+        'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SCAN_VISOR),
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
 
@@ -52,7 +52,7 @@ export function phazonMines(): RegionObject[] {
       name: 'Elite Research',
       locations: {
         [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
-        [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -107,7 +107,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Ventilation Shaft': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const boostReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canBoost();
-          return boostReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return boostReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         },
         'Phazon Processing Center': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM),
         'Elite Control Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
@@ -163,7 +163,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Fungal Hall Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+          return xrayReqs && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SCAN_VISOR)
         },
         'Central Dynamo': (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
       }
@@ -211,7 +211,7 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Metroid Quarantine B (Fungal Hall B Side)',
       exits: {
-        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR),
         'Fungal Hall B': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM)
       }
     },
