@@ -209,7 +209,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Arboretum',
       exits: {
         'Gathering Hall': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Sunchamber': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
+        'Sunchamber': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() items.has(PrimeItem.SCAN_VISOR),
         'Ruined Fountain': (items: PrimeItemCollection) => items.hasMissiles()
       }
     },
