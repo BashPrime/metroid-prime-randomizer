@@ -255,7 +255,7 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Watery Hall',
       locations: {
-        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: () => true,
+        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR),
         [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const bombsReqs = items.canLayBombs() || settings.tricks.wateryHallUnderwaterFlaahgraSkip;
           const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.wateryHallUnderwaterSlopeJump;
@@ -265,7 +265,7 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Dynamo': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const powerBombReqs = settings.tricks.destroyBombCoversWithPowerBombs && items.canLayPowerBombs();
-          return items.hasMissiles() && (items.canLayBombs() || powerBombReqs);
+          return items.hasMissiles() && (items.canLayBombs() || powerBombReqs) && items.has(PrimeItem.SCAN_VISOR);
         },
         'Watery Hall Access': (items: PrimeItemCollection) => items.hasMissiles(),
       }
