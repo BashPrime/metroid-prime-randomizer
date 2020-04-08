@@ -338,7 +338,7 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.CROSSWAY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const fewerReqs = settings.tricks.crosswayItemFewerReqs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          const normalReqs = items.canBoost() && items.canSpider() && items.canFireSuperMissiles();
+          const normalReqs = items.canBoost() && items.canSpider() && items.canFireSuperMissiles() && items.has(PrimeItem.SCAN_VISOR);
           return fewerReqs || normalReqs;
         }
       },
