@@ -121,7 +121,7 @@ export function phendranaDrifts(): RegionObject[] {
           || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM)),
         'Ruined Courtyard': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = items.canSpider() || settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump;
-          return spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM);
+          return spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SCAN_VISOR);
         }
       }
     },
@@ -132,7 +132,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Observatory': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM),
-        'Ruined Courtyard': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Ruined Courtyard': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SCAN_VISOR)
       }
     },
     {
