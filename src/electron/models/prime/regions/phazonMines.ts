@@ -13,7 +13,7 @@ export function phazonMines(): RegionObject[] {
         [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.tricks.mainQuarryItemWithoutSpider || items.canSpider();
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return spiderReqs && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return spiderReqs && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
