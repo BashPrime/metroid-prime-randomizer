@@ -211,7 +211,7 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Metroid Quarantine B (Fungal Hall B Side)',
       exits: {
-        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR),
         'Fungal Hall B': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM)
       }
     },
