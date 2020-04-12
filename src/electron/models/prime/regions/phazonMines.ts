@@ -4,6 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
+import { Elevator } from '../../../enums/elevator';
 
 export function phazonMines(): RegionObject[] {
   const regions: RegionObject[] = [
@@ -24,7 +25,7 @@ export function phazonMines(): RegionObject[] {
           return spiderReqs && items.canLayBombs() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
             && items.has(PrimeItem.ICE_BEAM);
         },
-        'Mines Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        [Elevator.MINES_EAST]: (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
           && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
@@ -126,7 +127,7 @@ export function phazonMines(): RegionObject[] {
           const spiderBombsReqs = (items.canSpider() && items.canLayBombs()) || settings.tricks.climbPhazonProcessingCenterWithoutSpider;
           return spiderBombsReqs && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Mines Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        [Elevator.MINES_WEST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderBombsReqs = (items.canSpider() && items.canLayBombs()) || settings.tricks.climbPhazonProcessingCenterWithoutSpider;
           return spiderBombsReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
@@ -135,7 +136,7 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Ventilation Shaft',
       locations: {
-        [PrimeLocation.VENTILATION_SHAFT]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.VENTILATION_SHAFT]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         'Central Dynamo': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
@@ -246,16 +247,16 @@ export function phazonMines(): RegionObject[] {
       }
     },
     {
-      name: 'Mines Transport East',
+      name: Elevator.MINES_EAST,
       exits: {
-        'Tallon Transport South (Mines)': () => true,
+        [Elevator.TALLON_SOUTH_MINES]: () => true,
         'Main Quarry': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
-      name: 'Mines Transport West',
+      name: Elevator.MINES_WEST,
       exits: {
-        'Magmoor Transport South (Mines)': () => true,
+        [Elevator.MAGMOOR_SOUTH_MINES]: () => true,
         'Phazon Processing Center': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
           return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)

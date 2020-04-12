@@ -4,6 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
+import { Elevator } from '../../../enums/elevator';
 
 export function magmoorCaverns(): RegionObject[] {
   const regions: RegionObject[] = [
@@ -15,7 +16,7 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Triclops Pit': (items: PrimeItemCollection) => items.canLayBombs(),
-        'Magmoor Transport North': () => true
+        [Elevator.MAGMOOR_NORTH]: () => true
       }
     },
     {
@@ -43,7 +44,7 @@ export function magmoorCaverns(): RegionObject[] {
           const wsReqs = settings.tricks.warriorShrineWithoutBoost || items.canBoost();
           return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Magmoor Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        [Elevator.MAGMOOR_WEST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();
           return canBoost || items.canLayBombs();
         }
@@ -107,14 +108,14 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Fiery Shores (Shore Tunnel Side)': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
-        'Magmoor Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
+        [Elevator.MAGMOOR_EAST]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       }
     },
     {
       name: 'Twin Fires',
       exits: {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        [Elevator.MAGMOOR_EAST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.crossTwinFiresTunnelSuitless) {
             return items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasCount(PrimeItem.ENERGY_TANK, 2);
           }
@@ -154,8 +155,8 @@ export function magmoorCaverns(): RegionObject[] {
         }
       },
       exits: {
-        'Magmoor Transport South (Phendrana)': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Magmoor Transport South (Mines)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [Elevator.MAGMOOR_SOUTH_PHENDRANA]: (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        [Elevator.MAGMOOR_SOUTH_MINES]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         // OOB only
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -164,18 +165,18 @@ export function magmoorCaverns(): RegionObject[] {
       }
     },
     {
-      name: 'Magmoor Transport North',
+      name: Elevator.MAGMOOR_NORTH,
       exits: {
-        'Chozo Transport North': () => true,
+        [Elevator.CHOZO_NORTH]: () => true,
         'Lava Lake': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings)
       }
     },
     {
-      name: 'Magmoor Transport West',
+      name: Elevator.MAGMOOR_WEST,
       exits: {
-        'Phendrana Transport North': () => true,
+        [Elevator.PHENDRANA_NORTH]: () => true,
         // Suitless Magmoor check
-        'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        [Elevator.MAGMOOR_EAST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           let minimumEnergyTanks: number;
 
           if (!(settings.tricks.suitlessMagmoorRun || settings.tricks.suitlessMagmoorRunMinimal)) {
@@ -196,11 +197,11 @@ export function magmoorCaverns(): RegionObject[] {
       }
     },
     {
-      name: 'Magmoor Transport East',
+      name: Elevator.MAGMOOR_EAST,
       exits: {
-        'Tallon Transport West': () => true,
+        [Elevator.TALLON_WEST]: () => true,
         // Suitless Magmoor check
-        'Magmoor Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        [Elevator.MAGMOOR_WEST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           let minimumEnergyTanks: number;
 
           if (!(settings.tricks.suitlessMagmoorRun || settings.tricks.suitlessMagmoorRunMinimal)) {
@@ -229,16 +230,16 @@ export function magmoorCaverns(): RegionObject[] {
       }
     },
     {
-      name: 'Magmoor Transport South (Mines)',
+      name: Elevator.MAGMOOR_SOUTH_MINES,
       exits: {
-        'Mines Transport West': () => true,
+        [Elevator.MINES_WEST]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
-      name: 'Magmoor Transport South (Phendrana)',
+      name: Elevator.MAGMOOR_SOUTH_PHENDRANA,
       exits: {
-        'Phendrana Transport South': () => true,
+        [Elevator.PHENDRANA_SOUTH]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
       }
     },

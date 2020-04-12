@@ -4,6 +4,7 @@ import { PrimeLocation } from '../../../enums/primeLocation';
 import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
+import { Elevator } from '../../../enums/elevator';
 
 export function tallonOverworld(): RegionObject[] {
   const regions: RegionObject[] = [
@@ -67,7 +68,7 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Tallon Canyon',
       exits: {
         'Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Tallon Transport North': () => true
+        [Elevator.TALLON_NORTH]: () => true
       }
     },
     {
@@ -89,7 +90,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Tallon Canyon': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Tallon Transport West': () => true
+        [Elevator.TALLON_WEST]: () => true
       }
     },
     {
@@ -99,7 +100,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM),
-        'Tallon Transport East': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
+        [Elevator.TALLON_EAST]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
@@ -148,7 +149,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Life Grove Tunnel': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Tallon Transport South (Chozo)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        [Elevator.TALLON_SOUTH_CHOZO]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
@@ -159,7 +160,7 @@ export function tallonOverworld(): RegionObject[] {
           return thermalReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
         },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Tallon Transport South (Mines)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [Elevator.TALLON_SOUTH_MINES]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -183,37 +184,37 @@ export function tallonOverworld(): RegionObject[] {
       }
     },
     {
-      name: 'Tallon Transport North',
+      name: Elevator.TALLON_NORTH,
       exits: {
-        'Chozo Transport West': () => true,
+        [Elevator.CHOZO_WEST]: () => true,
         'Tallon Canyon': () => true
       }
     },
     {
-      name: 'Tallon Transport East',
+      name: Elevator.TALLON_EAST,
       exits: {
-        'Chozo Transport East': () => true,
+        [Elevator.CHOZO_EAST]: () => true,
         'Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
-      name: 'Tallon Transport West',
+      name: Elevator.TALLON_WEST,
       exits: {
-        'Magmoor Transport East': () => true,
+        [Elevator.MAGMOOR_EAST]: () => true,
         'Root Cave': () => true
       }
     },
     {
-      name: 'Tallon Transport South (Chozo)',
+      name: Elevator.TALLON_SOUTH_CHOZO,
       exits: {
-        'Chozo Transport South': () => true,
+        [Elevator.CHOZO_SOUTH]: () => true,
         'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
-      name: 'Tallon Transport South (Mines)',
+      name: Elevator.TALLON_SOUTH_MINES,
       exits: {
-        'Mines Transport East': () => true,
+        [Elevator.MINES_EAST]: () => true,
         'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     }
