@@ -174,6 +174,21 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Magmoor Transport West',
       exits: {
         'Phendrana Transport North': () => true,
+        // Suitless Magmoor check
+        'Magmoor Transport East': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          let minimumEnergyTanks: number;
+
+          if (!(settings.tricks.suitlessMagmoorRun || settings.tricks.suitlessMagmoorRunMinimal)) {
+            return false;
+          } else if (settings.tricks.suitlessMagmoorRunMinimal) {
+            minimumEnergyTanks = items.has(PrimeItem.SPACE_JUMP_BOOTS) ? 3 : 4;
+          } else {
+            // suitlessMagmoorRun
+            minimumEnergyTanks = items.has(PrimeItem.SPACE_JUMP_BOOTS) ? 5 : 6;
+          }
+
+          return items.canLayBombs() && !items.hasSuit(settings) && items.hasCount(PrimeItem.ENERGY_TANK, minimumEnergyTanks);
+        },
         'Monitor Station': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRunMinimal && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 5) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
@@ -186,6 +201,21 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Magmoor Transport East',
       exits: {
         'Tallon Transport West': () => true,
+        // Suitless Magmoor check
+        'Magmoor Transport West': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          let minimumEnergyTanks: number;
+
+          if (!(settings.tricks.suitlessMagmoorRun || settings.tricks.suitlessMagmoorRunMinimal)) {
+            return false;
+          } else if (settings.tricks.suitlessMagmoorRunMinimal) {
+            minimumEnergyTanks = items.has(PrimeItem.SPACE_JUMP_BOOTS) ? 3 : 4;
+          } else {
+            // suitlessMagmoorRun
+            minimumEnergyTanks = items.has(PrimeItem.SPACE_JUMP_BOOTS) ? 5 : 6;
+          }
+
+          return items.canLayBombs() && !items.hasSuit(settings) && items.hasCount(PrimeItem.ENERGY_TANK, minimumEnergyTanks);
+        },
         'Fiery Shores (Tallon Elevator Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const suitReqsMinimum = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRunMinimal && items.hasCount(PrimeItem.ENERGY_TANK, 3) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           const suitReqs = items.hasSuit(settings) || (settings.tricks.suitlessMagmoorRun && items.hasCount(PrimeItem.ENERGY_TANK, 5) && items.has(PrimeItem.SPACE_JUMP_BOOTS));
