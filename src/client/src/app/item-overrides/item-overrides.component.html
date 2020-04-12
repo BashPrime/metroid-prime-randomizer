@@ -1,4 +1,8 @@
 <div [formGroup]="getFormGroup()">
+  <div clas="field">
+    <div class="control">Item Pool: <span [ngClass]="itemPoolTextStyling">{{ getItemPoolSize() }}</span> /
+      {{ ITEM_POOL_MAX_SIZE }}</div>
+  </div>
   <div class="field is-grouped">
     <div class="control">
       <div class="select is-small" style="margin-right: 0.5rem;" *ngIf="getAvailableItems().length">
@@ -24,7 +28,8 @@
         </header>
         <div class="card-content">
           <div class="field" *ngIf="getItem(override.value.name).experimental">
-            <p class="has-text-danger">EXPERIMENTAL - You are not guaranteed to finish the game if you change this item's behavior.</p>
+            <p class="has-text-danger">EXPERIMENTAL - You are not guaranteed to finish the game if you change this
+              item's behavior.</p>
           </div>
           <div class="field">
             <label class="label is-small">State</label>

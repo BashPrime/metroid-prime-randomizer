@@ -383,14 +383,14 @@ export const details: SettingsDetails = {
   },
   suitlessMagmoorRun: {
     name: 'Suitless Magmoor Run',
-    description: `With fast movement, you can travel from the Magmoor East to the Magmoor West elevator (and vice versa) without a suit.
+    description: `With fast movement, you can travel from the Magmoor East to the Magmoor West elevator (and vice versa) without a suit. This does not open up suitless item checks in Magmoor.
 
-    This trick expects you to have 5 Energy Tanks if you have Space Jump, 6 tanks without Space Jump.`,
+    This trick expects you to have 5 Energy Tanks if you have Space Jump, or 6 tanks without it.`,
     difficulty: Difficulty.HARD
   },
   suitlessMagmoorRunMinimal: {
     name: 'Suitless Magmoor Run - Minimum Requirements',
-    description: `Same as Suitless Magmoor Run, but expects you to have 3 Energy Tanks with Space Jump, 4 without.
+    description: `Same as Suitless Magmoor Run, but expects you to have 3 Energy Tanks with Space Jump, or 4 tanks without it.
 
     This trick is extremely difficult and is not recommended for beginners.`,
     difficulty: Difficulty.INSANE

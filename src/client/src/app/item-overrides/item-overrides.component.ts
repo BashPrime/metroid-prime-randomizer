@@ -23,6 +23,7 @@ interface Item {
 export class ItemOverridesComponent extends SettingsSection implements OnInit {
   selectedAvailableItem: Item;
   private formArray: FormArray;
+  private globalFormGroup: FormGroup;
   private fb: FormBuilder = new FormBuilder();
   private items: Item[] = [
     { name: PrimeItem.MISSILE_LAUNCHER, maximum: 1 },
@@ -49,8 +50,11 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     { name: PrimeItem.FLAMETHROWER, maximum: 1 },
     { name: PrimeItem.ENERGY_TANK, maximum: 14, isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] },
     { name: PrimeItem.MISSILE_EXPANSION, maximum: 49, isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] },
-    { name: PrimeItem.POWER_BOMB_EXPANSION, maximum: 4 , isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] }
+    { name: PrimeItem.POWER_BOMB_EXPANSION, maximum: 4, isExpansion: true, exclude: [ItemOverrides.STATES.vanilla] }
   ];
+
+  // Constants
+  readonly ITEM_POOL_MAX_SIZE = 100;
 
   constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
@@ -58,6 +62,7 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
 
   ngOnInit() {
     this.formArray = this.controlContainer.control.get('itemOverrides') as FormArray;
+    this.globalFormGroup = this.controlContainer.control as FormGroup;
     this.assignFirstAvailableItem();
   }
 
@@ -129,6 +134,41 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
 
     // Otherwise, all other combinations are acceptable
     return true;
+  }
+
+  getItemPoolSize(): number {
+    const activeOverrides = this.formArray.value as ItemOverride[];
+    let itemPoolSize = 0;
+
+    // Everything is shuffled except for scan visor
+    for (let item of this.items) {
+      const override = activeOverrides.find(overrideItem => overrideItem.name === item.name);
+
+      if (override && override.state === ItemOverrides.STATES.shuffled) {
+        itemPoolSize += override.count;
+      } else if (!override && item.name !== PrimeItem.SCAN_VISOR) {
+        itemPoolSize += item.maximum;
+      }
+    }
+
+    // Handle artifacts
+    const artifactChoices = this.getChoices('goal');
+    switch (this.globalFormGroup.get('rules').get('goal').value) {
+      case 'artifact-collection':
+        itemPoolSize += this.globalFormGroup.get('rules').get('goalArtifacts').value;
+        break;
+      case 'all-bosses':
+        itemPoolSize += 3;
+        break;
+    }
+
+    return itemPoolSize;
+  }
+
+  get itemPoolTextStyling(): object {
+    return {
+      'has-text-danger': this.getItemPoolSize() > this.ITEM_POOL_MAX_SIZE
+    };
   }
 
   private assignFirstAvailableItem(): void {
