@@ -11,9 +11,6 @@ import { PrimeItem } from '../../enums/primeItem';
 export function setRules(world: PrimeWorld): void {
   const locations = world.getLocations();
 
-  // Set the root node of the world graph
-  world.setRootRegion(world.getRegionByKey('Root'));
-
   // Set excluded locations
   for (let key of world.getSettings().excludeLocations.toArray()) {
     locations.getLocationByKey(key).setExcluded(true);
@@ -30,9 +27,12 @@ export function setRules(world: PrimeWorld): void {
     locations.getLocationByKey(PrimeLocation.HIVE_TOTEM).setItem(missileLauncher);
     world.getItemPool().remove(missileLauncher);
   }
+
+  // Pre-fill Chozo Ruins randomly from 0-26 items to balance the logic
+  prefillChozoWithJunk(world);
 }
 
-export function prefillChozoWithJunk(world: PrimeWorld): void {
+function prefillChozoWithJunk(world: PrimeWorld): void {
   const rng = world.getRng();
   const baseItemPool = world.getItemPool();
   const junkItemPool = baseItemPool.shuffle(rng).filter((item: Item) => item.getPriority() === ItemPriority.EXTRA);
