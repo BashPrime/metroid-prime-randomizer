@@ -1,6 +1,6 @@
 # Metroid Prime Randomizer
 
-This application is an item randomizer for the video game Metroid Prime, powered by [Angular](https://angular.io), [TypeScript](https://www.typescriptlang.org), [Node.js](https://nodejs.org) and [Electron](https://electronjs.org).
+This application is an item randomizer for the video game Metroid Prime, powered by the [randomprime patcher](https://github.com/aprilwade/randomprime), [Angular](https://angular.io), [TypeScript](https://www.typescriptlang.org), [Node.js](https://nodejs.org) and [Electron](https://electronjs.org).
 
 [Visit website](https://randomizer.metroidprime.run)
 
