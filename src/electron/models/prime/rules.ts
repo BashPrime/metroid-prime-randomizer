@@ -1,16 +1,19 @@
 import { PrimeWorld } from './world';
 import { primeLocations } from './locations';
+import { primeItems } from './items';
 import { PrimeRegion } from '../../enums/primeRegion';
 import * as Utilities from '../../utilities';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { ItemPriority } from './items';
 import { Item } from '../item';
+import { PrimeItem } from '../../enums/primeItem';
 
 export function setRules(world: PrimeWorld): void {
+  const locations = world.getLocations();
+
   // Set the root node of the world graph
   world.setRootRegion(world.getRegionByKey('Root'));
 
-  const locations = world.getLocations();
   // Set excluded locations
   for (let key of world.getSettings().excludeLocations.toArray()) {
     locations.getLocationByKey(key).setExcluded(true);
@@ -19,6 +22,13 @@ export function setRules(world: PrimeWorld): void {
   // Automatically artifact temple from being in progression if goal is always open
   if (world.getSettings().goal === 'always-open') {
     locations.getLocationByKey(PrimeLocation.ARTIFACT_TEMPLE).setExcluded(true);
+  }
+
+  // If the starting area is Chozo Transport North, automatically put Missile Launcher in Hive Totem to ensure the seed can be completed
+  if (world.getStartingArea().id === 1) {
+    const missileLauncher = primeItems[PrimeItem.MISSILE_LAUNCHER];
+    locations.getLocationByKey(PrimeLocation.HIVE_TOTEM).setItem(missileLauncher);
+    world.getItemPool().remove(missileLauncher);
   }
 }
 
