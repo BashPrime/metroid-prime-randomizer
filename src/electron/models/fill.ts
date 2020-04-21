@@ -14,10 +14,12 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
   while (itemPool.size() > 0 && locations.size() > 0) {
     // Take next item out of the item pool before searching the world for available locations to ensure completeability
     const itemToPlace = itemPool.pop();
-    // world.searchRegions(itemPool);
 
     // Collect available placed items using the current item pool for accurate dependency checking
     const assumedItems = new PrimeItemCollection(world.collectItems(itemPool).toArray());
+
+    // Run one more search with our assumed items to get the most up-to-date region checks
+    const searchResults = world.searchRegions(assumedItems);
 
     // Using this for "can escape room" checking when potentially placing an item
     const assumedItemsWithItemToPlace = new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]);
@@ -26,12 +28,22 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
     const shuffledLocations = locations.shuffle(rng);
     let locationToFill: Location;
 
-    for (const location of shuffledLocations.toArray()) {
-      // Only fill if the location isn't excluded and we can fill it
-      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings) && location.canEscape(assumedItemsWithItemToPlace, settings)) {
+    // Iterate through each location and perform our checks
+    for (let location of shuffledLocations.toArray()) {
+      const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
+      const oppositeConnection = visitedRegion && visitedRegion.entryPoint ? visitedRegion.entryPoint.getOpposite() : null;
+
+      // If the location's encompassing region's entry point (when we did our search) is bidirectional, we perform additional checks for safety
+      // If we can't leave through the way we came in, then we move on to the next location.
+      // This is to handle special cases such as Ventilation Shaft where you can enter the room and can get stuck.
+      // For one-way connections, we don't perform the additional check.
+      if (oppositeConnection && !oppositeConnection.accessRule(assumedItemsWithItemToPlace, world.getSettings())) {
+        continue;
+      }
+
+      // Only fill if the location is empty, isn't excluded, and we can fill it
+      if (!location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, settings)) {
         locationToFill = location;
-        location.setItem(itemToPlace);
-        locations.remove(location);
         break;
       }
     }

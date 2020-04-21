@@ -26,8 +26,7 @@ describe('Fill', () => {
       primeItems[PrimeItem.SPACE_JUMP_BOOTS]
     ]);
 
-    expect(alcove.canFill(assumedItems, world.getSettings()) && alcove.canEscape(assumedItemsAfter, world.getSettings())).to.be.true;
-    expect(alcove.canFill(assumedItems, world.getSettings()) && alcove.canEscape(assumedItems, world.getSettings())).to.be.false;
+    expect(alcove.itemRule(assumedItems, world.getSettings())).to.be.true;
   });
 
   it('should fill Alcove (PONR: Allow Visible)', () => {
@@ -42,7 +41,7 @@ describe('Fill', () => {
       primeItems[PrimeItem.MORPH_BALL_BOMB]
     ]);
 
-    expect(alcove.canFill(assumedItems, world.getSettings())).to.be.true;
+    expect(alcove.itemRule(assumedItems, world.getSettings())).to.be.true;
   });
 
   it('should fill Alcove (PONR: Do Not Allow)', () => {
@@ -55,7 +54,7 @@ describe('Fill', () => {
       primeItems[PrimeItem.SPACE_JUMP_BOOTS]
     ]);
 
-    expect(alcove.canFill(assumedItems, world.getSettings())).to.be.true;
+    expect(alcove.itemRule(assumedItems, world.getSettings())).to.be.true;
   });
 
   it('should NOT fill Alcove (PONR: Do Not Allow)', () => {
@@ -70,6 +69,6 @@ describe('Fill', () => {
       primeItems[PrimeItem.MORPH_BALL_BOMB]
     ]);
 
-    expect(alcove.canFill(assumedItems, world.getSettings())).to.be.false;
+    expect(alcove.itemRule(assumedItems, world.getSettings())).to.be.false;
   });
 });

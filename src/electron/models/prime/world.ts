@@ -175,16 +175,15 @@ export class PrimeWorld extends World {
       myItems = myItems.merge(new PrimeItemCollection(startingItemsArray));
     }
 
-    // Get all item locations filled with items
-    const filledItemLocations = this.getLocations().filter(location => location.hasItem());
     let newItems = new PrimeItemCollection([]);
 
     do {
       // Get reachable regions using current items
-      this.searchRegions(myItems);
+      const searchResults = this.searchRegions(myItems);
+      const filledItemLocations = searchResults.getLocations().filter(location => location.hasItem());
 
-      const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
-        return location.canFill(myItems, this.settings) && location.canEscape(myItems, this.settings);
+      const searchLocations = new LocationCollection(filledItemLocations.filter(location => {
+        return location.itemRule(myItems, this.settings);
       }));
 
       const foundItems = new PrimeItemCollection(searchLocations.getItems().toArray());
@@ -216,25 +215,27 @@ export class PrimeWorld extends World {
     let myLocations = new LocationCollection([]);
     let newLocations = new LocationCollection([]);
 
-    // If the world has starting items, add to myItems
-    if (this.getStartingItems()) {
-      const startingItemsArray = mapToItemPool(this.getStartingItems());
-      myItems.merge(new PrimeItemCollection(startingItemsArray));
-    }
-
-    // Get all item locations filled with items
-    const filledItemLocations = this.getLocations().filter(location => location.hasItem());
-
     do {
       const itemLocationSphere = {};
 
       // Get reachable regions using current items
-      this.searchRegions(myItems);
+      const searchResults = this.searchRegions(myItems);
 
-      // Get all locations we can reach with our current items
-      const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
+      // Get all locations we can reach with our current items     
+      const searchLocations = new LocationCollection(searchResults.getLocations().filter(location => {
+        // Two checks:
+        // 1. Can we get the item in the location?
+        // 2. After getting the item, can we leave the region from where we entered? (assuming the connection is two-way)
+        //   - This is to hopefully validate checks such as Ventilation Shaft.
         const escapeItems = new PrimeItemCollection([...myItems.toArray(), location.getItem()]);
-        return location.canFill(myItems, this.settings) && location.canEscape(escapeItems, this.settings);
+        const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
+        const oppositeConnection = visitedRegion && visitedRegion.entryPoint ? visitedRegion.entryPoint.getOpposite() : null;
+
+        if (oppositeConnection && !oppositeConnection.accessRule(escapeItems, this.settings)) {
+          return false;
+        }
+
+        return location.itemRule(myItems, this.settings);
       }));
 
       // Update myItems state (this includes any items previously reached)
@@ -253,7 +254,7 @@ export class PrimeWorld extends World {
       myLocations = searchLocations.merge(oldLocations);
 
       /*
-       * In terms of filling the item sphere, we're interesetd in the new locations
+       * In terms of filling the item sphere, we're interested in the new locations
        *
        * Our criteria for filling the location sphere is as follows:
        * - The item has an item priority of Progression or higher

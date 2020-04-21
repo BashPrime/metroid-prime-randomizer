@@ -5,6 +5,7 @@ import { RegionCollection } from './regionCollection';
 import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
 import { MersenneTwister } from '../mersenneTwister';
+import { SearchResults, VisitedRegionWrapper } from './searchResults';
 
 /**
  * Generic representation of a Metroid Prime-like game world.
@@ -17,7 +18,6 @@ export class World {
   protected itemPool: ItemCollection;
   protected cachedLocations: LocationCollection;
   protected rootRegion: Region;
-  protected cachedVisitedRegions: { [key: string]: boolean } = {};
 
   constructor(settings: RandomizerSettings) {
     this.settings = settings;
@@ -143,24 +143,22 @@ export class World {
   }
 
   /**
-   * Traverses the game world via a graph search and marks which regions are accessible
-   * with the player's given inventory of items.
+   * Traverses the game world via graph search, marking which regions can be visited with the given items,
+   * and returns the results of the search.
    * 
-   * @param items The player's assumed item inventory.
+   * @param items The player's assumed item inventory when running the search.
+   * @param startingRegion The region to start the search in. Defaults to the root region if not provided.
    */
-  searchRegions(items: ItemCollection): void {
-    this.cachedVisitedRegions = {};
-    // Mark all regions as not visited by default (false)
-    for (const region of this.getRegions().toArray()) {
-      this.cachedVisitedRegions[region.getName()] = false;
-    }
+  searchRegions(items: ItemCollection, startingRegion: Region = this.rootRegion): SearchResults {
+    // Visited regions object
+    const visited: VisitedRegionWrapper[] = [];
 
     // Use an array instance as a queue
     const regionQueue: Region[] = [];
 
     // Mark the starting region as visited and enqueue it
-    this.cachedVisitedRegions[this.rootRegion.getName()] = true;
-    regionQueue.push(this.rootRegion);
+    visited.push({ region: startingRegion, entryPoint: null });
+    regionQueue.push(startingRegion);
 
     while (regionQueue.length) {
       // Dequeue a region.
@@ -173,62 +171,16 @@ export class World {
         const connectedRegion = exit.getConnectedRegion();
 
         // Check if the adjacent region can be visited
-        if (exit.accessRule(items, this.settings)) {
-          // Else, continue BFS
-          if (!this.cachedVisitedRegions[connectedRegion.getName()]) {
-            this.cachedVisitedRegions[connectedRegion.getName()] = true;
-            regionQueue.push(connectedRegion);
-          }
+        if (exit.accessRule(items, this.settings)
+          && !visited.find(visitedItem => visitedItem.region.getName() === connectedRegion.getName())) {
+          visited.push({ region: connectedRegion, entryPoint: exit });
+          regionQueue.push(connectedRegion);
         }
+        // Else, continue BFS
       }
     }
-  }
 
-  /**
-   * Returns true if the destination region can be reached.
-   * 
-   * @param destination The destination region being checked.
-   * @param items The player's assumed item collection.
-   * @param forceSearch Forces searchRegions() to be run if true.
-   * @returns false if no root region is set.
-   */
-  isReachable(destination: Region, items: ItemCollection, forceSearch?: boolean): boolean {
-    // Immediately return false if root region is not set
-    if (!this.rootRegion) {
-      return false;
-    }
-
-    // Run search if it hasn't been run already, or forced
-    if (forceSearch || Object.keys(this.cachedVisitedRegions).length === 0) {
-      this.searchRegions(items);
-    }
-
-    return this.cachedVisitedRegions[destination.getName()];
-  }
-
-  /**
-   * Returns all unfilled item locations that can be filled.
-   * @param items The player's assumed inventory of items.
-   * @param forceSearch Forces searchRegions() to be run if true.
-   */
-  getFillableLocations(items: ItemCollection, forceSearch?: boolean): LocationCollection {
-    let locations: Location[] = [];
-
-    if (forceSearch || Object.keys(this.cachedVisitedRegions).length === 0) {
-      this.searchRegions(items);
-    }
-
-    const visitedRegions = Object.keys(this.cachedVisitedRegions).filter(key => this.cachedVisitedRegions[key] === true);
-
-    for (const key of visitedRegions) {
-      const fillableLocations = this.getRegionByKey(key).getLocations().toArray().filter(location =>
-        location.canFill(items, this.settings, true)
-      );
-
-      locations = locations.concat(fillableLocations);
-    }
-
-    return new LocationCollection(locations);
+    return new SearchResults({ visitedRegions: visited, items: items });
   }
 
   /**

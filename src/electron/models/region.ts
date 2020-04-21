@@ -107,12 +107,4 @@ export class Region {
   setWorld(world: World) {
     this.world = world;
   }
-
-  /**
-   * Returns true if this region can be reached by the player.
-   * @param items The player's assumed inventory of items.
-   */
-  canReach(items: ItemCollection): boolean {
-    return this.world.isReachable(this, items);
-  }
 }

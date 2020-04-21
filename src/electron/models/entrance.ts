@@ -106,8 +106,4 @@ export class Entrance {
     this.parentRegion = null;
     return previouslyConnected;
   }
-
-  canReach(items: ItemCollection, settings: RandomizerSettings, noParent: boolean = false): boolean {
-    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items));
-  }
 }

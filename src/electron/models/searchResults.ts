@@ -2,22 +2,21 @@ import { Region } from './region';
 import { Entrance } from './entrance';
 import { ItemCollection } from './itemCollection';
 import { Location } from './location';
-import { Item } from './item';
 
 export class SearchResults {
-  private visited: VisitedRegionWrapper[] = [];
-  private items: ItemCollection = undefined;
+  private visitedRegions: VisitedRegionWrapper[] = [];
+  private items: ItemCollection = new ItemCollection([]);
 
-  constructor(args: SearchArgs) {
+  constructor(args?: SearchArgs) {
     if (args) {
       Object.assign(this, args);
     }
   }
 
-  collectLocations(): Location[] {
+  getLocations(): Location[] {
     let locations: Location[] = [];
 
-    for (let item of this.visited) {
+    for (let item of this.visitedRegions) {
       const region = item.region;
       if (region.getLocations().size()) {
         locations = locations.concat(region.getLocations().toArray());
@@ -27,26 +26,16 @@ export class SearchResults {
     return locations;
   }
 
-  collectItems(): Item[] {
-    let items: Item[] = [];
-
-    for (let item of this.visited) {
-      const region = item.region;
-      if (region.getLocations().size()) {
-        const locationItems = region.getLocations().toArray().filter(location => location.hasItem()).map(location => location.getItem());
-        items = items.concat(locationItems);
-      }
-    }
-
-    return items;
+  getVisitedRegions(): VisitedRegionWrapper[] {
+    return this.visitedRegions;
   }
 
-  getVisited(): VisitedRegionWrapper[] {
-    return this.visited;
+  setVisitedRegions(visited: VisitedRegionWrapper[]): void {
+    this.visitedRegions = visited;
   }
 
-  setVisited(visited: VisitedRegionWrapper[]): void {
-    this.visited = visited;
+  getVisitedRegion(region: Region): VisitedRegionWrapper {
+    return this.visitedRegions.find(visitedItem => visitedItem.region.getName() === region.getName());
   }
 
   getItems(): ItemCollection {
@@ -59,7 +48,7 @@ export class SearchResults {
 }
 
 export interface SearchArgs {
-  visited: VisitedRegionWrapper[];
+  visitedRegions: VisitedRegionWrapper[];
   items: ItemCollection;
 }
 
