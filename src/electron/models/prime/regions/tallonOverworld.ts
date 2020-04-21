@@ -20,7 +20,8 @@ export function tallonOverworld(): RegionObject[] {
           return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tallon Canyon': () => true,
-        'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles()
+        'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Frigate Crash Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)
       }
     },
     {

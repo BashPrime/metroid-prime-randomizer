@@ -19,6 +19,7 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Ruined Nursery': () => true,
+        'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.hasMissiles(),
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
         'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const tricksReqs = settings.tricks.mainPlazaItemsOnlySpaceJump || settings.tricks.enableMainPlazaLedgeDoor;
