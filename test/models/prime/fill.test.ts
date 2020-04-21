@@ -1,13 +1,11 @@
 import { expect } from 'chai';
 import 'mocha';
 
+import { setUpWorld }from '../../utils';
 import { PrimeRandomizerSettings } from '../../../src/electron/models/prime/randomizerSettings';
 import { PointOfNoReturnItems } from '../../../src/electron/enums/pointOfNoReturnItems';
 import { PrimeLocation } from '../../../src/electron/enums/primeLocation';
 import { PrimeItem } from '../../../src/electron/enums/primeItem';
-import { PrimeWorld } from '../../../src/electron/models/prime/world';
-import { setRules } from '../../../src/electron/models/prime/rules';
-import { setEntrances } from '../../../src/electron/models/prime/entranceShuffle';
 import { PrimeItemCollection } from '../../../src/electron/models/prime/itemCollection';
 import { primeItems } from '../../../src/electron/models/prime/items';
 
@@ -75,11 +73,3 @@ describe('Fill', () => {
     expect(alcove.canFill(assumedItems, world.getSettings())).to.be.false;
   });
 });
-
-function setUpWorld(settings: PrimeRandomizerSettings) {
-  const world = new PrimeWorld(settings);
-  world.loadRegions();
-  setRules(world);
-  setEntrances(world);
-  return world;
-}
