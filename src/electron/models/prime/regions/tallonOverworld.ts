@@ -67,6 +67,7 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Tallon Canyon',
       exits: {
+        'Landing Site': () => true,
         'Root Cave': (items: PrimeItemCollection) => items.hasMissiles(),
         [Elevator.TALLON_NORTH]: () => true
       }
