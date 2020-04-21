@@ -140,8 +140,7 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Observatory',
       locations: {
         [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = (items.canBoost() && items.canLayBombs()) || settings.tricks.climbObservatoryWithoutBoost;
-          return boostReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
