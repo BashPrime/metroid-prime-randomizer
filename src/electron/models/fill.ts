@@ -41,8 +41,8 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
         continue;
       }
 
-      // Only fill if the location is empty, isn't excluded, and we can fill it
-      if (!location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, settings)) {
+      // Only fill if we can visit the region, and if the location is empty, isn't excluded, and we can fill it
+      if (visitedRegion && !location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, settings)) {
         locationToFill = location;
         break;
       }

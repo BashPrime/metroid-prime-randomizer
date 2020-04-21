@@ -235,7 +235,7 @@ export class PrimeWorld extends World {
           return false;
         }
 
-        return location.itemRule(myItems, this.settings);
+        return visitedRegion && location.itemRule(myItems, this.settings);
       }));
 
       // Update myItems state (this includes any items previously reached)
