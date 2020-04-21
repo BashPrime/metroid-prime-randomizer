@@ -425,7 +425,7 @@ export const details: SettingsDetails = {
   wateryHallUnderwaterFlaahgraSkip: {
     name: 'Watery Hall (Underwater) Flaahgra Skip',
     description: `You can obtain the underwater Watery Hall item before fighting Flaaghra, making it possible for the Morph Ball Bomb to be placed here.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.TRIVIAL
   },
   wateryHallUnderwaterSlopeJump: {
     name: 'Watery Hall (Underwater) Slope Jump',
