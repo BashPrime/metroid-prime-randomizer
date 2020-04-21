@@ -155,6 +155,7 @@ export function chozoRuins(): RegionObject[] {
         }
       },
       exits: {
+        'Arboretum': (items: PrimeItemCollection) => items.hasMissiles(),
         'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           return (settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2)) || items.hasSuit(settings);
         },
