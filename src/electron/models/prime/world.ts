@@ -215,18 +215,21 @@ export class PrimeWorld extends World {
     let myLocations = new LocationCollection([]);
     let newLocations = new LocationCollection([]);
 
+    // Get all item locations filled with items
+    const filledItemLocations = this.getLocations().filter(location => location.hasItem());
+
     do {
       const itemLocationSphere = {};
 
       // Get reachable regions using current items
       const searchResults = this.searchRegions(myItems);
 
-      // Get all locations we can reach with our current items     
-      const searchLocations = new LocationCollection(searchResults.getLocations().filter(location => {
+      // Get all locations we can reach with our current items
+      const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
         // Two checks:
         // 1. Can we get the item in the location?
         // 2. After getting the item, can we leave the region from where we entered? (assuming the connection is two-way)
-        //   - This is to hopefully validate checks such as Ventilation Shaft.
+        // This is to validate checks such as Ventilation Shaft.
         const escapeItems = new PrimeItemCollection([...myItems.toArray(), location.getItem()]);
         const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
         const oppositeConnection = visitedRegion && visitedRegion.entryPoint ? visitedRegion.entryPoint.getOpposite() : null;
