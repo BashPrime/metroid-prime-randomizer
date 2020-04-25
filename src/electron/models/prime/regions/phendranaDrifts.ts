@@ -261,7 +261,11 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Hunter Cave',
       exits: {
-        'Gravity Chamber': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Gravity Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const gravityReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.GRAVITY_SUIT);
+
+          return gravityReqs && items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         'Frost Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReqs = settings.tricks.removePhendranaDepthsGrappleReqs || items.has(PrimeItem.GRAPPLE_BEAM);
           return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && grappleReqs
@@ -272,7 +276,7 @@ export function phendranaDrifts(): RegionObject[] {
     },
     {
       name: 'Gravity Chamber',
-      locations: {
+    locations: {
         [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grapplePlasmaReqs = settings.tricks.gravityChamberLedgeItemWithoutGrapplePlasma || (items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.PLASMA_BEAM));

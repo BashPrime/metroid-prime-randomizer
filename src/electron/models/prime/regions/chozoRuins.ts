@@ -41,9 +41,7 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Main Plaza': () => true,
-        'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
-          // missiles and morph ball to handle coming through vault first
-          (items.hasMissiles() && items.has(PrimeItem.MORPH_BALL)) || settings.tricks.enableMainPlazaLedgeDoor
+        'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.enableMainPlazaLedgeDoor
       }
     },
     {

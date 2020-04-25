@@ -128,7 +128,7 @@ export function tallonOverworld(): RegionObject[] {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return thermalReqs && items.has(PrimeItem.WAVE_BEAM);
         },
-        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
       }
     },
     {
