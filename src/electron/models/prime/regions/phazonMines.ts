@@ -20,10 +20,14 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SCAN_VISOR),
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
-
-          return spiderReqs && items.canLayBombs() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          const baseReqs = items.canLayBombs() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
             && items.has(PrimeItem.ICE_BEAM);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
         },
         [Elevator.MINES_EAST]: (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
           && items.has(PrimeItem.SPACE_JUMP_BOOTS)
@@ -57,10 +61,14 @@ export function phazonMines(): RegionObject[] {
       },
       exits: {
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
-
-          return spiderReqs && items.canBoost() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
+          const baseReqs = items.canBoost() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
         },
         'Mine Security Station': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
       }
@@ -107,8 +115,13 @@ export function phazonMines(): RegionObject[] {
       name: 'Elite Control',
       exits: {
         'Ventilation Shaft': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canBoost();
-          return boostReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+          const baseReqs = items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canBoost() && baseReqs;
         },
         'Phazon Processing Center': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM),
         'Elite Control Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
@@ -259,8 +272,13 @@ export function phazonMines(): RegionObject[] {
       exits: {
         [Elevator.MAGMOOR_SOUTH_MINES]: () => true,
         'Phazon Processing Center': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
-          return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          const baseReqs = items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
         }
       }
     }

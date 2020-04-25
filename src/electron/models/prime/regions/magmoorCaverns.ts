@@ -57,8 +57,11 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Fiery Shores (Warrior Shrine Tunnel)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
-          return bombReqs && items.canLayPowerBombs();
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return items.canLayPowerBombs();
+          }
+
+          return items.canLayBombs() && items.canLayPowerBombs();
         },
         'Monitor Station': () => true
       }
@@ -77,8 +80,11 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {},
       exits: {
         'Shore Tunnel (Lava Pit)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          return items.canLayPowerBombs() && sjReqs;
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return items.canLayPowerBombs();
+          }
+
+          return items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Fiery Shores (Shore Tunnel Side)': () => true,
         'Monitor Station': () => true
@@ -129,9 +135,14 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Geothermal Core',
       exits: {
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const plasmaReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.PLASMA_BEAM);
+          const baseReqs = items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
           const grappleSpiderReqs = settings.tricks.plasmaProcessingItemWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
-          return plasmaReqs && grappleSpiderReqs && items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
+
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return grappleSpiderReqs && baseReqs;
+          }
+
+          return items.has(PrimeItem.PLASMA_BEAM) && grappleSpiderReqs && baseReqs;
         },
         'Magmoor Workstation': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Twin Fires': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
@@ -160,7 +171,13 @@ export function magmoorCaverns(): RegionObject[] {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         // OOB only
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return settings.tricks.plasmaProcessingFromMagmoorWorkstationOob && items.canWallcrawl(settings) && items.has(PrimeItem.ICE_BEAM);
+          const baseReqs = settings.tricks.plasmaProcessingFromMagmoorWorkstationOob && items.canWallcrawl(settings) && items.has(PrimeItem.ICE_BEAM);
+
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return baseReqs;
+          }
+
+          return items.has(PrimeItem.PLASMA_BEAM) && baseReqs;
         }
       }
     },

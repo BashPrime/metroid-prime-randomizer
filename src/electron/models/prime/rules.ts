@@ -1,12 +1,8 @@
 import { PrimeWorld } from './world';
 import { primeLocations } from './locations';
-import { primeItems } from './items';
 import { PrimeRegion } from '../../enums/primeRegion';
 import * as Utilities from '../../utilities';
 import { PrimeLocation } from '../../enums/primeLocation';
-import { ItemPriority } from './items';
-import { Item } from '../item';
-import { PrimeItem } from '../../enums/primeItem';
 
 export function setRules(world: PrimeWorld): void {
   const locations = world.getLocations();

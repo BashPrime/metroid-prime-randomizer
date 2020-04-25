@@ -15,9 +15,13 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          const normalReqs = sjReqs && items.canBoost() && items.canLayBombs(); // sj for blind item check
-          return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const normalReqs = items.canBoost() && items.canLayBombs();
+
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          }
+
+          return items.has(PrimeItem.SPACE_JUMP_BOOTS) && normalReqs;
         },
         'Tallon Canyon': () => true,
         'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles(),
@@ -158,8 +162,13 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Great Tree Hall (Lower)',
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const thermalReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.has(PrimeItem.THERMAL_VISOR);
-          return thermalReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+          const baseReqs = items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.has(PrimeItem.THERMAL_VISOR) && baseReqs;
         },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [Elevator.TALLON_SOUTH_MINES]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)

@@ -41,9 +41,14 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Chapel of the Elders',
       locations: {
         [PrimeLocation.CHAPEL_OF_THE_ELDERS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const waveBeamReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.WAVE_BEAM);
           const infiniteSpeedReqs = settings.tricks.waveSunOobWallcrawlWithIS && items.hasMissiles() && items.canWallcrawl(settings) && items.canInfiniteSpeed();
-          return waveBeamReqs && ((items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)) || infiniteSpeedReqs);
+          const baseReqs = (items.hasMissiles() || items.canLayBombs() || items.has(PrimeItem.PLASMA_BEAM)) || infiniteSpeedReqs;
+
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return baseReqs;
+          }
+
+          return items.has(PrimeItem.WAVE_BEAM) && baseReqs;
         }
       },
       exits: {
@@ -100,18 +105,20 @@ export function phendranaDrifts(): RegionObject[] {
         'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const boostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
-          return boostSpiderReqs && thermalReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const baseReqs = boostSpiderReqs && thermalReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
         }
       }
     },
     {
       name: 'Quarantine Cave',
       locations: {
-        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const visibleReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canSpider();
-          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return visibleReqs && thermalReqs;
-        },
+        [PrimeLocation.QUARANTINE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR),
         [PrimeLocation.QUARANTINE_MONITOR]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReq = settings.tricks.quarantineMonitorDash || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReq && items.canSpider(); // requiring spider ball for quality of life/softlock protection
@@ -157,12 +164,22 @@ export function phendranaDrifts(): RegionObject[] {
       exits: {
         'Research Lab Aether': (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR) && items.has(PrimeItem.WAVE_BEAM),
         'Control Tower (Collapsed Tower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
-          return bombReqs && items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const baseReqs = items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canLayBombs() && baseReqs;
         },
         'Observatory': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const visibleReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || (items.canBoost() && items.canLayBombs());
-          return visibleReqs && items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const baseReqs = items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM);
+
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return baseReqs;
+          }
+
+          return items.canBoost() && items.canLayBombs() && baseReqs;
         }
       }
     },
@@ -218,8 +235,11 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Frozen Pike': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
-          return bombReqs && items.has(PrimeItem.WAVE_BEAM);
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return items.has(PrimeItem.WAVE_BEAM);
+          }
+
+          return items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM);
         },
         [Elevator.PHENDRANA_SOUTH]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)
       }
@@ -262,9 +282,13 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Hunter Cave',
       exits: {
         'Gravity Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const gravityReqs = settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW || items.has(PrimeItem.GRAVITY_SUIT);
+          const baseReqs = items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
 
-          return gravityReqs && items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
+            return baseReqs;
+          }
+
+          return items.has(PrimeItem.GRAVITY_SUIT) && baseReqs;
         },
         'Frost Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReqs = settings.tricks.removePhendranaDepthsGrappleReqs || items.has(PrimeItem.GRAPPLE_BEAM);
