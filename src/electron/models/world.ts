@@ -145,7 +145,7 @@ export class World {
   /**
    * Traverses the game world via graph search, marking which regions can be visited with the given items,
    * and returns the results of the search.
-   * 
+   *
    * @param items The player's assumed item inventory when running the search.
    * @param startingRegion The region to start the search in. Defaults to the root region if not provided.
    */

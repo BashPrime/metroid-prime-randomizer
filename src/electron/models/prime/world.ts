@@ -176,13 +176,23 @@ export class PrimeWorld extends World {
     }
 
     let newItems = new PrimeItemCollection([]);
+    let lastRegionVisited: Region;
 
     do {
       // Get reachable regions using current items
-      const searchResults = this.searchRegions(myItems);
+      const searchResults = this.searchRegions(myItems, lastRegionVisited);
+
+      // Save last visited region; the search in the next iteration of the loop will start there
+      const wrapperLastRegionVisited = searchResults.getLastVisitedRegion();
+
+      if (wrapperLastRegionVisited) {
+        lastRegionVisited = wrapperLastRegionVisited.region;
+      }
+
       const filledItemLocations = searchResults.getLocations().filter(location => location.hasItem());
 
       const searchLocations = new LocationCollection(filledItemLocations.filter(location => {
+
         return location.itemRule(myItems, this.settings);
       }));
 
@@ -201,7 +211,7 @@ export class PrimeWorld extends World {
    *
    * This function is similar to collectItems(), but instead explores the world and returns the order of items it obtains.
    */
-  getPlaythrough(): { [key: string]: string }[] {
+  getPlaythrough(): object[] {
     const playthrough = [];
     let myItems = new PrimeItemCollection([]);
 
@@ -210,6 +220,9 @@ export class PrimeWorld extends World {
     if (this.getStartingItems()) {
       startingItems = new PrimeItemCollection(mapToItemPool(this.getStartingItems()));
       myItems = myItems.merge(startingItems);
+
+      // Make the starting items the first in the item sphere
+      playthrough.push({ ['Starting Items']: startingItems.toArray().map(item => item.getName()) });
     }
 
     let myLocations = new LocationCollection([]);
@@ -226,46 +239,24 @@ export class PrimeWorld extends World {
 
       // Get all locations we can reach with our current items
       const searchLocations = new LocationCollection(filledItemLocations.toArray().filter(location => {
-        // Two checks:
-        // 1. Can we get the item in the location?
-        // 2. After getting the item, can we leave the region from where we entered? (assuming the connection is two-way)
-        // This is to validate checks such as Ventilation Shaft.
-        const escapeItems = new PrimeItemCollection([...myItems.toArray(), location.getItem()]);
+        /*
+         * Two checks:
+         *
+         * 1. Can we get the item in the location?
+         * 2. After getting the item, can we leave the region from where we entered? (assuming the connection is two-way)
+         * This is to validate checks such as Ventilation Shaft.
+         *
+         */
         const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
-        const oppositeConnection = visitedRegion && visitedRegion.entryPoint ? visitedRegion.entryPoint.getOpposite() : null;
 
-        if (oppositeConnection && !oppositeConnection.accessRule(escapeItems, this.settings)) {
-          return false;
-        }
-
-        return visitedRegion && location.itemRule(myItems, this.settings);
-      }));
-
-      // Update myItems state (this includes any items previously reached)
-      myItems = new PrimeItemCollection(searchLocations.getItems().toArray());
-
-      // Don't lose starting items if they exist
-      if (startingItems) {
-        myItems = myItems.merge(startingItems);
-      }
-
-      // First, get the old (already visited locations) out of the search locations
-      const oldLocations = myLocations.diff(searchLocations);
-      // Next, get the new locations out of the search locations
-      newLocations = searchLocations.diff(myLocations);
-      // Last, to maintain the search state, update myLocations by merging search and oldLocations
-      myLocations = searchLocations.merge(oldLocations);
-
-      /*
-       * In terms of filling the item sphere, we're interested in the new locations
-       *
-       * Our criteria for filling the location sphere is as follows:
-       * - The item has an item priority of Progression or higher
-       *   OR
-       * - The item is an Item or Artifact type
-       */
-      const newLocationsWithSphereItems = newLocations.toArray().filter(location => {
-        // We have already filtered out locations that don't have items, so no need to check hasItem() here
+        /*
+         * In terms of filling the item sphere, we're interested in the new locations
+         *
+         * Our criteria for filling the location sphere is as follows:
+         * - The item has an item priority of Progression or higher
+         *   OR
+         * - The item is an Item or Artifact type
+         */
         const item = location.getItem();
         let hasHighEnoughItemPriority: boolean;
         let isCorrectItemType: boolean;
@@ -288,10 +279,39 @@ export class PrimeWorld extends World {
             isCorrectItemType = false;
         }
 
-        return hasHighEnoughItemPriority || isCorrectItemType;
-      });
+        // This is the first check, to see if we can reach the location and get to the item (and if the item should be displayed in the playthrough)
+        const canGetItemInLocation = visitedRegion && (hasHighEnoughItemPriority || isCorrectItemType) && location.itemRule(myItems, this.settings);
 
-      for (let location of newLocationsWithSphereItems) {
+        // No point in continuing the checks if the location isn't worth getting
+        if (!canGetItemInLocation) {
+          return false;
+        }
+
+        // If we can get the item, run a search starting at the location's parent region to check if we can safely leave after obtaining the item.
+        const searchResultsWithObtainedItem = this.searchRegions(new PrimeItemCollection([...myItems.toArray(), location.getItem()]), location.getParentRegion());
+
+        // Get the region we came from to enter the current location's parent region
+        const entryPointRegion = visitedRegion.entryPoint ? visitedRegion.entryPoint.getParentRegion() : null;
+
+        return !entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion);
+      }));
+
+      // Update myItems state (this includes any items previously reached)
+      myItems = new PrimeItemCollection(searchLocations.getItems().toArray());
+
+      // Don't lose starting items if they exist
+      if (startingItems) {
+        myItems = myItems.merge(startingItems);
+      }
+
+      // First, get the old (already visited locations) out of the search locations
+      const oldLocations = myLocations.diff(searchLocations);
+      // Next, get the new locations out of the search locations
+      newLocations = searchLocations.diff(myLocations);
+      // Last, to maintain the search state, update myLocations by merging search and oldLocations
+      myLocations = searchLocations.merge(oldLocations);
+
+      for (let location of newLocations.toArray()) {
         itemLocationSphere[location.getName()] = location.getItem().getName();
       }
 

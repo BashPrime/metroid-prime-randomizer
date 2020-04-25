@@ -38,6 +38,10 @@ export class SearchResults {
     return this.visitedRegions.find(visitedItem => visitedItem.region.getName() === region.getName());
   }
 
+  getLastVisitedRegion(): VisitedRegionWrapper {
+    return this.visitedRegions.length ? this.visitedRegions[this.visitedRegions.length - 1] : null;
+  }
+
   getItems(): ItemCollection {
     return this.items;
   }
