@@ -86,7 +86,7 @@ export function phazonMines(): RegionObject[] {
         },
         'Elite Control Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (items.canLayBombs() && items.canSpider()) || settings.tricks.climbOreProcessingWithoutGrappleSpider;
-          return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       }
     },
@@ -164,7 +164,8 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Fungal Hall Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SCAN_VISOR)
+          return xrayReqs && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+            && items.has(PrimeItem.SCAN_VISOR);
         },
         'Central Dynamo': (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
       }

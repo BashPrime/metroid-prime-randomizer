@@ -139,14 +139,14 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Observatory',
       locations: {
-        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          return items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection) => {
+          return items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
         'Control Tower': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const boostReqs = (items.canBoost() && items.canLayBombs()) || settings.tricks.climbObservatoryWithoutBoost;
-          return items.hasMissiles() && boostReqs && items.has(PrimeItem.WAVE_BEAM)
+          return items.hasMissiles() && boostReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SCAN_VISOR)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Research Lab Hydra': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
@@ -155,7 +155,7 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Control Tower',
       exits: {
-        'Research Lab Aether': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
+        'Research Lab Aether': (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR) && items.has(PrimeItem.WAVE_BEAM),
         'Control Tower (Collapsed Tower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const bombReqs = settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL || items.canLayBombs();
           return bombReqs && items.hasMissiles() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
