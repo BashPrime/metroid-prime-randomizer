@@ -77,14 +77,20 @@ export function setStartingItems(world: PrimeWorld): void {
     }
   }
 
-  // If scan visor override isn't present, make it a starting item by default.
-  // When no overrides are provided, scan visor is the only item that will be set as a starting item; all others will be shuffled.
-  if (!settings.itemOverrides[PrimeItem.SCAN_VISOR]) {
-    startingItems[PrimeItem.SCAN_VISOR] = items[PrimeItem.SCAN_VISOR].maximum;
-  }
+  let numberOfRandomStartingItems: number;
 
-  // Pick a random number of starting items from a min and max range
-  let numberOfRandomStartingItems = Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
+  // Validate random starting items
+  if (!(settings.randomStartingItems.minimum && settings.randomStartingItems.maximum)) {
+    numberOfRandomStartingItems = 0;
+  }
+  // If minimum >= maximum, automatically use the minimum value
+  else if (settings.randomStartingItems.minimum >= settings.randomStartingItems.maximum) {
+    numberOfRandomStartingItems = settings.randomStartingItems.minimum;
+  }
+  // Else, Pick a random number of starting items from a min and max range
+  else {
+    numberOfRandomStartingItems = Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
+  }
 
   // Add the given number of random starting items, using items list to choose what we're adding
   for (let i = 0; i < numberOfRandomStartingItems; i++) {
