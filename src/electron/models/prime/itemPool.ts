@@ -47,7 +47,10 @@ const vanillaUpgrades = {
   [PrimeLocation.RESEARCH_CORE]: PrimeItem.THERMAL_VISOR,
   [PrimeLocation.LIFE_GROVE_START]: PrimeItem.XRAY_VISOR,
   [PrimeLocation.ALCOVE]: PrimeItem.SPACE_JUMP_BOOTS,
-  [PrimeLocation.STORAGE_DEPOT_B]: PrimeItem.GRAPPLE_BEAM
+  [PrimeLocation.STORAGE_DEPOT_B]: PrimeItem.GRAPPLE_BEAM,
+  [PrimeLocation.TOWER_OF_LIGHT]: PrimeItem.WAVEBUSTER,
+  [PrimeLocation.SHORE_TUNNEL]: PrimeItem.ICE_SPREADER,
+  [PrimeLocation.STORAGE_DEPOT_A]: PrimeItem.FLAMETHROWER
 };
 
 const vanillaArtifacts = {
