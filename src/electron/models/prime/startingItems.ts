@@ -77,6 +77,12 @@ export function setStartingItems(world: PrimeWorld): void {
     }
   }
 
+  // If scan visor override isn't present, make it a starting item by default.
+  // When no overrides are provided, scan visor is the only item that will be set as a starting item; all others will be shuffled.
+  if (!settings.itemOverrides[PrimeItem.SCAN_VISOR]) {
+    startingItems[PrimeItem.SCAN_VISOR] = items[PrimeItem.SCAN_VISOR].maximum;
+  }
+
   let numberOfRandomStartingItems: number;
 
   // Validate random starting items
