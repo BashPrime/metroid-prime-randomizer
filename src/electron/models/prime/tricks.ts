@@ -27,6 +27,7 @@ export class Tricks extends SettingsFlags {
   furnaceSpiderTrackItemHBJ = false;
   furnaceSpiderTrackItemSpaceJumpBombs = false;
   gravityChamberLedgeItemWithoutGrapplePlasma = false;
+  greatTreeHallBarsSkip = false;
   hallOfTheEldersBombSlotsWithoutSpider = false;
   hallOfTheEldersItemsWithIS = false;
   iceBeamBeforeFlaahgraOobWallcrawl = false;

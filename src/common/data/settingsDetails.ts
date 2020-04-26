@@ -138,7 +138,9 @@ export const details: SettingsDetails = {
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
-    description: `Arbor Chamber can be entered through the ceiling by going out of bounds.`,
+    description: `Arbor Chamber can be entered through the ceiling from out of bounds.
+    
+    You can go out of bounds in Root Cave near the Arbor Chamber door, or in Gully.`,
     difficulty: Difficulty.NORMAL
   },
   boostThroughBombTunnels: {
@@ -268,6 +270,11 @@ export const details: SettingsDetails = {
   gravityChamberLedgeItemWithoutGrapplePlasma: {
     name: 'Gravity Chamber Ledge Item without Grapple, Plasma Beam',
     description: `You can R jump to reach the ledge without Grapple and Plasma Beam.`,
+    difficulty: Difficulty.NORMAL
+  },
+  greatTreeHallBarsSkip: {
+    name: 'Great Tree Hall - Bars Skip',
+    description: 'You can double bomb jump over the bars from both directions in Great Tree Hall.',
     difficulty: Difficulty.NORMAL
   },
   hallOfTheEldersBombSlotsWithoutSpider: {

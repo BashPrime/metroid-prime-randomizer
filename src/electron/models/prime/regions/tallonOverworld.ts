@@ -155,7 +155,9 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Life Grove Tunnel': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        [Elevator.TALLON_SOUTH_CHOZO]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        [Elevator.TALLON_SOUTH_CHOZO]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
+        // Only with bars skip
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.greatTreeHallBarsSkip && items.canLayBombs()
       }
     },
     {
@@ -170,7 +172,10 @@ export function tallonOverworld(): RegionObject[] {
 
           return items.has(PrimeItem.THERMAL_VISOR) && baseReqs;
         },
-        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = items.canBoost() || (settings.tricks.greatTreeHallBarsSkip && items.canLayBombs());
+          return boostReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         [Elevator.TALLON_SOUTH_MINES]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
