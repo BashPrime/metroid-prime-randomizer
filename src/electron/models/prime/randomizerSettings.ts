@@ -20,15 +20,16 @@ import { RandomizerForm } from '../../../common/models/randomizerForm';
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
   spoiler?: boolean;
-  elevatorShuffle?: boolean;
   skipFrigate?: boolean;
   skipHudPopups?: boolean;
   hideItemModels?: boolean;
+  enableMainPlazaLedgeDoor?: boolean;
   goal?: string;
   goalArtifacts?: number;
   artifactLocationHints?: boolean;
   heatProtection?: string;
   suitDamageReduction?: string;
+  elevatorShuffle?: boolean;
   startingArea?: number;
   randomStartingItems?: RandomStartingItems;
   pointOfNoReturnItems?: string;
@@ -40,15 +41,16 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
 export class PrimeRandomizerSettings extends RandomizerSettings {
   seed: string;
   spoiler: boolean = false;
-  elevatorShuffle: boolean = false;
   skipFrigate: boolean = true;
   skipHudPopups: boolean = true;
   hideItemModels: boolean = false;
+  enableMainPlazaLedgeDoor = false;
   goal: string = 'artifact-collection';
   goalArtifacts: number = 12;
   artifactLocationHints: boolean = true;
   heatProtection: string = 'any-suit';
   suitDamageReduction: string = 'default';
+  elevatorShuffle: boolean = false;
   startingArea: number = 20;
   randomStartingItems: RandomStartingItems = {
     minimum: 0,
@@ -284,6 +286,7 @@ export const settings = [
   new Checkbox({ name: 'spoiler', shared: true, default: true }),
   new Checkbox({ name: 'skipFrigate', shared: true, default: true }),
   new Checkbox({ name: 'skipHudPopups', shared: true, default: true }),
+  new Checkbox({ name: 'enableMainPlazaLedgeDoor', shared: true, default: false }),
   new Checkbox({ name: 'hideItemModels', shared: true, default: false }),
   new SelectOption({
     name: 'goal',

@@ -19,10 +19,7 @@ export function chozoRuins(): RegionObject[] {
         'Ruined Nursery': () => true,
         'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.hasMissiles(),
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const tricksReqs = settings.tricks.mainPlazaItemsOnlySpaceJump || settings.tricks.enableMainPlazaLedgeDoor;
-          return tricksReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-        },
+        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Main Plaza Grapple Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump
           && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         // OOB rooms
@@ -41,8 +38,7 @@ export function chozoRuins(): RegionObject[] {
         [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: () => true
       },
       exits: {
-        'Main Plaza': () => true,
-        'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.enableMainPlazaLedgeDoor
+        'Main Plaza': () => true
       }
     },
     {

@@ -20,7 +20,6 @@ export class Tricks extends SettingsFlags {
   crosswayItemFewerReqs = false;
   destroyBombCoversWithPowerBombs = false;
   eliteResearchInfiniteBoostClip = false;
-  enableMainPlazaLedgeDoor = false;
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   frigateCrashSiteItemWithoutGravitySuit = false;

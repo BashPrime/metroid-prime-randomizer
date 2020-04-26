@@ -30,6 +30,10 @@ export const details: SettingsDetails = {
     name: 'Hide Item Models',
     description: `All items will use the Metroid logo with a glitched texture. Their scan entries will also be removed.`
   },
+  enableMainPlazaLedgeDoor: {
+    name: 'Enable Main Plaza Ledge Door',
+    description: `This door is normally disabled from the Main Plaza side. This option enables it in the patcher, allowing for additional routing options.`,
+  },
   goal: {
     name: 'Goal',
     description: `This sets the requirements to access the Meta Ridley fight, and by extension the Impact Crater.
@@ -230,11 +234,6 @@ export const details: SettingsDetails = {
     name: 'Infinite Boost clip into Elite Research',
     description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
     difficulty: Difficulty.NORMAL
-  },
-  enableMainPlazaLedgeDoor: {
-    name: 'Enable Main Plaza Ledge Door',
-    description: `This door is normally disabled from the Main Plaza side. This option enables it in the patcher, allowing for additional routing options.`,
-    difficulty: Difficulty.TRIVIAL
   },
   exitQuarantineCaveRuinedCourtyardSlopeJump: {
     name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
