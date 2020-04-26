@@ -28,7 +28,7 @@ export function phendranaDrifts(): RegionObject[] {
       locations: {
         [PrimeLocation.CHOZO_ICE_TEMPLE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const infiniteSpeedReqs = (settings.tricks.chozoIceTempleItemWithIS && items.canInfiniteSpeed() && items.has(PrimeItem.WAVE_BEAM))
-            || (settings.tricks.chozoIceTempleItemWithIS && items.canWallcrawl(settings) && items.canInfiniteSpeed());
+            || (settings.tricks.waveSunOobWallcrawlWithIS && items.hasMissiles() && items.canWallcrawl(settings) && items.canInfiniteSpeed());
           return (items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || infiniteSpeedReqs;
         }
       },
@@ -92,8 +92,8 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Ruined Courtyard',
       locations: {
         [PrimeLocation.RUINED_COURTYARD]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost() || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
-          return boostReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const boostSpiderReqs = items.canBoost() || items.canSpider() || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+          return boostSpiderReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
@@ -105,7 +105,8 @@ export function phendranaDrifts(): RegionObject[] {
         'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const boostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
-          const baseReqs = boostSpiderReqs && thermalReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const baseReqs = !settings.excludeLocations['Quarantine Cave'] && boostSpiderReqs && thermalReqs && items.canFireSuperMissiles()
+            && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;
@@ -129,7 +130,7 @@ export function phendranaDrifts(): RegionObject[] {
           || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM)),
         'Ruined Courtyard': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = items.canSpider() || settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump;
-          return spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM);
+          return spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM); // in case we need to re-enter
         }
       }
     },
@@ -290,7 +291,7 @@ export function phendranaDrifts(): RegionObject[] {
 
           return items.has(PrimeItem.GRAVITY_SUIT) && baseReqs;
         },
-        'Frost Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        'Frozen Pike': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grappleReqs = settings.tricks.removePhendranaDepthsGrappleReqs || items.has(PrimeItem.GRAPPLE_BEAM);
           return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && grappleReqs
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
@@ -308,8 +309,8 @@ export function phendranaDrifts(): RegionObject[] {
         }
       },
       exits: {
-        'Hunter Cave': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
-        'Frost Cave': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Hunter Cave': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM),
+        'Frozen Pike': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.WAVE_BEAM)
       }
     },
     {
@@ -323,7 +324,7 @@ export function phendranaDrifts(): RegionObject[] {
       name: Elevator.PHENDRANA_SOUTH,
       exits: {
         [Elevator.MAGMOOR_SOUTH_PHENDRANA]: () => true,
-        'Quarantine Cave': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Transport Access (Phendrana)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (settings.tricks.phendranaTransportSouthToTransportAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.canSpider();
           return spiderReqs && items.has(PrimeItem.ICE_BEAM);

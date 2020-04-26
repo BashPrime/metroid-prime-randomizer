@@ -130,7 +130,7 @@ export function tallonOverworld(): RegionObject[] {
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return thermalReqs && items.has(PrimeItem.WAVE_BEAM);
+          return thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
       }
@@ -142,7 +142,7 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.ICE_BEAM),
-        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs()
+        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {

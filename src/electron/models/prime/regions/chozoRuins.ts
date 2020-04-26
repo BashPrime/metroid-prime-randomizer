@@ -176,7 +176,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Magma Pool',
       locations: {
         [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const infiniteSpeedReqs = settings.tricks.magmaPoolItemWithIS && items.canInfiniteSpeed();
+          const infiniteSpeedReqs = !settings.tricks.crossMagmaPoolSuitless && settings.tricks.magmaPoolItemWithIS && items.canInfiniteSpeed(); // need to have the suit requirement
           const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.has(PrimeItem.GRAPPLE_BEAM);
           return (grappleReqs && items.canLayPowerBombs()) || infiniteSpeedReqs;
         }

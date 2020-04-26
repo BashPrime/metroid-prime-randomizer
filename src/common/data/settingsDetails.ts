@@ -247,7 +247,7 @@ export const details: SettingsDetails = {
   },
   frigateCrashSiteItemWithoutGravitySuit: {
     name: 'Frigate Crash Site Item without Gravity Suit',
-    description: `You can scan dash, slope jump, or grapple to the underwater ledge where the item is.`,
+    description: `You can scan dash, slope jump, or grapple to the underwater ledge where the item is. You are expected to have either Space Jump or Grapple Beam.`,
     difficulty: Difficulty.EASY
   },
   furnaceAccessWithoutSpider: {

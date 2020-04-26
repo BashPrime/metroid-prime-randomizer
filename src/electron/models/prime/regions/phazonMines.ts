@@ -89,8 +89,8 @@ export function phazonMines(): RegionObject[] {
             && items.has(PrimeItem.ICE_BEAM)
         },
         'Elite Research': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.tricks.spiderlessShafts || items.canSpider();
-          return spiderReqs && (settings.tricks.eliteResearchInfiniteBoostClip && items.canBoost()) && items.has(PrimeItem.ICE_BEAM);
+          const spiderReqs = (settings.tricks.spiderlessShafts && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.canSpider();
+          return spiderReqs && settings.tricks.eliteResearchInfiniteBoostClip && items.canBoost() && items.has(PrimeItem.ICE_BEAM);
         },
         'Elite Control Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (items.canLayBombs() && items.canSpider()) || settings.tricks.climbOreProcessingWithoutGrappleSpider;
@@ -106,7 +106,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Elite Control': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.tricks.spiderlessShafts || items.canSpider();
+          const spiderReqs = (settings.tricks.spiderlessShafts && items.canLayBombs()) || items.canSpider();
           return spiderReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
