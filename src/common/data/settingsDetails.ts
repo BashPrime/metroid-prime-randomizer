@@ -143,6 +143,11 @@ export const details: SettingsDetails = {
     You can go out of bounds in Root Cave near the Arbor Chamber door, or in Gully.`,
     difficulty: Difficulty.NORMAL
   },
+  arboretumPuzzleSkip: {
+    name: 'Arboretum Puzzle Skip',
+    description: 'You can double bomb jump over the gate at the top of Arboretum to access Sunchamber without completing the scan puzzle.',
+    difficulty: Difficulty.EASY
+  },
   boostThroughBombTunnels: {
     name: 'Traverse Morph Ball Bomb tunnels with Boost Ball',
     description: `In morph tunnels that normally require single bomb jumps to traverse or access them, a properly-timed boost can be used instead.
@@ -274,7 +279,7 @@ export const details: SettingsDetails = {
   },
   greatTreeHallBarsSkip: {
     name: 'Great Tree Hall - Bars Skip',
-    description: 'You can double bomb jump over the bars from both directions in Great Tree Hall.',
+    description: 'You can double bomb jump over the bars from either side (the logic also expects this) in Great Tree Hall.',
     difficulty: Difficulty.NORMAL
   },
   hallOfTheEldersBombSlotsWithoutSpider: {

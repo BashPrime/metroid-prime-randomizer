@@ -4,6 +4,7 @@ import { getPaddedBitStringFromSettingsString } from '../../utilities';
 export class Tricks extends SettingsFlags {
   alcoveNoItems = false;
   arborChamberWithoutPlasma = false;
+  arboretumPuzzleSkip = false;
   boostThroughBombTunnels = false;
   chozoIceTempleItemWithIS = false;
   climbFrigateCrashSite = false;
