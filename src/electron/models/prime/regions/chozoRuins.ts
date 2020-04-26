@@ -13,8 +13,6 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.MAIN_PLAZA_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canBoost()
           || (settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS)),
-        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => (settings.tricks.mainPlazaItemsOnlySpaceJump || items.has(PrimeItem.GRAPPLE_BEAM))
-          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
@@ -25,6 +23,9 @@ export function chozoRuins(): RegionObject[] {
           const tricksReqs = settings.tricks.mainPlazaItemsOnlySpaceJump || settings.tricks.enableMainPlazaLedgeDoor;
           return tricksReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
+        'Main Plaza Grapple Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        // OOB rooms
         'Training Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           return settings.tricks.trainingChamberAndAccessOobWallcrawl && items.canWallcrawl(settings) && items.canLayBombs();
         },
@@ -42,6 +43,15 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Main Plaza': () => true,
         'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.enableMainPlazaLedgeDoor
+      }
+    },
+    {
+      name: 'Main Plaza Grapple Ledge',
+      locations: {
+        [PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE]: () => true
+      },
+      exits: {
+        'Main Plaza': () => true
       }
     },
     {
@@ -208,7 +218,8 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Training Chamber Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
-        'Main Plaza': (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost()
+        'Main Plaza': (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost(),
+        'Main Plaza Grapple Ledge': (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost() && items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
