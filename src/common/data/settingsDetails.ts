@@ -142,14 +142,14 @@ export const details: SettingsDetails = {
     description: `You can retrieve the item and leave Antechamber without Ice Beam by using a power bomb to open the door, moving to the very back of the room, and then back to the door.
     
     WARNING: If you fail the trick, you will softlock. It is strongly recommended to save at the nearby save station before attempting.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
     description: `Arbor Chamber can be entered through the ceiling from out of bounds.
     
     You can go out of bounds in Root Cave near the Arbor Chamber door, or in Gully.`,
-    difficulty: Difficulty.NORMAL
+    difficulty: Difficulty.OOB
   },
   arboretumPuzzleSkip: {
     name: 'Arboretum Puzzle Skip',
@@ -169,7 +169,7 @@ export const details: SettingsDetails = {
       + `then immediately roll into Chapel of the Elders.
       
       WARNING: You will softlock if you fail this trick. You are recommended to save first before attempting.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   chozoIceTempleItemWithIS: {
     name: 'Chozo Ice Temple Item with Infinite Speed',
@@ -189,7 +189,7 @@ export const details: SettingsDetails = {
   climbObservatoryWithoutBoost: {
     name: 'Climb Observatory without Boost Ball',
     description: `You can dash off the orange panels (scan point) or the space pirates to reach the upper platform, and either R Jump or dash to reach the Control Tower.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   climbOreProcessingWithoutGrappleSpider: {
     name: 'Climb Ore Processing without Grapple Beam, Spider Ball',
@@ -333,7 +333,7 @@ export const details: SettingsDetails = {
   iceBeamBeforeFlaahgraOobWallcrawl: {
     name: 'Ice Beam Before Flaahgra Wallcrawl (Out of Bounds)',
     description: `You can go out of bounds in Gathering Hall and wallcrawl all the way to Reflecting Pool, skipping some items.`,
-    difficulty: Difficulty.HARD
+    difficulty: Difficulty.OOB
   },
   iceRuinsEastSpiderItemWithoutSpider: {
     name: 'Ice Ruins East - Spider Track Item without Spider Ball',
@@ -380,19 +380,19 @@ export const details: SettingsDetails = {
   observatoryPuzzleSkip: {
     name: 'Observatory Item Puzzle Skip',
     description: `This trick expects you to dash to climb Observatory without Boost Ball and Bombs, and then slope jump to the pipes to reach the item.`,
-    difficulty: Difficulty.EASY
+    difficulty: Difficulty.NORMAL
   },
   outOfBoundsWithoutMorphBall: {
     name: 'Out of Bounds without Morph Ball',
     description: `Morph Ball and bombs won't be factored in for most out of bounds checks.`,
-    difficulty: Difficulty.INSANE
+    difficulty: Difficulty.OOB
   },
   phazonMiningTunnelItemWithoutPhazonSuit: {
     name: 'Phazon Mining Tunnel Item without Phazon Suit',
     description: `You can damage boost to the item and escape with a minimum of 11 Energy Tanks, or by going out of bounds in Fungal Hall A and infinite boosting through the collision.
 
     This setting will check if you have 12 Energy Tanks and Boost Ball.`,
-    difficulty: Difficulty.HARD
+    difficulty: Difficulty.INSANE
   },
   phendranaTransportSouthToTransportAccessWithoutSpider: {
     name: 'Phendrana Transport South to Transport Access without Spider Ball',
@@ -402,7 +402,7 @@ export const details: SettingsDetails = {
   plasmaProcessingFromMagmoorWorkstationOob: {
     name: 'Plasma Processing from Magmoor Workstation (Out of Bounds)',
     description: `Using the Flying Pirate secret world in Magmoor Workstation, you can wallcrawl to Geothermal Core and go back inbounds in front of the door to Plasma Processing.`,
-    difficulty: Difficulty.HARD
+    difficulty: Difficulty.OOB
   },
   plasmaProcessingItemWithoutGrappleSpider: {
     name: 'Plasma Processing Item without Grapple Beam, Spider Ball',
@@ -497,7 +497,7 @@ export const details: SettingsDetails = {
     description: `You can wallcrawl out of bounds and ceiling warp into Training Chamber and Training Chamber Access.
 
     This trick will always expect you to have Morph Ball and bombs.`,
-    difficulty: Difficulty.HARD
+    difficulty: Difficulty.OOB
   },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine and Tower of Light - Fewer Access Requirements',
@@ -527,7 +527,7 @@ export const details: SettingsDetails = {
   waveSunOobWallcrawlWithIS: {
     name: 'Wave/Sun Infinite Speed (Out of Bounds)',
     description: `It's possible to obtain the Chozo Ice Temple and Chapel of the Elders items simultaneously by performing this wallcrawl, then using the infinite speed glitch in Chozo Ice Temple.`,
-    difficulty: Difficulty.HARD
+    difficulty: Difficulty.OOB
   }
 };
 

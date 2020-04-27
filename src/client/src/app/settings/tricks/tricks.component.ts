@@ -29,7 +29,8 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
     Difficulty.EASY,
     Difficulty.NORMAL,
     Difficulty.HARD,
-    Difficulty.INSANE
+    Difficulty.INSANE,
+    Difficulty.OOB
   ];
   readonly FILTERS: string[] = [
     this.NONE_FILTER,
