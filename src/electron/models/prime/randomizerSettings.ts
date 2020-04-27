@@ -157,7 +157,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
       romSettings: {
         skipFrigate: this.skipFrigate,
         skipHudPopups: this.skipHudPopups,
-        hideItemModels: this.hideItemModels
+        hideItemModels: this.hideItemModels,
+        enableMainPlazaLedgeDoor: this.enableMainPlazaLedgeDoor
       },
       rules: {
         goal: this.goal,

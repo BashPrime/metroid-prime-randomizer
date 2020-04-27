@@ -7,6 +7,7 @@ export interface RandomizerForm {
     skipFrigate: boolean;
     skipHudPopups: boolean;
     hideItemModels: boolean;
+    enableMainPlazaLedgeDoor: boolean;
   };
   rules: {
     goal: string;
