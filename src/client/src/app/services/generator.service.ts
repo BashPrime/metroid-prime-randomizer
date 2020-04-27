@@ -48,7 +48,6 @@ export class GeneratorService {
             value: currentGeneration.seeds.length,
             label: (currentGeneration.seeds.length + 1) + ' / ' + currentGeneration.total + ':'
           });
-          this.progressService.setMessage('Generating world...');
           this.progressService.setProgressBars(currentProgressBars);
 
           this.currentGeneration$.next(currentGeneration);
@@ -100,7 +99,7 @@ export class GeneratorService {
       });
 
       this.progressService.setTitle('Generating Seed');
-      this.progressService.setMessage('Starting generator.');
+      this.progressService.setMessage('Generating world...');
       this.progressService.setProgressBars([
         {
           total: generationCount,
