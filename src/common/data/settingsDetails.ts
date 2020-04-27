@@ -14,7 +14,8 @@ export enum Difficulty {
   EASY = 'Easy',
   NORMAL = 'Normal',
   HARD = 'Hard',
-  INSANE = 'Insane'
+  INSANE = 'Insane',
+  OOB = 'Out of Bounds'
 }
 
 export const details: SettingsDetails = {
@@ -136,6 +137,13 @@ export const details: SettingsDetails = {
     This can be done with a scan dash off the Red Starburst above the Temple Hall door, or by locking onto a Seedling in Temple Hall and then dashing.`,
     difficulty: Difficulty.EASY
   },
+  antechamberWithPowerBombs: {
+    name: 'Antechamber with Power Bombs',
+    description: `You can retrieve the item and leave Antechamber without Ice Beam by using a power bomb to open the door, moving to the very back of the room, and then back to the door.
+    
+    WARNING: If you fail the trick, you will softlock. It is strongly recommended to save at the nearby save station before attempting.`,
+    difficulty: Difficulty.EASY
+  },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
     description: `Arbor Chamber can be entered through the ceiling from out of bounds.
@@ -154,6 +162,14 @@ export const details: SettingsDetails = {
 
     This trick is very difficult and not recommended for beginners.`,
     difficulty: Difficulty.INSANE
+  },
+  chapelOfTheEldersWithPowerBombs: {
+    name: 'Chapel of the Elders without Power Bombs',
+    description: `Similar to Antechamber without Power Bombs, but you open the door, lay a power bomb in the middle of the door frame, and `
+      + `then immediately roll into Chapel of the Elders.
+      
+      WARNING: You will softlock if you fail this trick. You are recommended to save first before attempting.`,
+    difficulty: Difficulty.EASY
   },
   chozoIceTempleItemWithIS: {
     name: 'Chozo Ice Temple Item with Infinite Speed',
@@ -185,6 +201,11 @@ export const details: SettingsDetails = {
     description: `You can abuse standable collision such as the morph track and the scaffolding to access the top of the room without needing Spider Ball.`,
     difficulty: Difficulty.EASY
   },
+  climbReflectingPoolWithoutBoostBall: {
+    name: 'Climb Reflecting Pool without Boost Ball',
+    description: `You can slope jump off the Stone Toads to reach the top of the room.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   climbRuinedCourtyardWithoutBoostSpider: {
     name: 'Climb Ruined Courtyard without Boost Ball, Spider Ball',
     description: `There is standable collision near the lower door that can be used to climb to the top of the room.`,
@@ -195,6 +216,11 @@ export const details: SettingsDetails = {
     description: `Tower of Light can be climbed by dashing to the outside edges, skipping the 40 missile requirement.
 
     You still need missiles to reach this room inbounds.`,
+    difficulty: Difficulty.EASY
+  },
+  crashedFrigateGammaElevatorWithoutGravity: {
+    name: 'Crashed Frigate - Gamma Elevator Item without Gravity Suit',
+    description: `In-game, there's nothing stopping you from entering (and leaving) the front side of the crashed frigate without Gravity Suit.`,
     difficulty: Difficulty.EASY
   },
   crossMagmaPoolSuitless: {
@@ -224,6 +250,11 @@ export const details: SettingsDetails = {
 
     You can also Space Jump out of the lava to the Twin Fires side if you have Gravity Suit.`,
     difficulty: Difficulty.EASY
+  },
+  crosswayHpbj: {
+    name: 'Crossway - Half Pipe Bomb Jump',
+    description: `You can reach Hall of the Elders by performing a half pipe bomb jump to reach the other side of the room.`,
+    difficulty: Difficulty.HARD
   },
   crosswayItemFewerReqs: {
     name: 'Crossway Item - Fewer Requirements',
@@ -272,6 +303,11 @@ export const details: SettingsDetails = {
     description: `You can climb the Furnace and its spider tracks using Space Jump, reach the top of the room, then bomb jump across to the item.`,
     difficulty: Difficulty.NORMAL
   },
+  gatheringHallWithoutSpaceJump: {
+    name: 'Gathering Hall Item without Space Jump',
+    description: `You can double bomb jump from the side platform to the grate where the item is.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   gravityChamberLedgeItemWithoutGrapplePlasma: {
     name: 'Gravity Chamber Ledge Item without Grapple, Plasma Beam',
     description: `You can R jump to reach the ledge without Grapple and Plasma Beam.`,
@@ -299,10 +335,37 @@ export const details: SettingsDetails = {
     description: `You can go out of bounds in Gathering Hall and wallcrawl all the way to Reflecting Pool, skipping some items.`,
     difficulty: Difficulty.HARD
   },
+  iceRuinsEastSpiderItemWithoutSpider: {
+    name: 'Ice Ruins East - Spider Track Item without Spider Ball',
+    description: `You can hyper bomb jump to reach the tunnel where the item is without Spider Ball.`,
+    difficulty: Difficulty.HARD
+  },
+  lifeGroveSpinnerWithoutBoostBall: {
+    name: 'Life Grove Spinner without Boost Ball',
+    description: `With a specific camera angle and control stick angle setup, you can open up the spinner item without Boost Ball.
+    
+    Requires 'Life Grove Tunnel - Half Pipe Bomb Jump' to also be activated for this trick to be considered in logic.`,
+    difficulty: Difficulty.NORMAL
+  },
+  lifeGroveTunnelHpbj: {
+    name: 'Life Grove Tunnel - Half Pipe Bomb Jump',
+    description: `You can half pipe bomb jump to reach either side of Life Grove Tunnel without Boost Ball.`,
+    difficulty: Difficulty.HARD
+  },
+  lowerPhazonMineWithoutSpiderGrapple: {
+    name: 'Lower Phazon Mines without Spider Ball, Grapple Beam',
+    description: `Using R jumps, slope jumps, and dashes, you can traverse the entirety of lower Phazon Mines without Spider Ball and Grapple Beam.`,
+    difficulty: Difficulty.NORMAL
+  },
   magmaPoolItemWithIS: {
     name: 'Magma Pool Item with Infinite Speed',
     description: `You can use the infinite speed glitch by wedging yourself between the crates and the wall on the Ruined Fountain side of this room.`,
     difficulty: Difficulty.NORMAL
+  },
+  mainPlazaHpbj: {
+    name: 'Main Plaza - Half Pipe Bomb Jump',
+    description: `You can reach the half pipe item by performing a half pipe bomb jump.`,
+    difficulty: Difficulty.HARD
   },
   mainPlazaItemsOnlySpaceJump: {
     name: 'Main Plaza Items with only Space Jump',
@@ -313,6 +376,11 @@ export const details: SettingsDetails = {
     name: 'Main Quarry Item without Spider Ball',
     description: `You can slope jump onto the top of the crane and R jump over to the item.`,
     difficulty: Difficulty.NORMAL
+  },
+  observatoryPuzzleSkip: {
+    name: 'Observatory Item Puzzle Skip',
+    description: `This trick expects you to dash to climb Observatory without Boost Ball and Bombs, and then slope jump to the pipes to reach the item.`,
+    difficulty: Difficulty.EASY
   },
   outOfBoundsWithoutMorphBall: {
     name: 'Out of Bounds without Morph Ball',
@@ -406,6 +474,14 @@ export const details: SettingsDetails = {
     This trick is extremely difficult and is not recommended for beginners.`,
     difficulty: Difficulty.INSANE
   },
+  sunTowerIbj: {
+    name: 'Sun Tower - Infinite Bomb Jump',
+    description: `After defeating Flaahgra, you can jump into the left groove, have the Oculus carry you, and then infinite bomb jump `
+    + `back to the top door to trigger the Sunchamber Chozo Ghost room layer without needing Spider Ball and Super Missles.
+    
+    WARNING: If progession is on Sunchamber (Ghosts), you will softlock if you fail this trick. You are advised to save before attempting.`,
+    difficulty: Difficulty.NORMAL
+  },
   quarantineMonitorDash: {
     name: 'Quarantine Monitor Dash',
     description: `You can skip the Grapple Beam by scan dashing to the Quarantine Monitor platform from the elevator platform.`,
@@ -426,7 +502,12 @@ export const details: SettingsDetails = {
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine and Tower of Light - Fewer Access Requirements',
     description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`,
-    difficulty: Difficulty.EASY,
+    difficulty: Difficulty.EASY
+  },
+  ventShaftHpbj: {
+    name: 'Ventilation Shaft - Half Pipe Bomb Jump',
+    description: `It's possible to return to Elite Control by performing a half pipe bomb jump to reach the Elite Control door.`,
+    difficulty: Difficulty.HARD
   },
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',

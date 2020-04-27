@@ -153,7 +153,10 @@ export function phazonMines(): RegionObject[] {
       },
       exits: {
         'Central Dynamo': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
-        'Elite Control': (items: PrimeItemCollection) => items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+        'Elite Control': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = items.canBoost() || (settings.tricks.ventShaftHpbj && items.canLayBombs());
+          return boostReqs && items.has(PrimeItem.ICE_BEAM);
+        }
       }
     },
     {
@@ -170,14 +173,17 @@ export function phazonMines(): RegionObject[] {
       name: 'Metroid Quarantine A',
       locations: {
         [PrimeLocation.METROID_QUARANTINE_A]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || (items.canSpider());
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.canSpider() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          return xrayReqs && spiderReqs && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
         'Fungal Hall Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || (items.canSpider());
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.canSpider() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
+          return xrayReqs && spiderReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.PLASMA_BEAM)
             && items.has(PrimeItem.SCAN_VISOR);
         },
         'Central Dynamo': (items: PrimeItemCollection) => items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
@@ -196,7 +202,10 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Fungal Hall A',
       exits: {
-        'Phazon Mining Tunnel': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Phazon Mining Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        },
         'Fungal Hall Access': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
@@ -219,14 +228,20 @@ export function phazonMines(): RegionObject[] {
         [PrimeLocation.FUNGAL_HALL_B]: (items: PrimeItemCollection) => items.canLayBombsOrPowerBombs()
       },
       exits: {
-        'Metroid Quarantine B (Fungal Hall B Side)': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM),
+        'Metroid Quarantine B (Fungal Hall B Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const grappleReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || items.has(PrimeItem.GRAPPLE_BEAM);
+          return grappleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM);
+        },
         'Phazon Mining Tunnel': (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
       name: 'Metroid Quarantine B (Fungal Hall B Side)',
       exits: {
-        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR),
+        'Metroid Quarantine B (Elite Quarters Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderGrappleReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
+          return spiderGrappleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+        },
         'Fungal Hall B': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.PLASMA_BEAM)
       }
     },

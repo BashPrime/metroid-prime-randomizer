@@ -59,8 +59,9 @@ export function tallonOverworld(): RegionObject[] {
         'Landing Site': (items: PrimeItemCollection) => items.hasMissiles(),
         'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          const gravityReqs = settings.tricks.crashedFrigateGammaElevatorWithoutGravity || items.has(PrimeItem.GRAVITY_SUIT);
           return items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && thermalReqs
-            && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            && gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         // Only an exit if climb frigate crash site is true
         'Overgrown Cavern': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -112,27 +113,28 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Cargo Freight Lift to Deck Gamma',
       locations: {
-        [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: (items: PrimeItemCollection) => (items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)) && items.has(PrimeItem.GRAVITY_SUIT)
+        [PrimeLocation.CARGO_FREIGHT_LIFT_TO_DECK_GAMMA]: (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       },
       exits: {
         'Biohazard Containment': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           return items.has(PrimeItem.GRAVITY_SUIT) && thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
         },
-        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
       name: 'Biohazard Containment',
       locations: {
-        [PrimeLocation.BIOHAZARD_CONTAINMENT]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.GRAVITY_SUIT)
+        [PrimeLocation.BIOHAZARD_CONTAINMENT]: (items: PrimeItemCollection) => items.canFireSuperMissiles()
       },
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return thermalReqs && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.WAVE_BEAM)
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT)
+        'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -141,8 +143,8 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
       },
       exits: {
-        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.ICE_BEAM),
-        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.ICE_BEAM),
+        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
@@ -185,15 +187,25 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.LIFE_GROVE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.canBoost()
       },
       exits: {
-        'Life Grove': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost(),
-        'Great Tree Hall (Upper)': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.ICE_BEAM)
+        'Life Grove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = items.canBoost() || (settings.tricks.lifeGroveTunnelHpbj && items.canLayBombs());
+          return items.canLayPowerBombs() && boostReqs;
+        },
+        'Great Tree Hall (Upper)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = items.canBoost() || (settings.tricks.lifeGroveTunnelHpbj && items.canLayBombs());
+          return items.canLayPowerBombs() && boostReqs && items.has(PrimeItem.ICE_BEAM);
+        }
       }
     },
     {
       name: 'Life Grove',
       locations: {
         [PrimeLocation.LIFE_GROVE_START]: () => true,
-        [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.LIFE_GROVE_UNDERWATER_SPINNER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spinnerDirectReqs = items.canBoost()
+            || (settings.tricks.lifeGroveSpinnerWithoutBoostBall && items.canLayBombs()); // need bombs to prevent softlocking
+          return items.canLayPowerBombs() && spinnerDirectReqs;
+        }
       },
       exits: {
         'Life Grove Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)

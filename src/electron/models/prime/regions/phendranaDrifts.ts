@@ -52,14 +52,18 @@ export function phendranaDrifts(): RegionObject[] {
         }
       },
       exits: {
-        'Chozo Ice Temple': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Chozo Ice Temple': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const waveReqs = items.has(PrimeItem.WAVE_BEAM) || (settings.tricks.chapelOfTheEldersWithPowerBombs && items.canLayPowerBombs());
+          return waveReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
       name: 'Ice Ruins East',
       locations: {
         [PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
-        [PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK]: (items: PrimeItemCollection) => items.canSpider()
+        [PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => 
+          items.canSpider() || (settings.tricks.iceRuinsEastSpiderItemWithoutSpider && items.canLayBombs())
       },
       exits: {
         'Ice Ruins West': () => true,
@@ -147,8 +151,9 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Observatory',
       locations: {
-        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection) => {
-          return items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+        [PrimeLocation.OBSERVATORY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const puzzleReqs = settings.tricks.observatoryPuzzleSkip || (items.canBoost() && items.canLayBombs());
+          return puzzleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
