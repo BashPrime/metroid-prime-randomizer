@@ -11,7 +11,6 @@ export class Entrance {
   private parentRegion: Region;
   private connectedRegion: Region;
   private connectedRegionKey: string;
-  private elevator: boolean;
 
   constructor(name: string, parentRegion?: Region) {
     this.name = name;
@@ -53,12 +52,21 @@ export class Entrance {
     this.connectedRegionKey = key;
   }
 
-  isElevator(): boolean {
-    return this.elevator;
-  }
+  /**
+   * Returns the opposite direction Entrance between this entrance's parent region and the connected region, or null if the connection is not bidirectional (two-way).
+   */
+  getOpposite(): Entrance {
+    // Need to have a connected region/exits, or else we know the connection isn't bidirectional
+    if (this.connectedRegion) {
+      for (let exit of this.connectedRegion.getExits()) {
+        // If the exit connects to this parent region, we have the other-way connection and return it immediately
+        if (exit.getConnectedRegion().getName() === this.parentRegion.getName()) {
+          return exit;
+        }
+      }
+    }
 
-  setElevator(elevator: boolean): void {
-    this.elevator = elevator;
+    return null;
   }
 
   connect(region: Region): void {
@@ -97,9 +105,5 @@ export class Entrance {
     const previouslyConnected = this.parentRegion;
     this.parentRegion = null;
     return previouslyConnected;
-  }
-
-  canReach(items: ItemCollection, settings: RandomizerSettings, noParent: boolean = false): boolean {
-    return this.accessRule(items, settings) && (noParent || this.parentRegion.canReach(items));
   }
 }

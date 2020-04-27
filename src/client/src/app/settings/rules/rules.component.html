@@ -113,18 +113,26 @@
       <div formGroupName="randomStartingItems">
         <label class="label is-small" [pTooltip]="DETAILS.randomStartingItems.description">Randomized Starting
           Items</label>
-        <div class="field is-spaced-field is-inline-block-tablet">
+        <div class="field">
           <label class="label is-small">Minimum</label>
           <div class="control">
             <input class="input has-width-auto is-small" type="number" formControlName="minimum"
               [pTooltip]="DETAILS.randomStartingItems.items.minimum.description">
+            <div *ngIf="getFormGroup().controls.randomStartingItems.controls.minimum.errors">
+              <p class="help is-danger" *ngIf="getFormGroup().controls.randomStartingItems.controls.minimum.errors.min">Minimum count is 0.</p>
+              <p class="help is-danger" *ngIf="getFormGroup().controls.randomStartingItems.controls.minimum.errors.max">Maximum count is 25.</p>
+            </div>
           </div>
         </div>
-        <div class="field is-spaced-field is-inline-block-tablet">
+        <div class="field">
           <label class="label is-small">Maximum</label>
           <div class="control">
             <input class="input has-width-auto is-small" type="number" formControlName="maximum"
               [pTooltip]="DETAILS.randomStartingItems.items.maximum.description">
+              <div *ngIf="getFormGroup().controls.randomStartingItems.controls.maximum.errors">
+                <p class="help is-danger" *ngIf="getFormGroup().controls.randomStartingItems.controls.maximum.errors.min">Minimum count is 0.</p>
+                <p class="help is-danger" *ngIf="getFormGroup().controls.randomStartingItems.controls.maximum.errors.max">Maximum count is 25.</p>
+              </div>
           </div>
         </div>
       </div>

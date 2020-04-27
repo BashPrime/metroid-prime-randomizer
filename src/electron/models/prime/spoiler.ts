@@ -25,7 +25,7 @@ export class Spoiler {
   ['Starting Items']: { [key: string]: number };
   ['Elevators']: { [key: string]: string };
   ['Locations']: PrimeLocations;
-  ['Playthrough']: { [key: string]: string }[];
+  ['Playthrough']: object[];
 
   static generateFromWorld(world: PrimeWorld): Spoiler {
     const spoiler = new Spoiler();

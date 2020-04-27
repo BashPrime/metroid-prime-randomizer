@@ -192,7 +192,9 @@ export class GenerateGameComponent implements OnInit {
   }
 
   generateSeed(spoiler: boolean) {
-    this.generatorService.generateGame(this.form.value, spoiler);
+    if (this.form.valid) {
+      this.generatorService.generateGame(this.form.value, spoiler);
+    }
   }
 
   importPreset(): void {

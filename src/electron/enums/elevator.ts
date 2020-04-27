@@ -1,0 +1,23 @@
+export enum Elevator {
+  TALLON_NORTH = 'Tallon Overworld North (Tallon Canyon)',
+  TALLON_EAST = 'Tallon Overworld East (Frigate Crash Site)',
+  TALLON_WEST = 'Tallon Overworld West (Root Cave)',
+  TALLON_SOUTH_CHOZO = 'Tallon Overworld South (Great Tree Hall, Upper)',
+  TALLON_SOUTH_MINES = 'Tallon Overworld South (Great Tree Hall, Lower)',
+  CHOZO_WEST = 'Chozo Ruins West (Main Plaza)',
+  CHOZO_NORTH = 'Chozo Ruins North (Sun Tower)',
+  CHOZO_EAST = 'Chozo Ruins East (Reflecting Pool, Save Station)',
+  CHOZO_SOUTH = 'Chozo Ruins South (Reflecting Pool, Far End)',
+  MAGMOOR_NORTH = 'Magmoor Caverns North (Lava Lake)',
+  MAGMOOR_WEST = 'Magmoor Caverns West (Monitor Station)',
+  MAGMOOR_EAST = 'Magmoor Caverns East (Twin Fires)',
+  MAGMOOR_SOUTH_MINES = 'Magmoor Caverns South (Magmoor Workstation, Debris)',
+  MAGMOOR_SOUTH_PHENDRANA = 'Magmoor Caverns South (Magmoor Workstation, Save Station)',
+  PHENDRANA_NORTH = 'Phendrana Drifts North (Phendrana Shorelines)',
+  PHENDRANA_SOUTH = 'Phendrana Drifts South (Quarantine Cave)',
+  MINES_EAST = 'Phazon Mines East (Main Quarry)',
+  MINES_WEST = 'Phazon Mines West (Phazon Processing Center)',
+  LANDING_SITE = 'Landing Site',
+  ARTIFACT_TEMPLE = 'Artifact Temple',
+  CRATER_ENTRY_POINT = 'Crater Entry Point'
+}

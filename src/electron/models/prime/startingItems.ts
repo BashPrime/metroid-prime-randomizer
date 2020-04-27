@@ -83,8 +83,20 @@ export function setStartingItems(world: PrimeWorld): void {
     startingItems[PrimeItem.SCAN_VISOR] = items[PrimeItem.SCAN_VISOR].maximum;
   }
 
-  // Pick a random number of starting items from a min and max range
-  let numberOfRandomStartingItems = Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
+  let numberOfRandomStartingItems: number;
+
+  // Validate random starting items
+  if (!(settings.randomStartingItems.minimum && settings.randomStartingItems.maximum)) {
+    numberOfRandomStartingItems = 0;
+  }
+  // If minimum >= maximum, automatically use the minimum value
+  else if (settings.randomStartingItems.minimum >= settings.randomStartingItems.maximum) {
+    numberOfRandomStartingItems = settings.randomStartingItems.minimum;
+  }
+  // Else, Pick a random number of starting items from a min and max range
+  else {
+    numberOfRandomStartingItems = Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
+  }
 
   // Add the given number of random starting items, using items list to choose what we're adding
   for (let i = 0; i < numberOfRandomStartingItems; i++) {

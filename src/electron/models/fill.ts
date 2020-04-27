@@ -3,7 +3,8 @@ import { LocationCollection } from './locationCollection';
 import { ItemCollection } from './itemCollection';
 import { Location } from './location';
 import { PrimeItemCollection } from './prime/itemCollection';
-import { mapToItemPool } from './prime/itemPool';
+import { Region } from './region';
+import { ItemPriority } from './prime/items';
 
 export function fillRestrictive(world: World, locations: LocationCollection, itemPool: ItemCollection) {
   const rng = world.getRng();
@@ -14,25 +15,37 @@ export function fillRestrictive(world: World, locations: LocationCollection, ite
   while (itemPool.size() > 0 && locations.size() > 0) {
     // Take next item out of the item pool before searching the world for available locations to ensure completeability
     const itemToPlace = itemPool.pop();
-    // world.searchRegions(itemPool);
 
-    // Collect available placed items using the current item pool for accurate dependency checking
+    // Collect available placed progression items using the current item pool for accurate dependency checking
+    // We are intentionally filtering to progression items to rule out the player collecting a junk missile expansion as their first source of progression
     const assumedItems = new PrimeItemCollection(world.collectItems(itemPool).toArray());
 
-    // Using this for "can escape room" checking when potentially placing an item
-    const assumedItemsWithItemToPlace = new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]);
+    // Run one more search with our assumed items to get the most up-to-date region checks
+    const searchResults = world.searchRegions(assumedItems);
 
     // Shuffle locations collection
     const shuffledLocations = locations.shuffle(rng);
     let locationToFill: Location;
 
-    for (const location of shuffledLocations.toArray()) {
-      // Only fill if the location isn't excluded and we can fill it
-      if (!location.isExcluded() && !location.hasItem() && location.canFill(assumedItems, settings) && location.canEscape(assumedItemsWithItemToPlace, settings)) {
-        locationToFill = location;
-        location.setItem(itemToPlace);
-        locations.remove(location);
-        break;
+    // Iterate through each location and perform our checks
+    for (let location of shuffledLocations.toArray()) {
+      const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
+      // This is the first check, to see if we can reach the location and get to (or fill it with) the item.
+      const canFillLocation = visitedRegion && !location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, settings);
+
+      if (canFillLocation) {
+        // If we can fill the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
+        const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), location.getParentRegion());
+
+        // Get the region we came from to enter the current location's parent region
+        const entryPointRegion = visitedRegion.entryPoint ? visitedRegion.entryPoint.getParentRegion() : null;
+
+        // We're basically checking if we can leave the location's parent region via its original entry point, be it directly or indirectly.
+        // This is to handle cases like Ventilation Shaft where you need more items to leave the way you came in than when you entered.
+        if (!entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion)) {
+          locationToFill = location;
+          break;
+        }
       }
     }
 

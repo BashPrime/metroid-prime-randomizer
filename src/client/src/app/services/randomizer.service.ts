@@ -28,7 +28,8 @@ export class RandomizerService {
       romSettings: fb.group({
         skipFrigate: [this.DEFAULT_SETTINGS.skipFrigate],
         skipHudPopups: [this.DEFAULT_SETTINGS.skipHudPopups],
-        hideItemModels: [this.DEFAULT_SETTINGS.hideItemModels]
+        hideItemModels: [this.DEFAULT_SETTINGS.hideItemModels],
+        enableMainPlazaLedgeDoor: [this.DEFAULT_SETTINGS.enableMainPlazaLedgeDoor]
       }),
       rules: fb.group({
         goal: [this.DEFAULT_SETTINGS.goal],

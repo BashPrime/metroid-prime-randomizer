@@ -97,7 +97,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
     auto_enabled_elevators: !startingWithScanVisor,
-    enable_vault_ledge_door: world.getSettings().tricks.enableMainPlazaLedgeDoor
+    enable_vault_ledge_door: world.getSettings().enableMainPlazaLedgeDoor
   };
 }
 

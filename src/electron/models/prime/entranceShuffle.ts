@@ -2,6 +2,7 @@ import { PrimeWorld } from './world';
 import { getRandomInt } from '../../utilities';
 import { MersenneTwister } from '../../mersenneTwister';
 import { STARTING_AREA_LANDING_SITE, STARTING_AREA_RANDOM } from '../../../common/constants';
+import { Elevator as ElevatorEnum } from '../../enums/elevator';
 
 export interface Elevator {
   id: number;
@@ -30,64 +31,64 @@ enum Region {
 
 export const startingAreas: StartingArea[] = [
   // Default
-  { id: 20, name: 'Landing Site', region: 'Landing Site' },
+  { id: 20, name: ElevatorEnum.LANDING_SITE, region: ElevatorEnum.LANDING_SITE },
   { id: -1, name: 'Random', region: undefined },
-  { id: 7, name: 'Artifact Temple', region: 'Artifact Temple' },
+  { id: 7, name: ElevatorEnum.ARTIFACT_TEMPLE, region:ElevatorEnum.ARTIFACT_TEMPLE },
   // Tallon
-  { id: 6, name: 'Tallon Transport North', region: 'Tallon Transport North' },
-  { id: 8, name: 'Tallon Transport East', region: 'Tallon Transport East' },
-  { id: 9, name: 'Tallon Transport West', region: 'Tallon Transport West' },
-  { id: 10, name: 'Tallon Transport South (Chozo)', region: 'Tallon Transport South (Chozo)' },
-  { id: 11, name: 'Tallon Transport South (Mines)', region: 'Tallon Transport South (Mines)' },
+  { id: 6, name: ElevatorEnum.TALLON_NORTH, region: ElevatorEnum.TALLON_NORTH },
+  { id: 8, name: ElevatorEnum.TALLON_EAST, region: ElevatorEnum.TALLON_EAST },
+  { id: 9, name: ElevatorEnum.TALLON_WEST, region: ElevatorEnum.TALLON_WEST },
+  { id: 10, name: ElevatorEnum.TALLON_SOUTH_CHOZO, region: ElevatorEnum.TALLON_SOUTH_CHOZO },
+  { id: 11, name: ElevatorEnum.TALLON_SOUTH_MINES, region: ElevatorEnum.TALLON_SOUTH_MINES },
   // Chozo
-  { id: 0, name: 'Chozo Transport West', region: 'Chozo Transport West' },
-  { id: 1, name: 'Chozo Transport North', region: 'Chozo Transport North' },
-  { id: 2, name: 'Chozo Transport East', region: 'Chozo Transport East' },
-  { id: 3, name: 'Chozo Transport South', region: 'Chozo Transport South' },
+  { id: 0, name: ElevatorEnum.CHOZO_WEST, region: ElevatorEnum.CHOZO_WEST },
+  { id: 1, name: ElevatorEnum.CHOZO_NORTH, region: ElevatorEnum.CHOZO_NORTH },
+  { id: 2, name: ElevatorEnum.CHOZO_EAST, region: ElevatorEnum.CHOZO_EAST },
+  { id: 3, name: ElevatorEnum.CHOZO_SOUTH, region: ElevatorEnum.CHOZO_SOUTH },
   // Magmoor
-  { id: 14, name: 'Magmoor Transport North', region: 'Magmoor Transport North' },
-  { id: 15, name: 'Magmoor Transport West', region: 'Magmoor Transport West' },
-  { id: 16, name: 'Magmoor Transport East', region: 'Magmoor Transport East' },
-  { id: 17, name: 'Magmoor Transport South (Mines)', region: 'Magmoor Transport South (Mines)' },
-  { id: 18, name: 'Magmoor Transport South (Phendrana)', region: 'Magmoor Transport South (Phendrana)' },
+  { id: 14, name: ElevatorEnum.MAGMOOR_NORTH, region: ElevatorEnum.MAGMOOR_NORTH },
+  { id: 15, name: ElevatorEnum.MAGMOOR_WEST, region: ElevatorEnum.MAGMOOR_WEST },
+  { id: 16, name: ElevatorEnum.MAGMOOR_EAST, region: ElevatorEnum.MAGMOOR_EAST },
+  { id: 17, name: ElevatorEnum.MAGMOOR_SOUTH_MINES, region: ElevatorEnum.MAGMOOR_SOUTH_MINES },
+  { id: 18, name: ElevatorEnum.MAGMOOR_SOUTH_PHENDRANA, region: ElevatorEnum.MAGMOOR_SOUTH_PHENDRANA },
   // Phendrana
-  { id: 4, name: 'Phendrana Transport North', region: 'Phendrana Transport North' },
-  { id: 5, name: 'Phendrana Transport South', region: 'Phendrana Transport South' },
+  { id: 4, name: ElevatorEnum.PHENDRANA_NORTH, region: ElevatorEnum.PHENDRANA_NORTH },
+  { id: 5, name: ElevatorEnum.PHENDRANA_SOUTH, region: ElevatorEnum.PHENDRANA_SOUTH },
   // Mines
-  { id: 12, name: 'Mines Transport East', region: 'Mines Transport East' },
-  { id: 13, name: 'Mines Transport West', region: 'Mines Transport West' }
+  { id: 12, name: ElevatorEnum.MINES_EAST, region: ElevatorEnum.MINES_EAST },
+  { id: 13, name: ElevatorEnum.MINES_WEST, region: ElevatorEnum.MINES_WEST }
   // { id: 19, name: 'Crater Entry Point' } // While a valid randomprime starting location, not using for the randomizer.
 ];
 
 export const elevatorTableBase: Elevator[] = [
   // Tallon
-  { id: 6, name: 'Tallon Transport North', destination: 0, region: Region.TALLON },
-  { id: 8, name: 'Tallon Transport East', destination: 2, region: Region.TALLON },
-  { id: 9, name: 'Tallon Transport West', destination: 16, region: Region.TALLON },
-  { id: 10, name: 'Tallon Transport South (Chozo)', destination: 3, region: Region.TALLON },
-  { id: 11, name: 'Tallon Transport South (Mines)', destination: 12, region: Region.TALLON },
+  { id: 6, name: ElevatorEnum.TALLON_NORTH, destination: 0, region: Region.TALLON },
+  { id: 8, name: ElevatorEnum.TALLON_EAST, destination: 2, region: Region.TALLON },
+  { id: 9, name: ElevatorEnum.TALLON_WEST, destination: 16, region: Region.TALLON },
+  { id: 10, name: ElevatorEnum.TALLON_SOUTH_CHOZO, destination: 3, region: Region.TALLON },
+  { id: 11, name: ElevatorEnum.TALLON_SOUTH_MINES, destination: 12, region: Region.TALLON },
   // Chozo
-  { id: 0, name: 'Chozo Transport West', destination: 6, region: Region.CHOZO },
-  { id: 1, name: 'Chozo Transport North', destination: 14, region: Region.CHOZO },
-  { id: 2, name: 'Chozo Transport East', destination: 8, region: Region.CHOZO },
-  { id: 3, name: 'Chozo Transport South', destination: 10, region: Region.CHOZO },
+  { id: 0, name: ElevatorEnum.CHOZO_WEST, destination: 6, region: Region.CHOZO },
+  { id: 1, name: ElevatorEnum.CHOZO_NORTH, destination: 14, region: Region.CHOZO },
+  { id: 2, name: ElevatorEnum.CHOZO_EAST, destination: 8, region: Region.CHOZO },
+  { id: 3, name: ElevatorEnum.CHOZO_SOUTH, destination: 10, region: Region.CHOZO },
   // Magmoor
-  { id: 14, name: 'Magmoor Transport North', destination: 1, region: Region.MAGMOOR },
-  { id: 15, name: 'Magmoor Transport West', destination: 4, region: Region.MAGMOOR },
-  { id: 16, name: 'Magmoor Transport East', destination: 9, region: Region.MAGMOOR },
-  { id: 17, name: 'Magmoor Transport South (Mines)', destination: 13, region: Region.MAGMOOR },
-  { id: 18, name: 'Magmoor Transport South (Phendrana)', destination: 5, region: Region.MAGMOOR },
+  { id: 14, name: ElevatorEnum.MAGMOOR_NORTH, destination: 1, region: Region.MAGMOOR },
+  { id: 15, name: ElevatorEnum.MAGMOOR_WEST, destination: 4, region: Region.MAGMOOR },
+  { id: 16, name: ElevatorEnum.MAGMOOR_EAST, destination: 9, region: Region.MAGMOOR },
+  { id: 17, name: ElevatorEnum.MAGMOOR_SOUTH_MINES, destination: 13, region: Region.MAGMOOR },
+  { id: 18, name: ElevatorEnum.MAGMOOR_SOUTH_PHENDRANA, destination: 5, region: Region.MAGMOOR },
   // Phendrana
-  { id: 4, name: 'Phendrana Transport North', destination: 15, region: Region.PHENDRANA },
-  { id: 5, name: 'Phendrana Transport South', destination: 18, region: Region.PHENDRANA },
+  { id: 4, name: ElevatorEnum.PHENDRANA_NORTH, destination: 15, region: Region.PHENDRANA },
+  { id: 5, name: ElevatorEnum.PHENDRANA_SOUTH, destination: 18, region: Region.PHENDRANA },
   // Mines
-  { id: 12, name: 'Mines Transport East', destination: 11, region: Region.MINES },
-  { id: 13, name: 'Mines Transport West', destination: 17, region: Region.MINES }
+  { id: 12, name: ElevatorEnum.MINES_EAST, destination: 11, region: Region.MINES },
+  { id: 13, name: ElevatorEnum.MINES_WEST, destination: 17, region: Region.MINES }
 ];
 
 export const endgameTeleporters: Elevator[] = [
-  { id: 7, name: 'Artifact Temple', destination: 19, region: Region.TALLON },
-  { id: 19, name: 'Crater Entry Point', destination: 7, region: undefined }
+  { id: 7, name: ElevatorEnum.ARTIFACT_TEMPLE, destination: 19, region: Region.TALLON },
+  { id: 19, name: ElevatorEnum.CRATER_ENTRY_POINT, destination: 7, region: undefined }
 ];
 
 export function setEntrances(world: PrimeWorld): void {
