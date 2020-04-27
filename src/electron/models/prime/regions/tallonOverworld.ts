@@ -131,7 +131,9 @@ export function tallonOverworld(): RegionObject[] {
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return thermalReqs && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.WAVE_BEAM)
+          const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || (settings.tricks.hydroAccessTunnelWithoutGravity);
+
+          return thermalReqs && gravityReqs && items.has(PrimeItem.WAVE_BEAM)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
@@ -140,11 +142,24 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Hydro Access Tunnel',
       locations: {
-        [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT)
+        [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          return (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+        }
       },
       exits: {
-        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.ICE_BEAM),
-        'Biohazard Containment': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const gravityReqs = (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+
+          return gravityReqs && items.has(PrimeItem.ICE_BEAM);
+        },
+        'Biohazard Containment': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const gravityReqs = (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+
+          return gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
@@ -166,7 +181,8 @@ export function tallonOverworld(): RegionObject[] {
       name: 'Great Tree Hall (Lower)',
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.GRAVITY_SUIT);
+          const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.hydroAccessTunnelWithoutGravity;
+          const baseReqs = gravityReqs && items.has(PrimeItem.ICE_BEAM);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;

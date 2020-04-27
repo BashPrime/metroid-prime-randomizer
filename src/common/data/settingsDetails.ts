@@ -330,6 +330,11 @@ export const details: SettingsDetails = {
     This will "secretize" Hall of the Elders, (makes the room disappear) while keeping the collision loaded.`,
     difficulty: Difficulty.NORMAL
   },
+  hydroAccessTunnelWithoutGravity: {
+    name: 'Hydro Access Tunnel without Gravity Suit',
+    description: `You can use precise boosting to explore Hydro Access Tunnel without Gravity Suit, including obtaining the item.`,
+    difficulty: Difficulty.INSANE
+  },
   iceBeamBeforeFlaahgraOobWallcrawl: {
     name: 'Ice Beam Before Flaahgra Wallcrawl (Out of Bounds)',
     description: `You can go out of bounds in Gathering Hall and wallcrawl all the way to Reflecting Pool, skipping some items.`,

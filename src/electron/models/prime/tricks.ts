@@ -37,6 +37,7 @@ export class Tricks extends SettingsFlags {
   greatTreeHallBarsSkip = false;
   hallOfTheEldersBombSlotsWithoutSpider = false;
   hallOfTheEldersItemsWithIS = false;
+  hydroAccessTunnelWithoutGravity = false;
   iceBeamBeforeFlaahgraOobWallcrawl = false;
   iceRuinsEastSpiderItemWithoutSpider = false;
   lifeGroveSpinnerWithoutBoostBall = false;
