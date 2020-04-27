@@ -27,6 +27,10 @@ export class RulesComponent extends SettingsSection implements OnInit {
     return this.formGroup;
   }
 
+  getRandomStartingItemsFormGroup(): FormGroup {
+    return this.formGroup.controls.randomStartingItems as FormGroup;
+  }
+
   isArtifactCollectionSelected(): boolean {
     return this.formGroup.get('goal').value === this.ARTIFACT_COLLECTION;
   }
