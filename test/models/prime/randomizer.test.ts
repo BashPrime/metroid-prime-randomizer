@@ -5,7 +5,7 @@ import 'mocha';
 
 describe('PrimeRandomizer', () => {
   it('should successfully generate a world', () => {
-    const settings = new PrimeRandomizerSettings({ seed: 'K3N45IC8SJ' });
+    const settings = new PrimeRandomizerSettings({ seed: 'N99OETYKV4' });
     const world = generateWorld(settings);
     const placedItemLocations = world.getLocations().toArray().filter(location => location.hasItem());
 
