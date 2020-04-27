@@ -48,7 +48,6 @@ export class GeneratorService {
             value: currentGeneration.seeds.length,
             label: (currentGeneration.seeds.length + 1) + ' / ' + currentGeneration.total + ':'
           });
-          this.progressService.setMessage('Generating world...');
           this.progressService.setProgressBars(currentProgressBars);
 
           this.currentGeneration$.next(currentGeneration);
@@ -74,6 +73,7 @@ export class GeneratorService {
 
     this.electronService.ipcRenderer.on('importSeedResponse', (event, generatedSeed: GeneratedSeed, spoiler: boolean) => {
       this.ngZone.run(() => {
+        this.progressService.setOpen(false);
         this.spoiler$.next(spoiler);
         this.generatedSeeds$.next([generatedSeed]);
         this.toastrService.success('Imported the permalink successfully.');
@@ -100,7 +100,7 @@ export class GeneratorService {
       });
 
       this.progressService.setTitle('Generating Seed');
-      this.progressService.setMessage('Starting generator.');
+      this.progressService.setMessage('Generating world...');
       this.progressService.setProgressBars([
         {
           total: generationCount,
@@ -129,6 +129,18 @@ export class GeneratorService {
 
       if (decodedItems) {
         this.lastSettingsUsed$.next(PrimeRandomizerSettings.fromSettingsString(decodedItems.settingsString).toRandomizerForm());
+
+        this.progressService.setTitle('Importing Permalink');
+        this.progressService.setMessage('Generating world...');
+        this.progressService.setProgressBars([
+          {
+            total: 1,
+            value: null,
+            label: '1 / 1:'
+          }
+        ]);
+
+        this.progressService.setOpen(true);
         this.electronService.ipcRenderer.send('importSeed', decodedItems.seed, decodedItems.settingsString);
       }
     }

@@ -192,8 +192,19 @@ export class PrimeWorld extends World {
       const filledItemLocations = searchResults.getLocations().filter(location => location.hasItem());
 
       const searchLocations = new LocationCollection(filledItemLocations.filter(location => {
+        const visitedRegion = searchResults.getVisitedRegion(location.getParentRegion());
 
-        return location.itemRule(myItems, this.settings);
+        // Can't get the item, no point running the additional checks.
+        if (!location.itemRule(myItems, this.settings)) {
+          return false;
+        }
+
+        // If we can obtain the item, can we exit?
+        const locationExit = visitedRegion.entryPoint
+          ? visitedRegion.entryPoint.getOpposite()
+          : null;
+
+        return !locationExit || locationExit.accessRule(new PrimeItemCollection([...myItems.toArray(), location.getItem()]), this.settings);
       }));
 
       const foundItems = new PrimeItemCollection(searchLocations.getItems().toArray());

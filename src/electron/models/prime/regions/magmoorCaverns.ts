@@ -41,8 +41,12 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         'Shore Tunnel': () => true,
         'Warrior Shrine': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const wsReqs = settings.tricks.warriorShrineWithoutBoost || items.canBoost();
-          return wsReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          if (settings.tricks.warriorShrineMinimumReqs) {
+            return true;
+          }
+
+          const boostReqs = settings.tricks.warriorShrineWithoutBoost || items.canBoost();
+          return boostReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         [Elevator.MAGMOOR_WEST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const canBoost = settings.tricks.boostThroughBombTunnels && items.canBoost();

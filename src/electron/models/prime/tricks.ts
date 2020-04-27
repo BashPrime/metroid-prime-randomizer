@@ -9,6 +9,7 @@ export class Tricks extends SettingsFlags {
   boostThroughBombTunnels = false;
   chapelOfTheEldersWithPowerBombs = false;
   chozoIceTempleItemWithIS = false;
+  chozoIceTempleWithoutSpaceJump = false;
   climbFrigateCrashSite = false;
   climbFrozenPikeWithoutBombs = false;
   climbObservatoryWithoutBoost = false;
@@ -26,6 +27,7 @@ export class Tricks extends SettingsFlags {
   crosswayItemFewerReqs = false;
   destroyBombCoversWithPowerBombs = false;
   eliteResearchInfiniteBoostClip = false;
+  exitPhendranaCanyonNoItems = false;
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   frigateCrashSiteItemWithoutGravitySuit = false;
@@ -70,6 +72,7 @@ export class Tricks extends SettingsFlags {
   trainingChamberAndAccessOobWallcrawl = false;
   upperRuinedShrineTowerOfLightFewerAccessReqs = false;
   ventShaftHpbj = false;
+  warriorShrineMinimumReqs = false;
   warriorShrineWithoutBoost = false;
   wateryHallUnderwaterFlaahgraSkip = false;
   wateryHallUnderwaterSlopeJump = false;

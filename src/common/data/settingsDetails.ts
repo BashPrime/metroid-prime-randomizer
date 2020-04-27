@@ -140,14 +140,14 @@ export const details: SettingsDetails = {
   antechamberWithPowerBombs: {
     name: 'Antechamber with Power Bombs',
     description: `You can retrieve the item and leave Antechamber without Ice Beam by using a power bomb to open the door, moving to the very back of the room, and then back to the door.
-    
+
     WARNING: If you fail the trick, you will softlock. It is strongly recommended to save at the nearby save station before attempting.`,
     difficulty: Difficulty.NORMAL
   },
   arborChamberWithoutPlasma: {
     name: 'Arbor Chamber without Plasma Beam',
     description: `Arbor Chamber can be entered through the ceiling from out of bounds.
-    
+
     You can go out of bounds in Root Cave near the Arbor Chamber door, or in Gully.`,
     difficulty: Difficulty.OOB
   },
@@ -164,11 +164,18 @@ export const details: SettingsDetails = {
     difficulty: Difficulty.INSANE
   },
   chapelOfTheEldersWithPowerBombs: {
-    name: 'Chapel of the Elders without Power Bombs',
+    name: 'Chapel of the Elders with Power Bombs',
     description: `Similar to Antechamber without Power Bombs, but you open the door, lay a power bomb in the middle of the door frame, and `
       + `then immediately roll into Chapel of the Elders.
-      
+
       WARNING: You will softlock if you fail this trick. You are recommended to save first before attempting.`,
+    difficulty: Difficulty.NORMAL
+  },
+  chozoIceTempleWithoutSpaceJump: {
+    name: 'Chozo Ice Temple without Space Jump',
+    description: `Removes Space Jump from being considered for Chozo Ice Temple, Chapel of the Elders, and Phendrana Shorelines (Spider Track).
+
+    You can reach these locations by doing a hyper bomb jump in Phendrana Shorelines to reach the temple, and double bomb jumping to climb the temple itself.`,
     difficulty: Difficulty.NORMAL
   },
   chozoIceTempleItemWithIS: {
@@ -273,6 +280,13 @@ export const details: SettingsDetails = {
     description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
     difficulty: Difficulty.NORMAL
   },
+  exitPhendranaCanyonNoItems: {
+    name: 'Exit Phendrana Canyon with No Items',
+    description: `Normally, the logic expects you to be able to boost or Space Jump to exit Phendrana Canyon as a means of softlock protection. This trick removes those checks.
+
+    You can leave Phendrana Canyon without any items by jumping on the crates. However, if you destroy the crates and don't have Boost Ball or Space Jump, you will softlock.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   exitQuarantineCaveRuinedCourtyardSlopeJump: {
     name: 'Exit Quarantine Cave to Ruined Courtyard without Spider Ball',
     description: `You can exit Quarantine Cave to Ruined Courtyard by slope jumping next to the Spider Ball track.`,
@@ -348,7 +362,7 @@ export const details: SettingsDetails = {
   lifeGroveSpinnerWithoutBoostBall: {
     name: 'Life Grove Spinner without Boost Ball',
     description: `With a specific camera angle and control stick angle setup, you can open up the spinner item without Boost Ball.
-    
+
     Requires 'Life Grove Tunnel - Half Pipe Bomb Jump' to also be activated for this trick to be considered in logic.`,
     difficulty: Difficulty.NORMAL
   },
@@ -483,7 +497,7 @@ export const details: SettingsDetails = {
     name: 'Sun Tower - Infinite Bomb Jump',
     description: `After defeating Flaahgra, you can jump into the left groove, have the Oculus carry you, and then infinite bomb jump `
     + `back to the top door to trigger the Sunchamber Chozo Ghost room layer without needing Spider Ball and Super Missles.
-    
+
     WARNING: If progession is on Sunchamber (Ghosts), you will softlock if you fail this trick. You are advised to save before attempting.`,
     difficulty: Difficulty.NORMAL
   },
@@ -513,6 +527,11 @@ export const details: SettingsDetails = {
     name: 'Ventilation Shaft - Half Pipe Bomb Jump',
     description: `It's possible to return to Elite Control by performing a half pipe bomb jump to reach the Elite Control door.`,
     difficulty: Difficulty.HARD
+  },
+  warriorShrineMinimumReqs: {
+    name: 'Warrior Shrine - Minimum Requirements',
+    description: `You can climb the central structure in Monitor Station without Space Jump or Morph Ball Bombs, then dash across to the Warrior Shrine door.`,
+    difficulty: Difficulty.NORMAL
   },
   warriorShrineWithoutBoost: {
     name: 'Warrior Shrine without Boost Ball',
