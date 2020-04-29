@@ -33,7 +33,7 @@ export class ItemOverrides {
   [PrimeItem.POWER_BOMB_EXPANSION]: ItemOverride;
 
   // Constants
-  private readonly expansions: string[] = [
+  static readonly EXPANSIONS: string[] = [
     PrimeItem.ENERGY_TANK,
     PrimeItem.MISSILE_EXPANSION,
     PrimeItem.POWER_BOMB_EXPANSION
@@ -146,7 +146,7 @@ export class ItemOverrides {
       this[override.name] = override;
 
       // Handle if the override is for an expansion type
-      if (this.expansions.includes(override.name)) {
+      if (ItemOverrides.EXPANSIONS.includes(override.name)) {
         this[override.name].isExpansion = true;
 
         // Vanilla isn't a valid state for expansions. Set to shuffle instead.
