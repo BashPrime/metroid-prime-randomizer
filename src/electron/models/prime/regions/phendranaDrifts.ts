@@ -343,7 +343,15 @@ export function phendranaDrifts(): RegionObject[] {
       name: Elevator.PHENDRANA_SOUTH,
       exits: {
         [Elevator.MAGMOOR_SOUTH_PHENDRANA]: () => true,
-        'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
+        },
         'Transport Access (Phendrana)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (settings.tricks.phendranaTransportSouthToTransportAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.canSpider();
           return spiderReqs && items.has(PrimeItem.ICE_BEAM);
