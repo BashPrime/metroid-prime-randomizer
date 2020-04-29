@@ -9,6 +9,7 @@ This randomizer uses Syncathetic's randomprime patcher, which makes some changes
 * The Hint System is turned off by default.
 * The cutscene in Temple Security Station has been removed.
 * The Ridley flyover cutscene in Phendrana Shorelines has been removed.
+* You can safely enter Sunchamber and fight Flaahgra from the Sun Tower side. To trigger the Sunchamber Chozo Ghost layer change, you will need to return to Sun Tower and touch the trigger near the top of the spider track after defeating Flaahgra.
 * Research Lab Aether's glass will be broken if you collect the Research Core item before visiting the room for the first time, allowing you access to Control Tower and the rest of the pirate labs.
 * Observatory's Boost Ball puzzle can now be done at any time, regardless if you collect the Research Core item beforehand (or not).
 * The door in Main Ventilation Shaft Section B is now powered on by default, allowing you to traverse through the entire crashed frigate in reverse on your first visit.
