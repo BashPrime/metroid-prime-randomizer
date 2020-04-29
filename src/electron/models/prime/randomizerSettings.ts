@@ -132,7 +132,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   prettify(excludedKeys?: string[]) {
     const prettified = {};
 
-    const filtered = Utilities.filterProperties(this, ['randomStartingItems', 'itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
+    const filtered = Utilities.filterProperties(this, ['goalArtifacts', 'randomStartingItems', 'itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
 
     for (let key of Object.keys(filtered)) {
       // Try to get prettified setting name, if applicable
@@ -143,6 +143,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     // Add excluded tricks and tricks as arrays instead of objects
     Object.assign(prettified, {
+      ['Number of Chozo Artifacts']: this.goalArtifacts,
       ['Random Starting Items']: {
         ['Minimum']: this.randomStartingItems.minimum,
         ['Maximum']: this.randomStartingItems.maximum
