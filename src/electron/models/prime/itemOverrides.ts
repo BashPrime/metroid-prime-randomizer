@@ -39,7 +39,7 @@ export class ItemOverrides {
     PrimeItem.POWER_BOMB_EXPANSION
   ];
   static readonly COUNT_MIN: number = 1;
-  static readonly COUNT_MAX: number = 50;
+  static readonly COUNT_MAX: number = 100; // maximum possible item pool size
   static readonly STATES = {
     vanilla: 'vanilla',
     startingItem: 'starting-item',
