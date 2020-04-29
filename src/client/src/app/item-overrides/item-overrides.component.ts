@@ -152,22 +152,36 @@ export class ItemOverridesComponent extends SettingsSection implements OnInit {
     }
 
     // Handle artifacts
-    const artifactChoices = this.getChoices('goal');
-    switch (this.globalFormGroup.get('rules').get('goal').value) {
-      case 'artifact-collection':
-        itemPoolSize += this.globalFormGroup.get('rules').get('goalArtifacts').value;
-        break;
-      case 'all-bosses':
-        itemPoolSize += 3;
-        break;
+    if (this.globalFormGroup.get('rules').get('goal').value === 'artifact-collection') {
+      itemPoolSize += this.globalFormGroup.get('rules').get('goalArtifacts').value;
     }
 
     return itemPoolSize;
   }
 
+  getItemPoolCapacity(): number {
+    const activeOverrides = this.formArray.value as ItemOverride[];
+    let placedItems = 0;
+
+    // Placed items will increment for any vanilla items, and if All Bosses is the goal
+    if (this.globalFormGroup.get('rules').get('goal').value === 'all-bosses') {
+      placedItems += 3;
+    }
+
+    for (let item of this.items) {
+      const override = activeOverrides.find(overrideItem => overrideItem.name === item.name);
+
+      if (override && override.state === ItemOverrides.STATES.vanilla) {
+        placedItems += 1;
+      }
+    }
+
+    return this.ITEM_POOL_MAX_SIZE - placedItems;
+  }
+
   get itemPoolTextStyling(): object {
     return {
-      'has-text-danger': this.getItemPoolSize() > this.ITEM_POOL_MAX_SIZE
+      'has-text-danger': this.getItemPoolSize() > this.getItemPoolCapacity()
     };
   }
 
