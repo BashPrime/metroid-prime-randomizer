@@ -132,7 +132,9 @@ export const details: SettingsDetails = {
   outputType: {
     name: 'Output Type',
     description: `'Plain ISO': Your plain, regular, uncompressed .iso file type. Works with virtually every loader and emulator.
+
     'Compressed ISO': Compresses the ISO, saves on file size. Should work with most loaders and emulators (Nintendont, Dolphin, etc).
+
     'GameCube Zip': Another compressed format. Currently, it only works with Dolphin.`
   },
   // Tricks
