@@ -19,6 +19,7 @@ export interface RandomizerForm {
     startingArea: number;
     randomStartingItems: RandomStartingItems;
     pointOfNoReturnItems: string;
+    junkItems: string;
   };
   itemOverrides: ItemOverride[];
   excludeLocations: string[];

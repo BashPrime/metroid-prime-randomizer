@@ -216,10 +216,10 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
     throw new Error('Cannot set core item pool. There are more items to be placed than there are locations available. (' + pool.length + ' items, ' + numberOfUnplacedLocations + ' locations)');
   }
 
-  // If the item pool has less than the number of unplaced locations, fill the remainder with "Nothing" items
+  // If the item pool has less than the number of unplaced locations, fill the remainder with junk items
   else if (pool.length < numberOfUnplacedLocations) {
     pool.push(...mapToItemPool({
-      [PrimeItem.NOTHING]: numberOfUnplacedLocations - pool.length
+      [settings.junkItems]: numberOfUnplacedLocations - pool.length
     }, ItemPriority.EXTRA));
   }
 
