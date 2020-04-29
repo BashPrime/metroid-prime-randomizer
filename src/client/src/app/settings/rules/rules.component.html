@@ -150,7 +150,7 @@
             <input class="input is-small" type="number" formControlName="maximum"
               [pTooltip]="DETAILS.randomStartingItems.items.maximum.description">
             <div *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors">
-              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.required">You
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.required">You
                 must set a maximum value.</p>
               <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.min">Minimum
                 count is 0.</p>
