@@ -96,7 +96,8 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Canyon',
       locations: {
-        [PrimeLocation.PHENDRANA_CANYON]: () => true
+        // Need space jump or scan visor to get to the platforms
+        [PrimeLocation.PHENDRANA_CANYON]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         // You'll softlock if you destroy the boxes, and don't have space jump or boost
