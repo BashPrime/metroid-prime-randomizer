@@ -404,6 +404,11 @@ export const details: SettingsDetails = {
     description: `You can slope jump onto the top of the crane and R jump over to the item.`,
     difficulty: Difficulty.NORMAL
   },
+  mainQuarryToOreProcessingWithoutGrapple: {
+    name: 'Main Quarry to Ore Processing without Grapple Beam',
+    description: `You can scan dash from the top of the structure (using the crane spider track scan point) to reach the door to Waste Disposal.`,
+    difficulty: Difficulty.EASY
+  },
   observatoryPuzzleSkip: {
     name: 'Observatory Item Puzzle Skip',
     description: `This trick expects you to dash to climb Observatory without Boost Ball and Bombs, and then slope jump to the pipes to reach the item.`,
