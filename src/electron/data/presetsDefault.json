@@ -56,7 +56,7 @@
 			"goal": "artifact-collection",
 			"goalArtifacts": 6,
 			"heatProtection": "any-suit",
-			"junkItems": "Nothing",
+			"junkItems": "Energy Tank",
 			"pointOfNoReturnItems": "do-not-allow",
 			"randomStartingItems": {
 				"maximum": 0,
