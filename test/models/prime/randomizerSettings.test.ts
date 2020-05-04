@@ -29,7 +29,7 @@ describe('PrimeRandomizerSettings', () => {
         alcoveNoItems: true
       }
     });
-    const expected = '124TP1C-2D91XAFQV9MTQVAGICCXOXQF4-UQ3UEU2I5SNC9D47UV4-32QHB1A5QG9PL34';
+    const expected = '8H2LKAO-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-65GYM2KBGWJF668';
     const result = settings.toSettingsString();
 
     expect(result).to.equal(expected);
