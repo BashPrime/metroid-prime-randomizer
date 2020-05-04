@@ -171,7 +171,8 @@ export function tallonOverworld(): RegionObject[] {
         }
       },
       exits: {
-        'Life Grove Tunnel': (items: PrimeItemCollection) => items.canSpider() && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Life Grove Tunnel': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canSpider() && items.has(PrimeItem.ICE_BEAM)
+          && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [Elevator.TALLON_SOUTH_CHOZO]: (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
         // Only with bars skip
         'Great Tree Hall (Lower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.greatTreeHallBarsSkip && items.canLayBombs()
@@ -200,16 +201,16 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Life Grove Tunnel',
       locations: {
-        [PrimeLocation.LIFE_GROVE_TUNNEL]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.canLayBombs() && items.canBoost()
+        [PrimeLocation.LIFE_GROVE_TUNNEL]: (items: PrimeItemCollection) => items.canLayBombs() && items.canBoost()
       },
       exits: {
         'Life Grove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost() || (settings.tricks.lifeGroveTunnelHpbj && items.canLayBombs());
-          return items.canLayPowerBombs() && boostReqs;
+          const boostReqs = items.canBoost() || settings.tricks.lifeGroveTunnelHpbj;
+          return boostReqs && items.canLayBombs();
         },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost() || (settings.tricks.lifeGroveTunnelHpbj && items.canLayBombs());
-          return items.canLayPowerBombs() && boostReqs && items.has(PrimeItem.ICE_BEAM);
+          const boostReqs = items.canBoost() || settings.tricks.lifeGroveTunnelHpbj;
+          return boostReqs && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
         }
       }
     },
