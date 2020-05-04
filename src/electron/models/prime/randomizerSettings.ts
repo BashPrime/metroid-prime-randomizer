@@ -16,6 +16,7 @@ import { ItemOverrides } from './itemOverrides';
 import { ItemOverride } from '../../../common/models/itemOverride';
 import { details } from '../../../common/data/settingsDetails';
 import { RandomizerForm } from '../../../common/models/randomizerForm';
+import { PrimeItem } from '../../enums/primeItem';
 
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
@@ -33,6 +34,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   startingArea?: number;
   randomStartingItems?: RandomStartingItems;
   pointOfNoReturnItems?: string;
+  junkItems?: string;
   itemOverrides?: ItemOverride[];
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
@@ -57,6 +59,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
     maximum: 0
   };
   pointOfNoReturnItems: string = PointOfNoReturnItems.ALLOW_ALL;
+  junkItems: string = PrimeItem.NOTHING;
   itemOverrides: ItemOverrides = new ItemOverrides();
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
@@ -129,7 +132,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   prettify(excludedKeys?: string[]) {
     const prettified = {};
 
-    const filtered = Utilities.filterProperties(this, ['randomStartingItems', 'itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
+    const filtered = Utilities.filterProperties(this, ['goalArtifacts', 'randomStartingItems', 'itemOverrides', 'excludeLocations', 'tricks', ...excludedKeys]);
 
     for (let key of Object.keys(filtered)) {
       // Try to get prettified setting name, if applicable
@@ -140,6 +143,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
 
     // Add excluded tricks and tricks as arrays instead of objects
     Object.assign(prettified, {
+      ['Number of Chozo Artifacts']: this.goalArtifacts,
       ['Random Starting Items']: {
         ['Minimum']: this.randomStartingItems.minimum,
         ['Maximum']: this.randomStartingItems.maximum
@@ -169,7 +173,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
         suitDamageReduction: this.suitDamageReduction,
         startingArea: this.startingArea,
         randomStartingItems: this.randomStartingItems,
-        pointOfNoReturnItems: this.pointOfNoReturnItems
+        pointOfNoReturnItems: this.pointOfNoReturnItems,
+        junkItems: this.junkItems
       },
       itemOverrides: this.itemOverrides.toArray(),
       excludeLocations: this.excludeLocations.toArray(),
@@ -394,6 +399,41 @@ export const settings = [
       }
     ],
     default: PointOfNoReturnItems.ALLOW_ALL
+  }),
+  new SelectOption({
+    name: 'junkItems',
+    shared: true,
+    choices: [
+      {
+        name: '"Nothing" Item',
+        value: PrimeItem.NOTHING
+      },
+      {
+        name: PrimeItem.ENERGY_TANK,
+        value: PrimeItem.ENERGY_TANK
+      },
+      {
+        name: PrimeItem.MISSILE_EXPANSION,
+        value: PrimeItem.MISSILE_EXPANSION
+      },
+      {
+        name: PrimeItem.POWER_BOMB_EXPANSION,
+        value: PrimeItem.POWER_BOMB_EXPANSION
+      },
+      {
+        name: PrimeItem.WAVEBUSTER,
+        value: PrimeItem.WAVEBUSTER
+      },
+      {
+        name: PrimeItem.ICE_SPREADER,
+        value: PrimeItem.ICE_SPREADER
+      },
+      {
+        name: PrimeItem.FLAMETHROWER,
+        value: PrimeItem.FLAMETHROWER
+      }
+    ],
+    default: PrimeItem.NOTHING
   }),
   new SelectOption({
     name: 'itemOverride',

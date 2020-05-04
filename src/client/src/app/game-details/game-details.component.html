@@ -84,8 +84,8 @@
               <div class="buttons">
                 <button class="button is-success" (click)="saveIsos(getFormGroup().value)">Save
                   ISO{{ hasMultipleSeeds() ? 's' : null }}</button>
-                <button class="button is-link" (click)="saveSpoilers(getFormGroup().value)"
-                  *ngIf="isSpoilerEnabled() | async">Save
+                <button class="button is-link" [disabled]="!(isSpoilerEnabled() | async)"
+                  (click)="saveSpoilers(getFormGroup().value)">Save
                   Spoiler{{ hasMultipleSeeds() ? 's' : null }}</button>
               </div>
             </div>

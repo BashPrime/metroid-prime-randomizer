@@ -1,28 +1,29 @@
 {
   "Default": {
-    "excludeLocations": [],
-    "itemOverrides": [],
-    "romSettings": {
-      "hideItemModels": false,
-      "skipFrigate": true,
-			"skipHudPopups": true,
-			"enableMainPlazaLedgeDoor": false
-    },
-    "rules": {
-      "artifactLocationHints": true,
-      "elevatorShuffle": false,
-      "goal": "artifact-collection",
-      "goalArtifacts": 12,
-      "heatProtection": "any-suit",
-      "pointOfNoReturnItems": "allow-all",
-      "randomStartingItems": {
-        "maximum": 0,
-        "minimum": 0
-      },
-      "startingArea": 20,
-      "suitDamageReduction": "default"
-    },
-    "tricks": []
+		"excludeLocations": [],
+		"itemOverrides": [],
+		"romSettings": {
+			"enableMainPlazaLedgeDoor": false,
+			"hideItemModels": false,
+			"skipFrigate": true,
+			"skipHudPopups": true
+		},
+		"rules": {
+			"artifactLocationHints": true,
+			"elevatorShuffle": false,
+			"goal": "artifact-collection",
+			"goalArtifacts": 12,
+			"heatProtection": "any-suit",
+			"junkItems": "Nothing",
+			"pointOfNoReturnItems": "allow-all",
+			"randomStartingItems": {
+				"maximum": 0,
+				"minimum": 0
+			},
+			"startingArea": 20,
+			"suitDamageReduction": "default"
+		},
+		"tricks": []
   },
   "Beginner Friendly": {
 		"excludeLocations": [],
@@ -44,10 +45,10 @@
 			}
 		],
 		"romSettings": {
+			"enableMainPlazaLedgeDoor": false,
 			"hideItemModels": false,
 			"skipFrigate": true,
-			"skipHudPopups": true,
-			"enableMainPlazaLedgeDoor": false
+			"skipHudPopups": true
 		},
 		"rules": {
 			"artifactLocationHints": true,
@@ -55,6 +56,7 @@
 			"goal": "artifact-collection",
 			"goalArtifacts": 6,
 			"heatProtection": "any-suit",
+			"junkItems": "Energy Tank",
 			"pointOfNoReturnItems": "do-not-allow",
 			"randomStartingItems": {
 				"maximum": 0,
@@ -85,7 +87,8 @@
 			"elevatorShuffle": false,
 			"goal": "artifact-collection",
 			"goalArtifacts": 6,
-			"heatProtection": "varia-only",
+      "heatProtection": "varia-only",
+			"junkItems": "Missile Expansion",
 			"pointOfNoReturnItems": "allow-visible",
 			"randomStartingItems": {
 				"maximum": 0,

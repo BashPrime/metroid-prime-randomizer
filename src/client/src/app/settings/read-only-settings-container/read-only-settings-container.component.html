@@ -52,6 +52,10 @@
       <p class="heading">{{ getDisplayName('startingArea') }}</p>
       <p>{{ getValue('startingArea', 'rules') }}</p>
     </div>
+    <div class="field">
+      <p class="heading">{{ getDisplayName('junkItems') }}</p>
+      <p>{{ getValue('junkItems', 'rules') }}</p>
+    </div>
     <p class="heading">{{ getDisplayName('randomStartingItems') }}</p>
     <div class="field">
       <p class="heading">{{ DETAILS.randomStartingItems.items.minimum.name }}</p>
@@ -67,7 +71,7 @@
     <div *ngIf="getRandomizerForm().itemOverrides.length">
       <div class="field" *ngFor="let override of getRandomizerForm().itemOverrides">
         <p class="heading">{{ override.name }}</p>
-        <p>{{ getChoiceName('itemOverride', override.state) + (override.state === STATES.shuffled ? ' (' + override.count + ')' : '') }}</p>
+        <p>{{ formatItemOverrideOutput(override) }}</p>
       </div>
     </div>
     <div class="field" *ngIf="!getRandomizerForm().itemOverrides.length">

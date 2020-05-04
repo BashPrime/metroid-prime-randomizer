@@ -11,7 +11,8 @@ interface StartingItems {
     bitWidth: number;
     maximum: number;
     randomPrimeOnly?: boolean;
-    exclude?: boolean;
+    excludeFromRandomPrime?: boolean;
+    excludeFromRandomStartingItems?: boolean;
   }
 }
 
@@ -42,12 +43,12 @@ const items: StartingItems = {
   [PrimeItem.SPACE_JUMP_BOOTS]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.GRAPPLE_BEAM]: { bitWidth: 1, maximum: 1 },
   [PrimeItem.SUPER_MISSILE]: { bitWidth: 1, maximum: 1 },
-  [PrimeItem.WAVEBUSTER]: { bitWidth: 1, maximum: 1 },
-  [PrimeItem.ICE_SPREADER]: { bitWidth: 1, maximum: 1 },
-  [PrimeItem.FLAMETHROWER]: { bitWidth: 1, maximum: 1 },
-  [PrimeItem.MISSILE_LAUNCHER]: { bitWidth: 0, maximum: 1, exclude: true },
-  [PrimeItem.MISSILE_EXPANSION]: { bitWidth: 0, maximum: 49, exclude: true },
-  [PrimeItem.POWER_BOMB_EXPANSION]: { bitWidth: 0, maximum: 4, exclude: true }
+  [PrimeItem.WAVEBUSTER]: { bitWidth: 1, maximum: 1, excludeFromRandomStartingItems: true },
+  [PrimeItem.ICE_SPREADER]: { bitWidth: 1, maximum: 1, excludeFromRandomStartingItems: true },
+  [PrimeItem.FLAMETHROWER]: { bitWidth: 1, maximum: 1, excludeFromRandomStartingItems: true },
+  [PrimeItem.MISSILE_LAUNCHER]: { bitWidth: 0, maximum: 1, excludeFromRandomPrime: true },
+  [PrimeItem.MISSILE_EXPANSION]: { bitWidth: 0, maximum: 49, excludeFromRandomPrime: true },
+  [PrimeItem.POWER_BOMB_EXPANSION]: { bitWidth: 0, maximum: 4, excludeFromRandomPrime: true }
 };
 
 /**
@@ -56,7 +57,6 @@ const items: StartingItems = {
  */
 export function setStartingItems(world: PrimeWorld): void {
   const startingItems: ItemMap = getStartingItemsMap();
-  const itemEntries = Object.entries(items);
   const settings = world.getSettings();
   const rng = world.getRng();
 
@@ -64,7 +64,7 @@ export function setStartingItems(world: PrimeWorld): void {
   for (let override of settings.itemOverrides.toArray()) {
     if (override.state === ItemOverrides.STATES.startingItem) {
       // Initially set the count to the maximum for the starting item (1 if the item isn't an expansion)
-      // This value will be overwritten if the override is for an expansion.
+      // This value will be overridden if the override is for an expansion.
       let startCount = items[override.name].maximum;
 
       // If the item is an expansion, use either its count value or the maximum for the item.
@@ -75,7 +75,19 @@ export function setStartingItems(world: PrimeWorld): void {
       // Apply the count to the starting items map
       startingItems[override.name] = startCount;
     }
+    // If the overridden item is shuffled, set the maximum to the new count value
+    // We want to handle cases such as items being taken out of the pool (shuffled with 0 count), where we don't want the player to potentially start with those items.
+    else if (override.state === ItemOverrides.STATES.shuffled) {
+      items[override.name].maximum = override.count;
+    }
+    // Set count to 0 if the override is vanilla. We don't want the player to potentially start with the item
+    else {
+      items[override.name].maximum = 0;
+    }
   }
+
+  // Get item entries for random starting item calculation
+  const itemEntries = Object.entries(items);
 
   // If scan visor override isn't present, make it a starting item by default.
   // When no overrides are provided, scan visor is the only item that will be set as a starting item; all others will be shuffled.
@@ -83,34 +95,25 @@ export function setStartingItems(world: PrimeWorld): void {
     startingItems[PrimeItem.SCAN_VISOR] = items[PrimeItem.SCAN_VISOR].maximum;
   }
 
-  let numberOfRandomStartingItems: number;
-
-  // Validate random starting items
-  if (!(settings.randomStartingItems.minimum && settings.randomStartingItems.maximum)) {
-    numberOfRandomStartingItems = 0;
-  }
   // If minimum >= maximum, automatically use the minimum value
-  else if (settings.randomStartingItems.minimum >= settings.randomStartingItems.maximum) {
-    numberOfRandomStartingItems = settings.randomStartingItems.minimum;
-  }
   // Else, Pick a random number of starting items from a min and max range
-  else {
-    numberOfRandomStartingItems = Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
-  }
+  const numberOfRandomStartingItems: number = settings.randomStartingItems.minimum >= settings.randomStartingItems.maximum
+    ? settings.randomStartingItems.minimum
+    : Utilities.getRandomInt(settings.randomStartingItems.minimum, settings.randomStartingItems.maximum, rng);
 
   // Add the given number of random starting items, using items list to choose what we're adding
   for (let i = 0; i < numberOfRandomStartingItems; i++) {
     // Look for an item that can have its value incremented.
     let incrementedItem = false;
 
-    // Keep getting a random item until we find one that can be added to.
+    // Keep getting a random item until we find one that can be added.
     while (!incrementedItem) {
       const item = itemEntries[Utilities.getRandomInt(0, itemEntries.length - 1, rng)];
       const itemKey = item[0];
       const itemInfo = item[1];
 
-      // Increment the item if we can, set flag to true
-      if (startingItems[itemKey] < itemInfo.maximum) {
+      // Increment the item if it isn't excluded and isn't at its maximum value, then flag to exit the loop
+      if (!itemInfo.excludeFromRandomStartingItems && startingItems[itemKey] < itemInfo.maximum) {
         startingItems[itemKey]++;
         incrementedItem = true;
       }
@@ -126,7 +129,7 @@ export function toRandomprimeFormat(startingItems: Item[]): number {
   let itemBitString = '';
 
   // Iterate through all un-excluded items (excluded items are not useful for building randomprime string)
-  for (let [key, info] of Object.entries(items).filter(([key, info]) => !info.exclude)) {
+  for (let [key, info] of Object.entries(items).filter(([key, info]) => !info.excludeFromRandomPrime)) {
     let value: number;
 
     // Special cases for missiles and power bombs
@@ -168,7 +171,7 @@ export function toRandomprimeFormat(startingItems: Item[]): number {
 function getStartingItemsMap(): ItemMap {
   const map: ItemMap = {};
 
-  // Build map out of non randomprime-specific items
+  // Build map out of non-randomprime-only items
   for (let [key, info] of Object.entries(items).filter(([key, info]) => !info.randomPrimeOnly)) {
     map[key] = 0;
   }

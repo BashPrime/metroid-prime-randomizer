@@ -96,7 +96,8 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Canyon',
       locations: {
-        [PrimeLocation.PHENDRANA_CANYON]: () => true
+        // Need space jump or scan visor to get to the platforms
+        [PrimeLocation.PHENDRANA_CANYON]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         // You'll softlock if you destroy the boxes, and don't have space jump or boost
@@ -343,7 +344,15 @@ export function phendranaDrifts(): RegionObject[] {
       name: Elevator.PHENDRANA_SOUTH,
       exits: {
         [Elevator.MAGMOOR_SOUTH_PHENDRANA]: () => true,
-        'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canSpider() && baseReqs;
+        },
         'Transport Access (Phendrana)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const spiderReqs = (settings.tricks.phendranaTransportSouthToTransportAccessWithoutSpider && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.canSpider();
           return spiderReqs && items.has(PrimeItem.ICE_BEAM);

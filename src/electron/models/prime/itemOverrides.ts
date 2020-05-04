@@ -33,13 +33,13 @@ export class ItemOverrides {
   [PrimeItem.POWER_BOMB_EXPANSION]: ItemOverride;
 
   // Constants
-  private readonly expansions: string[] = [
+  static readonly EXPANSIONS: string[] = [
     PrimeItem.ENERGY_TANK,
     PrimeItem.MISSILE_EXPANSION,
     PrimeItem.POWER_BOMB_EXPANSION
   ];
   static readonly COUNT_MIN: number = 1;
-  static readonly COUNT_MAX: number = 50;
+  static readonly COUNT_MAX: number = 100; // maximum possible item pool size
   static readonly STATES = {
     vanilla: 'vanilla',
     startingItem: 'starting-item',
@@ -146,7 +146,7 @@ export class ItemOverrides {
       this[override.name] = override;
 
       // Handle if the override is for an expansion type
-      if (this.expansions.includes(override.name)) {
+      if (ItemOverrides.EXPANSIONS.includes(override.name)) {
         this[override.name].isExpansion = true;
 
         // Vanilla isn't a valid state for expansions. Set to shuffle instead.

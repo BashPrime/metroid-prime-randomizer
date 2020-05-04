@@ -1,7 +1,7 @@
 <div [formGroup]="getFormGroup()">
   <div clas="field" style="margin-bottom: 0.5rem;">
     <div class="control">Item Pool: <span [ngClass]="itemPoolTextStyling">{{ getItemPoolSize() }}</span> /
-      {{ ITEM_POOL_MAX_SIZE }}</div>
+      {{ getItemPoolCapacity() }}</div>
   </div>
   <div class="field is-grouped">
     <div class="control">

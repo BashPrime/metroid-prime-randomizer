@@ -49,6 +49,7 @@ export class Tricks extends SettingsFlags {
   mainPlazaHpbj = false;
   mainPlazaItemsOnlySpaceJump = false;
   mainQuarryItemWithoutSpider = false;
+  mainQuarryToOreProcessingWithoutGrapple = false;
   observatoryPuzzleSkip = false;
   outOfBoundsWithoutMorphBall = false;
   phazonMiningTunnelItemWithoutPhazonSuit = false;

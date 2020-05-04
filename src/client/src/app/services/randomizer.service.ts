@@ -40,10 +40,11 @@ export class RandomizerService {
         suitDamageReduction: [this.DEFAULT_SETTINGS.suitDamageReduction],
         startingArea: [this.DEFAULT_SETTINGS.startingArea],
         randomStartingItems: fb.group({
-          minimum: [this.DEFAULT_SETTINGS.randomStartingItems.minimum, [Validators.min(0), Validators.max(25)]],
-          maximum: [this.DEFAULT_SETTINGS.randomStartingItems.maximum, [Validators.min(0), Validators.max(25)]]
+          minimum: [this.DEFAULT_SETTINGS.randomStartingItems.minimum, [Validators.required, Validators.min(0), Validators.max(25)]],
+          maximum: [this.DEFAULT_SETTINGS.randomStartingItems.maximum, [Validators.required, Validators.min(0), Validators.max(25)]]
         }),
-        pointOfNoReturnItems: [this.DEFAULT_SETTINGS.pointOfNoReturnItems]
+        pointOfNoReturnItems: [this.DEFAULT_SETTINGS.pointOfNoReturnItems],
+        junkItems: [this.DEFAULT_SETTINGS.junkItems]
       }),
       itemOverrides: fb.array([]),
       excludeLocations: fb.array([]),

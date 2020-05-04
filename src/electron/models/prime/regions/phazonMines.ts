@@ -20,7 +20,8 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SCAN_VISOR),
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = items.canLayBombs() && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.mainQuarryToOreProcessingWithoutGrapple;
+          const baseReqs = grappleReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
             && items.has(PrimeItem.ICE_BEAM);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {

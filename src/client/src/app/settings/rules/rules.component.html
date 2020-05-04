@@ -82,10 +82,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <hr>
-  <div class="columns">
-    <div class="column">
+    <div class="column is-one-third">
       <div class="field">
         <label class="label is-small">{{ getDisplayName('elevatorShuffle') }}</label>
         <div class="control">
@@ -94,7 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="column">
+    <div class="column is-one-third">
       <div class="field">
         <label class="label is-small">{{ getDisplayName('startingArea') }}</label>
         <div class="control">
@@ -109,30 +106,57 @@
         </div>
       </div>
     </div>
-    <div class="column">
-      <div formGroupName="randomStartingItems">
-        <label class="label is-small" [pTooltip]="DETAILS.randomStartingItems.description">Randomized Starting
-          Items</label>
+    <div class="column is-one-third">
+      <div class="field">
+        <label class="label is-small">{{ getDisplayName('junkItems') }}</label>
+        <div class="control">
+          <div class="select is-small" [pTooltip]="DETAILS.junkItems.description" tooltipStyleClass="is-wide-tooltip">
+            <select formControlName="junkItems">
+              <option *ngFor="let choice of getChoices('junkItems')" [ngValue]="choice.value">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div formGroupName="randomStartingItems">
+    <label class="label" [pTooltip]="DETAILS.randomStartingItems.description"
+      tooltipStyleClass="is-wide-tooltip">Randomized Starting Items</label>
+    <div class="columns">
+      <div class="column is-one-third">
         <div class="field">
           <label class="label is-small">Minimum</label>
           <div class="control">
-            <input class="input has-width-auto is-small" type="number" formControlName="minimum"
+            <input class="input is-small" type="number" formControlName="minimum"
               [pTooltip]="DETAILS.randomStartingItems.items.minimum.description">
             <div *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors">
-              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.min">Minimum count is 0.</p>
-              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.max">Maximum count is 25.</p>
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.required">You
+                must set a minimum value.</p>
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.min">Minimum
+                count is 0.</p>
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.minimum.errors.max">Maximum
+                count is 25.</p>
             </div>
           </div>
         </div>
+      </div>
+      <div class="column is-one-third">
         <div class="field">
           <label class="label is-small">Maximum</label>
           <div class="control">
-            <input class="input has-width-auto is-small" type="number" formControlName="maximum"
+            <input class="input is-small" type="number" formControlName="maximum"
               [pTooltip]="DETAILS.randomStartingItems.items.maximum.description">
-              <div *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors">
-                <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.min">Minimum count is 0.</p>
-                <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.max">Maximum count is 25.</p>
-              </div>
+            <div *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors">
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.required">You
+                must set a maximum value.</p>
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.min">Minimum
+                count is 0.</p>
+              <p class="help is-danger" *ngIf="getRandomStartingItemsFormGroup().controls.maximum.errors.max">Maximum
+                count is 25.</p>
+            </div>
           </div>
         </div>
       </div>

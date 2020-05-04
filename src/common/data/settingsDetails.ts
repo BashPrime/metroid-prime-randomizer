@@ -105,6 +105,12 @@ export const details: SettingsDetails = {
       }
     }
   },
+  junkItems: {
+    name: 'Junk Items',
+    description: `Any unfilled spots in the item pool will be filled with the chosen item.
+
+    The "Nothing" item is a suit model that intentionally uses a "glitched" texture.`
+  },
   // Game Details
   baseIso: {
     name: 'Base ISO',
@@ -126,7 +132,9 @@ export const details: SettingsDetails = {
   outputType: {
     name: 'Output Type',
     description: `'Plain ISO': Your plain, regular, uncompressed .iso file type. Works with virtually every loader and emulator.
+
     'Compressed ISO': Compresses the ISO, saves on file size. Should work with most loaders and emulators (Nintendont, Dolphin, etc).
+
     'GameCube Zip': Another compressed format. Currently, it only works with Dolphin.`
   },
   // Tricks
@@ -395,6 +403,11 @@ export const details: SettingsDetails = {
     name: 'Main Quarry Item without Spider Ball',
     description: `You can slope jump onto the top of the crane and R jump over to the item.`,
     difficulty: Difficulty.NORMAL
+  },
+  mainQuarryToOreProcessingWithoutGrapple: {
+    name: 'Main Quarry to Ore Processing without Grapple Beam',
+    description: `You can scan dash from the top of the structure (using the crane spider track scan point) to reach the door to Waste Disposal.`,
+    difficulty: Difficulty.EASY
   },
   observatoryPuzzleSkip: {
     name: 'Observatory Item Puzzle Skip',
