@@ -409,15 +409,27 @@ export const settings = [
         value: PrimeItem.NOTHING
       },
       {
-        name: 'Missile Expansion',
-        value: PrimeItem.MISSILE_EXPANSION
-      },
-      {
-        name: 'Energy Tank',
+        name: PrimeItem.ENERGY_TANK,
         value: PrimeItem.ENERGY_TANK
       },
       {
-        name: 'Flamethrower',
+        name: PrimeItem.MISSILE_EXPANSION,
+        value: PrimeItem.MISSILE_EXPANSION
+      },
+      {
+        name: PrimeItem.POWER_BOMB_EXPANSION,
+        value: PrimeItem.POWER_BOMB_EXPANSION
+      },
+      {
+        name: PrimeItem.WAVEBUSTER,
+        value: PrimeItem.WAVEBUSTER
+      },
+      {
+        name: PrimeItem.ICE_SPREADER,
+        value: PrimeItem.ICE_SPREADER
+      },
+      {
+        name: PrimeItem.FLAMETHROWER,
         value: PrimeItem.FLAMETHROWER
       }
     ],
