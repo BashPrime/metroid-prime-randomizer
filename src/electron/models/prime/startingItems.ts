@@ -75,10 +75,14 @@ export function setStartingItems(world: PrimeWorld): void {
       // Apply the count to the starting items map
       startingItems[override.name] = startCount;
     }
-    // If the item we're overriding is shuffled and using a count less than its maximum/default, set the new maximum for the random starting items check.
-    // This is to handle cases such as removing an item from the item pool, and ensuring that you do not start with the item if it has been removed (set to 0).
-    else if (override.state === ItemOverrides.STATES.shuffled && override.count < items[override.name].maximum) {
+    // If the overridden item is shuffled, set the maximum to the new count value
+    // We want to handle cases such as items being taken out of the pool (shuffled with 0 count), where we don't want the player to potentially start with those items.
+    else if (override.state === ItemOverrides.STATES.shuffled) {
       items[override.name].maximum = override.count;
+    }
+    // Set count to 0 if the override is vanilla. We don't want the player to potentially start with the item
+    else {
+      items[override.name].maximum = 0;
     }
   }
 
