@@ -57,7 +57,6 @@ const items: StartingItems = {
  */
 export function setStartingItems(world: PrimeWorld): void {
   const startingItems: ItemMap = getStartingItemsMap();
-  const itemEntries = Object.entries(items);
   const settings = world.getSettings();
   const rng = world.getRng();
 
@@ -65,7 +64,7 @@ export function setStartingItems(world: PrimeWorld): void {
   for (let override of settings.itemOverrides.toArray()) {
     if (override.state === ItemOverrides.STATES.startingItem) {
       // Initially set the count to the maximum for the starting item (1 if the item isn't an expansion)
-      // This value will be overwritten if the override is for an expansion.
+      // This value will be overridden if the override is for an expansion.
       let startCount = items[override.name].maximum;
 
       // If the item is an expansion, use either its count value or the maximum for the item.
@@ -76,7 +75,15 @@ export function setStartingItems(world: PrimeWorld): void {
       // Apply the count to the starting items map
       startingItems[override.name] = startCount;
     }
+    // If the item we're overriding is shuffled and using a count less than its maximum/default, set the new maximum for the random starting items check.
+    // This is to handle cases such as removing an item from the item pool, and ensuring that you do not start with the item if it has been removed (set to 0).
+    else if (override.state === ItemOverrides.STATES.shuffled && override.count < items[override.name].maximum) {
+      items[override.name].maximum = override.count;
+    }
   }
+
+  // Get item entries for random starting item calculation
+  const itemEntries = Object.entries(items);
 
   // If scan visor override isn't present, make it a starting item by default.
   // When no overrides are provided, scan visor is the only item that will be set as a starting item; all others will be shuffled.
@@ -95,7 +102,7 @@ export function setStartingItems(world: PrimeWorld): void {
     // Look for an item that can have its value incremented.
     let incrementedItem = false;
 
-    // Keep getting a random item until we find one that can be added to.
+    // Keep getting a random item until we find one that can be added.
     while (!incrementedItem) {
       const item = itemEntries[Utilities.getRandomInt(0, itemEntries.length - 1, rng)];
       const itemKey = item[0];
