@@ -413,7 +413,7 @@ export function chozoRuins(): RegionObject[] {
         'Antechamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const climbReqs = (items.canBoost() && items.canLayBombs())
             || (settings.tricks.climbReflectingPoolWithoutBoostBall && items.has(PrimeItem.SPACE_JUMP_BOOTS));
-          const baseReqs = climbReqs && items.canLayBombs() && items.hasMissiles();
+          const baseReqs = climbReqs && items.hasMissiles();
 
           if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
             return baseReqs;
