@@ -47,3 +47,7 @@ The upper door locks if the Metroid breaks out of its container. It will not unl
 You killed the two Space Pirates that normally jump down from the ledge near the save station before triggering the door lock. If you don't have Boost Ball, or don't know how to scan dash to climb back up the room, you are softlocked, but you can otherwise leave the top door of the room and reload Observatory to get rid of the door lock.
 
 Make sure you trigger the door lock first before killing the space pirates.
+
+## Why is Varia Suit in Phendrana Drifts? I don't have heat protection to get there!
+
+The second half of Magmoor Caverns (past Twin Fires Tunnel) is not superheated, so the logic is likely expecting you to go to the Phendrana Quarantine Cave elevator by going to Magmoor Workstation from Phazon Mines.
