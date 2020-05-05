@@ -10,7 +10,7 @@ Every time you play a randomizer seed, you should always start from a brand-new 
 
 ## My seed is broken. Items are missing, artifacts aren't working, I'm starting out with items, etc.
 
-The randomizer doesn't work (or work *well*) with pre-existing saves. You need to start from a brand-new save slot each time you play a randomizer seed or else you might run into this issue.
+The randomizer doesn't work (or work *well*) with pre-existing save slots. You need to start from a brand-new save slot each time you play a randomizer seed or else you might run into this issue.
 
 ## The game crashes if I lay a Morph Ball Bomb while submerged in water or lava.
 
@@ -48,6 +48,14 @@ You killed the two Space Pirates that normally jump down from the ledge near the
 
 Make sure you trigger the door lock first before killing the space pirates.
 
-## Why is Varia Suit in Phendrana Drifts? I don't have heat protection to get there!
+## Why is Varia Suit in Phendrana Drifts? I don't have heat protection to get there.
 
 The second half of Magmoor Caverns (past Twin Fires Tunnel) is not superheated, so the logic is likely expecting you to go to the Phendrana Quarantine Cave elevator by going to Magmoor Workstation from Phazon Mines.
+
+## When Samus morphs, her Morph Ball form looks different than her suit.
+
+Metroid Prime does not contain any 3D models or assets for Power Suit Spider Ball, Gravity Suit spiderless Morph Ball, and Phazon Suit spiderless Morph Ball, so it does the following:
+
+If Samus has the Power Suit and the Spider Ball, the game uses the Gravity Suit Spider Ball model when she is morphed.
+
+If Samus has the Gravity Suit or Phazon Suit but does not have Spider Ball, the game uses the Power Suit Morph Ball model when she is morphed.
