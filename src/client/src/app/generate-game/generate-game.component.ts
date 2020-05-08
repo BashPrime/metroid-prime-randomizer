@@ -78,6 +78,7 @@ export class GenerateGameComponent implements OnInit {
         case 'update':
           if (this.lastUpdatedPreset) {
             this.setPreset(this.lastUpdatedPreset);
+            this.lastUpdatedPreset = null;
           }
           break;
         case 'remove':
