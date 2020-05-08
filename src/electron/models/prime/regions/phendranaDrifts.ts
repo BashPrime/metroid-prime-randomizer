@@ -285,8 +285,12 @@ export function phendranaDrifts(): RegionObject[] {
       name: 'Phendrana\'s Edge',
       locations: {
         [PrimeLocation.STORAGE_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = settings.tricks.removePhendranaDepthsGrappleReqs || items.has(PrimeItem.GRAPPLE_BEAM);
-          return items.canLayPowerBombs() && grappleReqs && items.has(PrimeItem.PLASMA_BEAM)
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.removePhendranaDepthsGrappleReqs;
+          // Effectively removes visor requirements if either Remove Thermal or Remove X-Ray Requirements are enabled.
+          const visorReqs = (items.has(PrimeItem.THERMAL_VISOR) || settings.tricks.removeThermalReqs)
+            || (items.has(PrimeItem.XRAY_VISOR) || settings.tricks.removeXrayReqs);
+
+          return grappleReqs && visorReqs && items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         [PrimeLocation.SECURITY_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {

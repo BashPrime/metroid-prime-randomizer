@@ -17,6 +17,7 @@ export class HelpComponent implements OnInit {
   readonly menuItems = [
     { name: 'Getting Started', file: 'assets/help-documents/gettingStarted.md' },
     { name: 'FAQ', file: 'assets/help-documents/faq.md' },
+    { name: 'Softlocks', file: 'assets/help-documents/softlocks.md' },
     { name: 'Differences', file: 'assets/help-documents/differences.md' },
     { name: 'Trackers', file: 'assets/help-documents/trackers.md' }
   ];

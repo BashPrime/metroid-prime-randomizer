@@ -31,7 +31,7 @@ export function initialize() {
     event.sender.send('getDefaultPresetsResponse', response);
   });
 
-  ipcMain.on('getUserPresets', (event) => {
+  ipcMain.on('getUserPresets', (event, previousAction: string) => {
     const userPresetsResponse = 'getUserPresetsResponse';
 
     fs.access(userPresetsPath, fs.constants.R_OK, (err) => {
@@ -45,7 +45,7 @@ export function initialize() {
         readUserPresetsFile(response => {
           // Add to allPresets object
           Object.assign(allPresets, response.presets);
-          event.sender.send(userPresetsResponse, response);
+          event.sender.send(userPresetsResponse, response, previousAction);
         });
       }
     });
