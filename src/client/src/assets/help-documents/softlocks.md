@@ -1,6 +1,6 @@
 # Softlocks
 
-Softlocks are situations where the game is technically still playable, but further progression is impossible.
+Softlocks are situations where the game is usually still playable, but further progression is impossible.
 
 If you're not careful, you can accidentally find yourself in a room without the item needed to leave it, causing you to softlock. While the randomizer handles a lot of these cases, there are some that it does not and cannot account for.
 
