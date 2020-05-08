@@ -83,7 +83,7 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.TRANSPORT_TUNNEL_B]: () => true,
         [PrimeLocation.ROOT_CAVE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple
+          const grappleReqs = items.has(PrimeItem.GRAPPLE_BEAM) || settings.tricks.rootCaveArborChamberWithoutGrapple;
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
           return xrayReqs && grappleReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
