@@ -26,6 +26,7 @@ export class GenerateGameComponent implements OnInit {
   private userPresets: PresetObject;
   private form: FormGroup;
   private ngUnsubscribe: Subject<any> = new Subject();
+  private lastUpdatedPreset: string;
 
   // Constants
   private readonly CUSTOM_PRESET = 'Custom';
@@ -69,6 +70,27 @@ export class GenerateGameComponent implements OnInit {
           this.loaded = true;
         }
       });
+
+    this.presetsService._previousAction
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(previousAction => {
+      switch (previousAction) {
+        case 'update':
+          if (this.lastUpdatedPreset) {
+            this.setPreset(this.lastUpdatedPreset);
+          }
+          break;
+        case 'remove':
+          this.setPreset(this.randomizerService.DEFAULT_PRESET);
+          break;
+      }
+    });
+
+    this.presetsService._lastUpdatedPreset
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(preset => {
+      this.lastUpdatedPreset = preset;
+    });
   }
 
   ngOnDestroy() {
@@ -188,7 +210,6 @@ export class GenerateGameComponent implements OnInit {
 
   removePreset(name: string): void {
     this.presetsService.removePreset(name);
-    this.form.patchValue({ preset: this.randomizerService.DEFAULT_PRESET });
   }
 
   generateSeed(spoiler: boolean) {
@@ -217,15 +238,5 @@ export class GenerateGameComponent implements OnInit {
         this.presets[key] = preset[key];
       }
     }
-
-    // After building presets, if we imported a preset, select it in the form
-    this.presetsService._importedPreset
-      .pipe(take(1))
-      .subscribe(preset => {
-        if (preset) {
-          this.setPreset(preset);
-          this.presetsService.clearImportPresetSubject();
-        }
-      });
   }
 }
