@@ -30,6 +30,11 @@
 		"itemOverrides": [
 			{
 				"count": 1,
+				"name": "Charge Beam",
+				"state": "starting-item"
+			},
+			{
+				"count": 1,
 				"name": "Morph Ball",
 				"state": "starting-item"
 			},
@@ -40,7 +45,12 @@
 			},
 			{
 				"count": 1,
-				"name": "Charge Beam",
+				"name": "Boost Ball",
+				"state": "starting-item"
+			},
+			{
+				"count": 1,
+				"name": "Spider Ball",
 				"state": "starting-item"
 			}
 		],
