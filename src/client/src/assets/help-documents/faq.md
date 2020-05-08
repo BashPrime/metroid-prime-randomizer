@@ -10,7 +10,7 @@ Every time you play a randomizer seed, you should always start from a brand-new 
 
 ## My seed is broken. Items are missing, artifacts aren't working, I'm starting out with items, etc.
 
-The randomizer doesn't work (or work *well*) with pre-existing saves. You need to start from a brand-new save slot each time you play a randomizer seed or else you might run into this issue.
+The randomizer doesn't work (or work *well*) with pre-existing save slots. You need to start from a brand-new save slot each time you play a randomizer seed or else you might run into this issue.
 
 ## The game crashes if I lay a Morph Ball Bomb while submerged in water or lava.
 
@@ -30,10 +30,6 @@ This is a variation of the above problem, except the game doesn't crash. Try run
 
 You need the Charge Beam equipped in order to use beam combos.
 
-## The big red flower isn't there when I enter Sunchamber (Flaahgra's room).
-
-This happens when you enter Sunchamber from the Sun Tower side without fighting Flaahgra first. If you have Space Jump Boots, you can slope jump from one of the roots to reach the item that spawns after the Chozo Ghost fight, otherwise you won't be able to load the Flaahgra fight. If you don't have Space Jump Boots, or Flaahgra blocks access to them, you are softlocked and need to restart.
-
 ## I can't hurt Omega Pirate.
 
 Omega Pirate can only be hurt while you have the X-Ray Visor active. If you start the boss fight and don't have the X-Ray Visor, you will softlock.
@@ -48,6 +44,14 @@ You killed the two Space Pirates that normally jump down from the ledge near the
 
 Make sure you trigger the door lock first before killing the space pirates.
 
-## Why is Varia Suit in Phendrana Drifts? I don't have heat protection to get there!
+## Why is Varia Suit in Phendrana Drifts? I don't have heat protection to get there.
 
 The second half of Magmoor Caverns (past Twin Fires Tunnel) is not superheated, so the logic is likely expecting you to go to the Phendrana Quarantine Cave elevator by going to Magmoor Workstation from Phazon Mines.
+
+## When Samus morphs, her Morph Ball form looks different than her suit.
+
+Metroid Prime does not contain any 3D models or assets for Power Suit Spider Ball, Gravity Suit spiderless Morph Ball, and Phazon Suit spiderless Morph Ball, so it does the following:
+
+If Samus has the Power Suit and the Spider Ball, the game uses the Gravity Suit Spider Ball model when she is morphed.
+
+If Samus has the Gravity Suit or Phazon Suit but does not have Spider Ball, the game uses the Power Suit Morph Ball model when she is morphed.

@@ -114,7 +114,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Ruined Shrine (Outer)',
       locations: {
         [PrimeLocation.RUINED_SHRINE_HALF_PIPE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spaceJumpReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const spaceJumpReqs = settings.tricks.upperRuinedShrineTowerOfLightFewerAccessReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.MORPH_BALL);
           return spaceJumpReqs || items.canBoost();
         }
       },

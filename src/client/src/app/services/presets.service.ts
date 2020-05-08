@@ -10,13 +10,14 @@ import { RandomizerForm } from '../../../../common/models/randomizerForm';
   providedIn: 'root'
 })
 export class PresetsService {
-  private cachedImportedPreset: string;
   private defaultPresets$ = new BehaviorSubject<PresetObject>(undefined);
   private userPresets$ = new BehaviorSubject<PresetObject>(undefined);
-  private importedPreset$ = new BehaviorSubject<string>(undefined);
+  private previousAction$ = new BehaviorSubject<string>(undefined);
+  private lastUpdatedPreset$ = new BehaviorSubject<string>(undefined);
   _defaultPresets = this.defaultPresets$.asObservable();
   _userPresets = this.userPresets$.asObservable();
-  _importedPreset = this.importedPreset$.asObservable();
+  _previousAction = this.previousAction$.asObservable();
+  _lastUpdatedPreset = this.lastUpdatedPreset$.asObservable();
 
   constructor(private ngZone: NgZone, private electronService: ElectronService, private toastrService: ToastrService) {
     this.getAllPresets();
@@ -27,33 +28,28 @@ export class PresetsService {
       });
     });
 
-    this.electronService.ipcRenderer.on('getUserPresetsResponse', (event, response: PresetsResponse) => {
+    this.electronService.ipcRenderer.on('getUserPresetsResponse', (event, response: PresetsResponse, previousAction: string) => {
       this.ngZone.run(() => {
-        // Emit imported preset key if one is provided
-        if (this.cachedImportedPreset) {
-          this.importedPreset$.next(this.cachedImportedPreset);
-          this.cachedImportedPreset = null;
-        }
-
         this.handlePresetsResponse(response, this.userPresets$);
+        this.previousAction$.next(previousAction);
       });
     });
 
     this.electronService.ipcRenderer.on('updateUserPresetResponse', (event, response) => {
       this.ngZone.run(() => {
-        this.getUserPresets();
+        this.getUserPresets('update');
       });
     });
 
     this.electronService.ipcRenderer.on('removeUserPresetResponse', (event, response) => {
       this.ngZone.run(() => {
-        this.getUserPresets();
+        this.getUserPresets('remove');
       });
     });
 
     this.electronService.ipcRenderer.on('importPresetResponse', (event, key: string, preset: RandomizerForm) => {
       this.ngZone.run(() => {
-        this.cachedImportedPreset = key;
+        this.lastUpdatedPreset$.next(key);
         this.electronService.ipcRenderer.send('updateUserPreset', preset, key);
       });
     });
@@ -79,8 +75,8 @@ export class PresetsService {
     this.electronService.ipcRenderer.send('getDefaultPresets');
   }
 
-  getUserPresets() {
-    this.electronService.ipcRenderer.send('getUserPresets');
+  getUserPresets(previousAction?: string) {
+    this.electronService.ipcRenderer.send('getUserPresets', previousAction);
   }
 
   getAllPresets() {
@@ -89,6 +85,7 @@ export class PresetsService {
   }
 
   addOrUpdatePreset(name: string, preset: RandomizerForm) {
+    this.lastUpdatedPreset$.next(name);
     this.electronService.ipcRenderer.send('updateUserPreset', preset, name);
   }
 
@@ -120,10 +117,6 @@ export class PresetsService {
         this.electronService.ipcRenderer.send('exportPreset', key, result.filePath);
       }
     });
-  }
-
-  clearImportPresetSubject(): void {
-    this.importedPreset$.next(null);
   }
 
   private handlePresetsResponse(response: PresetsResponse, subject: Subject<PresetObject>): void {
