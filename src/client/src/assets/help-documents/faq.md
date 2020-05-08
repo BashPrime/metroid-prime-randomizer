@@ -30,10 +30,6 @@ This is a variation of the above problem, except the game doesn't crash. Try run
 
 You need the Charge Beam equipped in order to use beam combos.
 
-## The big red flower isn't there when I enter Sunchamber (Flaahgra's room).
-
-This happens when you enter Sunchamber from the Sun Tower side without fighting Flaahgra first. If you have Space Jump Boots, you can slope jump from one of the roots to reach the item that spawns after the Chozo Ghost fight, otherwise you won't be able to load the Flaahgra fight. If you don't have Space Jump Boots, or Flaahgra blocks access to them, you are softlocked and need to restart.
-
 ## I can't hurt Omega Pirate.
 
 Omega Pirate can only be hurt while you have the X-Ray Visor active. If you start the boss fight and don't have the X-Ray Visor, you will softlock.
