@@ -63,7 +63,7 @@ export function phazonMines(): RegionObject[] {
       exits: {
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const baseReqs = items.canBoost() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
-            && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;
