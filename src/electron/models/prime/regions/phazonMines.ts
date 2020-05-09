@@ -47,7 +47,7 @@ export function phazonMines(): RegionObject[] {
     {
       name: 'Mine Security Station',
       locations: {
-        [PrimeLocation.STORAGE_DEPOT_A]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM)
+        [PrimeLocation.STORAGE_DEPOT_A]: (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.PLASMA_BEAM) && items.has(PrimeItem.SCAN_VISOR)
       },
       exits: {
         'Security Access A': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM),
