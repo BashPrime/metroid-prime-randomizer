@@ -459,7 +459,7 @@ export function chozoRuins(): RegionObject[] {
         [Elevator.MAGMOOR_NORTH]: () => true,
         'Transport Access North': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs(),
         'Vault': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles()
+        'Sunchamber': (items: PrimeItemCollection) => items.canLayBombs() && items.canSpider() && items.canFireSuperMissiles() && items.has(PrimeItem.SCAN_VISOR)
       }
     },
     {
