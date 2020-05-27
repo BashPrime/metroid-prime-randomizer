@@ -181,13 +181,13 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const infiniteSpeedReqs = !settings.tricks.crossMagmaPoolSuitless && settings.tricks.magmaPoolItemWithIS && items.canInfiniteSpeed(); // need to have the suit requirement
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
           return (grappleReqs && items.canLayPowerBombs()) || infiniteSpeedReqs;
         }
       },
       exits: {
         'Training Chamber Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
           return grappleReqs && items.has(PrimeItem.WAVE_BEAM);
         },
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
@@ -201,7 +201,7 @@ export function chozoRuins(): RegionObject[] {
       exits: {
         'Training Chamber': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
         'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS)) || items.has(PrimeItem.GRAPPLE_BEAM);
+          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
           const suitReqs = (settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2)) || items.hasSuit(settings);
           return grappleReqs && suitReqs && items.has(PrimeItem.WAVE_BEAM);
         },
