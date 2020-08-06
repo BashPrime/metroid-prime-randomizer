@@ -9,8 +9,8 @@
 main.js
 main.js.LICENSE.txt
 src/**/*.js
+!src/karma.conf.js
 *.js.map
-common/**/*.js
 /build
 /bin
 settings.json
@@ -29,7 +29,7 @@ settings.json
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
+.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json

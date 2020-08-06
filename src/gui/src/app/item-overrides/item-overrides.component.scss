@@ -1,0 +1,19 @@
+.item-override {
+  padding: 1rem;
+  border-bottom: 1px solid #282f2f;
+}
+
+.item-override:last-child {
+  border-bottom: initial;
+}
+
+// Dataview styling
+:host {
+  ::ng-deep .ui-dataview .ui-dataview-content {
+    // height: 100%;
+    background-color: #101010;
+    color: #efefef;
+    border-color: #404040;
+  }
+}
+

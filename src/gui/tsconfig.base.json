@@ -1,5 +1,8 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
+    "module": "es2020",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -7,9 +10,8 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "target": "es5",
-    "types": [
-      "node",
-      "webpack-env"
+    "typeRoots": [
+      "node_modules/@types"
     ],
     "lib": [
       "es2017",
@@ -19,10 +21,13 @@
     ]
   },
   "files": [
-    "src/electron/main.ts"
+    "src/main.ts",
+    "src/polyfills.ts"
   ],
   "include": [
-    "src/electron/**/*.ts",
-    "test/**/*.test.ts"
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

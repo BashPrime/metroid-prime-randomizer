@@ -1,0 +1,29 @@
+@import '~bulma/sass/utilities/mixins';
+
+.seed-details {
+  padding: 1rem;
+  border-bottom: 1px solid #282f2f;
+}
+
+.seed-details:first-child {
+  padding-top: 0;
+}
+
+.seed-details:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.box.settings-box {
+  background-color: #101010;
+  border: 2px solid #404040;
+}
+
+// Don't let permalink overflow container on size >= tablet
+.is-permalink {
+  word-break: break-word;
+
+  @include from ($tablet) {
+    max-width: 80%;
+  }
+}
