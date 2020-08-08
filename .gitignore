@@ -9,6 +9,7 @@
 main.js
 main.js.LICENSE.txt
 src/**/*.js
+!src/gui/angular.webpack.js
 !src/karma.conf.js
 *.js.map
 /build
