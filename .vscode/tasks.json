@@ -4,14 +4,14 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "electron-build",
+      "label": "electron-webpack",
       "type": "npm",
-      "script": "electron:build"
+      "script": "electron:webpack"
     },
     {
-      "label": "electron-build-prod",
+      "label": "electron-webpack-prod",
       "type": "npm",
-      "script": "electron:build:prod"
+      "script": "electron:webpack:prod"
     }
   ]
 }
