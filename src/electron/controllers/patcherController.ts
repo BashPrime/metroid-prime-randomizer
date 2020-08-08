@@ -31,7 +31,7 @@ export function initialize() {
     }
 
     // If no output folder is defined, open the default folder
-    shell.openItem(outputFolder ? outputFolder : defaultOutputFolder);
+    shell.openPath(outputFolder ? outputFolder : defaultOutputFolder);
   });
 }
 
