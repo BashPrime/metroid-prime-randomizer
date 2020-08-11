@@ -380,15 +380,15 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.CROSSWAY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const fewerReqs = settings.tricks.crosswayItemFewerReqs && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          const normalReqs = items.canBoost() && items.canSpider() && items.canFireSuperMissiles() && items.has(PrimeItem.SCAN_VISOR);
+          const normalReqs = items.canLayBombs() && items.canBoost() && items.canSpider() && items.canFireSuperMissiles() && items.has(PrimeItem.SCAN_VISOR);
           return fewerReqs || normalReqs;
         }
       },
       exits: {
         'Hall of the Elders': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = items.canBoost || (settings.tricks.crosswayHpbj && items.canLayBombs());
-          return (boostReqs && items.hasMissiles())
-            || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM));
+          const blueDoorReqs = (items.canBoost() || (settings.tricks.crosswayHpbj && items.canLayBombs())) && items.hasMissiles();
+          const iceBeamDoorReqs = items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM);
+          return blueDoorReqs || iceBeamDoorReqs;
         },
         'Furnace (Main Room)': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       }
