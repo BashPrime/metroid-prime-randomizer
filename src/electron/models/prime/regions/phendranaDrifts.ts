@@ -148,12 +148,12 @@ export function phendranaDrifts(): RegionObject[] {
         [Elevator.PHENDRANA_SOUTH]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const baseReqs = (items.canLayBombs() && items.canSpider())
-            || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM))
+            || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.MORPH_BALL))
           return thermalReqs && baseReqs;
         },
         'Ruined Courtyard': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          const spiderReqs = items.canSpider() || settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump;
+          const spiderReqs = items.canSpider() || (settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump && items.has(PrimeItem.MORPH_BALL);
           const baseReqs = thermalReqs && spiderReqs && items.has(PrimeItem.WAVE_BEAM);
 
           // For Ruined Courtyard climb when point of no return isn't allow all
