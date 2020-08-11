@@ -145,11 +145,16 @@ export function phendranaDrifts(): RegionObject[] {
         }
       },
       exits: {
-        [Elevator.PHENDRANA_SOUTH]: (items: PrimeItemCollection) => (items.canLayBombs() && items.canSpider())
-          || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM)),
+        [Elevator.PHENDRANA_SOUTH]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
+          const baseReqs = (items.canLayBombs() && items.canSpider())
+            || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAPPLE_BEAM))
+          return thermalReqs && baseReqs;
+        },
         'Ruined Courtyard': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const spiderReqs = items.canSpider() || settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump;
-          return spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM); // in case we need to re-enter
+          return thermalReqs && spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM); // in case we need to re-enter
         }
       }
     },
@@ -325,7 +330,7 @@ export function phendranaDrifts(): RegionObject[] {
     },
     {
       name: 'Gravity Chamber',
-    locations: {
+      locations: {
         [PrimeLocation.GRAVITY_CHAMBER_UNDERWATER]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [PrimeLocation.GRAVITY_CHAMBER_GRAPPLE_LEDGE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const grapplePlasmaReqs = settings.tricks.gravityChamberLedgeItemWithoutGrapplePlasma || (items.has(PrimeItem.GRAPPLE_BEAM) && items.has(PrimeItem.PLASMA_BEAM));
