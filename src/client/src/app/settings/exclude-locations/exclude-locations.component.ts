@@ -27,7 +27,7 @@ export class ExcludeLocationsComponent extends PicklistFormComponent implements 
   protected initialize(): void {
     const settings = this.randomizerService.DEFAULT_SETTINGS;
 
-    for (let key of Object.keys(settings.excludeLocations)) {
+    for (let key of settings.excludeLocations.getSettingsKeys()) {
       const location = {
         label: key,
         value: key
