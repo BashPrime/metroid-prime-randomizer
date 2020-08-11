@@ -88,7 +88,17 @@ export class Tricks extends SettingsFlags {
   }
 
   setSettings(args: SettingsFlagsArgs): void {
-    Object.assign(this, args);
+    const allowedKeys = this.getSettingsKeys();
+
+    // To prevent outdated settings flags from being assigned, filter them
+    const filteredArgs = Object.keys(args)
+      .filter(key => allowedKeys.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = args[key];
+        return obj;
+      }, {});
+
+    Object.assign(this, filteredArgs);
   }
 
   static fromSettingsString(settingsString: string): Tricks {
