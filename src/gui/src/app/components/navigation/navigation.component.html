@@ -1,0 +1,7 @@
+<div class="tabs is-centered">
+    <ul>
+        <li *ngFor="let tab of getTabs()" [ngClass]="{ 'is-active': rla.isActive }">
+            <a [routerLink]="tab.route" routerLinkActive #rla="routerLinkActive">{{ tab.name }}</a>
+        </li>
+    </ul>
+</div>

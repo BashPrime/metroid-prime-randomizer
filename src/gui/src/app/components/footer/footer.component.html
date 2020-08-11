@@ -1,0 +1,42 @@
+<footer class="footer">
+  <nav class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <p>
+          <span class="has-text-weight-bold">v{{ getAppVersion() }}</span> &mdash; &copy; BashPrime, Syncathetic,
+          Pwootage
+        </p>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="field is-grouped">
+          <div class="control">
+            <a title="Visit our website" class="icon has-text-link"
+              (click)="openExternalUrl('https://randomizer.metroidprime.run')">
+              <fa-icon [icon]="icons.website" size="lg"></fa-icon>
+            </a>
+          </div>
+          <div class="control">
+            <a title="Join our Discord" class="icon has-text-link"
+              (click)="openExternalUrl('https://discord.gg/WWGcay6')">
+              <fa-icon [icon]="icons.discord" size="lg"></fa-icon>
+            </a>
+          </div>
+          <div class="control">
+            <a title="GitHub" class="icon has-text-link"
+              (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer')">
+              <fa-icon [icon]="icons.github" size="lg"></fa-icon>
+            </a>
+          </div>
+          <div class="control">
+            <a title="Report Issue" class="icon has-text-link"
+              (click)="openExternalUrl('https://github.com/etaylor8086/metroid-prime-randomizer/issues')">
+              <fa-icon [icon]="icons.reportIssue" size="lg"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</footer>
