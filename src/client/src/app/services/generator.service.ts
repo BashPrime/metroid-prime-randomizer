@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, generate } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { ElectronService } from './electron.service';
@@ -55,6 +55,7 @@ export class GeneratorService {
         } else {
           // We're done!
           const seedOrSeeds = currentGeneration.total > 1 ? 'seeds' : 'seed';
+          this.lastSettingsUsed$.next(PrimeRandomizerSettings.fromSettingsString(generatedSeed.settingsString).toRandomizerForm());
           this.progressService.setOpen(false);
           this.generatedSeeds$.next(currentGeneration.seeds);
           this.currentGeneration$.next(undefined);
@@ -73,6 +74,7 @@ export class GeneratorService {
 
     this.electronService.ipcRenderer.on('importSeedResponse', (event, generatedSeed: GeneratedSeed, spoiler: boolean) => {
       this.ngZone.run(() => {
+        this.lastSettingsUsed$.next(PrimeRandomizerSettings.fromSettingsString(generatedSeed.settingsString).toRandomizerForm());
         this.progressService.setOpen(false);
         this.spoiler$.next(spoiler);
         this.generatedSeeds$.next([generatedSeed]);
@@ -84,9 +86,6 @@ export class GeneratorService {
   generateGame(form: RandomizerForm, spoiler: boolean): void {
     // Set spoiler flag
     this.spoiler$.next(spoiler);
-
-    // Set last settings used
-    this.lastSettingsUsed$.next(form);
 
     // Don't run if a seed is currently being generated
     if (!this.currentGeneration$.value) {
@@ -128,8 +127,6 @@ export class GeneratorService {
       }
 
       if (decodedItems) {
-        this.lastSettingsUsed$.next(PrimeRandomizerSettings.fromSettingsString(decodedItems.settingsString).toRandomizerForm());
-
         this.progressService.setTitle('Importing Permalink');
         this.progressService.setMessage('Generating world...');
         this.progressService.setProgressBars([

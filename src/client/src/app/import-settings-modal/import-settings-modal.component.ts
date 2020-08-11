@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 import { ModalComponent } from '../components/common/modal.component';
 import { GeneratorService } from '../services/generator.service';
@@ -16,6 +19,7 @@ interface ImportForm {
 export class ImportSettingsModalComponent extends ModalComponent implements OnInit {
   private formGroup: FormGroup;
   private submitted: boolean = false;
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private generatorService: GeneratorService) {
     super();
@@ -23,6 +27,9 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
 
   ngOnInit() {
     this.initForm();
+    this.generatorService._lastSettingsUsed
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => this.setOpen(false));
   }
 
   openModal(): void {
@@ -47,7 +54,6 @@ export class ImportSettingsModalComponent extends ModalComponent implements OnIn
 
     if (this.formGroup.valid) {
       this.generatorService.importPermalink(formValue.permalink);
-      this.setOpen(false);
     }
   }
 
