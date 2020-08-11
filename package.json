@@ -102,7 +102,6 @@
     "@types/webpack-env": "^1.15.2",
     "chai": "^4.2.0",
     "codelyzer": "^5.2.2",
-    "conventional-changelog-cli": "2.0.11",
     "core-js": "~2.5.7",
     "electron": "6.0.10",
     "electron-builder": "^22.8.1",
