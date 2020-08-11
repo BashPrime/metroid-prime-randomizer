@@ -164,6 +164,11 @@ export function chozoRuins(): RegionObject[] {
       name: 'Ruined Fountain',
       locations: {
         [PrimeLocation.RUINED_FOUNTAIN]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          // If Flaahgra skip and the location are disabled, don't allow any items to be placed here
+          if (!settings.tricks.ruinedFountainItemFlaahgraSkip && settings.excludeLocations[PrimeLocation.SUNCHAMBER_FLAAHGRA]) {
+            return false;
+          }
+
           const bombsReqs = items.canLayBombs() || (settings.tricks.ruinedFountainItemFlaahgraSkip && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           return bombsReqs && items.canSpider();
         }
@@ -238,8 +243,12 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.SUNCHAMBER_FLAAHGRA]: (items: PrimeItemCollection) => items.canLayBombs(),
         [PrimeLocation.SUNCHAMBER_GHOSTS]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderSupersReqs = settings.tricks.sunTowerIbj || (items.canSpider() && items.canFireSuperMissiles());
+          // Need to defeat Flaahgra to unlock this location
+          if (settings.excludeLocations[PrimeLocation.SUNCHAMBER_FLAAHGRA]) {
+            return false;
+          }
 
+          const spiderSupersReqs = settings.tricks.sunTowerIbj || (items.canSpider() && items.canFireSuperMissiles());
           return items.canLayBombs() && spiderSupersReqs;
         }
       },
@@ -282,6 +291,11 @@ export function chozoRuins(): RegionObject[] {
       locations: {
         [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR),
         [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          // If Flaahgra skip and the location are disabled, don't allow any items to be placed here
+          if (!settings.tricks.wateryHallUnderwaterFlaahgraSkip && settings.excludeLocations[PrimeLocation.SUNCHAMBER_FLAAHGRA]) {
+            return false;
+          }
+
           const bombsReqs = items.canLayBombs() || settings.tricks.wateryHallUnderwaterFlaahgraSkip;
           const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.wateryHallUnderwaterSlopeJump;
           return bombsReqs && gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
