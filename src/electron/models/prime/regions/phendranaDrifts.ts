@@ -1,3 +1,4 @@
+k
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
@@ -124,7 +125,7 @@ export function phendranaDrifts(): RegionObject[] {
         'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const boostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
-          const baseReqs = !settings.excludeLocations['Quarantine Cave'] && boostSpiderReqs && thermalReqs && items.canFireSuperMissiles()
+          const baseReqs = !settings.excludeLocations[PrimeLocation.QUARANTINE_CAVE] && boostSpiderReqs && thermalReqs && items.canFireSuperMissiles()
             && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
