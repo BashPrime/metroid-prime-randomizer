@@ -154,7 +154,17 @@ export function phendranaDrifts(): RegionObject[] {
         'Ruined Courtyard': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const spiderReqs = items.canSpider() || settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump;
-          return thermalReqs && spiderReqs && items.canFireSuperMissiles() && items.has(PrimeItem.WAVE_BEAM); // in case we need to re-enter
+          const baseReqs = thermalReqs && spiderReqs && items.has(PrimeItem.WAVE_BEAM);
+
+          // For Ruined Courtyard climb when point of no return isn't allow all
+          const courtyardBoostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+
+          // Point of no return for Ruined Courtyard climb/Supers
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && courtyardBoostSpiderReqs && baseReqs;
         }
       }
     },
@@ -354,7 +364,7 @@ export function phendranaDrifts(): RegionObject[] {
       exits: {
         [Elevator.MAGMOOR_SOUTH_PHENDRANA]: () => true,
         'Quarantine Cave': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = !settings.excludeLocations['Quarantine Cave'] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const baseReqs = !settings.excludeLocations[PrimeLocation.QUARANTINE_CAVE] && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;
