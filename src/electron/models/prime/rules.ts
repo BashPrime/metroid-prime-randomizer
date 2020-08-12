@@ -25,29 +25,29 @@ function nerfEarlyChozoLocations(world: PrimeWorld): void {
   const rng = world.getRng();
 
   // Some otherwise "early" locations are excluded as they have significantly more item dependencies
-  const earlyChozoLocationNames = [
-    'Main Plaza (Half-Pipe)',
-    'Main Plaza (Grapple Ledge)',
-    'Main Plaza (Tree)',
-    'Main Plaza (Locked Door)',
-    'Ruined Shrine (Beetle Battle)',
-    'Ruined Shrine (Half-Pipe)',
-    'Ruined Shrine (Lower Tunnel)',
-    'Vault',
-    'Ruined Nursery',
-    'Ruined Gallery (Missile Wall)',
-    'Ruined Gallery (Tunnel)',
-    'Transport Access North',
-    'Gathering Hall',
-    'Sunchamber (Flaahgra)',
-    'Watery Hall Access',
-    'Watery Hall (Scan Puzzle)',
-    'Watery Hall (Underwater)',
-    'Dynamo (Lower)',
-    'Dynamo (Spider Track)',
-    'Burn Dome (Tunnel)',
-    'Burn Dome (I. Drone)',
-    'Furnace (Tunnel)'
+  const earlyChozoLocationNames: string[] = [
+    PrimeLocation.MAIN_PLAZA_HALF_PIPE,
+    PrimeLocation.MAIN_PLAZA_GRAPPLE_LEDGE,
+    PrimeLocation.MAIN_PLAZA_TREE,
+    PrimeLocation.MAIN_PLAZA_LOCKED_DOOR,
+    PrimeLocation.RUINED_SHRINE_BEETLE_BATTLE,
+    PrimeLocation.RUINED_SHRINE_HALF_PIPE,
+    PrimeLocation.RUINED_SHRINE_LOWER_TUNNEL,
+    PrimeLocation.VAULT,
+    PrimeLocation.RUINED_NURSERY,
+    PrimeLocation.RUINED_GALLERY_MISSILE_WALL,
+    PrimeLocation.RUINED_GALLERY_TUNNEL,
+    PrimeLocation.TRANSPORT_ACCESS_NORTH,
+    PrimeLocation.GATHERING_HALL,
+    PrimeLocation.SUNCHAMBER_FLAAHGRA,
+    PrimeLocation.WATERY_HALL_ACCESS,
+    PrimeLocation.WATERY_HALL_SCAN_PUZZLE,
+    PrimeLocation.WATERY_HALL_UNDERWATER,
+    PrimeLocation.DYNAMO_LOWER,
+    PrimeLocation.DYNAMO_SPIDER_TRACK,
+    PrimeLocation.BURN_DOME_TUNNEL,
+    PrimeLocation.BURN_DOME_I_DRONE,
+    PrimeLocation.FURNACE_TUNNEL
   ];
 
   const baseChozoLocations = world.getLocations().toArray().filter(location => {
