@@ -17,21 +17,54 @@ export function setRules(world: PrimeWorld): void {
     locations.getLocationByKey(PrimeLocation.ARTIFACT_TEMPLE).setExcluded(true);
   }
 
-  // Pre-fill Chozo Ruins randomly from 0-26 items to balance the logic
-  nerfChozoLocations(world);
+  // Exclude random early Chozo Ruins locations to balance the logic
+  nerfEarlyChozoLocations(world);
 }
 
-function nerfChozoLocations(world: PrimeWorld): void {
+function nerfEarlyChozoLocations(world: PrimeWorld): void {
   const rng = world.getRng();
 
-  const allChozoLocationNames = primeLocations.filter(location => location.region === PrimeRegion.CHOZO_RUINS)
-    .map(location => location.name) as string[];
+  // Some otherwise "early" locations are excluded as they have significantly more item dependencies
+  const earlyChozoLocationNames = [
+    'Main Plaza (Half-Pipe)',
+    'Main Plaza (Grapple Ledge)',
+    'Main Plaza (Tree)',
+    'Main Plaza (Locked Door)',
+    'Ruined Shrine (Beetle Battle)',
+    'Ruined Shrine (Half-Pipe)',
+    'Ruined Shrine (Lower Tunnel)',
+    'Vault',
+    'Ruined Nursery',
+    'Ruined Gallery (Missile Wall)',
+    'Ruined Gallery (Tunnel)',
+    'Transport Access North',
+    'Gathering Hall',
+    'Sunchamber (Flaahgra)',
+    'Watery Hall Access',
+    'Watery Hall (Scan Puzzle)',
+    'Watery Hall (Underwater)',
+    'Dynamo (Lower)',
+    'Dynamo (Spider Track)',
+    'Burn Dome (Tunnel)',
+    'Burn Dome (I. Drone)',
+    'Furnace (Tunnel)'
+  ];
+
   const baseChozoLocations = world.getLocations().toArray().filter(location => {
-    // Hive Totem needs to be open for most seeds, so don't include it in locations list
-    return allChozoLocationNames.includes(location.getName()) && location.getName() !== PrimeLocation.HIVE_TOTEM && !location.hasItem() && !location.isExcluded()
+    return earlyChozoLocationNames.includes(location.getName()) && !location.hasItem() && !location.isExcluded()
   });
-  // We are junk filling at most 75% (26 maximum) of the Chozo Ruins locations.
-  const numberOfLocationsToNerf = Utilities.getRandomInt(0, Math.floor(allChozoLocationNames.length * 0.75), rng);
+
+  /*
+   * Location excluding is as follows:
+   * 1. Pick a random integer in a range from 25% to 50% of the available locations. This will be our minimum number.
+   * 2. Pick a random integer in a range from 50% to 90% of the available locations. This will be our maximum number.
+   * 3. Pick a random integer in a range from the chosen minimum and maximum numbers. This will be the number used.
+   */
+  const minimumLocations = Utilities.getRandomInt(Math.floor(earlyChozoLocationNames.length * 0.25), Math.floor(earlyChozoLocationNames.length * 0.50), rng);
+  const maximumLocations = Utilities.getRandomInt(Math.floor(earlyChozoLocationNames.length * 0.50), Math.floor(earlyChozoLocationNames.length * 0.90), rng);
+
+  // Pick a number from a range between 0 and 90% of the early locations
+  const numberOfLocationsToNerf = Utilities.getRandomInt(minimumLocations, maximumLocations, rng);
 
   // Get the Chozo locations we are going to fill
   const nerfedChozoLocations = Utilities.randomArray(baseChozoLocations, numberOfLocationsToNerf, rng);
