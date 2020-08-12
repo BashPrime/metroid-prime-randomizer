@@ -5,6 +5,8 @@ import * as path from 'path';
 import * as presetsDefaultJson from '../data/presetsDefault.json';
 import { PresetObject } from '../../common/models/presetObject';
 import { RandomizerForm } from '../../common/models/randomizerForm';
+import { Tricks } from '../models/prime/tricks';
+import { ExcludeLocations } from '../models/prime/excludeLocations';
 
 /** Stores all default and user-saved presets for quick reference. */
 export const allPresets = {};
@@ -140,7 +142,7 @@ function readUserPresetsFile(callback) {
     if (err) {
       response.err = err;
     } else {
-      response.presets = JSON.parse(presets) as PresetObject;
+      response.presets = filterExcludeLocationsAndTricks(JSON.parse(presets) as PresetObject);
       response.keys = Object.keys(response.presets);
     }
 
@@ -161,4 +163,16 @@ interface PresetsResponse {
   err: NodeJS.ErrnoException;
   presets: any;
   keys: string[];
+}
+
+function filterExcludeLocationsAndTricks(presets: PresetObject): PresetObject {
+  const excludeLocationKeys = new ExcludeLocations().getSettingsKeys();
+  const trickKeys = new Tricks().getSettingsKeys();
+
+  for (let [key, preset] of Object.entries(presets)) {
+    preset.excludeLocations = preset.excludeLocations.filter(location => excludeLocationKeys.includes(location));
+    preset.tricks = preset.tricks.filter(trick => trickKeys.includes(trick));
+  }
+
+  return presets;
 }
