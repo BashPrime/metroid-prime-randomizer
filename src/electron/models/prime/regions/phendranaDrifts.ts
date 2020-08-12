@@ -156,15 +156,19 @@ export function phendranaDrifts(): RegionObject[] {
           const spiderReqs = items.canSpider() || (settings.tricks.exitQuarantineCaveRuinedCourtyardSlopeJump && items.has(PrimeItem.MORPH_BALL));
           const baseReqs = thermalReqs && spiderReqs && items.has(PrimeItem.WAVE_BEAM);
 
-          // For Ruined Courtyard climb when point of no return isn't allow all
-          const courtyardBoostSpiderReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+          // For Ruined Courtyard climb, when point of no return isn't allow all
+          const ruinedCourtyardClimbReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+
+          // For Frozen Pike climb requirements
+          const frozenPikeClimbReqs = items.has(PrimeItem.ICE_BEAM) && (items.canLayBombs() || settings.tricks.climbFrozenPikeWithoutBombs);
 
           // Point of no return for Ruined Courtyard climb/Supers
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;
           }
 
-          return items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && courtyardBoostSpiderReqs && baseReqs;
+          // Need Supers or Ice Beam to come back through the same door or through labs
+          return (items.canFireSuperMissiles() || frozenPikeClimbReqs) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && ruinedCourtyardClimbReqs && baseReqs;
         }
       }
     },
