@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 import { ModalComponent } from '../components/common/modal.component';
 import { PresetObject } from '../../../../common/models/presetObject';
+import { PresetsService } from '../services/presets.service';
 
 @Component({
   selector: 'app-save-preset-modal',
@@ -15,7 +17,7 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
   private formGroup: FormGroup;
   private submitted: boolean = false;
 
-  constructor() {
+  constructor(private presetsService: PresetsService) {
     super();
   }
 
@@ -23,11 +25,15 @@ export class SavePresetModalComponent extends ModalComponent implements OnInit {
     this.initializeForm();
   }
 
-  setPresetsObjectAndOpen(presets: PresetObject) {
-    this.presets = presets;
-    this.submitted = false;
-    this.initializeForm();
-    this.setOpen(true);
+  openModal() {
+    this.presetsService._userPresets
+      .pipe(take(1))
+      .subscribe(presets => {
+        this.presets = presets;
+        this.submitted = false;
+        this.initializeForm();
+        this.setOpen(true);
+      });
   }
 
   getFormGroup(): FormGroup {

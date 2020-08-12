@@ -106,8 +106,10 @@
       <app-read-only-settings-container [randomizerForm]="getLastSettingsUsed()"></app-read-only-settings-container>
     </section>
     <footer class="modal-card-foot">
+      <button class="button is-success is-small" (click)="openSavePresetModal()">Save Preset</button>
       <button class="button is-small" (click)="setModalOpen(false)">Close</button>
     </footer>
   </div>
 </div>
 <app-prime-iso-diagnostics-modal></app-prime-iso-diagnostics-modal>
+<app-save-preset-modal (onSave)="addOrUpdatePreset($event)"></app-save-preset-modal>

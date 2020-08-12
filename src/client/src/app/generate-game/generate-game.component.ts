@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subject, combineLatest, Subscription } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { Subject, combineLatest } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { filterProperties } from '../utilities';
 import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
@@ -196,8 +196,8 @@ export class GenerateGameComponent implements OnInit {
     }
   }
 
-  openSavePresetModal(presets: PresetObject): void {
-    this.savePresetModal.setPresetsObjectAndOpen(presets);
+  openSavePresetModal(): void {
+    this.savePresetModal.openModal();
   }
 
   openRemovePresetModal(preset: string): void {

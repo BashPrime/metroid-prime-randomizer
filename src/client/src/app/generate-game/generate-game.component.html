@@ -18,7 +18,7 @@
             <div class="field">
               <div class="buttons are-small">
                 <button class="button is-link" (click)="setCustomPreset()" *ngIf="!isCustomPreset()">Customize</button>
-                <button class="button is-success" (click)="openSavePresetModal(getUserPresets())"
+                <button class="button is-success" (click)="openSavePresetModal()"
                   *ngIf="isCustomPreset()">Save</button>
                 <button class="button is-danger" (click)="openRemovePresetModal(getPresetValue())"
                   *ngIf="isUserPreset()">Remove</button>

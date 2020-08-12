@@ -17,6 +17,9 @@ import { RandomizerService } from '../services/randomizer.service';
 import { RandomizerForm } from '../../../../common/models/randomizerForm';
 import { DiagnosticsService } from '../services/diagnostics.service';
 import { PrimeIsoDiagnosticsModalComponent } from '../prime-iso-diagnostics-modal/prime-iso-diagnostics-modal.component';
+import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';
+import { filterProperties } from '../utilities';
+import { PresetsService } from '../services/presets.service';
 
 @Component({
   selector: 'app-game-details',
@@ -25,7 +28,7 @@ import { PrimeIsoDiagnosticsModalComponent } from '../prime-iso-diagnostics-moda
 })
 export class GameDetailsComponent extends SettingsSection implements OnInit {
   @ViewChild(PrimeIsoDiagnosticsModalComponent, {static: false}) private diagnosticsModal: PrimeIsoDiagnosticsModalComponent;
-
+  @ViewChild(SavePresetModalComponent, { static: false }) private savePresetModal: SavePresetModalComponent;
   private modalOpen: boolean = false;
   private seeds: GeneratedSeed[];
   private lastSettingsUsed: RandomizerForm;
@@ -41,7 +44,8 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     private patcherService: PatcherService,
     private clipboardService: ClipboardService,
     private toastrService: ToastrService,
-    private diagnosticsService: DiagnosticsService
+    private diagnosticsService: DiagnosticsService,
+    private presetsService: PresetsService
   ) {
     super(randomizerService);
   }
@@ -200,5 +204,14 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     } else {
       this.toastrService.warning('You need to provide a base ISO to verify it!');
     }
+  }
+
+  openSavePresetModal(): void {
+    this.savePresetModal.openModal();
+  }
+
+  addOrUpdatePreset(name: string): void {
+    const preset = filterProperties(this.lastSettingsUsed, ['preset', 'generationCount']);
+    this.presetsService.addOrUpdatePreset(name, preset as RandomizerForm);
   }
 }

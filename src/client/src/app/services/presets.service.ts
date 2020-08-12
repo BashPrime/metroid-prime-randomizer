@@ -37,12 +37,14 @@ export class PresetsService {
 
     this.electronService.ipcRenderer.on('updateUserPresetResponse', (event, response) => {
       this.ngZone.run(() => {
+        this.toastrService.success('User preset saved.');
         this.getUserPresets('update');
       });
     });
 
     this.electronService.ipcRenderer.on('removeUserPresetResponse', (event, response) => {
       this.ngZone.run(() => {
+        this.toastrService.success('User preset removed.');
         this.getUserPresets('remove');
       });
     });
