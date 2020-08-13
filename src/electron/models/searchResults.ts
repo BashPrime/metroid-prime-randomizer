@@ -16,8 +16,8 @@ export class SearchResults {
   getLocations(): Location[] {
     let locations: Location[] = [];
 
-    for (let item of this.visitedRegions) {
-      const region = item.region;
+    for (let visitedRegion of this.visitedRegions) {
+      const region = visitedRegion.region;
       if (region.getLocations().size()) {
         locations = locations.concat(region.getLocations().toArray());
       }
