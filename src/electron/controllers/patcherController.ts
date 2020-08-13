@@ -81,6 +81,10 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
   const startingWithScanVisor: boolean = world.getStartingItems()[PrimeItem.SCAN_VISOR]
     && world.getStartingItems()[PrimeItem.SCAN_VISOR] > 0;
 
+  const randomizerComment: string = 'starting area: ' + world.getStartingArea().name + '\n\n'
+    + 'Layout generated with Metroid Prime Randomizer v' + version + ' - https://randomizer.metroidprime.run\n'
+    + 'Randomizer Permalink: ' + settings.toPermalink();
+
   return {
     input_iso: form.baseIso,
     output_iso: path.join(getOutputFolder(form), outputIso),
@@ -94,7 +98,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     artifact_hint_behavior: settings.artifactLocationHints ? 'all' : 'none',
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
-    comment: 'Metroid Prime Randomizer v' + version + ' by BashPrime, Syncathetic, and Pwootage. Permalink: ' + settings.toPermalink(),
+    comment: randomizerComment,
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
     auto_enabled_elevators: !startingWithScanVisor,
     enable_vault_ledge_door: world.getSettings().enableMainPlazaLedgeDoor
