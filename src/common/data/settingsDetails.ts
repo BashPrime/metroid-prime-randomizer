@@ -114,7 +114,7 @@ export const details: SettingsDetails = {
   // Game Details
   baseIso: {
     name: 'Base ISO',
-    description: `NTSC-U 1.00, 1.01, or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.
+    description: `NTSC-U 1.00 or 1.02 Metroid Prime ISO file. The PAL, NTSC-J, and Wii versions are not currently supported.
 
     While all three versions are compatible with the default item logic settings, 1.00 is strongly recommended if you plan `
       + `on removing any restrictions or adding any expected tricks.`,
