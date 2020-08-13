@@ -87,17 +87,17 @@
 			}
 		],
 		"romSettings": {
+			"enableMainPlazaLedgeDoor": false,
 			"hideItemModels": false,
 			"skipFrigate": true,
-			"skipHudPopups": true,
-			"enableMainPlazaLedgeDoor": false
+			"skipHudPopups": true
 		},
 		"rules": {
 			"artifactLocationHints": true,
 			"elevatorShuffle": false,
 			"goal": "artifact-collection",
 			"goalArtifacts": 6,
-      "heatProtection": "varia-only",
+			"heatProtection": "varia-only",
 			"junkItems": "Missile Expansion",
 			"pointOfNoReturnItems": "allow-visible",
 			"randomStartingItems": {
@@ -107,6 +107,8 @@
 			"startingArea": 20,
 			"suitDamageReduction": "progressive"
 		},
-		"tricks": []
+		"tricks": [
+			"destroyBombCoversWithPowerBombs"
+		]
 	}
 }
