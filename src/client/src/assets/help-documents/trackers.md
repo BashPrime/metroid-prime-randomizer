@@ -12,4 +12,4 @@ Using an item or map tracker is a great way to stay organized, as well as to kee
 
 [EmoTracker](https://emotracker.net) (SauceRelic has an item and map tracker for it)
 
-[Pwootage's and Dyceron's Item Tracker](https://mega.nz/#!KuQ3ECSB!F0KvqUkeoBTYQiAFag7kZtHYWPg8D51q5JLGtwqRoRE)
+[Pwootage's and Dyceron's Item Tracker](https://github.com/MetroidPrimeModding/PrimeRandomizerItemHelper)
