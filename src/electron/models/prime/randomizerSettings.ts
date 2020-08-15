@@ -409,6 +409,10 @@ export const settings = [
         value: PrimeItem.NOTHING
       },
       {
+        name: 'Random Items',
+        value: 'random-items'
+      },
+      {
         name: PrimeItem.ENERGY_TANK,
         value: PrimeItem.ENERGY_TANK
       },

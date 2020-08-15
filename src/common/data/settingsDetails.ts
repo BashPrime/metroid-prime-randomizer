@@ -106,7 +106,7 @@ export const details: SettingsDetails = {
     }
   },
   junkItems: {
-    name: 'Junk Items',
+    name: 'Filler Items',
     description: `Any unfilled spots in the item pool will be filled with the chosen item.
 
     The "Nothing" item is a suit model that intentionally uses a "glitched" texture.`

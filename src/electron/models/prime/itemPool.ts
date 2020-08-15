@@ -1,11 +1,12 @@
 import { PrimeItem } from '../../enums/primeItem';
 import { Item } from '../item';
-import { primeItems, ItemPriority } from './items';
+import { primeItems, ItemPriority, ItemType } from './items';
 import { PrimeLocation } from '../../enums/primeLocation';
 import { PrimeWorld } from './world';
 import { randomArray } from '../../utilities';
 import { PrimeItemCollection } from './itemCollection';
 import { ItemOverrides } from './itemOverrides';
+import * as Utilities from '../../utilities';
 
 export type ItemMap = { [key: string]: number };
 
@@ -218,12 +219,39 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
 
   // If the item pool has less than the number of unplaced locations, fill the remainder with junk items
   else if (pool.length < numberOfUnplacedLocations) {
-    pool.push(...mapToItemPool({
-      [settings.junkItems]: numberOfUnplacedLocations - pool.length
-    }, ItemPriority.EXTRA));
+    pool.push(...getJunkItems(world, numberOfUnplacedLocations - pool.length));
   }
 
   return { pool: pool, placedItems: placedItems };
+}
+
+/**
+ * Generates an array of junk items and returns it.
+ * 
+ * @param world The world object being processed.
+ * @param size The requested size of the item array being returned.
+ */
+function getJunkItems(world: PrimeWorld, size: number): Item[] {
+  const settings = world.getSettings();
+
+  if (settings.junkItems === 'random-items') {
+    const randomItems: Item[] = [];
+    const filteredItemEntries = Object.entries(primeItems).filter(([key, item]) => item.getType() !== ItemType.ARTIFACT);
+
+    for (let i = 0; i < size; i++) {
+      randomItems.push(filteredItemEntries[Utilities.getRandomInt(0, filteredItemEntries.length, world.getRng())][1]);
+    }
+
+    // Item priority needs to be "extra"
+    return randomItems.map(item => {
+      item.setPriority(ItemPriority.EXTRA);
+      return item;
+    });
+  }
+
+  return mapToItemPool({
+    [settings.junkItems]: size
+  }, ItemPriority.EXTRA);
 }
 
 /**
