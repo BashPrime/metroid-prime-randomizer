@@ -16,7 +16,7 @@ The randomizer doesn't work (or work *well*) with pre-existing save slots. You n
 
 We don't have a definitive answer for this, but we think it has to do with running the randomizer with an unclean Metroid Prime .iso file.
 
-You can use the [GameTDB page](https://www.gametdb.com/Wii/GM8E01) to see if your .iso file has a matching MD5 or SHA-1 checksum. If it matches, you have a clean file! If it doesn't, it's very possible your file is corrupted.
+You can verify if your base .iso file is clean by clicking the **Verify** button next to the Base ISO textbox in the Game Details page.
 
 ## The game crashes if I try to load a room, or open a door.
 
@@ -28,7 +28,7 @@ This is a variation of the above problem, except the game doesn't crash. Try run
 
 ## I obtained a beam combo (Super Missile, Wavebuster, Ice Spreader, Flamethrower), but I can't use it.
 
-You need the Charge Beam equipped in order to use beam combos.
+You need to obtain the Charge Beam in order to use beam combos.
 
 ## I can't hurt Omega Pirate.
 
@@ -55,3 +55,9 @@ Metroid Prime does not contain any 3D models or assets for Power Suit Spider Bal
 If Samus has the Power Suit and the Spider Ball, the game uses the Gravity Suit Spider Ball model when she is morphed.
 
 If Samus has the Gravity Suit or Phazon Suit but does not have Spider Ball, the game uses the Power Suit Morph Ball model when she is morphed.
+
+## I found a blue missile. What the heck? Is my game bugged?
+
+Your game is fine; You found a Shiny Missile!
+
+Shiny Missiles are exactly the same as regular Missiles, but are blue instead of red-orange. Missiles have a 1 in 1024 chance of being shiny.
