@@ -120,7 +120,9 @@ export class PatcherService {
         break;
       }
       case 'error': {
-        this.toastrService.error(message.msg);
+        this.toastrService.error(message.msg, null, {
+          disableTimeOut: true
+        });
         this.currentPatch$.next(undefined);
         this.progressService.setOpen(false);
         break;
@@ -168,7 +170,9 @@ export class PatcherService {
 
   private handleSpoilerResponse(err: NodeJS.ErrnoException) {
     if (err) {
-      this.toastrService.error('Encountered an error saving spoiler(s): ' + err.code);
+      this.toastrService.error('Encountered an error saving spoiler(s): ' + err.code, null, {
+        disableTimeOut: true
+      });
       this.currentPatch$.next(undefined);
       this.progressService.setOpen(false);
     } else {

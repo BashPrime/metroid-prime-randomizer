@@ -29,14 +29,18 @@ export class DiagnosticsService {
     this.electronService.ipcRenderer.on('parseIsoError', (event, errMsg: string) => {
       this.ngZone.run(() => {
         this.errorParse$.next();
-        this.toastrService.error('Verification on your ISO ran into an error: ' + errMsg);
+        this.toastrService.error('Verification on your ISO ran into an error: ' + errMsg, null, {
+          disableTimeOut: true
+        });
       });
     });
 
     this.electronService.ipcRenderer.on('saveIsoDataResponse', (event, errMsg: string) => {
       this.ngZone.run(() => {
         if (errMsg) {
-          this.toastrService.error('Failed to save diagnostics: ' + errMsg);
+          this.toastrService.error('Failed to save diagnostics: ' + errMsg, null, {
+            disableTimeOut: true
+          });
         } else {
           this.toastrService.success('Diagnostics saved.');
         }

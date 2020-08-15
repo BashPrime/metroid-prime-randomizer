@@ -58,14 +58,18 @@ export class PresetsService {
 
     this.electronService.ipcRenderer.on('importPresetError', (event, errMsg: string) => {
       this.ngZone.run(() => {
-        this.toastrService.error('Failed to import preset: ' + errMsg);
+        this.toastrService.error('Failed to import preset: ' + errMsg, null, {
+          disableTimeOut: true
+        });
       });
     });
 
     this.electronService.ipcRenderer.on('exportPresetResponse', (event, errMsg: string) => {
       this.ngZone.run(() => {
         if (errMsg) {
-          this.toastrService.error('Failed to export preset: ' + errMsg);
+          this.toastrService.error('Failed to export preset: ' + errMsg, null, {
+            disableTimeOut: true
+          });
         } else {
           this.toastrService.success('Successfully exported the preset.');
         }

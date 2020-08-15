@@ -68,7 +68,9 @@ export class GeneratorService {
       this.ngZone.run(() => {
         this.currentGeneration$.next(undefined);
         this.progressService.setOpen(false);
-        this.toastrService.error(err);
+        this.toastrService.error(err, null, {
+          disableTimeOut: true
+        });
       });
     });
 
@@ -123,7 +125,9 @@ export class GeneratorService {
       try {
         decodedItems = Utilities.parsePermalink(permalink);
       } catch (err) {
-        this.toastrService.error(err.message);
+        this.toastrService.error(err.message, null, {
+          disableTimeOut: true
+        });
       }
 
       if (decodedItems) {
