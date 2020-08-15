@@ -107,6 +107,10 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     return Utilities.generatePermalink(seed.seed, seed.settingsString);
   }
 
+  getSeedHash(seed: GeneratedSeed): string {
+    return seed.seedHash.join(' ');
+  }
+
   hasMultipleSeeds(): boolean {
     return this.seeds && this.seeds.length > 1;
   }
@@ -127,9 +131,8 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
     this.modalOpen = open;
   }
 
-  copyPermalink(permalink: string): void {
-    this.clipboardService.copy(permalink);
-    this.toastrService.info('Permalink copied.');
+  copy(str: string): void {
+    this.clipboardService.copy(str);
   }
 
   selectBaseIso(): void {

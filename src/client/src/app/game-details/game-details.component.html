@@ -5,16 +5,20 @@
         <div class="box settings-box">
           <button class="button is-info is-small" (click)="setModalOpen(true)">View Settings Used</button>
           <div class="seed-details" *ngFor="let seed of getSeeds(); let i = index">
-            <p class="heading">Permalink</p>
-            <div class="level">
-              <p class="level-item is-permalink">{{ getPermalink(seed) }}</p>
-              <div class="level-item">
-                <button class="button is-info is-small" (click)="copyPermalink(getPermalink(seed))">Copy</button>
+            <div style="margin-bottom: 1rem">
+              <p class="heading">Permalink</p>
+              <p class="is-permalink">{{ getPermalink(seed) }}</p>
+            </div>
+            <div style="margin-bottom: 1rem">
+              <p class="heading">Seed Hash</p>
+              <div class="level">
+                <p class="level-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
               </div>
             </div>
-            <p class="heading">Seed Hash</p>
-            <div class="level">
-              <p class="level-item" *ngFor="let hashItem of seed.seedHash">{{ hashItem }}</p>
+            <div class="buttons are-small">
+              <button class="button is-info" (click)="copy(getPermalink(seed))">Copy Permalink</button>
+              <button class="button is-info" (click)="copy(getSeedHash(seed))">Copy Hash</button>
+              <button class="button is-info" (click)="copy(getPermalink(seed) + '\n' + getSeedHash(seed))">Copy Both</button>
             </div>
           </div>
         </div>
