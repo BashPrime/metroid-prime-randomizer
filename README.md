@@ -12,7 +12,7 @@ The randomizer is currently option-based, allowing the user to enable or disable
 
 ## Install
 
-This section is to build the randomizer application from source. If you just want to use the randomizer and start playing randomized seeds, you can download it from the [Releases page](https://github.com/etaylor8086/metroid-prime-randomizer/releases).
+This section is to build the randomizer application from source. If you just want to use the randomizer and start playing randomized seeds, you can download it from the [Releases page](https://github.com/BashPrime/metroid-prime-randomizer/releases).
 
 To build from source, you will need to install the 64-bit version of [Node.js](https://nodejs.org) to install the application and its dependencies using `npm`. 32-bit builds of the randomizer are not supported currently.
 
