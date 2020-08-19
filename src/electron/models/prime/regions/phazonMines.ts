@@ -12,9 +12,11 @@ export function phazonMines(): RegionObject[] {
       name: 'Main Quarry',
       locations: {
         [PrimeLocation.MAIN_QUARRY]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = settings.tricks.mainQuarryItemWithoutSpider || items.canSpider();
+          const morphReqs = settings.tricks.mainQuarryItemWithoutSpider || (items.canSpider() && items.canLayBombs());
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
-          return spiderReqs && thermalReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+
+          return morphReqs && thermalReqs && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+            && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
