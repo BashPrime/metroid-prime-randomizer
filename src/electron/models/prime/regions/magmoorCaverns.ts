@@ -254,14 +254,28 @@ export function magmoorCaverns(): RegionObject[] {
       name: Elevator.MAGMOOR_SOUTH_MINES,
       exits: {
         [Elevator.MINES_WEST]: () => true,
-        'Magmoor Workstation': (items: PrimeItemCollection) => items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM)
+        'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
+
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return baseReqs;
+          }
+
+          return baseReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
     {
       name: Elevator.MAGMOOR_SOUTH_PHENDRANA,
       exits: {
         [Elevator.PHENDRANA_SOUTH]: () => true,
-        'Magmoor Workstation': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+        'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
+            return items.has(PrimeItem.WAVE_BEAM);
+          }
+
+          return items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+        }
       }
     },
   ];
