@@ -1,114 +1,117 @@
 {
   "Default": {
-		"excludeLocations": [],
-		"itemOverrides": [],
-		"romSettings": {
-			"enableMainPlazaLedgeDoor": false,
-			"hideItemModels": false,
-			"skipFrigate": true,
-			"skipHudPopups": true
-		},
-		"rules": {
-			"artifactLocationHints": true,
-			"elevatorShuffle": false,
-			"goal": "artifact-collection",
-			"goalArtifacts": 12,
-			"heatProtection": "any-suit",
-			"junkItems": "Nothing",
-			"pointOfNoReturnItems": "allow-all",
-			"randomStartingItems": {
-				"maximum": 0,
-				"minimum": 0
-			},
-			"startingArea": 20,
-			"suitDamageReduction": "default"
-		},
-		"tricks": []
+    "excludeLocations": [],
+    "itemOverrides": [],
+    "romSettings": {
+      "enableMainPlazaLedgeDoor": false,
+      "hideItemModels": false,
+      "skipFrigate": true,
+      "skipHudPopups": true
+    },
+    "rules": {
+      "artifactLocationHints": true,
+      "elevatorShuffle": false,
+      "goal": "artifact-collection",
+      "goalArtifacts": 12,
+      "heatProtection": "any-suit",
+      "junkItems": "Nothing",
+      "pointOfNoReturnItems": "allow-all",
+      "randomStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      },
+      "shuffleMode": "full",
+      "startingArea": 20,
+      "suitDamageReduction": "default"
+    },
+    "tricks": []
   },
   "Beginner Friendly": {
-		"excludeLocations": [],
-		"itemOverrides": [
-			{
-				"count": 1,
-				"name": "Charge Beam",
-				"state": "starting-item"
-			},
-			{
-				"count": 1,
-				"name": "Morph Ball",
-				"state": "starting-item"
-			},
-			{
-				"count": 1,
-				"name": "Morph Ball Bomb",
-				"state": "starting-item"
-			},
-			{
-				"count": 1,
-				"name": "Boost Ball",
-				"state": "starting-item"
-			},
-			{
-				"count": 1,
-				"name": "Spider Ball",
-				"state": "starting-item"
-			}
-		],
-		"romSettings": {
-			"enableMainPlazaLedgeDoor": false,
-			"hideItemModels": false,
-			"skipFrigate": true,
-			"skipHudPopups": true
-		},
-		"rules": {
-			"artifactLocationHints": true,
-			"elevatorShuffle": false,
-			"goal": "artifact-collection",
-			"goalArtifacts": 6,
-			"heatProtection": "any-suit",
-			"junkItems": "Energy Tank",
-			"pointOfNoReturnItems": "do-not-allow",
-			"randomStartingItems": {
-				"maximum": 0,
-				"minimum": 0
-			},
-			"startingArea": 20,
-			"suitDamageReduction": "default"
-		},
-		"tricks": []
+    "excludeLocations": [],
+    "itemOverrides": [
+      {
+        "count": 1,
+        "name": "Charge Beam",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Morph Ball",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Morph Ball Bomb",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Boost Ball",
+        "state": "starting-item"
+      },
+      {
+        "count": 1,
+        "name": "Spider Ball",
+        "state": "starting-item"
+      }
+    ],
+    "romSettings": {
+      "enableMainPlazaLedgeDoor": false,
+      "hideItemModels": false,
+      "skipFrigate": true,
+      "skipHudPopups": true
+    },
+    "rules": {
+      "artifactLocationHints": true,
+      "elevatorShuffle": false,
+      "goal": "artifact-collection",
+      "goalArtifacts": 6,
+      "heatProtection": "any-suit",
+      "junkItems": "Energy Tank",
+      "pointOfNoReturnItems": "do-not-allow",
+      "randomStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      },
+      "shuffleMode": "full",
+      "startingArea": 20,
+      "suitDamageReduction": "default"
+    },
+    "tricks": []
   },
   "2019 Tournament": {
-		"excludeLocations": [],
-		"itemOverrides": [
-			{
-				"count": 1,
-				"name": "Charge Beam",
-				"state": "vanilla"
-			}
-		],
-		"romSettings": {
-			"enableMainPlazaLedgeDoor": false,
-			"hideItemModels": false,
-			"skipFrigate": true,
-			"skipHudPopups": true
-		},
-		"rules": {
-			"artifactLocationHints": true,
-			"elevatorShuffle": false,
-			"goal": "artifact-collection",
-			"goalArtifacts": 6,
-			"heatProtection": "varia-only",
-			"junkItems": "Missile Expansion",
-			"pointOfNoReturnItems": "allow-visible",
-			"randomStartingItems": {
-				"maximum": 0,
-				"minimum": 0
-			},
-			"startingArea": 20,
-			"suitDamageReduction": "progressive"
-		},
-		"tricks": [
-			"destroyBombCoversWithPowerBombs"
-		]
-	}
+    "excludeLocations": [],
+    "itemOverrides": [
+      {
+        "count": 1,
+        "name": "Charge Beam",
+        "state": "vanilla"
+      }
+    ],
+    "romSettings": {
+      "enableMainPlazaLedgeDoor": false,
+      "hideItemModels": false,
+      "skipFrigate": true,
+      "skipHudPopups": true
+    },
+    "rules": {
+      "artifactLocationHints": true,
+      "elevatorShuffle": false,
+      "goal": "artifact-collection",
+      "goalArtifacts": 6,
+      "heatProtection": "varia-only",
+      "junkItems": "Missile Expansion",
+      "pointOfNoReturnItems": "allow-visible",
+      "randomStartingItems": {
+        "maximum": 0,
+        "minimum": 0
+      },
+      "shuffleMode": "full",
+      "startingArea": 20,
+      "suitDamageReduction": "progressive"
+    },
+    "tricks": [
+      "destroyBombCoversWithPowerBombs"
+    ]
+  }
 }
