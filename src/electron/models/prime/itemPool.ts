@@ -173,11 +173,6 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
   // in a glitchless setting.
   const towerOfLightExpansions = itemPool[PrimeItem.MISSILE_LAUNCHER][0].count > 0 ? 7 : 8;
 
-  // If major-minor item shuffle is enabled and there are power bomb expansions, move them to the expansions pool
-  if (settings.shuffleMode === 'major-minor' && itemPool[PrimeItem.POWER_BOMB_EXPANSION][0].count > 0) {
-    itemPool[PrimeItem.POWER_BOMB_EXPANSION][0].type = PoolType.JUNK;
-  }
-
   if (itemPool[PrimeItem.MISSILE_EXPANSION][0].count >= towerOfLightExpansions) {
     itemPool[PrimeItem.MISSILE_EXPANSION].push({ count: towerOfLightExpansions, type: PoolType.ALWAYS });
     itemPool[PrimeItem.MISSILE_EXPANSION][0].count -= towerOfLightExpansions;
