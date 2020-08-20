@@ -16,6 +16,9 @@ interface WeightedLocation {
   weight: number
 }
 
+const majorLocations: string[] = primeLocations.filter(location => location.isMajor).map(location => location.name as string);
+const minorLocations: string[] = primeLocations.filter(location => !location.isMajor).map(location => location.name as string);
+
 export function fillRestrictive(world: World, itemPool: ItemCollection) {
   const rng = world.getRng();
   const totalItems = itemPool.size();
@@ -78,16 +81,9 @@ export function fillFast(world: World, locations: LocationCollection, itemPool: 
 
 function getFillableWeightedLocations(searchResults: SearchResults, world: World, itemToPlace: Item): WeightedLocation[] {
   const unfilledShuffledLocations = new LocationCollection(searchResults.getLocations().filter(location => {
-    // Filter major (or minor if the item is an expansion) locations if major-minor split is turned on
     if ((world.getSettings() as PrimeRandomizerSettings).shuffleMode === 'major-minor') {
-      const filteredLocations = primeLocations.filter(location => {
-        // Energy Tanks are the only expansions allowed to be in major item location
-        if (itemToPlace.getType() === ItemType.EXPANSION && itemToPlace.getName() !== PrimeItem.ENERGY_TANK) {
-          return !location.isMajor;
-        }
-
-        return location.isMajor;
-      }).map(location => location.name as string);
+      const filteredLocations = itemToPlace.getType() === ItemType.EXPANSION && itemToPlace.getName() !== PrimeItem.ENERGY_TANK
+        ? minorLocations : majorLocations;
 
       return !location.hasItem() && filteredLocations.includes(location.getName());
     }
@@ -148,7 +144,7 @@ function getWeightedLocations(locations: Location[]): WeightedLocation[] {
   // Assign regions to the locations
   for (const location of locations) {
     const region = primeLocations.find(primeLocation => primeLocation.name === location.getName()).region;
-    locationsWithRegions.push({ location: location, region: region});
+    locationsWithRegions.push({ location: location, region: region });
   }
 
   // Get the number of available regions for use in calculating the average.
