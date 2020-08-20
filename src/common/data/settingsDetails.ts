@@ -35,6 +35,10 @@ export const details: SettingsDetails = {
     name: 'Enable Main Plaza Ledge Door',
     description: `This door is normally disabled from the Main Plaza side. This option enables it in the patcher, allowing for additional routing options.`,
   },
+  skipImpactCrater: {
+    name: 'Skip Impact Crater',
+    description: `Changes the Artifact Temple portal to go directly to the credits, skipping the Impact Crater and Metroid Prime boss fights.`,
+  },
   goal: {
     name: 'Goal',
     description: `This sets the requirements to access the Meta Ridley fight, and by extension the Impact Crater.

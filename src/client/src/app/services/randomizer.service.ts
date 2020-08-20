@@ -29,7 +29,8 @@ export class RandomizerService {
         skipFrigate: [this.DEFAULT_SETTINGS.skipFrigate],
         skipHudPopups: [this.DEFAULT_SETTINGS.skipHudPopups],
         hideItemModels: [this.DEFAULT_SETTINGS.hideItemModels],
-        enableMainPlazaLedgeDoor: [this.DEFAULT_SETTINGS.enableMainPlazaLedgeDoor]
+        enableMainPlazaLedgeDoor: [this.DEFAULT_SETTINGS.enableMainPlazaLedgeDoor],
+        skipImpactCrater: [this.DEFAULT_SETTINGS.skipImpactCrater]
       }),
       rules: fb.group({
         goal: [this.DEFAULT_SETTINGS.goal],

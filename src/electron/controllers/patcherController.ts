@@ -101,7 +101,8 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     comment: randomizerComment,
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
     auto_enabled_elevators: !startingWithScanVisor,
-    enable_vault_ledge_door: world.getSettings().enableMainPlazaLedgeDoor
+    enable_vault_ledge_door: world.getSettings().enableMainPlazaLedgeDoor,
+    skip_impact_crater: world.getSettings().skipImpactCrater
   };
 }
 

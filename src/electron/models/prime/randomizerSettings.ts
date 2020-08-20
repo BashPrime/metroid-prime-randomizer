@@ -25,6 +25,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   skipHudPopups?: boolean;
   hideItemModels?: boolean;
   enableMainPlazaLedgeDoor?: boolean;
+  skipImpactCrater?: boolean;
   goal?: string;
   goalArtifacts?: number;
   artifactLocationHints?: boolean;
@@ -48,6 +49,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   skipHudPopups: boolean = true;
   hideItemModels: boolean = false;
   enableMainPlazaLedgeDoor = false;
+  skipImpactCrater = false;
   goal: string = 'artifact-collection';
   goalArtifacts: number = 12;
   artifactLocationHints: boolean = true;
@@ -164,7 +166,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
         skipFrigate: this.skipFrigate,
         skipHudPopups: this.skipHudPopups,
         hideItemModels: this.hideItemModels,
-        enableMainPlazaLedgeDoor: this.enableMainPlazaLedgeDoor
+        enableMainPlazaLedgeDoor: this.enableMainPlazaLedgeDoor,
+        skipImpactCrater: this.skipImpactCrater
       },
       rules: {
         goal: this.goal,
@@ -296,6 +299,7 @@ export const settings = [
   new Checkbox({ name: 'skipFrigate', shared: true, default: true }),
   new Checkbox({ name: 'skipHudPopups', shared: true, default: true }),
   new Checkbox({ name: 'enableMainPlazaLedgeDoor', shared: true, default: false }),
+  new Checkbox({ name: 'skipImpactCrater', shared: true, default: false }),
   new Checkbox({ name: 'hideItemModels', shared: true, default: false }),
   new SelectOption({
     name: 'goal',

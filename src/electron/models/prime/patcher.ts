@@ -17,6 +17,7 @@ export interface PatcherConfiguration {
   main_menu_message: string;
   auto_enabled_elevators: boolean;
   enable_vault_ledge_door: boolean;
+  skip_impact_crater: boolean;
 }
 
 export function runRandomprimePatcher(config: PatcherConfiguration, callback: (message: string) => void): void {

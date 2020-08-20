@@ -28,5 +28,12 @@
           [pTooltip]="DETAILS.enableMainPlazaLedgeDoor.description">{{ getDisplayName('enableMainPlazaLedgeDoor') }}</label>
       </div>
     </div>
+    <div class="column is-one-third">
+      <div class="field">
+        <input class="is-checkradio" id="skipImpactCrater" type="checkbox" formControlName="skipImpactCrater">
+        <label for="skipImpactCrater"
+          [pTooltip]="DETAILS.skipImpactCrater.description">{{ getDisplayName('skipImpactCrater') }}</label>
+      </div>
+    </div>
   </div>
 </form>
