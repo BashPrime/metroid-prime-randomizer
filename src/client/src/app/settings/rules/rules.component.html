@@ -39,6 +39,21 @@
     </div>
     <div class="column is-one-third">
       <div class="field">
+        <label class="label is-small">{{ getDisplayName('shuffleMode') }}</label>
+        <div class="control">
+          <div class="select is-small" [pTooltip]="DETAILS.shuffleMode.description"
+            tooltipStyleClass="is-wide-tooltip">
+            <select formControlName="shuffleMode">
+              <option *ngFor="let choice of getChoices('shuffleMode')" [ngValue]="choice.value">
+                {{ choice.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="field">
         <label class="label is-small">{{ getDisplayName('heatProtection') }}</label>
         <div class="control">
           <div class="select is-small" [pTooltip]="DETAILS.heatProtection.description"

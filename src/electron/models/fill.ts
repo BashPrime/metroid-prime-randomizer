@@ -7,6 +7,9 @@ import { PrimeItemCollection } from './prime/itemCollection';
 import { primeLocations } from './prime/locations';
 import { PrimeRegion } from '../enums/primeRegion';
 import { SearchResults } from './searchResults';
+import { PrimeRandomizerSettings } from './prime/randomizerSettings';
+import { ItemType } from './prime/items';
+import { PrimeItem } from '../enums/primeItem';
 
 interface WeightedLocation {
   location: Location,
@@ -62,7 +65,7 @@ export function fillFast(world: World, locations: LocationCollection, itemPool: 
       continue;
     }
 
-    const itemToPlace = itemPool.pop();
+    let itemToPlace = itemPool.pop();
 
     // Exit the loop if there are no items left
     if (!itemToPlace) {
@@ -74,7 +77,23 @@ export function fillFast(world: World, locations: LocationCollection, itemPool: 
 };
 
 function getFillableWeightedLocations(searchResults: SearchResults, world: World, itemToPlace: Item): WeightedLocation[] {
-  const unfilledShuffledLocations = new LocationCollection(searchResults.getLocations().filter(location => !location.hasItem())).shuffle(world.getRng()).toArray();
+  const unfilledShuffledLocations = new LocationCollection(searchResults.getLocations().filter(location => {
+    // Filter major (or minor if the item is an expansion) locations if major-minor split is turned on
+    if ((world.getSettings() as PrimeRandomizerSettings).shuffleMode === 'major-minor') {
+      const filteredLocations = primeLocations.filter(location => {
+        // Energy Tanks are the only expansions allowed to be in major item location
+        if (itemToPlace.getType() === ItemType.EXPANSION && itemToPlace.getName() !== PrimeItem.ENERGY_TANK) {
+          return !location.isMajor;
+        }
+
+        return location.isMajor;
+      }).map(location => location.name as string);
+
+      return !location.hasItem() && filteredLocations.includes(location.getName());
+    }
+
+    return !location.hasItem();
+  })).shuffle(world.getRng()).toArray();
   const assumedItems = searchResults.getItems();
   const fillableLocations: Location[] = [];
 

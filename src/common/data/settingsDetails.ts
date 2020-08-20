@@ -111,6 +111,19 @@ export const details: SettingsDetails = {
 
     The "Nothing" item is a suit model that intentionally uses a "glitched" texture.`
   },
+  shuffleMode: {
+    name: 'Shuffle Mode',
+    description: `Determines how the item and location pools will be handled during randomization.
+
+    'Full': All items can be placed in any location.
+
+    'Major/Minor Split': Items are split into two pools: Major and Minor. Major items are upgrades, `
+      + `Energy Tanks, and Chozo Artifacts. Minor items are missile and power bomb expansions.
+
+      Locations are also split into two pools, so major items can only be shuffled into locations where major `
+      + `items can be found. The same applies to minor items and minor item locations, unless there are less major items `
+      + `than available locations.`
+  },
   // Game Details
   baseIso: {
     name: 'Base ISO',

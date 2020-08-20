@@ -35,6 +35,7 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   randomStartingItems?: RandomStartingItems;
   pointOfNoReturnItems?: string;
   junkItems?: string;
+  shuffleMode?: string;
   itemOverrides?: ItemOverride[];
   excludeLocations?: SettingsFlagsArgs;
   tricks?: SettingsFlagsArgs;
@@ -60,6 +61,7 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   };
   pointOfNoReturnItems: string = PointOfNoReturnItems.ALLOW_ALL;
   junkItems: string = PrimeItem.NOTHING;
+  shuffleMode: string = 'full';
   itemOverrides: ItemOverrides = new ItemOverrides();
   excludeLocations: ExcludeLocations = new ExcludeLocations();
   tricks: Tricks = new Tricks();
@@ -438,6 +440,21 @@ export const settings = [
       }
     ],
     default: PrimeItem.NOTHING
+  }),
+  new SelectOption({
+    name: 'shuffleMode',
+    shared: true,
+    choices: [
+      {
+        name: 'Full',
+        value: 'full'
+      },
+      {
+        name: 'Major/Minor Split',
+        value: 'major-minor'
+      }
+    ],
+    default: 'full'
   }),
   new SelectOption({
     name: 'itemOverride',

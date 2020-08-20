@@ -44,7 +44,8 @@ export class RandomizerService {
           maximum: [this.DEFAULT_SETTINGS.randomStartingItems.maximum, [Validators.required, Validators.min(0), Validators.max(25)]]
         }),
         pointOfNoReturnItems: [this.DEFAULT_SETTINGS.pointOfNoReturnItems],
-        junkItems: [this.DEFAULT_SETTINGS.junkItems]
+        junkItems: [this.DEFAULT_SETTINGS.junkItems],
+        shuffleMode: [this.DEFAULT_SETTINGS.shuffleMode]
       }),
       itemOverrides: fb.array([]),
       excludeLocations: fb.array([]),
