@@ -6,7 +6,8 @@
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
       "skipFrigate": true,
-      "skipHudPopups": true
+      "skipHudPopups": true,
+      "skipImpactCrater": false
     },
     "rules": {
       "artifactLocationHints": true,
@@ -59,7 +60,8 @@
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
       "skipFrigate": true,
-      "skipHudPopups": true
+      "skipHudPopups": true,
+      "skipImpactCrater": false
     },
     "rules": {
       "artifactLocationHints": true,
@@ -92,7 +94,8 @@
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
       "skipFrigate": true,
-      "skipHudPopups": true
+      "skipHudPopups": true,
+      "skipImpactCrater": false
     },
     "rules": {
       "artifactLocationHints": true,
