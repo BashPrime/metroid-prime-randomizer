@@ -175,27 +175,92 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Arboretum': (items: PrimeItemCollection) => items.hasMissiles(),
-        'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+        'Magma Pool (Ruined Fountain Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           return (settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2)) || items.hasSuit(settings);
         },
         'Main Plaza': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       }
     },
     {
-      name: 'Magma Pool',
+      name: 'Magma Pool (Ruined Fountain Side)',
+      exits: {
+        'Magma Pool (Training Chamber Access Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
+
+          if (settings.tricks.crossMagmaPoolSuitless) {
+            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+          }
+
+          const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
+            ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
+            : items.has(PrimeItem.GRAPPLE_BEAM);
+
+          return grappleReqs && items.hasSuit(settings);
+        },
+        'Magma Pool (Item)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          if (settings.tricks.magmaPoolItemWithIS) {
+            return items.hasSuit(settings) && items.canInfiniteSpeed();
+          }
+
+          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
+
+          if (settings.tricks.crossMagmaPoolSuitless) {
+            return energyTanks && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+          }
+
+          const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
+            ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
+            : items.has(PrimeItem.GRAPPLE_BEAM);
+
+          return grappleReqs && items.hasSuit(settings) && items.canLayPowerBombs();
+        },
+        'Ruined Fountain': () => true
+      }
+    },
+    {
+      name: 'Magma Pool (Training Chamber Access Side)',
+      exits: {
+        'Magma Pool (Ruined Fountain Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
+
+          if (settings.tricks.crossMagmaPoolSuitless) {
+            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+          }
+
+          const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
+            ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
+            : items.has(PrimeItem.GRAPPLE_BEAM);
+
+          return grappleReqs && items.hasSuit(settings);
+        },
+        'Magma Pool (Item)': (items: PrimeItemCollection) => items.canLayPowerBombs(),
+        'Training Chamber Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
+      }
+    },
+    // This is to handle infinite speed without the game considering access to Training Chamber Access with just infinite speed
+    {
+      name: 'Magma Pool (Item)',
       locations: {
-        [PrimeLocation.MAGMA_POOL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const infiniteSpeedReqs = !settings.tricks.crossMagmaPoolSuitless && settings.tricks.magmaPoolItemWithIS && items.canInfiniteSpeed(); // need to have the suit requirement
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
-          return (grappleReqs && items.canLayPowerBombs()) || infiniteSpeedReqs;
-        }
+        [PrimeLocation.MAGMA_POOL]: () => true
       },
       exits: {
-        'Training Chamber Access': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
-          return grappleReqs && items.has(PrimeItem.WAVE_BEAM);
+        'Magma Pool (Ruined Fountain Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          if (settings.tricks.magmaPoolItemWithIS) {
+            return items.hasSuit(settings) && items.canInfiniteSpeed();
+          }
+
+          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
+
+          if (settings.tricks.crossMagmaPoolSuitless) {
+            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+          }
+
+          const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
+            ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
+            : items.has(PrimeItem.GRAPPLE_BEAM);
+
+          return grappleReqs && items.hasSuit(settings);
         },
-        'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.GRAPPLE_BEAM)
       }
     },
     {
@@ -205,10 +270,9 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Training Chamber': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM),
-        'Magma Pool': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const grappleReqs = ((settings.tricks.crossMagmaPoolWithoutGrapple || settings.tricks.crossMagmaPoolSuitless) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)) || items.has(PrimeItem.GRAPPLE_BEAM);
+        'Magma Pool (Training Chamber Access Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const suitReqs = (settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2)) || items.hasSuit(settings);
-          return grappleReqs && suitReqs && items.has(PrimeItem.WAVE_BEAM);
+          return suitReqs && items.has(PrimeItem.WAVE_BEAM);
         },
       }
     },
