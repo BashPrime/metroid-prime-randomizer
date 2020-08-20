@@ -20,6 +20,7 @@ export interface RandomizerForm {
     randomStartingItems: RandomStartingItems;
     pointOfNoReturnItems: string;
     junkItems: string;
+    shuffleMode: string;
   };
   itemOverrides: ItemOverride[];
   excludeLocations: string[];

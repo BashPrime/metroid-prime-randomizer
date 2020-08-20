@@ -176,7 +176,8 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
         startingArea: this.startingArea,
         randomStartingItems: this.randomStartingItems,
         pointOfNoReturnItems: this.pointOfNoReturnItems,
-        junkItems: this.junkItems
+        junkItems: this.junkItems,
+        shuffleMode: this.shuffleMode
       },
       itemOverrides: this.itemOverrides.toArray(),
       excludeLocations: this.excludeLocations.toArray(),
