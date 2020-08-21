@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PrimeRandomizerSettings, settings } from '../../../../electron/models/prime/randomizerSettings';
 
 import { version } from '../../../../../package.json';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,17 @@ export class RandomizerService {
       excludeLocations: fb.array([]),
       tricks: fb.array([])
     });
+  }
+
+  getRandomizerFormGracefully(form: RandomizerForm): RandomizerForm {
+    const newSettings = this.DEFAULT_SETTINGS.toRandomizerForm();
+
+    Object.assign(newSettings.romSettings, form.romSettings);
+    Object.assign(newSettings.rules, form.rules);
+    Object.assign(newSettings.itemOverrides, form.itemOverrides);
+    Object.assign(newSettings.excludeLocations, form.excludeLocations);
+    Object.assign(newSettings.tricks, form.tricks);
+
+    return newSettings;
   }
 }

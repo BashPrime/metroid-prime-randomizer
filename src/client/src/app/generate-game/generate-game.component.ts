@@ -171,26 +171,29 @@ export class GenerateGameComponent implements OnInit {
   applyFormChanges(newValue: RandomizerForm, excludeControls: string[] = []): void {
     const fb = new FormBuilder();
 
-    for (let control in filterProperties(newValue, excludeControls)) {
+    // If preset is older/missing fields, get defaults and apply on top of those
+    const newSettings = this.randomizerService.getRandomizerFormGracefully(newValue);
+
+    for (let control in filterProperties(newSettings, excludeControls)) {
       // Make sure form has the control! (primarly for protected field)
       if (this.form.get(control)) {
         // Special handling for array controls
-        if (Array.isArray(newValue[control])) {
+        if (Array.isArray(newSettings[control])) {
           // If array values are objects, make them form groups
-          if (newValue[control].length && typeof newValue[control][0] === 'object') {
+          if (newSettings[control].length && typeof newSettings[control][0] === 'object') {
             const formArray = fb.array([]);
 
-            for (let item of newValue[control]) {
+            for (let item of newSettings[control]) {
               formArray.push(fb.group(item));
             }
 
             this.form.setControl(control, formArray);
           } else {
             // Primitives
-            this.form.setControl(control, fb.array(newValue[control] || []));
+            this.form.setControl(control, fb.array(newSettings[control] || []));
           }
         } else {
-          this.form.get(control).patchValue(newValue[control]);
+          this.form.get(control).patchValue(newSettings[control]);
         }
       }
     }
