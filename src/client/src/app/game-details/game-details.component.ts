@@ -133,7 +133,7 @@ export class GameDetailsComponent extends SettingsSection implements OnInit {
 
   copy(str: string): void {
     this.clipboardService.copy(str);
-    this.toastrService.success('Copied!');
+    this.toastrService.success('Copied to clipboard.');
   }
 
   selectBaseIso(): void {
