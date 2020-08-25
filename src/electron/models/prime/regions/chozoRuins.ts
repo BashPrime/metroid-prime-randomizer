@@ -393,7 +393,8 @@ export function chozoRuins(): RegionObject[] {
 
           return items.canLayBombs();
         },
-        'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs()
+        'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs(),
+        'Gathering Hall': () => true
       }
     },
     {
@@ -482,7 +483,7 @@ export function chozoRuins(): RegionObject[] {
         },
         'Crossway': (items: PrimeItemCollection) => (items.canBoost() && items.hasMissiles())
           || (items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM)),
-        'Energy Core': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
+        'Furnace (Main Room)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     },
     {
