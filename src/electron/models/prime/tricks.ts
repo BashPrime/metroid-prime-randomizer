@@ -30,6 +30,7 @@ export class Tricks extends SettingsFlags {
   exitPhendranaCanyonNoItems = false;
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
+  fieryShoresItemSj = false;
   frigateCrashSiteItemWithoutGravitySuit = false;
   furnaceAccessWithoutSpider = false;
   furnaceSpiderTrackItemHBJ = false;

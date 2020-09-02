@@ -322,6 +322,11 @@ export const details: SettingsDetails = {
     description: `From the Magmoor East elevator, you can intentionally walk/jump through the lava in Transport Tunnel B to access Magmoor Caverns through Fiery Shores.`,
     difficulty: Difficulty.TRIVIAL
   },
+  fieryShoresItemSj: {
+    name: 'Fiery Shores Item with Space Jump',
+    description: `The morph ball path can be climbed with Space Jump instead to reach the item area.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   frigateCrashSiteItemWithoutGravitySuit: {
     name: 'Frigate Crash Site Item without Gravity Suit',
     description: `You can scan dash, slope jump, or grapple to the underwater ledge where the item is. You are expected to have either Space Jump or Grapple Beam.`,
