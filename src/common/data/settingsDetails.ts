@@ -324,7 +324,7 @@ export const details: SettingsDetails = {
   },
   fieryShoresItemSj: {
     name: 'Fiery Shores Item with Space Jump',
-    description: `The morph ball path can be climbed with Space Jump instead to reach the item area.`,
+    description: `The morph ball path can be climbed with Space Jump instead to reach the item.`,
     difficulty: Difficulty.TRIVIAL
   },
   frigateCrashSiteItemWithoutGravitySuit: {
