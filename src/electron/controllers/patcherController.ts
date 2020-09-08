@@ -98,6 +98,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     artifact_hint_behavior: settings.artifactLocationHints ? 'all' : 'none',
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
+    show_starting_items: world.getShowStartingItems(),
     comment: randomizerComment,
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
     auto_enabled_elevators: !startingWithScanVisor,

@@ -82,6 +82,11 @@ export function setStartingItems(world: PrimeWorld): void {
       if (!itemInfo.excludeFromRandomStartingItems && startingItems[itemKey] < itemInfo.maximum) {
         startingItems[itemKey]++;
         incrementedItem = true;
+
+        // Flag the starting items popup if it isn't already flagged
+        if (!world.getShowStartingItems()) {
+          world.setShowStartingItems(true);
+        }
       }
     }
   }

@@ -47,6 +47,10 @@ export class PrimeWorld extends World {
    * The collection of items that will already be in the player's inventory when starting the game.
    */
   protected startingItems: ItemMap;
+  /**
+   * This flag is used to set the starting items popup flag in the patcher.
+   */
+  protected showStartingItems: boolean = false;
 
   constructor(settings: PrimeRandomizerSettings) {
     super(settings);
@@ -160,6 +164,14 @@ export class PrimeWorld extends World {
 
   setStartingItems(startingItems: ItemMap): void {
     this.startingItems = startingItems;
+  }
+
+  getShowStartingItems(): boolean {
+    return this.showStartingItems;
+  }
+
+  setShowStartingItems(showStartingItems: boolean): void {
+    this.showStartingItems = showStartingItems;
   }
 
   /**
