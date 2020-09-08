@@ -56,7 +56,7 @@ export function tallonOverworld(): RegionObject[] {
         }
       },
       exits: {
-        'Landing Site': (items: PrimeItemCollection) => items.hasMissiles(),
+        'Landing Site': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL),
         'Cargo Freight Lift to Deck Gamma': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const thermalReqs = settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR);
           const gravityReqs = settings.tricks.crashedFrigateGammaElevatorWithoutGravity || items.has(PrimeItem.GRAVITY_SUIT);

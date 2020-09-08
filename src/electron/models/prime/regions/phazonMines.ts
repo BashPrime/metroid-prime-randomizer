@@ -80,13 +80,13 @@ export function phazonMines(): RegionObject[] {
       name: 'Ore Processing',
       locations: {
         [PrimeLocation.STORAGE_DEPOT_B]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderReqs = (items.canLayBombs() && items.canSpider()) || settings.tricks.climbOreProcessingWithoutGrappleSpider;
+          const spiderReqs = items.canSpider() || settings.tricks.climbOreProcessingWithoutGrappleSpider;
           return spiderReqs && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
         },
       },
       exits: {
         'Main Quarry': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const spiderGrappleReqs = (items.canLayBombs() && items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM))
+          const spiderGrappleReqs = (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM))
             || settings.tricks.climbOreProcessingWithoutGrappleSpider;
           return spiderGrappleReqs && items.canLayBombs() && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
             && items.has(PrimeItem.ICE_BEAM)

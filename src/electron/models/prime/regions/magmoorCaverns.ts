@@ -39,6 +39,7 @@ export function magmoorCaverns(): RegionObject[] {
         [PrimeLocation.TRANSPORT_TUNNEL_A]: (items: PrimeItemCollection) => items.canLayBombs()
       },
       exits: {
+        'Triclops Pit': () => true,
         'Shore Tunnel': () => true,
         'Warrior Shrine': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.warriorShrineMinimumReqs) {

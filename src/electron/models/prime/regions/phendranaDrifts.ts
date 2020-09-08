@@ -24,7 +24,7 @@ export function phendranaDrifts(): RegionObject[] {
           const sjReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.tricks.chozoIceTempleWithoutSpaceJump && items.canLayBombs());
           return sjReqs && canBreakIce(items);
         },
-        'Ice Ruins East': (items: PrimeItemCollection) => ((items.hasMissiles() && canBreakIce(items)) || items.has(PrimeItem.SPACE_JUMP_BOOTS)) && items.has(PrimeItem.SCAN_VISOR),
+        'Ice Ruins East': (items: PrimeItemCollection) => (canBreakIce(items) || items.has(PrimeItem.SPACE_JUMP_BOOTS)) && items.has(PrimeItem.SCAN_VISOR),
         'Ice Ruins West': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS),
         [Elevator.PHENDRANA_NORTH]: (items: PrimeItemCollection) => items.hasMissiles() || items.has(PrimeItem.CHARGE_BEAM)
       }
@@ -78,7 +78,7 @@ export function phendranaDrifts(): RegionObject[] {
       },
       exits: {
         'Ice Ruins West': () => true,
-        'Phendrana Shorelines': (items: PrimeItemCollection) => canBreakIce(items)
+        'Phendrana Shorelines': () => true
       }
     },
     {
@@ -259,6 +259,7 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Frozen Pike',
       exits: {
+        'Research Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Frost Cave': (items: PrimeItemCollection) => items.canLayBombs() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Hunter Cave': (items: PrimeItemCollection) => items.has(PrimeItem.GRAVITY_SUIT) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Transport Access (Phendrana)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -339,7 +340,7 @@ export function phendranaDrifts(): RegionObject[] {
           return items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && grappleReqs
             && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
-        'Phendrana\'s Edge': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Phendrana\'s Edge': (items: PrimeItemCollection) => items.hasMissiles() && items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {
