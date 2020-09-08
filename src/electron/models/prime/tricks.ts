@@ -43,6 +43,7 @@ export class Tricks extends SettingsFlags {
   hydroAccessTunnelWithoutGravity = false;
   iceBeamBeforeFlaahgraOobWallcrawl = false;
   iceRuinsEastSpiderItemWithoutSpider = false;
+  lateMagmoorNoHeatProtection = false;
   lifeGroveSpinnerWithoutBoostBall = false;
   lifeGroveTunnelHpbj = false;
   lowerPhazonMineWithoutSpiderGrapple = false;

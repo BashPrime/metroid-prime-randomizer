@@ -371,7 +371,7 @@ export const details: SettingsDetails = {
     name: 'Hall of the Elders Items with Infinite Speed',
     description: `You can use the infinite speed glitch in this room by transitioning to East Furnace Access, then going back into Hall of the Elders and jumping on top of the door while still transitioned in East Furnace Access.
 
-    This will "secretize" Hall of the Elders, (makes the room disappear) while keeping the collision loaded.`,
+    This will "secretize" Hall of the Elders (makes the room disappear) while keeping the collision loaded.`,
     difficulty: Difficulty.NORMAL
   },
   hydroAccessTunnelWithoutGravity: {
@@ -388,6 +388,14 @@ export const details: SettingsDetails = {
     name: 'Ice Ruins East - Spider Track Item without Spider Ball',
     description: `You can hyper bomb jump to reach the tunnel where the item is without Spider Ball.`,
     difficulty: Difficulty.HARD
+  },
+  lateMagmoorNoHeatProtection: {
+    name: 'Enter Late Magmoor without Heat Protection',
+    description: `By default, any access to Magmoor Caverns will check for heat protection in the logic. However, the second half of Magmoor past Twin Fires Tunnel `
+      + `isn't superheated, allowing for safe traversal without any suits.
+
+      This trick will remove the heat protection requirement when entering Magmoor from either of the two south elevators.`,
+    difficulty: Difficulty.TRIVIAL
   },
   lifeGroveSpinnerWithoutBoostBall: {
     name: 'Life Grove Spinner without Boost Ball',

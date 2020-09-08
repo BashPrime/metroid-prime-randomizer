@@ -257,7 +257,7 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         [Elevator.MINES_WEST]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
+          const baseReqs = (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
             return baseReqs;
@@ -272,11 +272,13 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         [Elevator.PHENDRANA_SOUTH]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.has(PrimeItem.WAVE_BEAM);
+
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return items.has(PrimeItem.WAVE_BEAM);
+            return baseReqs;
           }
 
-          return items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return baseReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       }
     },
