@@ -115,7 +115,7 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Fiery Shores (Tallon Elevator Side)',
       locations: {
-        [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: (items: PrimeItemCollection) => items.canLayBombs() || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && settings.tricks.fieryShoresItemSj)
+        [PrimeLocation.FIERY_SHORES_MORPH_TRACK]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canLayBombs() || (items.has(PrimeItem.SPACE_JUMP_BOOTS) && settings.tricks.fieryShoresItemSj)
       },
       exits: {
         'Fiery Shores (Shore Tunnel Side)': (items: PrimeItemCollection) => items.canLayBombs() || items.has(PrimeItem.GRAPPLE_BEAM),
