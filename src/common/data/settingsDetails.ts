@@ -429,6 +429,11 @@ export const details: SettingsDetails = {
     description: `The Grapple Ledge, Locked Door, and Half Pipe items can be reached with only Space Jump equipped.`,
     difficulty: Difficulty.TRIVIAL
   },
+  mainPlazaTreeNoSpaceJump: {
+    name: 'Main Plaza Tree Item without Space Jump',
+    description: `You can jump or fall down from the Ruined Fountain door ledge to reach the tree item.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   mainQuarryItemWithoutSpider: {
     name: 'Main Quarry Item without Spider Ball',
     description: `You can slope jump onto the top of the crane and R jump over to the item.`,

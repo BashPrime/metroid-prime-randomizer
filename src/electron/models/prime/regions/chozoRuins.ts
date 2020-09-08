@@ -17,7 +17,8 @@ export function chozoRuins(): RegionObject[] {
 
           return boostReqs || sjReqs;
         },
-        [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection) => items.canFireSuperMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.MAIN_PLAZA_TREE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.canFireSuperMissiles()
+          && (settings.tricks.mainPlazaTreeNoSpaceJump || items.has(PrimeItem.SPACE_JUMP_BOOTS))
       },
       exits: {
         'Ruined Nursery': () => true,
