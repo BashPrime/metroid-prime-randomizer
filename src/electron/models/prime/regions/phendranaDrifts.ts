@@ -157,10 +157,17 @@ export function phendranaDrifts(): RegionObject[] {
           const baseReqs = thermalReqs && spiderReqs && items.has(PrimeItem.WAVE_BEAM);
 
           // For Ruined Courtyard climb, when point of no return isn't allow all
-          const ruinedCourtyardClimbReqs = ((items.canBoost() && items.canLayBombs()) || items.has(PrimeItem.SPIDER_BALL)) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+          const ruinedCourtyardClimbReqs = ((items.canBoost() && items.canLayBombs()) || items.canSpider()) || settings.tricks.climbRuinedCourtyardWithoutBoostSpider;
+
+          // Account for observatory climb
+          const observatoryReqs = settings.tricks.climbObservatoryWithoutBoost || (items.canBoost() && items.canLayBombs());
+
+          // For requirements to go through labs to Frozen Pike
+          const labsReqs = observatoryReqs && items.hasMissiles() && items.has(PrimeItem.SCAN_VISOR);
 
           // For Frozen Pike climb requirements
-          const frozenPikeClimbReqs = items.has(PrimeItem.ICE_BEAM) && (items.canLayBombs() || settings.tricks.climbFrozenPikeWithoutBombs);
+          const frozenPikeClimbReqs = labsReqs && items.has(PrimeItem.ICE_BEAM) && (items.canLayBombs() || settings.tricks.climbFrozenPikeWithoutBombs
+            || (items.canBoost() && settings.tricks.boostThroughBombTunnels));
 
           // Point of no return for Ruined Courtyard climb/Supers
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
