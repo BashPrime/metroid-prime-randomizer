@@ -553,7 +553,7 @@ export const details: SettingsDetails = {
     Boost Ball can also be used, but is part of the Boost through Bomb Tunnels trick option instead of this option.`,
     difficulty: Difficulty.HARD
   },
-  ruinedShrineEscapeDash: {
+  ruinedShrineScanDashEscape: {
     name: 'Ruined Shrine Scan Dash Escape',
     description: `To leave Ruined Shrine with just Scan Visor, there is some narrow collision on the branches opposite the sandstone tunnel that you can jump on.
 
