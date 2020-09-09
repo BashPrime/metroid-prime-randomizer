@@ -417,7 +417,15 @@ export const details: SettingsDetails = {
     name: 'Lava Lake Item with only Missiles',
     description: `There is some collision on the bottom part of the central pillar you can jump on to reach the item.
 
-    Because this trick is suitless, you are expected to have 3 Energy Tanks (2 if you have Space Jump).`
+    Because this trick is suitless, you are expected to have 3 Energy Tanks (2 if you have Space Jump).`,
+    difficulty: Difficulty.EASY
+  },
+  lavaLakeItemSuitless: {
+    name: 'Lava Lake Item Suitless',
+    description: `Removes the suit requirement when considering the Lava Lake item for logic. Enabling this trick overrides "Lava Lake Item with only Missiles".
+
+    This trick expects you to have at least 4 Energy Tanks and Space Jump.`,
+    difficulty: Difficulty.NORMAL
   },
   lifeGroveSpinnerWithoutBoostBall: {
     name: 'Life Grove Spinner without Boost Ball',

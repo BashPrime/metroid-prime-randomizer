@@ -11,11 +11,23 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Lava Lake',
       locations: {
-        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasMissiles()
-          && (settings.tricks.lavaLakeItemOnlyMissiles || items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          if (settings.tricks.lavaLakeItemSuitless) {
+            return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          }
+
+          return items.hasMissiles() && (settings.tricks.lavaLakeItemOnlyMissiles || items.has(PrimeItem.GRAPPLE_BEAM)
+            || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+        }
       },
       exits: {
-        'Triclops Pit': (items: PrimeItemCollection) => items.canLayBombs(),
+        'Triclops Pit': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          if (settings.tricks.lavaLakeItemSuitless) {
+            return items.hasSuit(settings) && items.canLayBombs();
+          }
+
+          return items.canLayBombs();
+        },
         [Elevator.MAGMOOR_NORTH]: () => true
       }
     },
@@ -194,7 +206,7 @@ export function magmoorCaverns(): RegionObject[] {
       name: Elevator.MAGMOOR_NORTH,
       exits: {
         [Elevator.CHOZO_NORTH]: () => true,
-        'Lava Lake': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasSuit(settings)
+        'Lava Lake': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.lavaLakeItemSuitless || items.hasSuit(settings)
       }
     },
     {

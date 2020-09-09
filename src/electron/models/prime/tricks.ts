@@ -48,6 +48,7 @@ export class Tricks extends SettingsFlags {
   iceRuinsEastSpiderItemWithoutSpider = false;
   lateMagmoorNoHeatProtection = false;
   lavaLakeItemOnlyMissiles = false;
+  lavaLakeItemSuitless = false;
   lifeGroveSpinnerWithoutBoostBall = false;
   lifeGroveTunnelHpbj = false;
   lowerPhazonMineWithoutSpiderGrapple = false;
