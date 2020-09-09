@@ -24,7 +24,12 @@ export function chozoRuins(): RegionObject[] {
         'Ruined Nursery': () => true,
         'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.hasMissiles(),
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const grappleReqs = settings.tricks.mainPlazaGrappleLedgeOnlyGrapple && items.has(PrimeItem.GRAPPLE_BEAM);
+
+          return sjReqs || grappleReqs;
+        },
         'Main Plaza Grapple Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump
           && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         // OOB rooms
@@ -40,10 +45,11 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Main Plaza Locked Door Ledge',
       locations: {
-        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: () => true
+        [PrimeLocation.MAIN_PLAZA_LOCKED_DOOR]: () => true,
       },
       exits: {
-        'Main Plaza': () => true
+        'Main Plaza': () => true,
+        'Vault': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.enableMainPlazaLedgeDoor && settings.tricks.vaultAccessFromMainPlaza
       }
     },
     {
@@ -145,7 +151,12 @@ export function chozoRuins(): RegionObject[] {
         }
       },
       exits: {
-        'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Ruined Shrine (Outer)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const scanReqs = settings.tricks.ruinedShrineScanDashEscape && items.has(PrimeItem.SCAN_VISOR);
+          const normalReqs = items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          return scanReqs || normalReqs;
+        }
       }
     },
     {
@@ -186,34 +197,26 @@ export function chozoRuins(): RegionObject[] {
       name: 'Magma Pool (Ruined Fountain Side)',
       exits: {
         'Magma Pool (Training Chamber Access Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
-
-          if (settings.tricks.crossMagmaPoolSuitless) {
-            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
-          }
+          const suitlessReqs = settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
             ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
             : items.has(PrimeItem.GRAPPLE_BEAM);
 
-          return grappleReqs && items.hasSuit(settings);
+          return suitlessReqs || (grappleReqs && items.hasSuit(settings));
         },
         'Magma Pool (Item)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.magmaPoolItemWithIS) {
             return items.hasSuit(settings) && items.canInfiniteSpeed();
           }
 
-          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
-
-          if (settings.tricks.crossMagmaPoolSuitless) {
-            return energyTanks && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
-          }
+          const suitlessReqs = settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
             ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
             : items.has(PrimeItem.GRAPPLE_BEAM);
 
-          return grappleReqs && items.hasSuit(settings) && items.canLayPowerBombs();
+          return (suitlessReqs || (grappleReqs && items.hasSuit(settings))) && items.canLayPowerBombs();
         },
         'Ruined Fountain': () => true
       }
@@ -222,17 +225,13 @@ export function chozoRuins(): RegionObject[] {
       name: 'Magma Pool (Training Chamber Access Side)',
       exits: {
         'Magma Pool (Ruined Fountain Side)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
-
-          if (settings.tricks.crossMagmaPoolSuitless) {
-            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
-          }
+          const suitlessReqs = settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
             ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
             : items.has(PrimeItem.GRAPPLE_BEAM);
 
-          return grappleReqs && items.hasSuit(settings);
+          return suitlessReqs || (grappleReqs && items.hasSuit(settings));
         },
         'Magma Pool (Item)': (items: PrimeItemCollection) => items.canLayPowerBombs(),
         'Training Chamber Access': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM)
@@ -250,17 +249,13 @@ export function chozoRuins(): RegionObject[] {
             return items.hasSuit(settings) && items.canInfiniteSpeed();
           }
 
-          const energyTanks = items.hasCount(PrimeItem.ENERGY_TANK, 2);
-
-          if (settings.tricks.crossMagmaPoolSuitless) {
-            return energyTanks && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
-          }
+          const suitlessReqs = settings.tricks.crossMagmaPoolSuitless && items.hasCount(PrimeItem.ENERGY_TANK, 2) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           const grappleReqs = settings.tricks.crossMagmaPoolWithoutGrapple
             ? items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
             : items.has(PrimeItem.GRAPPLE_BEAM);
 
-          return grappleReqs && items.hasSuit(settings);
+          return suitlessReqs || (grappleReqs && items.hasSuit(settings));
         },
       }
     },
@@ -319,8 +314,12 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         [Elevator.CHOZO_NORTH]: (items: PrimeItemCollection) => items.canLayBombs(),
-        'Arboretum': (items: PrimeItemCollection) => items.hasMissiles() && items.canLayBombs() && items.canSpider()
-          && items.canFireSuperMissiles()
+        // Arboretum is inaccessible until sunchamber ghosts are defeated
+        'Arboretum': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const spiderSupersReqs = settings.tricks.sunTowerIbj || (items.canSpider() && items.canFireSuperMissiles());
+          return items.hasMissiles() && items.canLayBombs() && spiderSupersReqs;
+        },
+
       }
     },
     {
@@ -354,7 +353,12 @@ export function chozoRuins(): RegionObject[] {
     {
       name: 'Watery Hall',
       locations: {
-        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: (items: PrimeItemCollection) => items.has(PrimeItem.SCAN_VISOR),
+        [PrimeLocation.WATERY_HALL_SCAN_PUZZLE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const infiniteSpeedReqs = settings.tricks.wateryHallScanPuzzleWithIS && items.hasMissiles() && items.hasSuit(settings)
+            && items.hasCount(PrimeItem.ENERGY_TANK, 1) && items.canInfiniteSpeed();
+
+          return infiniteSpeedReqs || items.has(PrimeItem.SCAN_VISOR);
+        },
         [PrimeLocation.WATERY_HALL_UNDERWATER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           // If Flaahgra skip and the location are disabled, don't allow any items to be placed here
           if (!settings.tricks.wateryHallUnderwaterFlaahgraSkip && settings.excludeLocations[PrimeLocation.SUNCHAMBER_FLAAHGRA]) {

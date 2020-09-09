@@ -13,7 +13,12 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Phendrana Shorelines',
       locations: {
-        [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
+        [PrimeLocation.PHENDRANA_SHORELINES_BEHIND_ICE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.tricks.chozoIceTempleWithoutSpaceJump && items.canLayBombs());
+          const infiniteSpeedReqs = settings.tricks.earlyPhendranaBehindIceItemsWithIS && sjReqs && items.canInfiniteSpeed() && items.has(PrimeItem.WAVE_BEAM);
+
+          return infiniteSpeedReqs || items.has(PrimeItem.PLASMA_BEAM);
+        },
         [PrimeLocation.PHENDRANA_SHORELINES_SPIDER_TRACK]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const sjReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.tricks.chozoIceTempleWithoutSpaceJump && items.canLayBombs());
           return sjReqs && items.canFireSuperMissiles() && items.canSpider() && items.has(PrimeItem.SCAN_VISOR);
@@ -72,7 +77,12 @@ export function phendranaDrifts(): RegionObject[] {
     {
       name: 'Ice Ruins East',
       locations: {
-        [PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE]: (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM),
+        [PrimeLocation.ICE_RUINS_EAST_BEHIND_ICE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const sjReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) || (settings.tricks.chozoIceTempleWithoutSpaceJump && items.canLayBombs());
+          const infiniteSpeedReqs = settings.tricks.earlyPhendranaBehindIceItemsWithIS && sjReqs && items.canInfiniteSpeed() && items.has(PrimeItem.WAVE_BEAM);
+
+          return infiniteSpeedReqs || items.has(PrimeItem.PLASMA_BEAM);
+        },
         [PrimeLocation.ICE_RUINS_EAST_SPIDER_TRACK]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) =>
           items.canSpider() || (settings.tricks.iceRuinsEastSpiderItemWithoutSpider && items.canLayBombs())
       },

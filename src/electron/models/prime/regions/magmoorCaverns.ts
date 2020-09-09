@@ -11,8 +11,8 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Lava Lake',
       locations: {
-        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection) => items.hasMissiles()
-          && (items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
+        [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => items.hasMissiles()
+          && (settings.tricks.lavaLakeItemOnlyMissiles || items.has(PrimeItem.GRAPPLE_BEAM) || items.has(PrimeItem.SPACE_JUMP_BOOTS))
       },
       exits: {
         'Triclops Pit': (items: PrimeItemCollection) => items.canLayBombs(),
@@ -23,8 +23,11 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Triclops Pit',
       locations: {
         [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const missileReqs = settings.tricks.triclopsPitItemWithCharge || items.hasMissiles();
+          const sjReqs = settings.tricks.triclopsPitItemWithoutSpaceJump || items.has(PrimeItem.SPACE_JUMP_BOOTS);
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+
+          return missileReqs && sjReqs && xrayReqs;
         },
         [PrimeLocation.STORAGE_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
@@ -58,7 +61,7 @@ export function magmoorCaverns(): RegionObject[] {
     {
       name: 'Warrior Shrine',
       locations: {
-        [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        [PrimeLocation.WARRIOR_SHRINE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.warriorShrineMinimumReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS)
       },
       exits: {
         'Fiery Shores (Warrior Shrine Tunnel)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {

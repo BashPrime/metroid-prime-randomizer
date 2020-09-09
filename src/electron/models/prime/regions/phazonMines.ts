@@ -60,7 +60,10 @@ export function phazonMines(): RegionObject[] {
       name: 'Elite Research',
       locations: {
         [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
-        [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection) => items.canBoost() && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR)
+        [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const boostReqs = settings.tricks.eliteResearchLaserItemWithoutBoost || items.canBoost();
+          return boostReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
+        }
       },
       exits: {
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {

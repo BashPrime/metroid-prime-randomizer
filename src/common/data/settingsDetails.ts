@@ -300,10 +300,21 @@ export const details: SettingsDetails = {
     The bombable cover at the top of Arboretum cannot be destroyed with Power Bombs and as such is not factored with this setting.`,
     difficulty: Difficulty.TRIVIAL
   },
+  earlyPhendranaBehindIceItemsWithIS: {
+    name: 'Early Phendrana Behind Ice items with Infinite Speed',
+    description: `The Phendrana Shorelines and Ice Ruins East items behind ice walls can be obtained by getting infinite speed in `
+      + `Chapel of the Elders first, then boosting to acquire them.`,
+    difficulty: Difficulty.NORMAL
+  },
   eliteResearchInfiniteBoostClip: {
     name: 'Infinite Boost clip into Elite Research',
     description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
     difficulty: Difficulty.NORMAL
+  },
+  eliteResearchLaserItemWithoutBoost: {
+    name: 'Elite Research Laser Item without Boost Ball',
+    description: `You can get the laser turret to spin by wedging the morph ball in the spinner, bombing out, and then spinning the morph ball while in the spinner before it locks you in.`,
+    difficulty: Difficulty.EASY
   },
   exitPhendranaCanyonNoItems: {
     name: 'Exit Phendrana Canyon with No Items',
@@ -326,6 +337,11 @@ export const details: SettingsDetails = {
     name: 'Fiery Shores Item with Space Jump',
     description: `The morph ball path can be climbed with Space Jump instead to reach the item.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  frigateCrashSiteItemOnlyScanVisor: {
+    name: 'Frigate Crash Site Item with only Scan Visor',
+    description: `You can scan dash from either side of the lake to reach the item ledge without any additional items.`,
+    difficulty: Difficulty.EASY
   },
   frigateCrashSiteItemWithoutGravitySuit: {
     name: 'Frigate Crash Site Item without Gravity Suit',
@@ -397,6 +413,12 @@ export const details: SettingsDetails = {
       This trick will remove the heat protection requirement when entering Magmoor from either of the two south elevators.`,
     difficulty: Difficulty.TRIVIAL
   },
+  lavaLakeItemOnlyMissiles: {
+    name: 'Lava Lake Item with only Missiles',
+    description: `There is some collision on the bottom part of the central pillar you can jump on to reach the item.
+
+    Because this trick is suitless, you are expected to have 3 Energy Tanks (2 if you have Space Jump).`
+  },
   lifeGroveSpinnerWithoutBoostBall: {
     name: 'Life Grove Spinner without Boost Ball',
     description: `With a specific camera angle and control stick angle setup, you can open up the spinner item without Boost Ball.
@@ -418,6 +440,12 @@ export const details: SettingsDetails = {
     name: 'Magma Pool Item with Infinite Speed',
     description: `You can use the infinite speed glitch by wedging yourself between the crates and the wall on the Ruined Fountain side of this room.`,
     difficulty: Difficulty.NORMAL
+  },
+  mainPlazaGrappleLedgeOnlyGrapple: {
+    name: 'Main Plaza Grapple Ledge Item with only Grapple Beam',
+    description: `To reach this grapple point with minimal items, fall down onto the tree knot from the Ruined Fountain door ledge. Next, aim up at the `
+      + `grapple point, jump towards it, then lock on to grapple while in mid-air.`,
+    difficulty: Difficulty.TRIVIAL
   },
   mainPlazaHpbj: {
     name: 'Main Plaza - Half Pipe Bomb Jump',
@@ -517,6 +545,13 @@ export const details: SettingsDetails = {
     Boost Ball can also be used, but is part of the Boost through Bomb Tunnels trick option instead of this option.`,
     difficulty: Difficulty.HARD
   },
+  ruinedShrineEscapeDash: {
+    name: 'Ruined Shrine Scan Dash Escape',
+    description: `To leave Ruined Shrine with just Scan Visor, there is some narrow collision on the branches opposite the sandstone tunnel that you can jump on.
+
+    Once on the branches, face the opposing wall and scan dash using the sandstone tunnel or the wall decoration.`,
+    difficulty: Difficulty.EASY
+  },
   shoreTunnelEscapeWithoutSpaceJump: {
     name: 'Shore Tunnel Escape without Space Jump Boots',
     description: `You can double bomb jump or slope jump out of the lava pit without the Space Jump Boots.`,
@@ -566,10 +601,27 @@ export const details: SettingsDetails = {
     This trick will always expect you to have Morph Ball and bombs.`,
     difficulty: Difficulty.OOB
   },
+  triclopsPitItemWithoutSpaceJump: {
+    name: 'Triclops Pit Item without Space Jump',
+    description: `There is a sloped section of the wall near the last invisible platform that can be reached without Space Jump.
+
+    From there, you can jump to the platform and then the item.`,
+    difficulty: Difficulty.NORMAL
+  },
+  triclopsPitItemWithCharge: {
+    name: 'Triclops Pit Item with Charge Beam',
+    description: `The pillar containing the item can be destroyed with Charge Beam instead of missiles.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   upperRuinedShrineTowerOfLightFewerAccessReqs: {
     name: 'Upper Ruined Shrine and Tower of Light - Fewer Access Requirements',
     description: `Upper Ruined Shrine and the door to Tower of Light can be reached with just Space Jump Boots (and Wave Beam for the latter).`,
     difficulty: Difficulty.EASY
+  },
+  vaultAccessFromMainPlaza: {
+    name: 'Vault Access from Main Plaza',
+    description: `Vault will be considered reachable in logic from Main Plaza if this trick and if "Enable Main Plaza Ledge Door" are both enabled.`,
+    difficulty: Difficulty.TRIVIAL
   },
   ventShaftHpbj: {
     name: 'Ventilation Shaft - Half Pipe Bomb Jump',
@@ -590,6 +642,11 @@ export const details: SettingsDetails = {
     name: 'Watery Hall (Underwater) Flaahgra Skip',
     description: `You can obtain the underwater Watery Hall item before fighting Flaaghra, making it possible for the Morph Ball Bomb to be placed here.`,
     difficulty: Difficulty.TRIVIAL
+  },
+  wateryHallScanPuzzleWithIS: {
+    name: 'Watery Hall Scan Puzzle Item with Infinite Speed',
+    description: 'You can obtain the scan puzzle item without Scan Visor by getting infinite speed in Magma Pool, then boosting in Watery Hall Access while Watery Hall is loaded.',
+    difficulty: Difficulty.NORMAL
   },
   wateryHallUnderwaterSlopeJump: {
     name: 'Watery Hall (Underwater) Slope Jump',

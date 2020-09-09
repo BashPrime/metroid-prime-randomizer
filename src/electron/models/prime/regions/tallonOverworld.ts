@@ -51,8 +51,9 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.FRIGATE_CRASH_SITE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const normalReqs = items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.GRAVITY_SUIT);
+          const scanReqs = settings.tricks.frigateCrashSiteItemOnlyScanVisor && items.has(PrimeItem.SCAN_VISOR);
           const gravitylessReqs = settings.tricks.frigateCrashSiteItemWithoutGravitySuit && (items.has(PrimeItem.SPACE_JUMP_BOOTS) || items.has(PrimeItem.GRAPPLE_BEAM))
-          return normalReqs || gravitylessReqs;
+          return scanReqs || gravitylessReqs || normalReqs;
         }
       },
       exits: {
@@ -167,7 +168,7 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.GREAT_TREE_CHAMBER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
-          return xrayReqs && items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return xrayReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
@@ -189,7 +190,7 @@ export function tallonOverworld(): RegionObject[] {
             return baseReqs;
           }
 
-          return items.has(PrimeItem.THERMAL_VISOR) && baseReqs;
+          return (settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR)) && baseReqs;
         },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const boostReqs = items.canBoost() || (settings.tricks.greatTreeHallBarsSkip && items.canLayBombs());
@@ -260,7 +261,7 @@ export function tallonOverworld(): RegionObject[] {
       name: Elevator.TALLON_SOUTH_MINES,
       exits: {
         [Elevator.MINES_EAST]: () => true,
-        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Great Tree Hall (Lower)': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM)
       }
     }
   ];
