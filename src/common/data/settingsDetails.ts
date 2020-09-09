@@ -415,9 +415,7 @@ export const details: SettingsDetails = {
   },
   lavaLakeItemOnlyMissiles: {
     name: 'Lava Lake Item with only Missiles',
-    description: `There is some collision on the bottom part of the central pillar you can jump on to reach the item.
-
-    Because this trick is suitless, you are expected to have 3 Energy Tanks (2 if you have Space Jump).`,
+    description: `There is some collision on the bottom part of the central pillar you can jump on to reach the item.`,
     difficulty: Difficulty.EASY
   },
   lavaLakeItemSuitless: {
