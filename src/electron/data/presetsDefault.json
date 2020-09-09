@@ -114,7 +114,8 @@
       "suitDamageReduction": "progressive"
     },
     "tricks": [
-      "destroyBombCoversWithPowerBombs"
+      "destroyBombCoversWithPowerBombs",
+      "lateMagmoorNoHeatProtection"
     ]
   }
 }
