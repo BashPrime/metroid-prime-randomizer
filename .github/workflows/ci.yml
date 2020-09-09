@@ -1,0 +1,65 @@
+name: Build
+
+on: push
+
+env:
+  CARGO_TERM_COLOR: always
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    
+    - name: Add Salt
+      run: sed -i "s/getNumericSeed()/getNumericSeed('${{ secrets.RELEASE_SALT }}')/" src/electron/models/prime/randomizer.ts
+    - name: Enable Nightly Rust Toolchain
+      run: rustup toolchain install nightly
+    - name: Add PowerPC toolchain
+      run: rustup target add --toolchain nightly powerpc-unknown-linux-gnu
+    - name: NPM Install
+      run: npm install
+    - name: Build Linux App
+      run: npm run electron:linux
+
+  macos:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    
+    - name: Add Salt
+      run: sed -i.bak "s/getNumericSeed()/getNumericSeed('${{ secrets.RELEASE_SALT }}')/" src/electron/models/prime/randomizer.ts
+    - name: Enable Nightly Rust Toolchain
+      run: rustup toolchain install nightly
+    - name: Add PowerPC toolchain
+      run: rustup target add --toolchain nightly powerpc-unknown-linux-gnu
+    - name: NPM Install
+      run: npm install
+    - name: Build macOS App
+      run: npm run electron:mac
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    
+    - name: Add Salt
+      run: $x = get-content src/electron/models/prime/randomizer.ts | %{$_ -replace "getNumericSeed\(\)", "getNumericSeed('${{ secrets.RELEASE_SALT }}')" }; set-content src/electron/models/prime/randomizer.ts $x
+    - name: Enable nightly Rust Toolchain
+      run: rustup toolchain install nightly
+    - name: Add PowerPC toolchain
+      run: rustup target add --toolchain nightly powerpc-unknown-linux-gnu
+    - name: NPM Install
+      run: npm install
+    - name: Build Windows App
+      run: npm run electron:windows
