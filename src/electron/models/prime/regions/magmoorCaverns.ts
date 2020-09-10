@@ -35,7 +35,7 @@ export function magmoorCaverns(): RegionObject[] {
       name: 'Triclops Pit',
       locations: {
         [PrimeLocation.TRICLOPS_PIT]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const missileReqs = settings.tricks.triclopsPitItemWithCharge || items.hasMissiles();
+          const missileReqs = (settings.tricks.triclopsPitItemWithCharge && items.has(PrimeItem.CHARGE_BEAM)) || items.hasMissiles();
           const sjReqs = settings.tricks.triclopsPitItemWithoutSpaceJump || items.has(PrimeItem.SPACE_JUMP_BOOTS);
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
 
