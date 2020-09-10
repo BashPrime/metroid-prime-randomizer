@@ -311,8 +311,8 @@ export const details: SettingsDetails = {
     description: `Elite Research can be entered from the Research Access door with an Infinite Boost clip.`,
     difficulty: Difficulty.NORMAL
   },
-  eliteResearchLaserItemWithoutBoost: {
-    name: 'Elite Research Laser Item without Boost Ball',
+  eliteResearchLaserWithoutBoost: {
+    name: 'Elite Research Laser without Boost Ball',
     description: `You can get the laser turret to spin by wedging the morph ball in the spinner, bombing out, and then spinning the morph ball while in the spinner before it locks you in.`,
     difficulty: Difficulty.EASY
   },

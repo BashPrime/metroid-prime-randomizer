@@ -61,20 +61,21 @@ export function phazonMines(): RegionObject[] {
       locations: {
         [PrimeLocation.ELITE_RESEARCH_PHAZON_ELITE]: (items: PrimeItemCollection) => items.canLayPowerBombs(),
         [PrimeLocation.ELITE_RESEARCH_LASER]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const boostReqs = settings.tricks.eliteResearchLaserItemWithoutBoost || items.canBoost();
+          const boostReqs = settings.tricks.eliteResearchLaserWithoutBoost || items.canBoost();
           return boostReqs && items.canLayBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
         'Ore Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = items.canBoost() && items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
+          const boostReqs = items.canBoost() || settings.tricks.eliteResearchLaserWithoutBoost;
+          const baseReqs = items.canLayBombs() && items.has(PrimeItem.ICE_BEAM)
             && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
 
           if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return baseReqs;
+            return boostReqs && baseReqs;
           }
 
-          return items.canSpider() && baseReqs;
+          return items.canSpider() && boostReqs && baseReqs;
         },
         'Mine Security Station': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.ICE_BEAM)
       }
