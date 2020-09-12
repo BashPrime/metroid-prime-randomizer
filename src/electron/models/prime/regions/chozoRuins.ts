@@ -24,14 +24,14 @@ export function chozoRuins(): RegionObject[] {
         'Ruined Nursery': () => true,
         'Ruined Shrine (Outer)': (items: PrimeItemCollection) => items.hasMissiles(),
         'Ruined Fountain': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL),
-        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          const grappleReqs = settings.tricks.mainPlazaGrappleLedgeOnlyGrapple && items.has(PrimeItem.GRAPPLE_BEAM);
-
-          return sjReqs || grappleReqs;
-        },
-        'Main Plaza Grapple Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump
+        'Main Plaza Locked Door Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.mainPlazaItemsOnlySpaceJump
           && items.has(PrimeItem.SPACE_JUMP_BOOTS),
+        'Main Plaza Grapple Ledge': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+            const sjReqs = settings.tricks.mainPlazaItemsOnlySpaceJump && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            const grappleReqs = settings.tricks.mainPlazaGrappleLedgeOnlyGrapple && items.has(PrimeItem.GRAPPLE_BEAM);
+
+            return sjReqs || grappleReqs;
+          },
         // OOB rooms
         'Training Chamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           return settings.tricks.trainingChamberAndAccessOobWallcrawl && items.canWallcrawl(settings) && items.canLayBombs();
