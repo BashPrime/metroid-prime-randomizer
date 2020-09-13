@@ -28,7 +28,7 @@ export class Tricks extends SettingsFlags {
   destroyBombCoversWithPowerBombs = false;
   earlyPhendranaBehindIceItemsWithIS = false;
   eliteResearchInfiniteBoostClip = false;
-  eliteResearchLaserItemWithoutBoost = false;
+  eliteResearchLaserWithoutBoost = false;
   exitPhendranaCanyonNoItems = false;
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
