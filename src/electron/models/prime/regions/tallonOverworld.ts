@@ -104,11 +104,15 @@ export function tallonOverworld(): RegionObject[] {
     {
       name: 'Overgrown Cavern',
       locations: {
-        [PrimeLocation.OVERGROWN_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
+        [PrimeLocation.OVERGROWN_CAVERN]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL)
       },
       exits: {
-        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM),
-        [Elevator.TALLON_EAST]: (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM)
+        'Frigate Crash Site': (items: PrimeItemCollection) => items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM),
+        [Elevator.TALLON_EAST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM);
+          const sjReqs = (items.has(PrimeItem.SPACE_JUMP_BOOTS) || settings.tricks.tallonTransportTunnelCMinimumReqs);
+          return baseReqs && sjReqs;
+        }
       }
     },
     {
@@ -240,7 +244,11 @@ export function tallonOverworld(): RegionObject[] {
       name: Elevator.TALLON_EAST,
       exits: {
         [Elevator.CHOZO_EAST]: () => true,
-        'Overgrown Cavern': (items: PrimeItemCollection) => items.has(PrimeItem.ICE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Overgrown Cavern': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
+          const baseReqs = items.has(PrimeItem.MORPH_BALL) && items.has(PrimeItem.ICE_BEAM);
+          const sjReqs = (items.has(PrimeItem.SPACE_JUMP_BOOTS) || settings.tricks.tallonTransportTunnelCMinimumReqs);
+          return baseReqs && sjReqs;
+        }
       }
     },
     {
