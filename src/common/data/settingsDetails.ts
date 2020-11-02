@@ -595,6 +595,11 @@ export const details: SettingsDetails = {
     description: `You can skip the Grapple Beam by scan dashing to the Quarantine Monitor platform from the elevator platform.`,
     difficulty: Difficulty.NORMAL
   },
+  tallonTransportTunnelCMinimumReqs: {
+    name: 'Tallon Transport Tunnel C - Minimum Requirements',
+    description: `The roots near Overgrown Cavern can be rolled under with Morph Ball. The remaining roots can be climbed over without Space Jump.`,
+    difficulty: Difficulty.TRIVIAL
+  },
   towerChamberNoGravity: {
     name: 'Tower Chamber without Gravity Suit',
     description: `The ledge can be reached by underwater slope jumping to the door without the Gravity Suit equipped.`,

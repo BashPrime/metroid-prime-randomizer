@@ -79,6 +79,7 @@ export class Tricks extends SettingsFlags {
   suitlessMagmoorRunMinimal = false;
   sunTowerIbj = false;
   quarantineMonitorDash = false;
+  tallonTransportTunnelCMinimumReqs = false;
   towerChamberNoGravity = false;
   trainingChamberAndAccessOobWallcrawl = false;
   triclopsPitItemWithoutSpaceJump = false;
