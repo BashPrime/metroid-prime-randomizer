@@ -14,6 +14,7 @@ common/**/*.js
 /build
 /bin
 settings.json
+/coverage
 
 # dependencies
 /node_modules
