@@ -8,8 +8,6 @@ interface Item extends BaseResource {
   max_capacity: number;
 }
 
-interface Event extends BaseResource {}
-
 interface Trick extends BaseResource {
   description: string;
 }
@@ -22,8 +20,6 @@ interface DamageReduction {
 interface Damage extends BaseResource {
   reductions: DamageReduction[];
 }
-
-interface Version extends BaseResource {}
 
 interface RequirementResource {
   type: 'resource';
@@ -49,10 +45,10 @@ interface ResourceDatabase {
   energy_tank_item_index: number;
   item_percentage_index: number;
   multiworld_magic_item_index: number;
-  events: Event[];
+  events: BaseResource[];
   tricks: Trick[];
   damage: Damage[];
-  versions: Version[];
+  versions: BaseResource[];
   misc: object[];
   requirement_template: RequirementTemplate;
 }
@@ -93,7 +89,7 @@ interface AreaNode {
   name: string;
   heal: boolean;
   coordinates: CoordinateObject;
-  node_type: 'dock';
+  node_type: 'generic' | 'dock' | 'pickup' | 'teleporter' | 'event' | 'translator_gate' | 'logbook' | 'player_ship';
   dock_index: number;
   connected_area_asset_id: number;
   connected_dock_index: number;
