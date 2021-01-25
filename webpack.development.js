@@ -20,6 +20,10 @@ module.exports = {
             use: 'ts-loader',
             exclude: /node_modules/
           },
+          {
+            test: /\.node$/,
+            loader: 'node-loader',
+          }
       ]
   },
   node: {

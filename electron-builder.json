@@ -27,6 +27,5 @@
     "target": [
       "AppImage", "tar.gz"
     ]
-  },
-  "nodeGypRebuild": true
+  }
 }
