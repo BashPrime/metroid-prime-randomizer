@@ -13,7 +13,7 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {
         [PrimeLocation.LAVA_LAKE]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           if (settings.tricks.lavaLakeItemSuitless) {
-            return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+            return items.hasMissiles() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.hasCount(PrimeItem.ENERGY_TANK, 4);
           }
 
           return items.hasMissiles() && (settings.tricks.lavaLakeItemOnlyMissiles || items.has(PrimeItem.GRAPPLE_BEAM)
