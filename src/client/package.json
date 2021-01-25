@@ -2,9 +2,9 @@
   "name": "metroid-prime-randomizer-client",
   "scripts": {
     "ng": "ng",
-    "ng:serve": "ng serve",
-    "ng:build": "ng build",
-    "ng:build:prod": "ng build --prod"
+    "ng:serve": "ng serve -c web -o",
+    "ng:build": "ng build --base-href ./",
+    "ng:build:prod": "ng build --prod --base-href ./"
   },
   "private": true
 }
