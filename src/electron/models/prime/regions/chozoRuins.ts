@@ -181,7 +181,10 @@ export function chozoRuins(): RegionObject[] {
             return false;
           }
 
-          const bombsReqs = items.canLayBombs() || (settings.tricks.ruinedFountainItemFlaahgraSkip && items.has(PrimeItem.SPACE_JUMP_BOOTS));
+          //Added check to see if flaahgra can be reached first.
+          const flaahgraReqs = items.hasMissiles() && (settings.tricks.arboretumPuzzleSkip || items.has(PrimeItem.SCAN_VISOR));
+          
+          const bombsReqs = items.canLayBombs() && flaahgraReqs || (settings.tricks.ruinedFountainItemFlaahgraSkip && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           return bombsReqs && items.canSpider();
         }
       },
