@@ -4,4 +4,7 @@ module.exports = {
     "**/__tests__/**/*.+(ts|tsx|js)"
   ],
   testEnvironment: 'node',
+  testPathIgnorePatterns: [
+    "/__tests__/utils.ts"
+  ]
 };
