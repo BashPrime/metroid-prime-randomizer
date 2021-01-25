@@ -14,12 +14,10 @@
     "sourceMap": true,
     "target": "es5",
     "types": [
-      "webpack-env",
-      "jest"
+      "webpack-env"
     ]
   },
   "include": [
-    "src/electron/**/*.ts",
-    "test/**/*.test.ts"
+    "src/electron/**/*.ts"
   ]
 }

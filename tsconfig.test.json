@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "webpack-cli",
+      "jest"
+    ]
+  },
+  "include": [
+    "src/electron/**/*.ts",
+    "test/**/*.test.ts"
+  ]
+}

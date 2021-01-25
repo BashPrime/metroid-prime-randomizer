@@ -6,5 +6,10 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     "/__tests__/utils.ts"
-  ]
+  ],
+  globals: {
+    'ts-jest': {
+      tsConfig: "tsconfig.test.json"
+    }
+  }
 };
