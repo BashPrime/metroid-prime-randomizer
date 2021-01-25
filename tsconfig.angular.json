@@ -1,13 +1,16 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
+    "module": "es2020",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "types": [
-      "node"
+    "typeRoots": [
+      "node_modules/@types"
     ],
     "lib": [
       "es2017",
@@ -17,10 +20,13 @@
     ]
   },
   "files": [
-    "main.ts"
+    "src/client/src/main.ts",
+    "src/client/src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ],
   "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
+    "node_modules"
   ]
 }
