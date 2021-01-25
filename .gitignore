@@ -8,9 +8,11 @@
 /release
 main.js
 main.js.LICENSE.txt
-src/**/*.js
+src/client/src/**/*.js
+!src/client/src/karma.conf.js
+src/common/**/*.js
+src/electron/**/*.js
 *.js.map
-common/**/*.js
 /build
 /bin
 settings.json
