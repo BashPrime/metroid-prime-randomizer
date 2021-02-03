@@ -127,10 +127,6 @@ export function chozoRuins(): RegionObject[] {
       },
       exits: {
         'Ruined Shrine (Pit)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return true;
-          }
-
           return items.has(PrimeItem.MORPH_BALL) || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tower of Light': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
@@ -183,7 +179,7 @@ export function chozoRuins(): RegionObject[] {
 
           //Added check to see if flaahgra can be reached first.
           const flaahgraReqs = items.hasMissiles() && (settings.tricks.arboretumPuzzleSkip || items.has(PrimeItem.SCAN_VISOR));
-          
+
           const bombsReqs = items.canLayBombs() && flaahgraReqs || (settings.tricks.ruinedFountainItemFlaahgraSkip && items.has(PrimeItem.SPACE_JUMP_BOOTS));
           return bombsReqs && items.canSpider();
         }
@@ -395,11 +391,7 @@ export function chozoRuins(): RegionObject[] {
       name: 'Energy Core',
       exits: {
         'Burn Dome': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return items.has(PrimeItem.MORPH_BALL);
-          }
-
-          return items.canLayBombs();
+          return items.has(PrimeItem.MORPH_BALL);
         },
         'Furnace (Spider Track and Tunnel)': (items: PrimeItemCollection) => items.canLayBombs(),
         'Gathering Hall': () => true
@@ -500,13 +492,7 @@ export function chozoRuins(): RegionObject[] {
         'Antechamber': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const climbReqs = (items.canBoost() && items.canLayBombs())
             || (settings.tricks.climbReflectingPoolWithoutBoostBall && items.has(PrimeItem.SPACE_JUMP_BOOTS));
-          const baseReqs = climbReqs && items.hasMissiles();
-
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return baseReqs;
-          }
-
-          return baseReqs && items.has(PrimeItem.ICE_BEAM);
+          return climbReqs && items.hasMissiles();
         },
         [Elevator.CHOZO_EAST]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const climbReqs = (items.canBoost() && items.canLayBombs())
