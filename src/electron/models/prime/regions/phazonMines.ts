@@ -165,7 +165,7 @@ export function phazonMines(): RegionObject[] {
           const spiderReqs = settings.tricks.lowerPhazonMineWithoutSpiderGrapple || (items.canSpider());
           const xrayReqs = settings.tricks.removeXrayReqs || items.has(PrimeItem.XRAY_VISOR);
 
-          return xrayReqs && spiderReqs && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return xrayReqs && spiderReqs && items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.SCAN_VISOR);
         }
       },
       exits: {
