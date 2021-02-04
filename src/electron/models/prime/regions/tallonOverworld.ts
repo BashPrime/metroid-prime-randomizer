@@ -149,19 +149,19 @@ export function tallonOverworld(): RegionObject[] {
       locations: {
         [PrimeLocation.HYDRO_ACCESS_TUNNEL]: (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           return (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
-            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && !items.has(PrimeItem.GRAVITY_SUIT) && items.canBoost());
         }
       },
       exits: {
         'Great Tree Hall (Lower)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const gravityReqs = (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
-            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && !items.has(PrimeItem.GRAVITY_SUIT) && items.canBoost());
 
           return gravityReqs && items.has(PrimeItem.ICE_BEAM);
         },
         'Biohazard Containment': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const gravityReqs = (items.canLayBombs() && items.has(PrimeItem.GRAVITY_SUIT))
-            || (settings.tricks.hydroAccessTunnelWithoutGravity && items.canBoost());
+            || (settings.tricks.hydroAccessTunnelWithoutGravity && !items.has(PrimeItem.GRAVITY_SUIT) && items.canBoost());
 
           return gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
