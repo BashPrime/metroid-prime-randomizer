@@ -12,7 +12,7 @@ import { PrimeRandomizerSettings } from './prime/randomizerSettings';
 import { ItemType } from './prime/items';
 import { PrimeItem } from '../enums/primeItem';
 import { PointOfNoReturnItems } from '../enums/pointOfNoReturnItems';
-import { PrimeLocation } from '../enums/primeLocation';
+import * as visiblePointsOfNoReturn from '../data/visiblePointsOfNoReturn.json';
 
 interface WeightedLocation {
   location: Location,
@@ -105,12 +105,33 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
 
     if (canFillLocation) {
       const ponrSetting = (world as PrimeWorld).getSettings().pointOfNoReturnItems;
+      let needToValidatePonr: boolean;
+      
+      // Evaluate PONR settings in case we need to set the validate PONR flag
+      switch (ponrSetting) {
+        case PointOfNoReturnItems.DO_NOT_ALLOW: {
+          needToValidatePonr = true;
+          break;
+        }
+        case PointOfNoReturnItems.ALLOW_VISIBLE: {
+          const visiblePonrEntry = visiblePointsOfNoReturn[visitedRegion.region.getName()];
+
+          if (visiblePonrEntry && !visiblePonrEntry.includes(visitedRegion.entryPoint.getParentRegion().getName())) {
+            needToValidatePonr = true;
+          }
+          break;
+        }
+        case PointOfNoReturnItems.ALLOW_ALL:
+        default: needToValidatePonr = false;
+      }
+
       // If point of no return (PONR) checks are restricted, check if we can return to the original search starting point from the location without the placed item.
-      if (ponrSetting !== PointOfNoReturnItems.ALLOW_ALL && visitedRegion.entryPoint) {
+      if (visitedRegion.entryPoint && needToValidatePonr) {
+        // Perform the search without the potentially placed item
         const ponrEntryPointRegion = visitedRegion.entryPoint.getParentRegion();
         const ponrSearch = world.searchRegions(assumedItems, visitedRegion.region, ponrEntryPointRegion);
 
-        // If we can't return to our original starting point, the location isn't fillable
+        // If we can't leave the region, the location isn't fillable
         if (!ponrSearch.getVisitedRegion(ponrEntryPointRegion)) {
           continue;
         }
