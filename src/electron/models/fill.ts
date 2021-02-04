@@ -105,7 +105,7 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
 
     if (canFillLocation) {
       const ponrSetting = (world as PrimeWorld).getSettings().pointOfNoReturnItems;
-      let needToValidatePonr: boolean;
+      let needToValidatePonr: boolean = false;
       
       // Evaluate PONR settings in case we need to set the validate PONR flag
       switch (ponrSetting) {
@@ -116,7 +116,7 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
         case PointOfNoReturnItems.ALLOW_VISIBLE: {
           const visiblePonrEntry = visiblePointsOfNoReturn[visitedRegion.region.getName()];
 
-          if (visiblePonrEntry && !visiblePonrEntry.includes(visitedRegion.entryPoint.getParentRegion().getName())) {
+          if (!visiblePonrEntry || !visiblePonrEntry.includes(visitedRegion.entryPoint.getParentRegion().getName())) {
             needToValidatePonr = true;
           }
           break;
@@ -126,7 +126,7 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
           break;
         }
         default: {
-          needToValidatePonr = false;
+          throw new Error('Unable to determine point of no return setting for location validating.');
         }
       }
 
