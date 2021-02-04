@@ -12,6 +12,7 @@ import { PrimeRandomizerSettings } from './prime/randomizerSettings';
 import { ItemType } from './prime/items';
 import { PrimeItem } from '../enums/primeItem';
 import { PointOfNoReturnItems } from '../enums/pointOfNoReturnItems';
+import { PrimeLocation } from '../enums/primeLocation';
 
 interface WeightedLocation {
   location: Location,
@@ -77,6 +78,10 @@ export function fillFast(world: World, locations: LocationCollection, itemPool: 
       break;
     }
 
+    if (itemToPlace.getName() === PrimeItem.MORPH_BALL_BOMB && locationToFill.getName() === PrimeLocation.BURN_DOME_I_DRONE) {
+      console.log('PONR CHECK FAIL');
+    }
+
     locationToFill.setItem(itemToPlace);
   }
 };
@@ -105,24 +110,30 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
     if (canFillLocation) {
       const ponrSetting = (world as PrimeWorld).getSettings().pointOfNoReturnItems;
       // If point of no return (PONR) checks are restricted, check if we can return to the original search starting point from the location without the placed item.
-      if (ponrSetting !== PointOfNoReturnItems.ALLOW_ALL) {
-        const ponrSearch = world.searchRegions(assumedItems, location.getParentRegion(), searchResults.getFirstVisitedRegion().region);
+      if (ponrSetting !== PointOfNoReturnItems.ALLOW_ALL && visitedRegion.entryPoint) {
+        const ponrEntryPointRegion = visitedRegion.entryPoint.getParentRegion();
+        const ponrSearch = world.searchRegions(assumedItems, visitedRegion.region, ponrEntryPointRegion);
 
         // If we can't return to our original starting point, the location isn't fillable
-        if (!ponrSearch.getVisitedRegion(searchResults.getFirstVisitedRegion().region)) {
+        if (!ponrSearch.getVisitedRegion(ponrEntryPointRegion)) {
           continue;
         }
       }
 
-      // If we can fill the location with the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
-      const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), location.getParentRegion());
+      if (visitedRegion.entryPoint) {
+        // Get the region we came from to enter the current location's parent region
+        const entryPointRegion = visitedRegion.entryPoint.getParentRegion();
 
-      // Get the region we came from to enter the current location's parent region
-      const entryPointRegion = visitedRegion.entryPoint ? visitedRegion.entryPoint.getParentRegion() : null;
+        // If we can fill the location with the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
+        const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), visitedRegion.region, entryPointRegion);
 
-      // We're basically checking if we can leave the location's parent region via its original entry point, be it directly or indirectly.
-      // This is to handle cases like Ventilation Shaft where you need more items to leave the way you came in than when you entered.
-      if (!entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion)) {
+        // We're basically checking if we can leave the location's parent region via its original entry point, be it directly or indirectly.
+        // This is to handle cases like Ventilation Shaft where you need more items to leave the way you came in than when you entered.
+        if (!entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion)) {
+          fillableLocations.push(location);
+        }
+      } else {
+        // Since there's no entry point, this is the first visited region. Go ahead and push
         fillableLocations.push(location);
       }
     }
