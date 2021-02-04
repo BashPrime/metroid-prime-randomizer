@@ -149,7 +149,7 @@ export class World {
    * @param items The player's assumed item inventory when running the search.
    * @param startingRegion The region to start the search in. Defaults to the root region if not provided.
    */
-  searchRegions(items: ItemCollection, startingRegion?: Region): SearchResults {
+  searchRegions(items: ItemCollection, startingRegion?: Region, destinationRegion?: Region): SearchResults {
     // If no starting region is defined, get the first region the Root region is connected to and start there
     if (!startingRegion) {
       startingRegion = this.rootRegion.getExits()[0].getConnectedRegion();
@@ -179,6 +179,12 @@ export class World {
         if (exit.accessRule(items, this.settings)
           && !visited.find(visitedItem => visitedItem.region.getName() === connectedRegion.getName())) {
           visited.push({ region: connectedRegion, entryPoint: exit });
+
+          // If a destination is provided, break the search if we visit the destination
+          if (destinationRegion && connectedRegion.getName() === destinationRegion.getName()) {
+            break;
+          }
+
           regionQueue.push(connectedRegion);
         }
         // Else, continue BFS

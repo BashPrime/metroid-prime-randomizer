@@ -1,7 +1,6 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
-import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 import { Elevator } from '../../../enums/elevator';
@@ -15,13 +14,8 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const normalReqs = items.canBoost() && items.canLayBombs();
-
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return settings.tricks.alcoveNoItems || normalReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
-          }
-
-          return items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          const devIntendedReqs = items.canBoost() && items.canLayBombs();
+          return settings.tricks.alcoveNoItems || devIntendedReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
         },
         'Tallon Canyon': () => true,
         'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles(),
@@ -188,13 +182,7 @@ export function tallonOverworld(): RegionObject[] {
       exits: {
         'Hydro Access Tunnel': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.hydroAccessTunnelWithoutGravity;
-          const baseReqs = gravityReqs && items.has(PrimeItem.ICE_BEAM);
-
-          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return baseReqs;
-          }
-
-          return (settings.tricks.removeThermalReqs || items.has(PrimeItem.THERMAL_VISOR)) && baseReqs;
+          return gravityReqs && items.has(PrimeItem.ICE_BEAM);
         },
         'Great Tree Hall (Upper)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const boostReqs = items.canBoost() || (settings.tricks.greatTreeHallBarsSkip && items.canLayBombs());

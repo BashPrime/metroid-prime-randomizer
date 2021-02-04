@@ -1,7 +1,6 @@
 import { RegionObject } from '../../region';
 import { PrimeItem } from '../../../enums/primeItem';
 import { PrimeLocation } from '../../../enums/primeLocation';
-import { PointOfNoReturnItems } from '../../../enums/pointOfNoReturnItems';
 import { PrimeItemCollection } from '../itemCollection';
 import { PrimeRandomizerSettings } from '../randomizerSettings';
 import { Elevator } from '../../../enums/elevator';
@@ -77,11 +76,7 @@ export function magmoorCaverns(): RegionObject[] {
       },
       exits: {
         'Fiery Shores (Warrior Shrine Tunnel)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return items.canLayPowerBombs();
-          }
-
-          return items.canLayBombs() && items.canLayPowerBombs();
+          return items.canLayPowerBombs();
         },
         'Monitor Station': () => true
       }
@@ -100,11 +95,7 @@ export function magmoorCaverns(): RegionObject[] {
       locations: {},
       exits: {
         'Shore Tunnel (Lava Pit)': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return items.canLayPowerBombs();
-          }
-
-          return items.canLayPowerBombs() && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return items.canLayPowerBombs();
         },
         'Fiery Shores (Shore Tunnel Side)': () => true,
         'Monitor Station': () => true
@@ -157,12 +148,7 @@ export function magmoorCaverns(): RegionObject[] {
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
           const baseReqs = items.canLayBombs() && items.canBoost() && items.has(PrimeItem.SPACE_JUMP_BOOTS) && items.has(PrimeItem.ICE_BEAM);
           const grappleSpiderReqs = settings.tricks.plasmaProcessingItemWithoutGrappleSpider || (items.canSpider() && items.has(PrimeItem.GRAPPLE_BEAM));
-
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return grappleSpiderReqs && baseReqs;
-          }
-
-          return items.has(PrimeItem.PLASMA_BEAM) && grappleSpiderReqs && baseReqs;
+          return grappleSpiderReqs && baseReqs;
         },
         'Magmoor Workstation': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         'Twin Fires': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS)
@@ -192,13 +178,7 @@ export function magmoorCaverns(): RegionObject[] {
         'Geothermal Core': (items: PrimeItemCollection) => items.has(PrimeItem.WAVE_BEAM) && items.has(PrimeItem.SPACE_JUMP_BOOTS),
         // OOB only
         'Plasma Processing': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = settings.tricks.plasmaProcessingFromMagmoorWorkstationOob && items.canWallcrawl(settings) && items.has(PrimeItem.ICE_BEAM);
-
-          if (settings.pointOfNoReturnItems !== PointOfNoReturnItems.DO_NOT_ALLOW) {
-            return baseReqs;
-          }
-
-          return items.has(PrimeItem.PLASMA_BEAM) && baseReqs;
+          return settings.tricks.plasmaProcessingFromMagmoorWorkstationOob && items.canWallcrawl(settings) && items.has(PrimeItem.ICE_BEAM);
         }
       }
     },
@@ -272,13 +252,7 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         [Elevator.MINES_WEST]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
-
-          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return baseReqs;
-          }
-
-          return baseReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.canLayPowerBombs() && items.has(PrimeItem.ICE_BEAM);
         }
       }
     },
@@ -287,13 +261,7 @@ export function magmoorCaverns(): RegionObject[] {
       exits: {
         [Elevator.PHENDRANA_SOUTH]: () => true,
         'Magmoor Workstation': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const baseReqs = (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.has(PrimeItem.WAVE_BEAM);
-
-          if (settings.pointOfNoReturnItems === PointOfNoReturnItems.ALLOW_ALL) {
-            return baseReqs;
-          }
-
-          return baseReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return (items.hasSuit(settings) || settings.tricks.lateMagmoorNoHeatProtection) && items.has(PrimeItem.WAVE_BEAM);
         }
       }
     },

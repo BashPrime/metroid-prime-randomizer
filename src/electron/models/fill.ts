@@ -5,11 +5,14 @@ import { Location } from './location';
 import { Item } from './item';
 import { PrimeItemCollection } from './prime/itemCollection';
 import { primeLocations } from './prime/locations';
+import { PrimeWorld } from './prime/world';
 import { PrimeRegion } from '../enums/primeRegion';
 import { SearchResults } from './searchResults';
 import { PrimeRandomizerSettings } from './prime/randomizerSettings';
 import { ItemType } from './prime/items';
 import { PrimeItem } from '../enums/primeItem';
+import { PointOfNoReturnItems } from '../enums/pointOfNoReturnItems';
+import * as visiblePointsOfNoReturn from '../data/visiblePointsOfNoReturn.json';
 
 interface WeightedLocation {
   location: Location,
@@ -101,15 +104,59 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
     const canFillLocation = !location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, world.getSettings());
 
     if (canFillLocation) {
-      // If we can fill the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
-      const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), location.getParentRegion());
+      const ponrSetting = (world as PrimeWorld).getSettings().pointOfNoReturnItems;
+      let needToValidatePonr: boolean = false;
+      
+      // Evaluate PONR settings in case we need to set the validate PONR flag
+      switch (ponrSetting) {
+        case PointOfNoReturnItems.DO_NOT_ALLOW: {
+          needToValidatePonr = true;
+          break;
+        }
+        case PointOfNoReturnItems.ALLOW_VISIBLE: {
+          const visiblePonrEntry = visiblePointsOfNoReturn[visitedRegion.region.getName()];
 
-      // Get the region we came from to enter the current location's parent region
-      const entryPointRegion = visitedRegion.entryPoint ? visitedRegion.entryPoint.getParentRegion() : null;
+          // If the region isn't in the visible PONR json or doesn't have the right entry point, then we must validate
+          if (!visiblePonrEntry || !visiblePonrEntry.includes(visitedRegion.entryPoint.getParentRegion().getName())) {
+            needToValidatePonr = true;
+          }
+          break;
+        }
+        case PointOfNoReturnItems.ALLOW_ALL: {
+          needToValidatePonr = false;
+          break;
+        }
+        default: {
+          throw new Error('Unable to determine point of no return setting for location validating.');
+        }
+      }
 
-      // We're basically checking if we can leave the location's parent region via its original entry point, be it directly or indirectly.
-      // This is to handle cases like Ventilation Shaft where you need more items to leave the way you came in than when you entered.
-      if (!entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion)) {
+      // If point of no return (PONR) checks are restricted, check if we can return to the original search starting point from the location without the placed item.
+      if (visitedRegion.entryPoint && needToValidatePonr) {
+        // Perform the search without the potentially placed item
+        const ponrEntryPointRegion = visitedRegion.entryPoint.getParentRegion();
+        const ponrSearch = world.searchRegions(assumedItems, visitedRegion.region, ponrEntryPointRegion);
+
+        // If we can't leave the region, the location isn't fillable
+        if (!ponrSearch.getVisitedRegion(ponrEntryPointRegion)) {
+          continue;
+        }
+      }
+
+      if (visitedRegion.entryPoint) {
+        // Get the region we came from to enter the current location's parent region
+        const entryPointRegion = visitedRegion.entryPoint.getParentRegion();
+
+        // If we can fill the location with the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
+        const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), visitedRegion.region, entryPointRegion);
+
+        // We're basically checking if we can leave the location's parent region via its original entry point, be it directly or indirectly.
+        // This is to handle cases like Ventilation Shaft where you need more items to leave the way you came in than when you entered.
+        if (!entryPointRegion || searchResultsWithObtainedItem.getVisitedRegion(entryPointRegion)) {
+          fillableLocations.push(location);
+        }
+      } else {
+        // Since there's no entry point, this is the first visited region. Go ahead and push
         fillableLocations.push(location);
       }
     }
