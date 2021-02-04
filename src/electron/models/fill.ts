@@ -121,8 +121,13 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
           }
           break;
         }
-        case PointOfNoReturnItems.ALLOW_ALL:
-        default: needToValidatePonr = false;
+        case PointOfNoReturnItems.ALLOW_ALL: {
+          needToValidatePonr = false;
+          break;
+        }
+        default: {
+          needToValidatePonr = false;
+        }
       }
 
       // If point of no return (PONR) checks are restricted, check if we can return to the original search starting point from the location without the placed item.
