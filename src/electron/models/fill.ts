@@ -78,10 +78,6 @@ export function fillFast(world: World, locations: LocationCollection, itemPool: 
       break;
     }
 
-    if (itemToPlace.getName() === PrimeItem.MORPH_BALL_BOMB && locationToFill.getName() === PrimeLocation.BURN_DOME_I_DRONE) {
-      console.log('PONR CHECK FAIL');
-    }
-
     locationToFill.setItem(itemToPlace);
   }
 };
