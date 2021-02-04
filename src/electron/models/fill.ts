@@ -5,11 +5,13 @@ import { Location } from './location';
 import { Item } from './item';
 import { PrimeItemCollection } from './prime/itemCollection';
 import { primeLocations } from './prime/locations';
+import { PrimeWorld } from './prime/world';
 import { PrimeRegion } from '../enums/primeRegion';
 import { SearchResults } from './searchResults';
 import { PrimeRandomizerSettings } from './prime/randomizerSettings';
 import { ItemType } from './prime/items';
 import { PrimeItem } from '../enums/primeItem';
+import { PointOfNoReturnItems } from '../enums/pointOfNoReturnItems';
 
 interface WeightedLocation {
   location: Location,
@@ -101,7 +103,18 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
     const canFillLocation = !location.isExcluded() && !location.hasItem() && location.itemRule(assumedItems, world.getSettings());
 
     if (canFillLocation) {
-      // If we can fill the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
+      const ponrSetting = (world as PrimeWorld).getSettings().pointOfNoReturnItems;
+      // If point of no return (PONR) checks are restricted, check if we can return to the original search starting point from the location without the placed item.
+      if (ponrSetting !== PointOfNoReturnItems.ALLOW_ALL) {
+        const ponrSearch = world.searchRegions(assumedItems, location.getParentRegion(), searchResults.getFirstVisitedRegion().region);
+
+        // If we can't return to our original starting point, the location isn't fillable
+        if (!ponrSearch.getVisitedRegion(searchResults.getFirstVisitedRegion().region)) {
+          continue;
+        }
+      }
+
+      // If we can fill the location with the item, run a search starting at the location's parent region to check if we can continue after filling it with the item.
       const searchResultsWithObtainedItem = world.searchRegions(new PrimeItemCollection([...assumedItems.toArray(), itemToPlace]), location.getParentRegion());
 
       // Get the region we came from to enter the current location's parent region
