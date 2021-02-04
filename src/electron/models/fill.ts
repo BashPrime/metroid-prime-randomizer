@@ -116,6 +116,7 @@ function getFillableWeightedLocations(searchResults: SearchResults, world: World
         case PointOfNoReturnItems.ALLOW_VISIBLE: {
           const visiblePonrEntry = visiblePointsOfNoReturn[visitedRegion.region.getName()];
 
+          // If the region isn't in the visible PONR json or doesn't have the right entry point, then we must validate
           if (!visiblePonrEntry || !visiblePonrEntry.includes(visitedRegion.entryPoint.getParentRegion().getName())) {
             needToValidatePonr = true;
           }
