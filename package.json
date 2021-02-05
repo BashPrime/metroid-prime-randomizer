@@ -49,7 +49,7 @@
     "electron:mac": "npm run build:prod && electron-builder build --mac",
     "electron:test": "jest",
     "native:build": "./node_modules/.bin/electron-rebuild",
-    "randomprime:build": "cargo build --release --manifest-path=./randomprime/Cargo.toml",
+    "randomprime:build": "set RUSTC_BOOTSTRAP=1&&cargo build --release --manifest-path=./randomprime/Cargo.toml",
     "randomprime:clean": "cargo clean --manifest-path=./randomprime/Cargo.toml",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e"
