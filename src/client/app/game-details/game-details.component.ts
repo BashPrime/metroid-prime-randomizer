@@ -27,8 +27,8 @@ import { PresetsService } from '../services/presets.service';
   styleUrls: ['./game-details.component.scss']
 })
 export class GameDetailsComponent extends SettingsSection implements OnInit {
-  @ViewChild(PrimeIsoDiagnosticsModalComponent, {static: false}) private diagnosticsModal: PrimeIsoDiagnosticsModalComponent;
-  @ViewChild(SavePresetModalComponent, { static: false }) private savePresetModal: SavePresetModalComponent;
+  @ViewChild(PrimeIsoDiagnosticsModalComponent) private diagnosticsModal: PrimeIsoDiagnosticsModalComponent;
+  @ViewChild(SavePresetModalComponent) private savePresetModal: SavePresetModalComponent;
   private modalOpen: boolean = false;
   private seeds: GeneratedSeed[];
   private lastSettingsUsed: RandomizerForm;

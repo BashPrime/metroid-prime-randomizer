@@ -9,7 +9,7 @@ import { ImportSettingsModalComponent } from '../import-settings-modal/import-se
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  @ViewChild(ImportSettingsModalComponent, {static: false}) private importPermalinkModal: ImportSettingsModalComponent;
+  @ViewChild(ImportSettingsModalComponent) private importPermalinkModal: ImportSettingsModalComponent;
 
   // Constants
   private readonly generateGameTab = 1;

@@ -22,7 +22,7 @@
             "main": "src/client/main.ts",
             "polyfills": "src/client/polyfills.ts",
             "tsConfig": "src/client/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/client/favicon.ico",
               "src/client/assets"
@@ -47,7 +47,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -88,7 +87,7 @@
           "options": {
             "main": "src/client/test.ts",
             "polyfills": "src/client/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "src/client/tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/client/favicon.ico",

@@ -19,8 +19,8 @@ import { SettingsService } from '../services/settings.service';
   styleUrls: ['./generate-game.component.scss']
 })
 export class GenerateGameComponent implements OnInit {
-  @ViewChild(SavePresetModalComponent, { static: false }) private savePresetModal: SavePresetModalComponent;
-  @ViewChild(RemovePresetModalComponent, { static: false }) private removePresetModal: RemovePresetModalComponent;
+  @ViewChild(SavePresetModalComponent) private savePresetModal: SavePresetModalComponent;
+  @ViewChild(RemovePresetModalComponent) private removePresetModal: RemovePresetModalComponent;
   private loaded: boolean = false;
   private presets: PresetObject = {};
   private userPresets: PresetObject;
