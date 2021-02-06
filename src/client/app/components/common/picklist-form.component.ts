@@ -3,7 +3,9 @@ import { SelectItem } from 'primeng/api';
 
 import { SettingsSection } from '../../settings/settings-section';
 import { RandomizerService } from '../../services/randomizer.service';
+import { Directive } from "@angular/core";
 
+@Directive()
 export abstract class PicklistFormComponent extends SettingsSection {
   items: PickList = {
     available: [],
