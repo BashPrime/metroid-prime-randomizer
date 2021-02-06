@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -19,8 +20,12 @@
       "dom"
     ]
   },
+  "files": [
+    "src/client/main.ts",
+    "src/client/polyfills.ts"
+  ],
   "include": [
-    "src/client/*"
+    "src/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"
