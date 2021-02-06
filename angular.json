@@ -1,9 +1,9 @@
 {
-  "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "metroid-prime-randomizer-client": {
+    "metroid-prime-randomizer-gui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,29 +17,29 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../../dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "./dist",
+            "index": "src/client/index.html",
+            "main": "src/client/main.ts",
+            "polyfills": "src/client/polyfills.ts",
+            "tsConfig": "src/client/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/client/favicon.ico",
+              "src/client/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/client/styles.scss"
             ],
             "scripts": [
-              "../../node_modules/marked/lib/marked.js"
+              "./node_modules/marked/lib/marked.js"
             ]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/client/environments/environment.ts",
+                  "with": "src/client/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -69,33 +69,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "metroid-prime-randomizer-client:build"
+            "browserTarget": "metroid-prime-randomizer-gui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "metroid-prime-randomizer-client:build:production"
+              "browserTarget": "metroid-prime-randomizer-gui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "metroid-prime-randomizer-client:build"
+            "browserTarget": "metroid-prime-randomizer-gui:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "src/client/test.ts",
+            "polyfills": "src/client/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/client/favicon.ico",
+              "src/client/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/client/styles.scss"
             ],
             "scripts": []
           }
@@ -104,8 +104,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
+              "src/client/tsconfig.app.json",
+              "src/client/tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
             "exclude": [
@@ -117,15 +117,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "metroid-prime-randomizer-client:serve"
+            "devServerTarget": "metroid-prime-randomizer-gui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "metroid-prime-randomizer-client:serve:production"
+              "devServerTarget": "metroid-prime-randomizer-gui:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "metroid-prime-randomizer-client"
+  "defaultProject": "metroid-prime-randomizer-gui"
 }

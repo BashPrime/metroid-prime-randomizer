@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'metroid-prime-randomizer-client'`, () => {
+  it(`should have as title 'metroid-prime-randomizer-gui'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('metroid-prime-randomizer-client');
+    expect(app.title).toEqual('metroid-prime-randomizer-gui');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('metroid-prime-randomizer-client app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('metroid-prime-randomizer-gui app is running!');
   });
 });

@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.angularjson",
+  "extends": "../../tsconfig.angular.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": []
