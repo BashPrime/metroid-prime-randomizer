@@ -1,0 +1,25 @@
+// Picklist styling
+:host {
+  ::ng-deep .ui-picklist {
+    .ui-picklist-filter-container {
+      background-color: inherit;
+      color: inherit;
+
+      input.ui-picklist-filter {
+        background-color: #101010;
+        color: #efefef;
+        border-color: #404040;
+      }
+    }
+
+    .ui-picklist-list {
+      background-color: #101010;
+      color: #efefef;
+      border-color: #404040;
+
+      .ui-picklist-item {
+        color: #efefef;
+      }
+    }
+  }
+}
