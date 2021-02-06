@@ -1,5 +1,5 @@
 import { RandomizerService } from '../services/randomizer.service';
-import { details } from '../../../../common/data/settingsDetails';
+import { details } from '../../../common/data/settingsDetails';
 
 export abstract class SettingsSection {
   readonly OBJECT_KEYS = Object.keys;

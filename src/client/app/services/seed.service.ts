@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './electron.service';
-import { GeneratedSeed } from '../../../../common/models/generatedSeed';
+import { GeneratedSeed } from '../../../common/models/generatedSeed';
 
 @Injectable({
   providedIn: 'root'

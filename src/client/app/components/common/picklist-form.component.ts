@@ -1,8 +1,8 @@
 import { FormArray, FormBuilder } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 
-import { SettingsSection } from 'src/app/settings/settings-section';
-import { RandomizerService } from 'src/app/services/randomizer.service';
+import { SettingsSection } from '../../settings/settings-section';
+import { RandomizerService } from '../../services/randomizer.service';
 
 export abstract class PicklistFormComponent extends SettingsSection {
   items: PickList = {

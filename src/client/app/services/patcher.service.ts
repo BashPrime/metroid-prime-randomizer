@@ -4,9 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ProgressService } from './progress.service';
 import { ElectronService } from './electron.service';
-import { GeneratedSeed } from '../../../../common/models/generatedSeed';
-import { PatchForm } from '../../../../common/models/patchForm';
-import { PatcherMessage } from '../../../../common/models/patcherMessage';
+import { GeneratedSeed } from '../../../common/models/generatedSeed';
+import { PatchForm } from '../../../common/models/patchForm';
+import { PatcherMessage } from '../../../common/models/patcherMessage';
 
 interface PatchState {
   seeds: GeneratedSeed[];

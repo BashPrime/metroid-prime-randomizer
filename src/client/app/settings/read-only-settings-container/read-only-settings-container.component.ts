@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from '../../services/randomizer.service';
-import { RandomizerForm } from '../../../../../common/models/randomizerForm';
-import { ItemOverrides } from '../../../../../electron/models/prime/itemOverrides';
-import { ItemOverride } from '../../../../../common/models/itemOverride';
+import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { ItemOverrides } from '../../../../electron/models/prime/itemOverrides';
+import { ItemOverride } from '../../../../common/models/itemOverride';
 
 @Component({
   selector: 'app-read-only-settings-container',

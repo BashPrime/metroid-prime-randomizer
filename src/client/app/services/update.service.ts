@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import * as compareVersions from 'compare-versions';
 
-import { version } from '../../../../../package.json';
+import { version } from '../../../../package.json';
 import { ElectronService } from './electron.service.js';
 
 @Injectable({

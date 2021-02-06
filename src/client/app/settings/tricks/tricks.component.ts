@@ -3,7 +3,7 @@ import { FormArray, ControlContainer, FormBuilder } from '@angular/forms';
 
 import { RandomizerService } from '../../services/randomizer.service';
 import { PicklistFormComponent } from '../../components/common/picklist-form.component';
-import { Difficulty } from '../../../../../common/data/settingsDetails';
+import { Difficulty } from '../../../../common/data/settingsDetails';
 
 interface TrickItem {
   label: string;

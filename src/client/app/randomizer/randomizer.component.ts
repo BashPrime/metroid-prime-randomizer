@@ -7,7 +7,7 @@ import { faGlobe, faExclamationTriangle } from '@fortawesome/free-solid-svg-icon
 import { RandomizerService } from '../services/randomizer.service';
 import { GeneratorService } from '../services/generator.service';
 import { TabService } from '../services/tab.service';
-import { Tab } from '../../../../common/models/tab';
+import { Tab } from '../../../common/models/tab';
 import { UpdateService } from '../services/update.service';
 import { ElectronService } from '../services/electron.service';
 

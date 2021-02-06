@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, ControlContainer } from '@angular/forms';
 
-import { PicklistFormComponent } from 'src/app/components/common/picklist-form.component';
-import { RandomizerService } from 'src/app/services/randomizer.service';
+import { PicklistFormComponent } from '../../components/common/picklist-form.component';
+import { RandomizerService } from '../../services/randomizer.service';
 
 @Component({
   selector: 'app-exclude-locations',

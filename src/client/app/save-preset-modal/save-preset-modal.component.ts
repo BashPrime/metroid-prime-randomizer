@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
 import { ModalComponent } from '../components/common/modal.component';
-import { PresetObject } from '../../../../common/models/presetObject';
+import { PresetObject } from '../../../common/models/presetObject';
 import { PresetsService } from '../services/presets.service';
 
 @Component({

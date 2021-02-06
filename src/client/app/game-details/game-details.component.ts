@@ -7,14 +7,14 @@ import { ToastrService } from 'ngx-toastr';
 
 import * as Utilities from '../utilities';
 import { GeneratorService } from '../services/generator.service';
-import { GeneratedSeed } from '../../../../common/models/generatedSeed';
+import { GeneratedSeed } from '../../../common/models/generatedSeed';
 import { ElectronService } from '../services/electron.service';
 import { PatcherService } from '../services/patcher.service';
-import { PatchForm } from '../../../../common/models/patchForm';
+import { PatchForm } from '../../../common/models/patchForm';
 import { SettingsService } from '../services/settings.service';
 import { SettingsSection } from '../settings/settings-section';
 import { RandomizerService } from '../services/randomizer.service';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
 import { DiagnosticsService } from '../services/diagnostics.service';
 import { PrimeIsoDiagnosticsModalComponent } from '../prime-iso-diagnostics-modal/prime-iso-diagnostics-modal.component';
 import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal.component';

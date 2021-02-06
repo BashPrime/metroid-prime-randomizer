@@ -2,8 +2,8 @@ import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './electron.service';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
-import { PatchForm } from '../../../../common/models/patchForm';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
+import { PatchForm } from '../../../common/models/patchForm';
 
 @Injectable({
   providedIn: 'root'

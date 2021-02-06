@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { ProgressBar } from '../../../../common/models/progressBar';
+import { ProgressBar } from '../../../common/models/progressBar';
 
 @Injectable({
   providedIn: 'root'

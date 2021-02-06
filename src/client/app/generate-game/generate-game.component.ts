@@ -8,8 +8,8 @@ import { SavePresetModalComponent } from '../save-preset-modal/save-preset-modal
 import { RemovePresetModalComponent } from '../remove-preset-modal/remove-preset-modal.component';
 import { RandomizerService } from '../services/randomizer.service';
 import { PresetsService } from '../services/presets.service';
-import { PresetObject } from '../../../../common/models/presetObject';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { PresetObject } from '../../../common/models/presetObject';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
 import { GeneratorService } from '../services/generator.service';
 import { SettingsService } from '../services/settings.service';
 

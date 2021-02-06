@@ -3,8 +3,8 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { ElectronService } from './electron.service';
-import { PresetObject } from '../../../../common/models/presetObject';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { PresetObject } from '../../../common/models/presetObject';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
 
 @Injectable({
   providedIn: 'root'

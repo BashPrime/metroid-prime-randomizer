@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { SeedService } from '../services/seed.service';
-import { GeneratedSeed } from '../../../../common/models/generatedSeed';
+import { GeneratedSeed } from '../../../common/models/generatedSeed';
 
 @Component({
   selector: 'app-seed-history',

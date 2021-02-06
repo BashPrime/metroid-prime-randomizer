@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ModalComponent } from '../components/common/modal.component';
-import { ProgressBar } from '../../../../common/models/progressBar';
+import { ProgressBar } from '../../../common/models/progressBar';
 import { ProgressService } from '../services/progress.service';
 
 @Component({

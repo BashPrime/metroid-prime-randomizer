@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, ControlContainer } from '@angular/forms';
 
-import { RandomizerService } from 'src/app/services/randomizer.service';
+import { RandomizerService } from '../../services/randomizer.service';
 import { SettingsSection } from '../settings-section';
 
 @Component({

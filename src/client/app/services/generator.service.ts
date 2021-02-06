@@ -3,11 +3,11 @@ import { BehaviorSubject, generate } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { ElectronService } from './electron.service';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
-import { GeneratedSeed } from '../../../../common/models/generatedSeed';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
+import { GeneratedSeed } from '../../../common/models/generatedSeed';
 import * as Utilities from '../utilities';
 import { ProgressService } from './progress.service';
-import { PrimeRandomizerSettings } from '../../../../electron/models/prime/randomizerSettings';
+import { PrimeRandomizerSettings } from '../../../electron/models/prime/randomizerSettings';
 
 interface GenerationState {
   total: number;

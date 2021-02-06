@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer } from '@angular/forms';
 
-import { Tab } from '../../../../../common/models/tab';
+import { Tab } from '../../../../common/models/tab';
 
 @Component({
   selector: 'app-customize-settings-container',

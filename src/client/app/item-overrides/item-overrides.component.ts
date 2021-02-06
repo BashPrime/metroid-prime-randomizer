@@ -3,9 +3,9 @@ import { FormArray, FormBuilder, FormGroup, ControlContainer } from '@angular/fo
 
 import { RandomizerService } from '../services/randomizer.service';
 import { SettingsSection } from '../settings/settings-section';
-import { PrimeItem } from '../../../../electron/enums/primeItem';
-import { ItemOverrides } from '../../../../electron/models/prime/itemOverrides';
-import { ItemOverride } from '../../../../common/models/itemOverride';
+import { PrimeItem } from '../../../electron/enums/primeItem';
+import { ItemOverrides } from '../../../electron/models/prime/itemOverrides';
+import { ItemOverride } from '../../../common/models/itemOverride';
 
 interface Item {
   name: string;

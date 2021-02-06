@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PrimeRandomizerSettings, settings } from '../../../../electron/models/prime/randomizerSettings';
+import { PrimeRandomizerSettings, settings } from '../../../electron/models/prime/randomizerSettings';
 
-import { version } from '../../../../../package.json';
-import { RandomizerForm } from '../../../../common/models/randomizerForm';
+import { version } from '../../../../package.json';
+import { RandomizerForm } from '../../../common/models/randomizerForm';
 
 @Injectable({
   providedIn: 'root'
