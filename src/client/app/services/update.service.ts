@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as compareVersions from 'compare-versions';
 
 import { version } from '../../../../package.json';
-import { ElectronService } from './electron.service.js';
+import { ElectronService } from './electron.service';
 
 @Injectable({
   providedIn: 'root'
