@@ -1,4 +1,6 @@
+import AvailableLocationsConfiguration from './availableLocationsConfiguration';
 import DamageStrictness from "./damageStrictness";
+import StartingLocationConfiguration from './startingLocationConfiguration';
 import TrickLevelConfiguration from './trickLevelConfiguration';
 
 /**
@@ -7,6 +9,8 @@ import TrickLevelConfiguration from './trickLevelConfiguration';
 export interface BaseConfigurationParams {
   trickLevel: TrickLevelConfiguration;
   damageStrictness: DamageStrictness;
+  startingLocation: StartingLocationConfiguration;
+  availableLocations: AvailableLocationsConfiguration
 }
 
 /**

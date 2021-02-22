@@ -5,7 +5,7 @@ import { GameName } from '../enums/gameName';
  * Type for storing levels of specific trick types.
  */
 interface SpecificLevels {
-  [key: string]: TrickLevel
+  [key: string]: TrickLevel;
 }
 
 /**
