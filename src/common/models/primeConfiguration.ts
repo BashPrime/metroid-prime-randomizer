@@ -11,9 +11,9 @@ export interface PrimeConfigurationParams extends BaseConfigurationParams {
   chozoArtifacts: ArtifactTempleAccessMode;
   hints: HintConfiguration;
   skipFinalBosses: boolean;
-  energyPerTank: unknown;
+  energyPerTank: number;
   nonVariaHeatDamage: boolean;
-  heatDamagePerSecond: unknown;
+  heatDamagePerSecond: number;
   staggeredSuitDamage: boolean;
   enableVaultLedgeDoor: boolean;
 }
@@ -26,9 +26,9 @@ export default class PrimeConfiguration extends BaseConfiguration {
   readonly chozoArtifacts: ArtifactTempleAccessMode;
   readonly hints: HintConfiguration;
   readonly skipFinalBosses: boolean;
-  readonly energyPerTank: unknown;
+  readonly energyPerTank: number;
   readonly nonVariaHeatDamage: boolean;
-  readonly heatDamagePerSecond: unknown;
+  readonly heatDamagePerSecond: number;
   readonly staggeredSuitDamage: boolean;
   readonly enableVaultLedgeDoor: boolean;
 
