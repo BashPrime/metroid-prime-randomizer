@@ -3,7 +3,7 @@ import { RandomizationMode } from '../enums/randomizationMode';
 /**
  * Constructor params for AvailableLocationsConfiguration class.
  */
-export interface AvailableLocationsParams {
+export interface AvailableLocationsConfigurationParams {
   randomizationMode: RandomizationMode;
   excludedIndices: readonly number[];
 }
@@ -15,7 +15,7 @@ export default class AvailableLocationsConfiguration {
   readonly randomizationMode: RandomizationMode;
   readonly excludedIndices: readonly number[];
 
-  constructor(params: AvailableLocationsParams) {
+  constructor(params: AvailableLocationsConfigurationParams) {
     Object.assign(params);
   }
 }

@@ -10,6 +10,12 @@ export interface PrimeConfigurationParams extends BaseConfigurationParams {
   elevators: Elevators;
   chozoArtifacts: ArtifactTempleAccessMode;
   hints: HintConfiguration;
+  skipFinalBosses: boolean;
+  energyPerTank: unknown;
+  nonVariaHeatDamage: boolean;
+  heatDamagePerSecond: unknown;
+  staggeredSuitDamage: boolean;
+  enableVaultLedgeDoor: boolean;
 }
 
 /**
@@ -19,6 +25,12 @@ export default class PrimeConfiguration extends BaseConfiguration {
   readonly elevators: Elevators;
   readonly chozoArtifacts: ArtifactTempleAccessMode;
   readonly hints: HintConfiguration;
+  readonly skipFinalBosses: boolean;
+  readonly energyPerTank: unknown;
+  readonly nonVariaHeatDamage: boolean;
+  readonly heatDamagePerSecond: unknown;
+  readonly staggeredSuitDamage: boolean;
+  readonly enableVaultLedgeDoor: boolean;
 
   constructor(params: PrimeConfigurationParams) {
     super(params);

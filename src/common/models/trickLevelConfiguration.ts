@@ -1,5 +1,4 @@
 import { TrickLevel } from '../enums/trickLevel';
-import { GameName } from '../enums/gameName';
 
 /**
  * Type for storing levels of specific trick types.
@@ -14,7 +13,6 @@ interface SpecificLevels {
 export interface TrickLevelConfigurationParams {
   minimalLogic: boolean;
   specificLevels: SpecificLevels;
-  game: GameName;
 }
 
 /**
@@ -24,7 +22,6 @@ export interface TrickLevelConfigurationParams {
 export default class TrickLevelConfiguration {
   readonly minimalLogic: boolean;
   readonly specificLevels: SpecificLevels;
-  readonly game: GameName;
 
   constructor(params: TrickLevelConfigurationParams) {
     Object.assign(this, params);

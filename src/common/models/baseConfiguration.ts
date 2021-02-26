@@ -1,5 +1,7 @@
+import AmmoConfiguration from './ammoConfiguration';
 import AvailableLocationsConfiguration from './availableLocationsConfiguration';
-import DamageStrictness from "./damageStrictness";
+import DamageStrictness from './damageStrictness';
+import MajorItemsConfiguration from './majorItemsConfiguration';
 import StartingLocationConfiguration from './startingLocationConfiguration';
 import TrickLevelConfiguration from './trickLevelConfiguration';
 
@@ -8,9 +10,12 @@ import TrickLevelConfiguration from './trickLevelConfiguration';
  */
 export interface BaseConfigurationParams {
   trickLevel: TrickLevelConfiguration;
-  damageStrictness: DamageStrictness;
   startingLocation: StartingLocationConfiguration;
-  availableLocations: AvailableLocationsConfiguration
+  availableLocations: AvailableLocationsConfiguration;
+  majorItemsConfiguration: MajorItemsConfiguration;
+  ammoConfiguration: AmmoConfiguration;
+  damageStrictness: DamageStrictness;
+  // unlike randovania, pickup model styling/sources are not supported in the randomprime patcher at this time
 }
 
 /**

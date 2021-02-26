@@ -1,4 +1,4 @@
-import { ChozoArtifactHintMode } from "../enums/chozoArtifactHintMode";
+import { ChozoArtifactHintMode } from '../enums/chozoArtifactHintMode';
 
 /**
  * Constructor params for HintsConfiguration class.
