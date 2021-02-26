@@ -1,3 +1,4 @@
+import { PickupModelStyle } from '../enums/pickupModelStyle';
 import AmmoConfiguration from './ammoConfiguration';
 import AvailableLocationsConfiguration from './availableLocationsConfiguration';
 import DamageStrictness from './damageStrictness';
@@ -15,15 +16,20 @@ export interface BaseConfigurationParams {
   majorItemsConfiguration: MajorItemsConfiguration;
   ammoConfiguration: AmmoConfiguration;
   damageStrictness: DamageStrictness;
-  // unlike randovania, pickup model styling/sources are not supported in the randomprime patcher at this time
+  pickupModelStyle: PickupModelStyle;
 }
 
 /**
  * Base configuration class containing common/shared randomization settings.
  */
-export default class BaseConfiguration {
+export default class BaseConfiguration implements BaseConfigurationParams {
   readonly trickLevel: TrickLevelConfiguration;
+  readonly startingLocation: StartingLocationConfiguration;
+  readonly availableLocations: AvailableLocationsConfiguration;
+  readonly majorItemsConfiguration: MajorItemsConfiguration;
+  readonly ammoConfiguration: AmmoConfiguration;
   readonly damageStrictness: DamageStrictness;
+  readonly pickupModelStyle: PickupModelStyle;
 
   constructor(params: BaseConfigurationParams) {
     Object.assign(params);
