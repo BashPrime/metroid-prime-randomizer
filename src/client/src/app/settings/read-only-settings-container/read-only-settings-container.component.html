@@ -1,115 +1,88 @@
 <div class="columns">
   <div class="column">
-    <h1 class="title has-bottom-border">ROM Settings</h1>
+    <h1 class="title has-bottom-border">Item Placement</h1>
     <div class="field">
-      <p class="heading">{{ getDisplayName('skipFrigate') }}</p>
-      <p>{{ getValue('skipFrigate', 'romSettings') }}</p>
+      <p class="heading">Trick Level</p>
+      <div *ngIf="getTrickLevels(); then showTricks; else noTricks"></div>
+      <ng-template #showTricks>
+        <ul>
+          <li *ngFor="let trickLevel of getTrickLevels()">{{ trickLevel }}</li>
+        </ul>
+      </ng-template>
+      <ng-template #noTricks>
+        <p>No Tricks</p>
+      </ng-template>
     </div>
     <div class="field">
-      <p class="heading">{{ getDisplayName('skipHudPopups') }}</p>
-      <p>{{ getValue('skipHudPopups', 'romSettings') }}</p>
+      <p class="heading">Shuffle Mode</p>
+      <p>{{ getValue('shuffleMode', 'rules') }}</p>
     </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('hideItemModels') }}</p>
-      <p>{{ getValue('hideItemModels', 'romSettings') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('enableMainPlazaLedgeDoor') }}</p>
-      <p>{{ getValue('enableMainPlazaLedgeDoor', 'romSettings') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('skipImpactCrater') }}</p>
-      <p>{{ getValue('skipImpactCrater', 'romSettings') }}</p>
+    <div class="field" *ngIf="hasRandomStartingItems()">
+      <p class="heading">Random Starting Items</p>
+      <p>{{ getRandomizerForm().rules.randomStartingItems.minimum }} to {{ getRandomizerForm().rules.randomStartingItems.maximum }}</p>
     </div>
   </div>
   <div class="column">
-    <h1 class="title has-bottom-border">Rules</h1>
+    <h1 class="title has-bottom-border">Items</h1>
     <div class="field">
-      <p class="heading">{{ getDisplayName('goal') }}</p>
+      <p class="heading">Starting Items</p>
+      <div *ngIf="getStartingItems(); then showStartingItems; else vanillaItems"></div>
+      <ng-template #showStartingItems>
+        <ul>
+          <li *ngFor="let item of getStartingItems()">{{ item }}</li>
+        </ul>
+      </ng-template>
+      <ng-template #vanillaItems>
+        <p>Vanilla</p>
+      </ng-template>
+    </div>
+    <div class="field">
+      <p class="heading">Item Pool</p>
+      <div *ngIf="getItemPool(); then showItemPool; else default"></div>
+      <ng-template #showItemPool>
+        <ul>
+          <li *ngFor="let item of getItemPool()">{{ item }}</li>
+        </ul>
+      </ng-template>
+      <ng-template #default>
+        <p>Default</p>
+      </ng-template>
+    </div>
+    <div class="field" *ngIf="getRandomizerForm().rules.goal === 'artifact-collection'">
+      <p class="heading">Chozo Artifacts Shuffled</p>
+      <p>{{ getRandomizerForm().rules.goalArtifacts }}</p>
+    </div>
+  </div>
+  <div class="column">
+    <h1 class="title has-bottom-border">Gameplay</h1>
+    <div class="field">
+      <p class="heading">Goal</p>
       <p>{{ getValue('goal', 'rules') }}</p>
     </div>
     <div class="field">
-      <p class="heading">{{ getDisplayName('goalArtifacts') }}</p>
-      <p>{{ getValue('goalArtifacts', 'rules') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('artifactLocationHints') }}</p>
-      <p>{{ getValue('artifactLocationHints', 'rules') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('shuffleMode') }}</p>
-      <p>{{ getValue('shuffleMode', 'rules') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('elevatorShuffle') }}</p>
-      <p>{{ getValue('elevatorShuffle', 'rules') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('heatProtection') }}</p>
+      <p class="heading">Heat Protection</p>
       <p>{{ getValue('heatProtection', 'rules') }}</p>
     </div>
     <div class="field">
-      <p class="heading">{{ getDisplayName('suitDamageReduction') }}</p>
+      <p class="heading">Suit Damage Reduction</p>
       <p>{{ getValue('suitDamageReduction', 'rules') }}</p>
     </div>
+  </div>
+  <div class="column">
+    <h1 class="title has-bottom-border">World Layout</h1>
     <div class="field">
-      <p class="heading">{{ getDisplayName('pointOfNoReturnItems') }}</p>
-      <p>{{ getValue('pointOfNoReturnItems', 'rules') }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ getDisplayName('startingArea') }}</p>
+      <p class="heading">Starting Location</p>
       <p>{{ getValue('startingArea', 'rules') }}</p>
     </div>
     <div class="field">
-      <p class="heading">{{ getDisplayName('junkItems') }}</p>
-      <p>{{ getValue('junkItems', 'rules') }}</p>
-    </div>
-    <p class="heading">{{ getDisplayName('randomStartingItems') }}</p>
-    <div class="field">
-      <p class="heading">{{ DETAILS.randomStartingItems.items.minimum.name }}</p>
-      <p>{{ getRandomizerForm().rules.randomStartingItems.minimum }}</p>
-    </div>
-    <div class="field">
-      <p class="heading">{{ DETAILS.randomStartingItems.items.maximum.name }}</p>
-      <p>{{ getRandomizerForm().rules.randomStartingItems.maximum }}</p>
+      <p class="heading">Elevators</p>
+      <p>{{ getRandomizerForm().rules.elevatorShuffle ? 'Random Two-Way' : 'Vanilla' }}</p>
     </div>
   </div>
-  <div class="column">
-    <h1 class="title has-bottom-border">Item Overrides</h1>
-    <div *ngIf="getRandomizerForm().itemOverrides.length">
-      <div class="field" *ngFor="let override of getRandomizerForm().itemOverrides">
-        <p class="heading">{{ override.name }}</p>
-        <p>{{ formatItemOverrideOutput(override) }}</p>
-      </div>
-    </div>
-    <div class="field" *ngIf="!getRandomizerForm().itemOverrides.length">
-      <p>(none)</p>
-    </div>
-  </div>
-  <div class="column">
-    <h1 class="title has-bottom-border">Exclude Locations</h1>
-    <div class="content" *ngIf="getRandomizerForm().excludeLocations.length">
-      <ul>
-        <li *ngFor="let item of getRandomizerForm().excludeLocations">
-          {{ item }}
-        </li>
-      </ul>
-    </div>
-    <div class="field" *ngIf="!getRandomizerForm().excludeLocations.length">
-      <p>(none)</p>
-    </div>
-  </div>
-  <div class="column">
-    <h1 class="title has-bottom-border">Tricks</h1>
-    <div class="content" *ngIf="getRandomizerForm().tricks.length">
-      <ul>
-        <li *ngFor="let item of getRandomizerForm().tricks">
-          {{ getTrickName(item) }}
-        </li>
-      </ul>
-    </div>
-    <div class="field" *ngIf="!getRandomizerForm().tricks.length">
-      <p>(none)</p>
-    </div>
+  <div class="column" *ngIf="getMiscSettings()">
+    <h1 class="title has-bottom-border">Game Changes</h1>
+    <ul>
+      <li *ngFor="let setting of getMiscSettings()">{{ setting }}</li>
+    </ul>
   </div>
 </div>
