@@ -5,7 +5,7 @@ describe('PrimeRandomizerSettings', () => {
   it('should return a settings instance', () => {
     const settings = new PrimeRandomizerSettings();
     // VS Code is complaining, likely due to unsupported TypeScript, but works
-    expect(settings).toBeInstanceOf(PrimeRandomizerSettings);    
+    expect(settings).toBeInstanceOf(PrimeRandomizerSettings);
   });
 
   it('should export settings to settings string', () => {
@@ -28,7 +28,7 @@ describe('PrimeRandomizerSettings', () => {
         alcoveNoItems: true
       }
     });
-    const expected = 'WQE3KE8-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-4BJNYPLQ6FUA5TENLS';
+    const expected = 'WQE3KE8-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-8N3BXF7GCVOKBMTB7K';
     const result = settings.toSettingsString();
 
     expect(result).toBe(expected);

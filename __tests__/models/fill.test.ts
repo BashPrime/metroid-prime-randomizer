@@ -118,7 +118,7 @@ describe('Fill', () => {
     expect(location.itemRule(assumedItems, world.getSettings())).toBe(true);
   });
 
-  it('should NOT fill lower mines with X-Ray Visor equipped (PONR: Do Not Allow)', () => {
+  it('should fill lower mines with X-Ray Visor equipped (PONR: Do Not Allow, lower mines PONR NOT forced)', () => {
     const world = setUpWorld(new PrimeRandomizerSettings({
       pointOfNoReturnItems: PointOfNoReturnItems.ALLOW_ALL,
       tricks: {
@@ -145,10 +145,45 @@ describe('Fill', () => {
     ]);
 
     const results = world.searchRegions(assumedItems, startingRegion, region);
-    const backwardsSearch = world.searchRegions(assumedItems, region, startingRegion);
+    const ponrSearch = world.searchRegions(assumedItems, region, startingRegion);
 
     expect(results.getVisitedRegion(region)).toBeDefined();
-    expect(backwardsSearch.getVisitedRegion(startingRegion)).not.toBeDefined();
+    expect(ponrSearch.getVisitedRegion(startingRegion)).toBeDefined();
+    expect(location.itemRule(assumedItems, world.getSettings())).toBe(true);
+  });
+
+  it('should fill lower mines with X-Ray Visor equipped (PONR: Do Not Allow, lower mines PONR forced)', () => {
+    const world = setUpWorld(new PrimeRandomizerSettings({
+      pointOfNoReturnItems: PointOfNoReturnItems.ALLOW_ALL,
+      tricks: {
+        forcePONRLogicForLowerMines: true,
+        removeXrayReqs: true
+      }
+    }));
+    const startingRegion = world.getRegionByKey('Phazon Mines West (Phazon Processing Center)');
+    const region = world.getRegionByKey('Fungal Hall Access');
+
+    const location = world.getLocationByKey(PrimeLocation.FUNGAL_HALL_ACCESS);
+    const assumedItems = new PrimeItemCollection([
+      primeItems[PrimeItem.SCAN_VISOR],
+      primeItems[PrimeItem.SPACE_JUMP_BOOTS],
+      primeItems[PrimeItem.GRAPPLE_BEAM],
+      primeItems[PrimeItem.VARIA_SUIT],
+      primeItems[PrimeItem.WAVE_BEAM],
+      primeItems[PrimeItem.ICE_BEAM],
+      primeItems[PrimeItem.PLASMA_BEAM],
+      primeItems[PrimeItem.MORPH_BALL],
+      primeItems[PrimeItem.MORPH_BALL_BOMB],
+      primeItems[PrimeItem.SPIDER_BALL],
+      primeItems[PrimeItem.POWER_BOMB],
+      primeItems[PrimeItem.XRAY_VISOR]
+    ]);
+
+    const results = world.searchRegions(assumedItems, startingRegion, region);
+    const ponrSearch = world.searchRegions(assumedItems, region, startingRegion);
+
+    expect(results.getVisitedRegion(region)).toBeDefined();
+    expect(ponrSearch.getVisitedRegion(startingRegion)).not.toBeDefined();
     expect(location.itemRule(assumedItems, world.getSettings())).toBe(true);
   });
 });
