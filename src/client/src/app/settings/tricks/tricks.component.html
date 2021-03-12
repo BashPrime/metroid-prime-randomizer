@@ -1,15 +1,16 @@
 <div class="field">
-  <div class="label is-small">Set Difficulty Level</div>
+  <div class="label is-small">Trick Difficulty</div>
   <div class="field is-grouped">
     <div class="control">
       <div class="select is-small">
-        <select [(ngModel)]="selectedFilter">
-          <option [value]="filter" *ngFor="let filter of FILTERS">{{ filter }}</option>
+        <select [(ngModel)]="selectedDifficulty">
+          <option [value]="difficulty" *ngFor="let difficulty of DIFFICULTIES">{{ difficulty }}</option>
         </select>
       </div>
     </div>
-    <div class="control">
-      <button class="button is-info is-small" (click)="setDifficulty(selectedFilter)">Set</button>
+    <div class="control buttons are-small">
+      <button class="button is-success" (click)="addAllTricksForDifficulty(selectedDifficulty)">Add All</button>
+      <button class="button is-danger" (click)="removeAllTricksForDifficulty(selectedDifficulty)">Remove All</button>
     </div>
   </div>
 </div>

@@ -18,12 +18,11 @@ interface TrickItem {
   styleUrls: ['./tricks.component.scss']
 })
 export class TricksComponent extends PicklistFormComponent implements OnInit {
-  selectedFilter: string;
+  selectedDifficulty: string;
   protected formArray: FormArray;
 
   // Constants
   readonly GLOBAL_STYLE = { height: 'calc(100% - 50px)' };
-  readonly NONE_FILTER: string = 'None';
   readonly DIFFICULTIES: string[] = [
     Difficulty.TRIVIAL,
     Difficulty.EASY,
@@ -32,14 +31,10 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
     Difficulty.INSANE,
     Difficulty.OOB
   ];
-  readonly FILTERS: string[] = [
-    this.NONE_FILTER,
-    ...this.DIFFICULTIES
-  ];
 
   constructor(private controlContainer: ControlContainer, protected randomizerService: RandomizerService) {
     super(randomizerService);
-    this.selectedFilter = this.NONE_FILTER;
+    this.selectedDifficulty = this.DIFFICULTIES[0];
   }
 
   ngOnInit() {
@@ -47,29 +42,39 @@ export class TricksComponent extends PicklistFormComponent implements OnInit {
     this.initialize();
   }
 
-  setDifficulty(difficulty: string) {
-    // Reset set tricks in UI and form
-    this.formArray.clear();
-    this.items.available = this.items.available.concat(...this.items.selected);
-    this.items.selected = [];
+  addAllTricksForDifficulty(difficulty: string) {
+    const fb = new FormBuilder();
 
-    if (difficulty !== this.NONE_FILTER) {
-      const fb = new FormBuilder();
-      const difficultyIndex = this.DIFFICULTIES.indexOf(difficulty);
-
-      for (let trickItem of (this.items.available as TrickItem[])) {
-        // If trick is within the difficulty threshold, select it
-        if (trickItem.difficulty && this.DIFFICULTIES.indexOf(trickItem.difficulty) <= difficultyIndex) {
-          this.formArray.push(fb.control(trickItem.value));
-          this.items.selected.push(trickItem);
-        }
+    for (let trickItem of (this.items.available as TrickItem[])) {
+      // If trick is within the difficulty threshold, select it
+      if (trickItem.difficulty === difficulty) {
+        this.formArray.push(fb.control(trickItem.value));
+        this.items.selected.push(trickItem);
       }
+    }
 
-      // Filter any items in available that are in selected
-      if (this.items.selected.length > 0) {
-        this.items.available = this.items.available.filter(trickItem =>
-          this.items.selected.map(item => item.value).indexOf(trickItem.value) < 0);
+    // Filter any items in available that are in selected
+    if (this.items.selected.length > 0) {
+      this.items.available = this.items.available.filter(trickItem =>
+        this.items.selected.map(item => item.value).indexOf(trickItem.value) < 0);
+    }
+  }
+
+  removeAllTricksForDifficulty(difficulty: string) {
+    const fb = new FormBuilder();
+
+    for (let trickItem of (this.items.selected as TrickItem[])) {
+      // If trick is within the difficulty threshold, select it
+      if (trickItem.difficulty === difficulty) {
+        this.formArray.removeAt(this.items.selected.findIndex(trick => trick.value === trickItem.value));
+        this.items.available.push(trickItem);
       }
+    }
+
+    // Filter any items in available that are in selected
+    if (this.items.selected.length > 0) {
+      this.items.selected = this.items.selected.filter(trickItem =>
+        this.items.available.map(item => item.value).indexOf(trickItem.value) < 0);
     }
   }
 
