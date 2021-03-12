@@ -338,13 +338,6 @@ export const details: SettingsDetails = {
     description: `The morph ball path can be climbed with Space Jump instead to reach the item.`,
     difficulty: Difficulty.TRIVIAL
   },
-  forcePONRLogicForLowerMines: {
-    name: 'Force Point of No Return Logic for Lower Phazon Mines',
-    description: 'There is a corner case in the logic. If you have enough items to defeat Omega Pirate and reach Phazon Processing Center from Processing Center Access, ' +
-      'lower mines will not be considered a point of no return, allowing for placement of items such as the Boost Ball in that area regardless of the PONR setting.\n\n' +
-      'Enabling this trick will force the logic to always treat lower mines as a point of no return.',
-    difficulty: Difficulty.TRIVIAL
-  },
   frigateCrashSiteItemOnlyScanVisor: {
     name: 'Frigate Crash Site Item with only Scan Visor',
     description: `You can scan dash from either side of the lake to reach the item ledge without any additional items.`,
@@ -443,6 +436,12 @@ export const details: SettingsDetails = {
     name: 'Life Grove Tunnel - Half Pipe Bomb Jump',
     description: `You can half pipe bomb jump to reach either side of Life Grove Tunnel without Boost Ball.`,
     difficulty: Difficulty.HARD
+  },
+  lowerPhazonMinesAllowPointOfNoReturnEdgeCase: {
+    name: 'Lower Phazon Mines - Allow edge case logic',
+    description: 'If you have enough items to reach Phazon Processing Center from Processing Center Access (by defeating Omega Pirate), ' +
+      'lower Phazon Mines will not be treated as a point of no return, allowing for items such as Boost Ball to be placed there when they normally would not be.',
+    difficulty: Difficulty.TRIVIAL
   },
   lowerPhazonMineWithoutSpiderGrapple: {
     name: 'Lower Phazon Mines without Spider Ball, Grapple Beam',

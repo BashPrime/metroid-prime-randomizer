@@ -260,7 +260,7 @@ export function phazonMines(): RegionObject[] {
         [PrimeLocation.PROCESSING_CENTER_ACCESS]: () => true
       },
       exits: {
-        'Phazon Processing Center': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => !settings.tricks.forcePONRLogicForLowerMines && items.has(PrimeItem.PLASMA_BEAM),
+        'Phazon Processing Center': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.lowerPhazonMinesAllowPointOfNoReturnEdgeCase && items.has(PrimeItem.PLASMA_BEAM),
         'Elite Quarters': (items: PrimeItemCollection) => items.has(PrimeItem.PLASMA_BEAM)
       }
     },

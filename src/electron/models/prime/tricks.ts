@@ -33,7 +33,6 @@ export class Tricks extends SettingsFlags {
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   fieryShoresItemSj = false;
-  forcePONRLogicForLowerMines = false;
   frigateCrashSiteItemOnlyScanVisor = false;
   frigateCrashSiteItemWithoutGravitySuit = false;
   furnaceAccessWithoutSpider = false;
@@ -52,6 +51,7 @@ export class Tricks extends SettingsFlags {
   lavaLakeItemSuitless = false;
   lifeGroveSpinnerWithoutBoostBall = false;
   lifeGroveTunnelHpbj = false;
+  lowerPhazonMinesAllowPointOfNoReturnEdgeCase = false;
   lowerPhazonMineWithoutSpiderGrapple = false;
   magmaPoolItemWithIS = false;
   mainPlazaGrappleLedgeOnlyGrapple = false;
