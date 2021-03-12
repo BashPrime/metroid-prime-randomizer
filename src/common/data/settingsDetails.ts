@@ -338,6 +338,13 @@ export const details: SettingsDetails = {
     description: `The morph ball path can be climbed with Space Jump instead to reach the item.`,
     difficulty: Difficulty.TRIVIAL
   },
+  forcePONRLogicForLowerMines: {
+    name: 'Force Point of No Return Logic for Lower Phazon Mines',
+    description: 'There is a corner case in the logic. If you have enough items to defeat Omega Pirate and reach Phazon Processing Center from Processing Center Access, ' +
+      'lower mines will not be considered a point of no return, allowing for placement of items such as the Boost Ball in that area regardless of the PONR setting.\n\n' +
+      'Enabling this trick will force the logic to always treat lower mines as a point of no return.',
+    difficulty: Difficulty.TRIVIAL
+  },
   frigateCrashSiteItemOnlyScanVisor: {
     name: 'Frigate Crash Site Item with only Scan Visor',
     description: `You can scan dash from either side of the lake to reach the item ledge without any additional items.`,

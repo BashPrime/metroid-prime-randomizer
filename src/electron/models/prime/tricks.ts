@@ -33,6 +33,7 @@ export class Tricks extends SettingsFlags {
   exitQuarantineCaveRuinedCourtyardSlopeJump = false;
   fieryShoresAccessWithoutMorphGrapple = false;
   fieryShoresItemSj = false;
+  forcePONRLogicForLowerMines = false;
   frigateCrashSiteItemOnlyScanVisor = false;
   frigateCrashSiteItemWithoutGravitySuit = false;
   furnaceAccessWithoutSpider = false;
