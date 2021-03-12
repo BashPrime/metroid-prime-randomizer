@@ -17,9 +17,9 @@
       <p class="heading">Shuffle Mode</p>
       <p>{{ getValue('shuffleMode', 'rules') }}</p>
     </div>
-    <div class="field" *ngIf="hasRandomStartingItems()">
-      <p class="heading">Random Starting Items</p>
-      <p>{{ getRandomizerForm().rules.randomStartingItems.minimum }} to {{ getRandomizerForm().rules.randomStartingItems.maximum }}</p>
+    <div class="field">
+      <p class="heading">Point of No Return Items</p>
+      <p>{{ getValue('pointOfNoReturnItems', 'rules') }}</p>
     </div>
   </div>
   <div class="column">
@@ -47,6 +47,10 @@
       <ng-template #default>
         <p>Default</p>
       </ng-template>
+    </div>
+    <div class="field" *ngIf="hasRandomStartingItems()">
+      <p class="heading">Random Starting Items</p>
+      <p>{{ getRandomizerForm().rules.randomStartingItems.minimum }} to {{ getRandomizerForm().rules.randomStartingItems.maximum }}</p>
     </div>
     <div class="field" *ngIf="getRandomizerForm().rules.goal === 'artifact-collection'">
       <p class="heading">Chozo Artifacts Shuffled</p>
