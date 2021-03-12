@@ -12,15 +12,12 @@ export function distributeItemsRestrictive(world: PrimeWorld): void {
   // Get whole item pool, and shuffle it
   const itemPool = world.getItemPool().shuffle(world.getRng());
 
-  const progressionItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.PROGRESSION);
-  const artifactsItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.ARTIFACTS);
+  // Progression items and artifacts go in the same pool.
+  const progressionItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.PROGRESSION || item.getPriority() === ItemPriority.ARTIFACTS);
   const extrasItemPool = itemPool.filter((item: Item) => item.getPriority() === ItemPriority.EXTRA);
 
   // Logically fill progressive items to ensure the game can be completed.
   fillRestrictive(world, progressionItemPool);
-
-  // Progression items are filled, fill artifacts restrictively to ensure reachability
-  fillRestrictive(world, artifactsItemPool);
 
   // Filter out filled locations
   let fillLocations = world.getLocations().filter((location: Location) => !location.hasItem());
