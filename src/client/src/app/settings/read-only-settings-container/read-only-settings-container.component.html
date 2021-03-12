@@ -5,9 +5,10 @@
       <p class="heading">Trick Level</p>
       <div *ngIf="getTrickLevels(); then showTricks; else noTricks"></div>
       <ng-template #showTricks>
-        <ul>
+        <ul style="margin-bottom: 0.35rem">
           <li *ngFor="let trickLevel of getTrickLevels()">{{ trickLevel }}</li>
         </ul>
+        <button class="button is-info is-small" (click)="openTricksDetailModal()">View Tricks</button>
       </ng-template>
       <ng-template #noTricks>
         <p>No Tricks</p>
@@ -90,3 +91,4 @@
     </ul>
   </div>
 </div>
+<app-tricks-detail-modal [tricks]="getRandomizerForm().tricks"></app-tricks-detail-modal>

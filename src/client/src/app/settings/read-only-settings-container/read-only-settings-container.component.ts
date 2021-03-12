@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { SettingsSection } from '../settings-section';
 import { RandomizerService } from '../../services/randomizer.service';
@@ -6,6 +6,7 @@ import { RandomizerForm } from '../../../../../common/models/randomizerForm';
 import { ItemOverrides } from '../../../../../electron/models/prime/itemOverrides';
 import { ItemOverride } from '../../../../../common/models/itemOverride';
 import { details, Difficulty } from '../../../../../common/data/settingsDetails';
+import { TricksDetailModalComponent } from 'src/app/tricks-detail-modal/tricks-detail-modal.component';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { details, Difficulty } from '../../../../../common/data/settingsDetails'
 })
 export class ReadOnlySettingsContainerComponent extends SettingsSection implements OnInit {
   @Input() private randomizerForm: RandomizerForm;
+  @ViewChild(TricksDetailModalComponent, { static: false }) private trickDetailModal: TricksDetailModalComponent;
 
   // Constants
   readonly STATES = ItemOverrides.STATES;
@@ -148,7 +150,6 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
 
     const totalTricks = Object.keys(this.DETAILS).filter(key => this.DETAILS[key].difficulty).length;
     const difficulties = {
-      'Disabled': totalTricks,
       [Difficulty.TRIVIAL]: 0,
       [Difficulty.EASY]: 0,
       [Difficulty.NORMAL]: 0,
@@ -159,7 +160,6 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
 
     for (let trick of tricks) {
       const difficulty = this.DETAILS[trick].difficulty;
-      difficulties['Disabled']--;
       difficulties[difficulty]++;
     }
 
@@ -169,7 +169,7 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
         obj[key] = difficulties[key];
         return obj;
       }, {});
-    const filteredDifficultyKeys = Object.keys(filteredDifficulties).reverse();
+    const filteredDifficultyKeys = Object.keys(filteredDifficulties);
     const trickLevels: string[] = [];
 
     for (let key of filteredDifficultyKeys) {
@@ -188,5 +188,9 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
     }
 
     return output;
+  }
+
+  openTricksDetailModal(): void {
+    this.trickDetailModal.setOpen(true);
   }
 }
