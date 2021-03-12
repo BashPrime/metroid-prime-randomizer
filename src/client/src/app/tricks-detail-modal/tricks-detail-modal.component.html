@@ -1,0 +1,24 @@
+<div class="modal" [class.is-active]="getOpen()">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="width: 95%">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Detailed Tricks</p>
+      <button class="delete" aria-label="close" (click)="setOpen(false)"></button>
+    </header>
+    <section class="modal-card-body has-text-left">
+      <div class="columns">
+        <div class="column" *ngFor="let key of getDetailedTrickKeys()">
+          <h1 class="heading">{{ key }}</h1>
+          <ul>
+            <li *ngFor="let trick of getDetailedTricks()[key]">
+              <span [pTooltip]="trick.tooltip" tooltipStyleClass="is-wide-tooltip is-modal-tooltip">{{ trick.label }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button" (click)="setOpen(false)">Close</button>
+    </footer>
+  </div>
+</div>

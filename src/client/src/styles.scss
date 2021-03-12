@@ -117,3 +117,7 @@ input[type=number] {
 .ui-tooltip.is-wide-tooltip {
   max-width: 25em;
 }
+
+.ui-tooltip.is-modal-tooltip .ui-tooltip-text {
+  background-color: #202020;
+}

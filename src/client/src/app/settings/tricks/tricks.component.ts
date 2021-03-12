@@ -4,13 +4,7 @@ import { FormArray, ControlContainer, FormBuilder } from '@angular/forms';
 import { RandomizerService } from '../../services/randomizer.service';
 import { PicklistFormComponent } from '../../components/common/picklist-form.component';
 import { Difficulty } from '../../../../../common/data/settingsDetails';
-
-interface TrickItem {
-  label: string;
-  value: string;
-  tooltip: string;
-  difficulty: string;
-}
+import { TrickItem } from '../../../../../common/models/trickItem';
 
 @Component({
   selector: 'app-tricks',

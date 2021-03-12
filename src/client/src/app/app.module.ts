@@ -32,6 +32,7 @@ import { ProgressModalComponent } from './progress-modal/progress-modal.componen
 import { ItemOverridesComponent } from './item-overrides/item-overrides.component';
 import { HelpComponent } from './help/help.component';
 import { PrimeIsoDiagnosticsModalComponent } from './prime-iso-diagnostics-modal/prime-iso-diagnostics-modal.component';
+import { TricksDetailModalComponent } from './tricks-detail-modal/tricks-detail-modal.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { PrimeIsoDiagnosticsModalComponent } from './prime-iso-diagnostics-modal
     ProgressModalComponent,
     ItemOverridesComponent,
     HelpComponent,
-    PrimeIsoDiagnosticsModalComponent
+    PrimeIsoDiagnosticsModalComponent,
+    TricksDetailModalComponent
   ],
   imports: [
     BrowserModule,
