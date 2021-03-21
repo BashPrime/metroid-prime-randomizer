@@ -120,10 +120,6 @@ export class ReadOnlySettingsContainerComponent extends SettingsSection implemen
   buildMiscSettingsArray(): string[] {
     const miscSettings: string[] = [];
 
-    if (!this.randomizerForm.romSettings.skipFrigate) {
-      miscSettings.push('Starting on Space Pirate Frigate');
-    }
-
     if (!this.randomizerForm.romSettings.skipHudPopups) {
       miscSettings.push('HUD Popups Enabled');
     }

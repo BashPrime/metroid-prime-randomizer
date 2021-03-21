@@ -19,10 +19,6 @@ export enum Difficulty {
 }
 
 export const details: SettingsDetails = {
-  skipFrigate: {
-    name: 'Skip the Space Pirate Frigate',
-    description: `You will start the game at the chosen starting area instead of the frigate.`
-  },
   skipHudPopups: {
     name: 'Skip Item Acquisition Popups',
     description: `The game won't pause and display a popup when you obtain an item.`

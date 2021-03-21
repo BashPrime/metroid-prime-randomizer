@@ -11,7 +11,6 @@ describe('PrimeRandomizerSettings', () => {
   it('should export settings to settings string', () => {
     const settings = new PrimeRandomizerSettings({
       spoiler: true,
-      skipFrigate: false,
       skipHudPopups: false,
       hideItemModels: true,
       itemOverrides: [
@@ -29,7 +28,7 @@ describe('PrimeRandomizerSettings', () => {
         landingSiteScanDash: true
       }
     });
-    const expected = 'WQE3KE8-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-YKDBPOTTIAI540X6O0';
+    const expected = 'GY574LC-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-YKDBPOTTIAI540X6O0';
     const result = settings.toSettingsString();
 
     expect(result).toBe(expected);

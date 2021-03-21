@@ -90,7 +90,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     output_iso: path.join(getOutputFolder(form), outputIso),
     layout_string: world.getRandomprimePatcherLayoutString(),
     iso_format: form.outputType,
-    skip_frigate: settings.skipFrigate,
+    skip_frigate: true,
     skip_hudmenus: settings.skipHudPopups,
     nonvaria_heat_damage: settings.heatProtection === 'varia-only',
     staggered_suit_damage: settings.suitDamageReduction === 'progressive',

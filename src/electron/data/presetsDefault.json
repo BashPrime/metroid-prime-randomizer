@@ -5,7 +5,6 @@
     "romSettings": {
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
-      "skipFrigate": true,
       "skipHudPopups": true,
       "skipImpactCrater": false
     },
@@ -59,7 +58,6 @@
     "romSettings": {
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
-      "skipFrigate": true,
       "skipHudPopups": true,
       "skipImpactCrater": false
     },
@@ -93,7 +91,6 @@
     "romSettings": {
       "enableMainPlazaLedgeDoor": false,
       "hideItemModels": false,
-      "skipFrigate": true,
       "skipHudPopups": true,
       "skipImpactCrater": false
     },

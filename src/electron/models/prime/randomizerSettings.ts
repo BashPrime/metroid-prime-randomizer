@@ -21,7 +21,6 @@ import { PrimeItem } from '../../enums/primeItem';
 export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
   seed?: string;
   spoiler?: boolean;
-  skipFrigate?: boolean;
   skipHudPopups?: boolean;
   hideItemModels?: boolean;
   enableMainPlazaLedgeDoor?: boolean;
@@ -45,7 +44,6 @@ export interface PrimeRandomizerSettingsArgs extends RandomizerSettingsArgs {
 export class PrimeRandomizerSettings extends RandomizerSettings {
   seed: string;
   spoiler: boolean = false;
-  skipFrigate: boolean = true;
   skipHudPopups: boolean = true;
   hideItemModels: boolean = false;
   enableMainPlazaLedgeDoor = false;
@@ -163,7 +161,6 @@ export class PrimeRandomizerSettings extends RandomizerSettings {
   toRandomizerForm(): RandomizerForm {
     return {
       romSettings: {
-        skipFrigate: this.skipFrigate,
         skipHudPopups: this.skipHudPopups,
         hideItemModels: this.hideItemModels,
         enableMainPlazaLedgeDoor: this.enableMainPlazaLedgeDoor,
@@ -296,7 +293,6 @@ function getTotalSharedSettingsBitWidth(): number {
  */
 export const settings = [
   new Checkbox({ name: 'spoiler', shared: true, default: true }),
-  new Checkbox({ name: 'skipFrigate', shared: true, default: true }),
   new Checkbox({ name: 'skipHudPopups', shared: true, default: true }),
   new Checkbox({ name: 'enableMainPlazaLedgeDoor', shared: true, default: false }),
   new Checkbox({ name: 'skipImpactCrater', shared: true, default: false }),

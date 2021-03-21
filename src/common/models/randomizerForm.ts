@@ -4,7 +4,6 @@ import { RandomStartingItems } from './randomStartingItems';
 export interface RandomizerForm {
   generationCount?: number;
   romSettings: {
-    skipFrigate: boolean;
     skipHudPopups: boolean;
     hideItemModels: boolean;
     enableMainPlazaLedgeDoor: boolean;
