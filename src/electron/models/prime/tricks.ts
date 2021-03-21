@@ -2,7 +2,6 @@ import { SettingsFlags, SettingsFlagsArgs } from '../settingsFlags';
 import { getPaddedBitStringFromSettingsString } from '../../utilities';
 
 export class Tricks extends SettingsFlags {
-  alcoveNoItems = false;
   antechamberWithPowerBombs = false;
   arborChamberWithoutPlasma = false;
   arboretumPuzzleSkip = false;
@@ -46,6 +45,8 @@ export class Tricks extends SettingsFlags {
   hydroAccessTunnelWithoutGravity = false;
   iceBeamBeforeFlaahgraOobWallcrawl = false;
   iceRuinsEastSpiderItemWithoutSpider = false;
+  landingSiteDashWithoutScanVisor = false;
+  landingSiteScanDash = false;
   lateMagmoorNoHeatProtection = false;
   lavaLakeItemOnlyMissiles = false;
   lavaLakeItemSuitless = false;

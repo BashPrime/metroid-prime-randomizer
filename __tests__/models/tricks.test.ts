@@ -10,7 +10,7 @@ describe('Tricks', () => {
   it('should handle Alcove with No Items', () => {
     const world = setUpWorld(new PrimeRandomizerSettings({
       tricks: {
-        alcoveNoItems: true
+        landingSiteScanDash: true
       }
     }));
     const items = new PrimeItemCollection([]);

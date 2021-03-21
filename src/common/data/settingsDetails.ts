@@ -155,13 +155,6 @@ export const details: SettingsDetails = {
     'GameCube Zip': Another compressed format. Currently, it only works with Dolphin.`
   },
   // Tricks
-  alcoveNoItems: {
-    name: 'Alcove with No Items',
-    description: `It's possible to reach the Alcove room without any items by performing a dash from Samus's ship to the upper ledge, near the Gully door.
-
-    This can be done with a scan dash off the Red Starburst above the Temple Hall door, or by locking onto a Seedling in Temple Hall and then dashing.`,
-    difficulty: Difficulty.EASY
-  },
   antechamberWithPowerBombs: {
     name: 'Antechamber with Power Bombs',
     description: `You can retrieve the item and leave Antechamber without Ice Beam by using a power bomb to open the door, moving to the very back of the room, and then back to the door.
@@ -404,6 +397,17 @@ export const details: SettingsDetails = {
     name: 'Ice Ruins East - Spider Track Item without Spider Ball',
     description: `You can hyper bomb jump to reach the tunnel where the item is without Spider Ball.`,
     difficulty: Difficulty.HARD
+  },
+  landingSiteDashWithoutScanVisor: {
+    name: 'Landing Site - Dash to Upper Ledge (without Scan Visor)',
+    description: 'It\'s possible to reach the upper ledge in Landing Site without Scan Visor or any other items by locking on to a Seedling in Temple Hall, ' +
+      'moving back to the ship while still locked on, and dashing from the ship to the ledge.',
+    difficulty: Difficulty.EASY
+  },
+  landingSiteScanDash: {
+    name: 'Landing Site - Scan Dash to Upper Ledge',
+    description: 'It\'s possible to reach the upper ledge in Landing Site with only Scan Visor by locking onto the Red Starburst above the Temple Hall door and performing a scan dash from Samus\'s ship.',
+    difficulty: Difficulty.EASY
   },
   lateMagmoorNoHeatProtection: {
     name: 'Enter Late Magmoor without Heat Protection',

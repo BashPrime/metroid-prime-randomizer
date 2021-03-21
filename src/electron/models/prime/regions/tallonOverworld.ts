@@ -14,8 +14,15 @@ export function tallonOverworld(): RegionObject[] {
       },
       exits: {
         'Alcove': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => {
-          const devIntendedReqs = items.canBoost() && items.canLayBombs();
-          return settings.tricks.alcoveNoItems || devIntendedReqs || items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          if (settings.tricks.landingSiteDashWithoutScanVisor) {
+            return true;
+          }
+
+          if (settings.tricks.landingSiteScanDash) {
+            return items.has(PrimeItem.SCAN_VISOR);
+          }
+
+          return items.has(PrimeItem.SPACE_JUMP_BOOTS) || (items.canBoost() && items.canLayBombs());
         },
         'Tallon Canyon': () => true,
         'Artifact Temple': (items: PrimeItemCollection) => items.hasMissiles(),
@@ -28,7 +35,7 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.ALCOVE]: () => true
       },
       exits: {
-        'Landing Site': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.alcoveNoItems || items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Landing Site': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {

@@ -25,7 +25,7 @@ describe('PrimeRandomizerSettings', () => {
         ['Alcove']: true
       },
       tricks: {
-        alcoveNoItems: true
+        landingSiteScanDash: true
       }
     });
     const expected = 'WQE3KE8-TXQWBYM6C68KHWGNTO8V9X4NX8G-UQ3UEU2I5SNC9D47UV4-8N3BXF7GCVOKBMTB7K';
