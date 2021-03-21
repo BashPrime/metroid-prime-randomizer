@@ -7,7 +7,33 @@ import { ENTRANCE_SEPARATOR } from '../../src/common/constants';
 import { PrimeItem } from '../../src/electron/enums/primeItem';
 
 describe('Tricks', () => {
-  it('should handle Alcove with No Items', () => {
+  it('should handle Landing Site dash (no scan)', () => {
+    const world = setUpWorld(new PrimeRandomizerSettings({
+      tricks: {
+        landingSiteDashWithoutScanVisor: true
+      }
+    }));
+    const items = new PrimeItemCollection([]);
+    const exit = world.getRegionByKey('Landing Site').getExit('Landing Site' + ENTRANCE_SEPARATOR + 'Alcove');
+
+    expect(exit.accessRule(items, world.getSettings())).toBe(true);
+  });
+
+  it('should handle Landing Site scan dash', () => {
+    const world = setUpWorld(new PrimeRandomizerSettings({
+      tricks: {
+        landingSiteScanDash: true
+      }
+    }));
+    const items = new PrimeItemCollection([
+      primeItems['Scan Visor']
+    ]);
+    const exit = world.getRegionByKey('Landing Site').getExit('Landing Site' + ENTRANCE_SEPARATOR + 'Alcove');
+
+    expect(exit.accessRule(items, world.getSettings())).toBe(true);
+  });
+
+  it('should NOT allow Landing Site scan dash without scan', () => {
     const world = setUpWorld(new PrimeRandomizerSettings({
       tricks: {
         landingSiteScanDash: true
@@ -16,7 +42,7 @@ describe('Tricks', () => {
     const items = new PrimeItemCollection([]);
     const exit = world.getRegionByKey('Landing Site').getExit('Landing Site' + ENTRANCE_SEPARATOR + 'Alcove');
 
-    expect(exit.accessRule(items, world.getSettings())).toBe(true);
+    expect(exit.accessRule(items, world.getSettings())).toBe(false);
   });
 
   it('should handle Arbor Chamber without Plasma Beam', () => {
