@@ -35,7 +35,7 @@ export function tallonOverworld(): RegionObject[] {
         [PrimeLocation.ALCOVE]: () => true
       },
       exits: {
-        'Landing Site': (items: PrimeItemCollection) => items.has(PrimeItem.SPACE_JUMP_BOOTS)
+        'Landing Site': (items: PrimeItemCollection, settings: PrimeRandomizerSettings) => settings.tricks.alcoveEscapeWithoutSpaceJump || items.has(PrimeItem.SPACE_JUMP_BOOTS)
       }
     },
     {

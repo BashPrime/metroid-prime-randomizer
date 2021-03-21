@@ -155,6 +155,12 @@ export const details: SettingsDetails = {
     'GameCube Zip': Another compressed format. Currently, it only works with Dolphin.`
   },
   // Tricks
+  alcoveEscapeWithoutSpaceJump: {
+    name: 'Alcove - Escape without Space Jump',
+    description: 'You can reach the upper ledge to leave Alcove without Space Jump by either slope jumping off the right wall next to the ledge, ' +
+    'or by jumping from a high enough spot on the ground to the ledge.',
+    difficulty: Difficulty.TRIVIAL
+  },
   antechamberWithPowerBombs: {
     name: 'Antechamber with Power Bombs',
     description: `You can retrieve the item and leave Antechamber without Ice Beam by using a power bomb to open the door, moving to the very back of the room, and then back to the door.

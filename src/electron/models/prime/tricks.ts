@@ -2,6 +2,7 @@ import { SettingsFlags, SettingsFlagsArgs } from '../settingsFlags';
 import { getPaddedBitStringFromSettingsString } from '../../utilities';
 
 export class Tricks extends SettingsFlags {
+  alcoveEscapeWithoutSpaceJump = false;
   antechamberWithPowerBombs = false;
   arborChamberWithoutPlasma = false;
   arboretumPuzzleSkip = false;
