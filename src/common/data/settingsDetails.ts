@@ -21,7 +21,9 @@ export enum Difficulty {
 export const details: SettingsDetails = {
   skipHudPopups: {
     name: 'Skip Item Acquisition Popups',
-    description: `The game won't pause and display a popup when you obtain an item.`
+    description: 'If this is unchecked, the game will pause and display a pop-up dialog when you obtain an item.\n\n' +
+      'If this is checked, the game will display a different item acquisition text message without interrupting gameplay, except for ' +
+      'the Watery Hall (Scan Puzzle) and Research Core items.'
   },
   hideItemModels: {
     name: 'Hide Item Models',
