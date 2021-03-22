@@ -1,7 +1,7 @@
 import { PrimeRandomizerSettings } from './randomizerSettings';
 import { PrimeWorld } from './world';
 import { generateItemPool } from './itemPool';
-import { setStartingItems } from './startingItems';
+import { setRandomStartingItems, setStartingItems } from './startingItems';
 import { setEntrances } from './entranceShuffle';
 import { setRules } from './rules';
 import { distributeItemsRestrictive } from './fill';
@@ -42,6 +42,9 @@ export function generateWorld(settings: PrimeRandomizerSettings): PrimeWorld {
 
       // Set starting items for the world
       setStartingItems(world);
+
+      // Set random starting items for the world
+      setRandomStartingItems(world);
 
       // Generate item pool based on settings, and add the item pool to the world instance
       generateItemPool(world);
