@@ -13,7 +13,7 @@ export interface PatcherConfiguration {
   artifact_hint_behavior: string;
   trilogy_disc_path: string;
   starting_items: number;
-  show_starting_items: boolean;
+  random_starting_items: number;
   comment: string;
   main_menu_message: string;
   auto_enabled_elevators: boolean;

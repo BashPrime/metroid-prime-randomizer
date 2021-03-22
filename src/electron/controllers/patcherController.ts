@@ -78,8 +78,8 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
   const settings = world.getSettings();
   const outputIso = getRandomizerFileNameNoExtension(world) + '.' + form.outputType;
 
-  const startingWithScanVisor: boolean = world.getStartingItems()[PrimeItem.SCAN_VISOR]
-    && world.getStartingItems()[PrimeItem.SCAN_VISOR] > 0;
+  const startingWithScanVisor: boolean = world.getCombinedStartingItems()[PrimeItem.SCAN_VISOR]
+    && world.getCombinedStartingItems()[PrimeItem.SCAN_VISOR] > 0;
 
   const randomizerComment: string = 'starting area: ' + world.getStartingArea().name + '\n\n'
     + 'Layout generated with Metroid Prime Randomizer v' + version + ' - https://randomizer.metroidprime.run\n'
@@ -98,7 +98,7 @@ function getPatcherConfig(world: PrimeWorld, form: PatchForm): PatcherConfigurat
     artifact_hint_behavior: settings.artifactLocationHints ? 'all' : 'none',
     trilogy_disc_path: form.trilogyIso ? form.trilogyIso : null,
     starting_items: toRandomprimeFormat(mapToItemPool(world.getStartingItems())),
-    show_starting_items: world.getShowStartingItems(),
+    random_starting_items: toRandomprimeFormat(mapToItemPool(world.getRandomStartingItems())),
     comment: randomizerComment,
     main_menu_message: 'Seed Hash:\n' + seedHashAsString(world) + '\n\n' + 'Randomizer v' + version,
     auto_enabled_elevators: !startingWithScanVisor,

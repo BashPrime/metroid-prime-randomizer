@@ -44,13 +44,15 @@ export class PrimeWorld extends World {
    */
   protected elevatorLayout: Elevator[] = undefined;
   /**
-   * The collection of items that will already be in the player's inventory when starting the game.
+   * The collection of player-selected items that will already be in the player's inventory when starting the game.
    */
   protected startingItems: ItemMap;
   /**
-   * This flag is used to set the starting items popup flag in the patcher.
+   * The collection of randomly selected items that will already be in the player's inventory when starting the game.
+   *
+   * This object is primarily used for setting the "additional items" popup in the patcher.
    */
-  protected showStartingItems: boolean = false;
+   protected randomStartingItems: ItemMap;
 
   constructor(settings: PrimeRandomizerSettings) {
     super(settings);
@@ -166,12 +168,19 @@ export class PrimeWorld extends World {
     this.startingItems = startingItems;
   }
 
-  getShowStartingItems(): boolean {
-    return this.showStartingItems;
+  getRandomStartingItems(): ItemMap {
+    return this.randomStartingItems;
   }
 
-  setShowStartingItems(showStartingItems: boolean): void {
-    this.showStartingItems = showStartingItems;
+  setRandomStartingItems(randomStartingItems: ItemMap): void {
+    this.randomStartingItems = randomStartingItems;
+  }
+
+  /**
+   * Returns item map containing both player-selected and random starting items.
+   */
+  getCombinedStartingItems(): ItemMap {
+    return { ...this.getStartingItems(), ...this.getRandomStartingItems() };
   }
 
   /**
@@ -182,8 +191,8 @@ export class PrimeWorld extends World {
     let myItems = collectedItems !== undefined ? collectedItems : new PrimeItemCollection([]);
 
     // If the world has starting items, add to myItems
-    if (this.getStartingItems()) {
-      const startingItemsArray = mapToItemPool(this.getStartingItems());
+    if (this.getCombinedStartingItems()) {
+      const startingItemsArray = mapToItemPool(this.getCombinedStartingItems());
       myItems = myItems.merge(new PrimeItemCollection(startingItemsArray));
     }
 
@@ -240,8 +249,8 @@ export class PrimeWorld extends World {
 
     // Set up starting items and append to myItems if there are any
     let startingItems: PrimeItemCollection;
-    if (this.getStartingItems()) {
-      startingItems = new PrimeItemCollection(mapToItemPool(this.getStartingItems()));
+    if (this.getCombinedStartingItems()) {
+      startingItems = new PrimeItemCollection(mapToItemPool(this.getCombinedStartingItems()));
       myItems = myItems.merge(startingItems);
 
       // Make the starting items the first in the item sphere

@@ -17,14 +17,13 @@ interface StartingItems {
 }
 
 /**
- * Sets the starting items for a world, based on the random starting settings and overrides.
+ * Sets the starting items for a world, based on the player-selected item overrides.
  * @param world The world to set the starting items for.
  */
 export function setStartingItems(world: PrimeWorld): void {
   const items: StartingItems = getItemsReference();
   const startingItems: ItemMap = getStartingItemsMap();
   const settings = world.getSettings();
-  const rng = world.getRng();
 
   // Get any starting items from item overrides
   for (let override of settings.itemOverrides.toArray()) {
@@ -52,14 +51,28 @@ export function setStartingItems(world: PrimeWorld): void {
     }
   }
 
-  // Get item entries for random starting item calculation
-  const itemEntries = Object.entries(items);
-
   // If scan visor override isn't present, make it a starting item by default.
   // When no overrides are provided, scan visor is the only item that will be set as a starting item; all others will be shuffled.
   if (!settings.itemOverrides[PrimeItem.SCAN_VISOR]) {
     startingItems[PrimeItem.SCAN_VISOR] = items[PrimeItem.SCAN_VISOR].maximum;
   }
+
+  const filteredStartingItems = filterItemMap(startingItems);
+  world.setStartingItems(filteredStartingItems);
+}
+
+/**
+ * Sets the starting items for a world, based on the random items range.
+ * @param world The world to set the starting items for.
+ */
+ export function setRandomStartingItems(world: PrimeWorld): void {
+  const items: StartingItems = getItemsReference();
+  const randomStartingItems: ItemMap = getStartingItemsMap();
+  const settings = world.getSettings();
+  const rng = world.getRng();
+
+  // Get item entries for random starting item calculation
+  const itemEntries = Object.entries(items);
 
   // If minimum >= maximum, automatically use the minimum value
   // Else, Pick a random number of starting items from a min and max range
@@ -79,20 +92,15 @@ export function setStartingItems(world: PrimeWorld): void {
       const itemInfo = item[1];
 
       // Increment the item if it isn't excluded and isn't at its maximum value, then flag to exit the loop
-      if (!itemInfo.excludeFromRandomStartingItems && startingItems[itemKey] < itemInfo.maximum) {
-        startingItems[itemKey]++;
+      if (!itemInfo.excludeFromRandomStartingItems && randomStartingItems[itemKey] < itemInfo.maximum) {
+        randomStartingItems[itemKey]++;
         incrementedItem = true;
-
-        // Flag the starting items popup if it isn't already flagged
-        if (!world.getShowStartingItems()) {
-          world.setShowStartingItems(true);
-        }
       }
     }
   }
 
-  const filteredStartingItems = filterItemMap(startingItems);
-  world.setStartingItems(filteredStartingItems);
+  const filteredRandomStartingItems = filterItemMap(randomStartingItems);
+  world.setRandomStartingItems(filteredRandomStartingItems);
 }
 
 export function toRandomprimeFormat(startingItems: Item[]): number {

@@ -161,7 +161,7 @@ function getPoolCore(world: PrimeWorld): ItemsObject {
   }
 
   // Handle the starting items
-  for (let [key, count] of Object.entries(world.getStartingItems())) {
+  for (let [key, count] of Object.entries(world.getCombinedStartingItems())) {
     // Keep the expansions in the item pool. Only remove the upgrades.
     if (!expansions.includes(key)) {
       itemPool[key][0].count = 0;

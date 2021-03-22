@@ -48,7 +48,7 @@ export class Spoiler {
     spoiler['Starting Area'] = world.getStartingArea().name;
 
     // Set starting items
-    spoiler['Starting Items'] = world.getStartingItems();
+    spoiler['Starting Items'] = world.getCombinedStartingItems();
 
     // Set elevator layout
     // Because we can use undefined elevator layouts for the patcher to quickly set the default layout, refer to the base table when undefined.
