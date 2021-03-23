@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { TabService } from '../services/tab.service';
 import { ImportSettingsModalComponent } from '../import-settings-modal/import-settings-modal.component';
+import { ElectronService } from '../services/electron.service';
 
 @Component({
   selector: 'app-welcome',
@@ -15,7 +16,7 @@ export class WelcomeComponent implements OnInit {
   private readonly generateGameTab = 1;
   private readonly helpTab = 3;
 
-  constructor(private tabService: TabService) { }
+  constructor(private tabService: TabService, private electronService: ElectronService) { }
 
   ngOnInit() {
   }
@@ -30,5 +31,9 @@ export class WelcomeComponent implements OnInit {
 
   openImportPermalinkModal(): void {
     this.importPermalinkModal.openModal();
+  }
+
+  openSeedHistory(): void {
+    this.electronService.ipcRenderer.send('openSeedHistoryFolder');
   }
 }

@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { app, ipcMain, shell } from 'electron';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import * as fs from 'fs';
@@ -16,6 +16,11 @@ const historyFileRead$ = new BehaviorSubject<boolean>(false);
 export function initialize() {
   // Create seed history folder if it does not exist
   fs.mkdirSync(seedHistoryDir, { recursive: true });
+
+  // Request from renderer to open the seed history folder
+  ipcMain.on('openSeedHistoryFolder', (event) => {
+    shell.openItem(seedHistoryDir);
+  });
 
   // Request from renderer to get the seed history
   ipcMain.on('getSeedHistory', (event) => {
