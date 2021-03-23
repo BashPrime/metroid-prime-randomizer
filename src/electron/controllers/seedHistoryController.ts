@@ -5,14 +5,17 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { SeedHistory } from '../models/prime/seedHistory';
+import { GeneratedSeed } from '../../common/models/generatedSeed';
+import { PrimeWorld } from '../models/prime/world';
+import { Spoiler } from '../models/prime/spoiler';
 
 export const seedHistory: SeedHistory = new SeedHistory();
-const seedHistoryPath: string = path.join(app.getPath('userData'), 'seeds.json');
+const seedHistoryDir: string = path.join(app.getPath('userData'), 'seed-history');
 const historyFileRead$ = new BehaviorSubject<boolean>(false);
 
 export function initialize() {
-  // Get the seed history from seeds.json first
-  // readFromSeedHistoryFile();
+  // Create seed history folder if it does not exist
+  fs.mkdirSync(seedHistoryDir, { recursive: true });
 
   // Request from renderer to get the seed history
   ipcMain.on('getSeedHistory', (event) => {
@@ -24,20 +27,20 @@ export function initialize() {
   });
 }
 
-export function writeSeedHistoryToFile(): void {
-  if (seedHistory.size() > 0) {
-    fs.writeFile(seedHistoryPath, seedHistory.toJson(), 'utf8', err => {
-      if (err) throw err;
-    });
-  }
+export function writeSeedToHistory(seed: GeneratedSeed, world: PrimeWorld) {
+  const seedJson = Spoiler.generateFromWorld(world).toJSON(!world.getSettings().spoiler);
+  const fileName = getSeedHistoryDateString(seed.createdDate) + ' ' + seed.seedHash.toString().replace(/,+/g, ' ');
+  const filePath = path.join(seedHistoryDir, fileName + '.json');
+
+  fs.writeFile(filePath, seedJson, 'utf8', err => {
+    if (err) throw err;
+  });
 }
 
-function readFromSeedHistoryFile(): void {
-  fs.readFile(seedHistoryPath, 'utf8', (err, seedHistoryJson) => {
-    if (seedHistoryJson) {
-      seedHistory.setSeedHistoryFromJson(seedHistoryJson);
-    }
+function getSeedHistoryDateString(date: Date): string {
+  const splitDateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+  .toISOString()
+  .split('T');
 
-    historyFileRead$.next(true);
-  });
+  return splitDateString[0] + '-' + splitDateString[1].replace(/:/g, '-').replace(/\.\d{3}Z/g, '');
 }

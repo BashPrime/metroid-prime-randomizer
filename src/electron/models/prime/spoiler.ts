@@ -27,6 +27,21 @@ export class Spoiler {
   ['Locations']: PrimeLocations;
   ['Playthrough']: object[];
 
+  toJSON(prune?: boolean): string {
+    const spoilerCopy = Object.assign({}, this);
+
+    if (prune) {
+      delete spoilerCopy['Info']['Patcher Layout String'];
+      delete spoilerCopy['Starting Area'];
+      delete spoilerCopy['Starting Items'];
+      delete spoilerCopy['Elevators'];
+      delete spoilerCopy['Locations'];
+      delete spoilerCopy['Playthrough'];
+    }
+
+    return JSON.stringify(spoilerCopy, null, '\t');
+  }
+
   static generateFromWorld(world: PrimeWorld): Spoiler {
     const spoiler = new Spoiler();
 

@@ -6,7 +6,6 @@ import * as Utilities from './utilities';
 import menuTemplate from './menu';
 import { defineControllers } from './controllers';
 import { writeSettingsFiles } from './controllers/settingsController';
-import { writeSeedHistoryToFile } from './controllers/seedHistoryController';
 
 let win: Electron.BrowserWindow;
 const serve = Utilities.isServe();
@@ -50,7 +49,6 @@ function createWindow() {
 
     // Write settings file, seed history file if changes have been made.
     writeSettingsFiles();
-    // writeSeedHistoryToFile();
 
     win = null;
   });

@@ -23,7 +23,7 @@ function saveSpoiler(seed: GeneratedSeed, form: PatchForm, callback: (err: NodeJ
     const spoiler = Spoiler.generateFromWorld(world);
     const outputFile = path.join(getOutputFolder(form), getRandomizerFileNameNoExtension(world) + ' - Spoiler.json');
 
-    fs.writeFile(outputFile, JSON.stringify(spoiler, null, '\t'), 'utf8', err => {
+    fs.writeFile(outputFile, spoiler.toJSON(), 'utf8', err => {
       callback(err);
     });
   } else {

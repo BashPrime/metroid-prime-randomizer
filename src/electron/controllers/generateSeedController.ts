@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 
-import { seedHistory } from './seedHistoryController';
+import { seedHistory, writeSeedToHistory } from './seedHistoryController';
 import { RandomizerForm } from '../../common/models/randomizerForm';
 import { generateWorld } from '../models/prime/randomizer';
 import { PrimeRandomizerSettings, PrimeRandomizerSettingsArgs } from '../models/prime/randomizerSettings';
@@ -25,6 +25,10 @@ export function initialize() {
 
     try {
       const newSeedId = generateSeed(settings);
+
+      // Save generated seed to history
+      const seed = seedHistory.getSeedObject(newSeedId);
+      writeSeedToHistory(seed.seed, seed.world);
 
       // Send client-friendly seed information back to the UI
       event.sender.send('generateSeedResponse', seedHistory.getSeedObject(newSeedId).seed);
