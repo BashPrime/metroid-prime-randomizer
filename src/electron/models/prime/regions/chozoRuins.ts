@@ -363,9 +363,9 @@ export function chozoRuins(): RegionObject[] {
             return false;
           }
 
-          const bombsReqs = items.canLayBombs() || settings.tricks.wateryHallUnderwaterFlaahgraSkip;
+          const flaahgraReqs = (items.canLayBombs() && (items.has(PrimeItem.SCAN_VISOR) || settings.tricks.arboretumPuzzleSkip)) || settings.tricks.wateryHallUnderwaterFlaahgraSkip;
           const gravityReqs = items.has(PrimeItem.GRAVITY_SUIT) || settings.tricks.wateryHallUnderwaterSlopeJump;
-          return bombsReqs && gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
+          return flaahgraReqs && gravityReqs && items.has(PrimeItem.SPACE_JUMP_BOOTS);
         }
       },
       exits: {
