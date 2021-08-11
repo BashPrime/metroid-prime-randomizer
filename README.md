@@ -1,3 +1,5 @@
+**Update (8/11/2021)**: Support for this application has ceased; please use [Randovania](https://github.com/randovania/randovania/releases) instead.
+
 # Metroid Prime Randomizer
 
 This application is an item randomizer for the video game Metroid Prime, powered by the [randomprime patcher](https://github.com/aprilwade/randomprime), [Angular](https://angular.io), [TypeScript](https://www.typescriptlang.org), [Node.js](https://nodejs.org) and [Electron](https://electronjs.org).
